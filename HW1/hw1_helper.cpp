@@ -8,52 +8,151 @@ using namespace std;
 
 Info::Info()
 {
-    filename = "the_starry_night.raw";
-    byteperpixel = DEFAULTBYTE;
-    width = DEFAULTSIZE;
-    height = DEFAULTSIZE;
-    if (!(file = fopen(filename, "rb")))
-    {
-        cout << "Cannot open file: " << filename <<endl;
-        exit(1);
-    }
+    file = NULL;
+    filename_read = "the_starry_night.raw";
+    filename_write = "output_p1a.raw";
+    byteperpixel = DEFAULT_BYTE;
+    width = DEFAULT_SIZE;
+    height = DEFAULT_SIZE;
 }
 
-Info::Info(const char* new_filename, int new_byteperpixel, int new_weight, int new_height)
+Info::Info(const char* new_filename_read, const char* new_filename_write, int new_byteperpixel, int new_weight, int new_height)
 {
-    filename = new_filename;
+    // Set value
+    file = NULL;
+    filename_read = new_filename_read;
+    filename_write = new_filename_write;
     byteperpixel = new_byteperpixel;
     width = new_weight;
     height = new_height;
-    if (filename == NULL)
+
+    // Validation
+    if (filename_read == NULL || filename_write == NULL)
     {
-        cout << "Filename is invalid" << endl;
+        cout << "Filename_read or filename_write is invalid" << endl;
         exit(1);
     }
-    if (byteperpixel <= 0 || byteperpixel > MAXBYTE)
+    if (byteperpixel <= 0 || byteperpixel > MAX_BYTE)
     {
         cout << "Byte per pixel is invalid" << endl;
         exit(1);
     }
-    if (width <= 0 || width > MAXSIZE || height <= 0 || height > MAXSIZE)
+    if (width <= 0 || width > MAX_SIZE || height <= 0 || height > MAX_SIZE)
     {
         cout << "width or height is invalid" << endl;
         exit(1);
     }
-    if (!(file = fopen(filename, "rb")))
+}
+
+Info::Info(int argc, char *argv[])
+{
+    // Set value
+    file = NULL;
+    if (argc < 3){
+        cout << "Syntax Error - Incorrect Parameter Usage:" << endl;
+        cout << "program_name input_image.raw output_image.raw [BytesPerPixel = 3] [Width 512] [Height = 512]" << endl;
+        exit(1);
+    }
+    else if (argc < 4)
     {
-        cout << "Cannot open file: " << filename <<endl;
+        filename_read = argv[1];
+        filename_write = argv[2];
+        byteperpixel = DEFAULT_BYTE;
+        width = DEFAULT_SIZE;
+        height = DEFAULT_SIZE;
+    }
+    else if (argc < 5)
+    {
+        filename_read = argv[1];
+        filename_write = argv[2];
+        byteperpixel = atoi(argv[3]);
+        width = DEFAULT_SIZE;
+        height = DEFAULT_SIZE;
+    }
+    else if (argc < 6)
+    {
+        filename_read = argv[1];
+        filename_write = argv[2];
+        byteperpixel = atoi(argv[3]);
+        width = atoi(argv[4]);
+        height = width;
+    }
+    else if (argc < 7)
+    {
+        filename_read = argv[1];
+        filename_write = argv[2];
+        byteperpixel = atoi(argv[3]);
+        width = atoi(argv[4]);
+        height = atoi(argv[5]);
+    }
+    else if (argc < 8) // ONLY FOR DEBUG in CLION
+    {
+        filename_read = argv[2];
+        filename_write = argv[3];
+        byteperpixel = atoi(argv[4]);
+        width = atoi(argv[5]);
+        height = atoi(argv[6]);
+    }
+    else
+    {
+        cout << "Syntax Error - Too much Parameter Usage:" << endl;
+        cout << "program_name input_image.raw output_image.raw [BytesPerPixel = 3] [Width 512] [Height = 512]" << endl;
+        exit(1);
+    }
+
+    // Validation
+    if (filename_read == NULL || filename_write == NULL)
+    {
+        cout << "Filename_read or filename_write is invalid" << endl;
+        exit(1);
+    }
+    if (byteperpixel <= 0 || byteperpixel > MAX_BYTE)
+    {
+        cout << "Byte per pixel is invalid" << endl;
+        exit(1);
+    }
+    if (width <= 0 || width > MAX_SIZE || height <= 0 || height > MAX_SIZE)
+    {
+        cout << "Width or height is invalid" << endl;
         exit(1);
     }
 }
 
+
 // print the information for me.
 void Info::Info_Print()
 {
-    cout << "Filename: " << filename << endl;
-    cout << "width: " << width << endl;
-    cout << "Height: " << height << endl;
+    cout << "File_read: " << filename_read << endl;
+    cout << "File_write: " << filename_write << endl;
     cout << "Byte per pixel: " << byteperpixel << endl;
+    cout << "Width: " << width << endl;
+    cout << "Height: " << height << endl;
+}
+
+// read filename_read
+void Info::Info_File_Read()
+{
+    if (!(file = fopen(filename_read, "rb")))
+    {
+        cout << "Cannot open file: " << filename_read <<endl;
+        exit(1);
+    }
+}
+
+// write filename_write
+void Info::Info_File_Write()
+{
+    if (!(file = fopen(filename_write, "wb")))
+    {
+        cout << "Cannot open file: " << filename_write <<endl;
+        exit(1);
+    }
+}
+
+// Close this->file
+void Info::Info_File_Close()
+{
+    fclose(file);
 }
 
 
@@ -87,10 +186,10 @@ void Image_Plot_Line(short * pt_line, int size, string filename)
     int min = 1000;
     int total = 0;
     double average = 0;
-    int color_occur_times[COLORSIZE] = {};
+    int color_occur_times[COLOR_SIZE] = {};
     int temp = 0;
 
-    int color_per_group = (int)ceil(COLORSIZE/(double)PLOT_X_SIZE);
+    int color_per_group = (int)ceil(COLOR_SIZE/(double)PLOT_X_SIZE);
     int color_plot_times[PLOT_X_SIZE] = {};
     int *pt_color_occur_times = &color_occur_times[0];
 
@@ -109,7 +208,6 @@ void Image_Plot_Line(short * pt_line, int size, string filename)
         total += temp;
     }
     average = total/(double)size;
-
     for(int i = 0; i < PLOT_X_SIZE; i++)
     {
         for (int j = 0; j < color_per_group; j++)
@@ -187,16 +285,16 @@ void Image_Plot_All_Line(unsigned char *pt_image, Info *pt_info, string filename
     int temp = 0;
 
     // for plot
-    int redcolor_occur_times[COLORSIZE] = {}; // 256 groups
+    int redcolor_occur_times[COLOR_SIZE] = {}; // 256 groups
     int redcolor_plot_times[PLOT_X_SIZE] = {}; // turn to plot 32 groups
     int *pt_redcolor_occur_times = &redcolor_occur_times[0];
-    int greencolor_occur_times[COLORSIZE] = {};
+    int greencolor_occur_times[COLOR_SIZE] = {};
     int greencolor_plot_times[PLOT_X_SIZE] = {};
     int *pt_greencolor_occur_times = &greencolor_occur_times[0];
-    int bluecolor_occur_times[COLORSIZE] = {};
+    int bluecolor_occur_times[COLOR_SIZE] = {};
     int bluecolor_plot_times[PLOT_X_SIZE] = {};
     int *pt_bluecolor_occur_times = &bluecolor_occur_times[0];
-    int color_per_group = (int)ceil(COLORSIZE/(double)PLOT_X_SIZE);
+    int color_per_group = (int)ceil(COLOR_SIZE/(double)PLOT_X_SIZE);
 
     // for file
     ofstream fout;
