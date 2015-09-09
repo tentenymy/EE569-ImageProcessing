@@ -12,7 +12,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="add86cd5-d5ec-44d8-8eb6-1d9cfa7ca572" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p1_demosaicing.cpp" afterPath="$PROJECT_DIR$/p1_demosaicing.cpp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/p1_MHC.cpp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/p1_bilinear.cpp" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/output_p1a.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/output_p1b.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/output_p1b2.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/p1_demosaicing.cpp" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/HW1.iml" afterPath="$PROJECT_DIR$/.idea/HW1.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Makefile" afterPath="$PROJECT_DIR$/Makefile" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HW1.iws" />
@@ -46,31 +54,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="p1_resize.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/p1_resize.cpp">
+      <file leaf-file-name="p1_bilinear.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/p1_bilinear.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="29.851852">
-              <caret line="22" column="56" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="119" column="4" selection-start-line="119" selection-start-column="4" selection-end-line="120" selection-end-column="15" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="p1_demosaicing.cpp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/p1_demosaicing.cpp">
+      <file leaf-file-name="p1_MHC.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/p1_MHC.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3558394">
-              <caret line="48" column="97" selection-start-line="48" selection-start-column="97" selection-end-line="48" selection-end-column="97" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="20" column="77" selection-start-line="20" selection-start-column="77" selection-end-line="20" selection-end-column="77" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Makefile" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Makefile" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Makefile">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.333333">
-              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.30869973">
+              <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -107,8 +115,11 @@
         <option value="$PROJECT_DIR$/p1_resize.cpp" />
         <option value="$PROJECT_DIR$/hw1_helper.cpp" />
         <option value="$PROJECT_DIR$/hw1_helper.h" />
-        <option value="$PROJECT_DIR$/Makefile" />
         <option value="$PROJECT_DIR$/p1_demosaicing.cpp" />
+        <option value="$PROJECT_DIR$/p1_MHC_demosaicing.cpp" />
+        <option value="$PROJECT_DIR$/p1_bilinear.cpp" />
+        <option value="$PROJECT_DIR$/p1_MHC.cpp" />
+        <option value="$PROJECT_DIR$/Makefile" />
       </list>
     </option>
   </component>
@@ -121,8 +132,8 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="137" />
-    <option name="y" value="192" />
+    <option name="x" value="394" />
+    <option name="y" value="398" />
     <option name="width" value="1960" />
     <option name="height" value="1216" />
   </component>
@@ -234,18 +245,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="137" y="192" width="1960" height="1216" extended-state="0" />
+    <frame x="394" y="398" width="1960" height="1216" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Terminal" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3404588" sideWeight="0.72153026" order="4" side_tool="false" content_ui="tabs" x="1097" y="304" width="460" height="1075" />
+      <window_info id="Terminal" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28467155" sideWeight="0.72153026" order="4" side_tool="false" content_ui="tabs" x="1097" y="304" width="460" height="1075" />
       <window_info id="TODO" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2932331" sideWeight="0.48576513" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.101277374" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.11331445" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14164306" sideWeight="0.48932385" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.101147026" sideWeight="0.93327403" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.11887383" sideWeight="0.93327403" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.104636595" sideWeight="0.06672598" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0" sideWeight="0.50250626" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3404588" sideWeight="0.27846974" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28467155" sideWeight="0.27846974" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -305,7 +316,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/p1_demosaicing.cpp">
+    <entry file="file://$PROJECT_DIR$/p1_bilinear.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="36" column="19" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
@@ -524,10 +535,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Makefile">
+    <entry file="file://$PROJECT_DIR$/p1_resize.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.333333">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        <state vertical-scroll-proportion="-0.73994386">
+          <caret line="22" column="56" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
           <folding />
         </state>
       </provider>
@@ -542,18 +553,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/p1_resize.cpp">
+    <entry file="file://$PROJECT_DIR$/p1_MHC.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="29.851852">
-          <caret line="22" column="56" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="77" selection-start-line="20" selection-start-column="77" selection-end-line="20" selection-end-column="77" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/p1_demosaicing.cpp">
+    <entry file="file://$PROJECT_DIR$/p1_bilinear.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3558394">
-          <caret line="48" column="97" selection-start-line="48" selection-start-column="97" selection-end-line="48" selection-end-column="97" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="119" column="4" selection-start-line="119" selection-start-column="4" selection-end-line="120" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30869973">
+          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
           <folding />
         </state>
       </provider>

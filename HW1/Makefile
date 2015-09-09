@@ -7,18 +7,24 @@ prob1a:
 	@g++ -c p1_resize.cpp
 	@g++ -o p1_resize p1_resize.o hw1_helper.o
 	@echo "USAGE: ./p1_resize [inputImageName] [outputImageName] 3 512 512"
-	@./p1_resize the_starry_night.raw output_p1a.raw 3 512 512
+	@./p1_resize the_starry_night.raw output1_resize.raw 3 512 512
 prob1b:
 	@echo "****** Problem 1.b ******"
 	g++ -c hw1_helper.cpp
-	g++ -c p1_demosaicing.cpp
-	g++ -o p1_demosaicing p1_demosaicing.o hw1_helper.o
-	@echo "USAGE: ./p1_demosaicing [inputImageName] [outputImageName] 1 [width] [height]"
-	./p1_demosaicing parrot_CFA.raw output_p1b.raw 1 424 636
-	./p1_demosaicing fruit_shop_CFA.raw output_p1b2.raw 1 574 800
+	g++ -c p1_bilinear.cpp
+	g++ -c p1_MHC.cpp
+	g++ -o p1_bilinear p1_bilinear.o hw1_helper.o
+	g++ -o p1_MHC p1_MHC.o hw1_helper.o
+	@echo "USAGE: ./p1_bilinear [inputImageName] [outputImageName] 1 [width] [height]"
+	@echo "USAGE: ./p1_MHC [inputImageName] [outputImageName] 1 [width] [height]"
+	./p1_bilinear parrot_CFA.raw output1_bilinear1.raw 1 424 636
+	./p1_MHC parrot_CFA.raw output1_MHC1.raw 1 424 636
+	./p1_MHC fruit_shop_CFA.raw output1_bilinear2.raw 1 574 800
+	./p1_MHC fruit_shop_CFA.raw output1_MHC2.raw 1 574 800
+
 
 clean:
-	rm -f *.o p1_resize p1_demosaicing
+	rm -f *.o p1_resize p1_bilinear p1_MHC
 
 
 

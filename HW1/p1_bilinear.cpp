@@ -47,9 +47,7 @@ int main(int argc, char *argv[])
     // Result:
     // This image is a little blur when I use photoshop to view it.
     // I think it is because it use an average calculation so the color of each pixel is similar.
-
-    // MHC linear image demosaicing
-
+    // It smooths the edges when the referenced points have a big difference between each other.
 
 
 
@@ -117,7 +115,8 @@ int main(int argc, char *argv[])
     info.width += 2 * add_boundary;
     info.height += 2 * add_boundary;
 
-    // 2. To estimate the other two colors in each point.
+
+    // 2. To estimate the other two colors in each point by bilinear demosaicing.
     int temp_i;
     int temp_j;
     // 2.1 For red points
@@ -129,20 +128,18 @@ int main(int argc, char *argv[])
             temp_i = 2 * i;
             temp_j = 2 * j;
             imagedata_addboundary[temp_i][temp_j][BLUE]
-                    = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j- 1][BLUE]
-                                                      + imagedata_addboundary[temp_i + 1][temp_j - 1][BLUE]
-                                                      + imagedata_addboundary[temp_i - 1][temp_j + 1][BLUE]
-                                                      + imagedata_addboundary[temp_i + 1][temp_j + 1][BLUE]));
-
+                    = (unsigned char)round((0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j- 1][BLUE]
+                                                            + imagedata_addboundary[temp_i + 1][temp_j - 1][BLUE]
+                                                            + imagedata_addboundary[temp_i - 1][temp_j + 1][BLUE]
+                                                            + imagedata_addboundary[temp_i + 1][temp_j + 1][BLUE])));
             // green channel
             imagedata_addboundary[temp_i][temp_j][GREEN]
-                    = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j][GREEN]
-                                                      + imagedata_addboundary[temp_i + 1][temp_j][GREEN]
-                                                      + imagedata_addboundary[temp_i][temp_j - 1][GREEN]
-                                                      + imagedata_addboundary[temp_i][temp_j + 1][GREEN]));
+                    = (unsigned char)round((0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j][GREEN]
+                                                            + imagedata_addboundary[temp_i + 1][temp_j][GREEN]
+                                                            + imagedata_addboundary[temp_i][temp_j - 1][GREEN]
+                                                            + imagedata_addboundary[temp_i][temp_j + 1][GREEN])));
         }
     }
-
     // 2.2 For green points
     for (int i = 1; 2 * i + 1 < info.height - add_boundary; i++)
     {
@@ -152,23 +149,23 @@ int main(int argc, char *argv[])
             temp_i = 2 * i + 1;
             temp_j = 2 * j;
             imagedata_addboundary[temp_i][temp_j][BLUE]
-                    = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i][temp_j - 1][BLUE]
-                                                      + imagedata_addboundary[temp_i][temp_j + 1][BLUE]));
+                    = (unsigned char)round((0.5 * (double)(imagedata_addboundary[temp_i][temp_j - 1][BLUE]
+                                                           + imagedata_addboundary[temp_i][temp_j + 1][BLUE])));
             // redchannel
             imagedata_addboundary[temp_i][temp_j][RED]
-                    = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i + 1][temp_j][RED]
-                                                      + imagedata_addboundary[temp_i - 1][temp_j][RED]));
+                    = (unsigned char)round((0.5 * (double)(imagedata_addboundary[temp_i + 1][temp_j][RED]
+                                                           + imagedata_addboundary[temp_i - 1][temp_j][RED])));
 
             temp_i = 2 * i;
             temp_j = 2 * j + 1;
             // blue channel
             imagedata_addboundary[temp_i][temp_j][BLUE]
-                    = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i - 1][temp_j][BLUE]
-                                                     + imagedata_addboundary[temp_i + 1][temp_j][BLUE]));
+                    = (unsigned char)round((0.5 * (double)(imagedata_addboundary[temp_i - 1][temp_j][BLUE]
+                                                           + imagedata_addboundary[temp_i + 1][temp_j][BLUE])));
             // redchannel
             imagedata_addboundary[temp_i][temp_j][RED]
-                    = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i][temp_j - 1][RED]
-                                                     + imagedata_addboundary[temp_i][temp_j + 1][RED]));
+                    = (unsigned char)round((0.5 * (double)(imagedata_addboundary[temp_i][temp_j - 1][RED]
+                                                           + imagedata_addboundary[temp_i][temp_j + 1][RED])));
         }
     }
     // 2.3 For blue points
@@ -180,16 +177,16 @@ int main(int argc, char *argv[])
             temp_i = 2 * i + 1;
             temp_j = 2 * j + 1;
             imagedata_addboundary[temp_i][temp_j][RED]
-                    = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j- 1][RED]
-                                                      + imagedata_addboundary[temp_i + 1][temp_j - 1][RED]
-                                                      + imagedata_addboundary[temp_i - 1][temp_j + 1][RED]
-                                                      + imagedata_addboundary[temp_i + 1][temp_j + 1][RED]));
+                    = (unsigned char)round((0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j- 1][RED]
+                                                            + imagedata_addboundary[temp_i + 1][temp_j - 1][RED]
+                                                            + imagedata_addboundary[temp_i - 1][temp_j + 1][RED]
+                                                            + imagedata_addboundary[temp_i + 1][temp_j + 1][RED])));
             // green channel
             imagedata_addboundary[temp_i][temp_j][GREEN]
-                    = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j][GREEN]
-                                                      + imagedata_addboundary[temp_i + 1][temp_j][GREEN]
-                                                      + imagedata_addboundary[temp_i][temp_j - 1][GREEN]
-                                                      + imagedata_addboundary[temp_i][temp_j + 1][GREEN]));
+                    = (unsigned char)round((0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j][GREEN]
+                                                            + imagedata_addboundary[temp_i + 1][temp_j][GREEN]
+                                                            + imagedata_addboundary[temp_i][temp_j - 1][GREEN]
+                                                            + imagedata_addboundary[temp_i][temp_j + 1][GREEN])));
         }
     }
 
@@ -207,10 +204,6 @@ int main(int argc, char *argv[])
         }
     }
 
-
-    // Test
-    //makeinfo.Info_Print();
-    //Image_Print_By_Interger(&imagedata_addboundary[0][0][0], &info, "image_print_by_interger2.txt");
 
     // End.Write image data from image data matrix
     info.Info_File_Write();
