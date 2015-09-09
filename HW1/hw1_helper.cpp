@@ -179,9 +179,28 @@ void Image_Print_By_Interger(unsigned char *pt_image, Info *pt_info, string file
     fout.close();
 }
 
-void Image_Plot_Line(short * pt_line, int size, string filename)
+void Image_Plot_Gray_Line(unsigned char *pt_image, Info *pt_info, string filename)
 {
+
+    // Usage: Image_Plot_Gray_Line(&image_data[0][0][0], &info, "image_plot_gray_line.txt");
     Check_Debug();
+    cout << "Image_Plot_Line() begin" << endl;
+
+    // 1. Get gray line
+    short grayline[pt_info->width * pt_info->height];
+
+    for(int i = 0; i < pt_info->width; i++)
+    {
+        for (int j = 0; j < pt_info->height; j++)
+        {
+            grayline[i * pt_info->height + j] = (short)*pt_image++;
+        }
+    }
+
+    // 2. Set all the parameters
+    // raw data
+    int size = pt_info->width * pt_info->height;
+
     int max = -1;
     int min = 1000;
     int total = 0;
@@ -193,9 +212,9 @@ void Image_Plot_Line(short * pt_line, int size, string filename)
     int color_plot_times[PLOT_X_SIZE] = {};
     int *pt_color_occur_times = &color_occur_times[0];
 
-    for(int i = 0; i <  size; i++)
+    for(int i = 0; i < sizeof(grayline)/sizeof(short); i++)
     {
-        temp = *pt_line++;
+        temp = grayline[i];
         color_occur_times[temp]++;
         if(temp > max)
         {
@@ -324,6 +343,7 @@ void Image_Plot_All_Line(unsigned char *pt_image, Info *pt_info, string filename
     // write to file
     fout << "------------------------- RED -------------------------" << endl;
     fout << "Max: " << max << " Min: " << min << " Average: " << average << " Size: " << size << endl;
+    fout << "Plot\t" << "0         5       10" << endl;
     for(int i = 0; i < PLOT_X_SIZE; i++)
     {
         fout << i * color_per_group << ": \t";

@@ -52,7 +52,7 @@ public:
 void Image_Print_By_Interger(unsigned char *, Info *, string);
 
 // Print certain line to a file.
-void Image_Plot_Line(short *, int, string);
+void Image_Plot_Gray_Line(unsigned char *, Info *, string);
 
 // Print statistic of eachcolor to a file and do a simple plot
 void Image_Plot_All_Line(unsigned char *, Info *, string);

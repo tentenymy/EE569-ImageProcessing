@@ -24,9 +24,10 @@ int main(int argc, char *argv[])
     fread(image_data_old, sizeof(unsigned char), (size_t)info.width * info.height * info.byteperpixel, info.file);
     info.Info_File_Close();
 
-
+    Image_Plot_All_Line(&image_data_old[0][0][0], &info, "image_plot_all_line.txt");
     ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
     // Problem 1a. Image resizing via bilinear interpolation
+    // Description: resize a 512 * 512 image to 650 * 650 using image manipulation.
     // Algorithm: Bilinear interpolation
     // Time: O(3*m*n)
 
