@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     info.Info_File_Close();
 
     info.Info_Print();
-    Image_Print_By_Interger(&imagedata_old[0][0][0], &info, "image_print_by_interger.txt");
+    //Image_Print_By_Interger(&imagedata_old[0][0][0], &info, "image_print_by_interger.txt");
     //Image_Plot_Gray_Line(&imagedata_old[0][0][0], &info, "image_plot_gray_line.txt");
 
     ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
@@ -53,52 +53,135 @@ int main(int argc, char *argv[])
 
 
     ////////////////////////////////////// PROCESSING CODE END //////////////////////////////////////
+    info.byteperpixel = COLOR_BYTE;
     int add_boundary = 2;
     unsigned char imagedata_addboundary [info.height+ 2 * add_boundary] [info.width + 2 * add_boundary] [info.byteperpixel];
     for (int i = 0; i < info.height; i++)
     {
         for (int j = 0; j < info.width; j++)
         {
-            imagedata_addboundary[i + add_boundary][j + add_boundary][0] = imagedata_old[i][j][0];
+            for (int k = 0; k < info.byteperpixel; k++)
+                imagedata_addboundary[i + add_boundary][j + add_boundary][k] = imagedata_old[i][j][0];
         }
     }
     for (int j = add_boundary; j < info.width + add_boundary; j++)
     {
         for (int i = 0; i < add_boundary; i++)
         {
-            imagedata_addboundary[add_boundary - 1 - i][j][0] = imagedata_addboundary[add_boundary + 1 + i][j][0];
+            for (int k = 0; k < info.byteperpixel; k++)
+                imagedata_addboundary[add_boundary - 1 - i][j][k]
+                        = imagedata_addboundary[add_boundary + 1 + i][j][k];
         }
         for (int i = 0; i < add_boundary; i++)
         {
-            imagedata_addboundary[add_boundary + info.height + i][j][0] = imagedata_addboundary[add_boundary + info.height - 2 - i][j][0];
+            for (int k = 0; k < info.byteperpixel; k++)
+                imagedata_addboundary[add_boundary + info.height + i][j][k]
+                        = imagedata_addboundary[add_boundary + info.height - 2 - i][j][k];
         }
     }
     for (int i = 0; i < info.height + 2 * add_boundary; i++)
     {
         for (int j = 0; j < add_boundary; j++)
         {
-            imagedata_addboundary[i][add_boundary - 1 - j][0] = imagedata_addboundary[i][add_boundary + 1 + j][0];
+            for (int k = 0; k < info.byteperpixel; k++)
+                imagedata_addboundary[i][add_boundary - 1 - j][k]
+                        = imagedata_addboundary[i][add_boundary + 1 + j][k];
+
         }
         for (int j = 0; j < add_boundary; j++)
         {
-            imagedata_addboundary[i][add_boundary + info.width + j][0] = imagedata_addboundary[i][add_boundary + info.width - 2 - j][0];
+            for (int k = 0; k < info.byteperpixel; k++)
+                imagedata_addboundary[i][add_boundary + info.width + j][k]
+                        = imagedata_addboundary[i][add_boundary + info.width - 2 - j][k];
         }
     }
 
-    info.width += (2 * add_boundary);
-    info.height += (2 * add_boundary);
-    info.Info_Print();
 
+    info.width += 2 * add_boundary;
+    info.height += 2 * add_boundary;
+
+
+    int temp_i;
+    int temp_j;
+    // For red points
+    for (int i = 1; 2 * i < info.height - add_boundary; i++)
+    {
+        for (int j = 1; 2 * j < info.width - add_boundary; j++)
+        {
+            // blue channel
+            temp_i = 2 * i;
+            temp_j = 2 * j;
+            imagedata_addboundary[temp_i][temp_j][BLUE]
+                    = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j- 1][BLUE]
+                                                      + imagedata_addboundary[temp_i + 1][temp_j - 1][BLUE]
+                                                      + imagedata_addboundary[temp_i - 1][temp_j + 1][BLUE]
+                                                      + imagedata_addboundary[temp_i + 1][temp_j + 1][BLUE]));
+
+            // green channel
+            imagedata_addboundary[temp_i][temp_j][GREEN]
+                    = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j][GREEN]
+                                                      + imagedata_addboundary[temp_i + 1][temp_j][GREEN]
+                                                      + imagedata_addboundary[temp_i][temp_j - 1][GREEN]
+                                                      + imagedata_addboundary[temp_i][temp_j + 1][GREEN]));
+        }
+    }
+
+    // For green points
+    for (int i = 1; 2 * i + 1 < info.height - add_boundary; i++)
+    {
+        for (int j = 1; 2 * j + 1 < info.width - add_boundary; j++)
+        {
+            // blue channel
+            temp_i = 2 * i + 1;
+            temp_j = 2 * j;
+            imagedata_addboundary[temp_i][temp_j][BLUE]
+                    = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i][temp_j - 1][BLUE]
+                                                      + imagedata_addboundary[temp_i][temp_j + 1][BLUE]));
+            // redchannel
+            imagedata_addboundary[temp_i][temp_j][RED]
+                    = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i + 1][temp_j][RED]
+                                                      + imagedata_addboundary[temp_i - 1][temp_j][RED]));
+
+            temp_i = 2 * i;
+            temp_j = 2 * j + 1;
+            // blue channel
+            imagedata_addboundary[temp_i][temp_j][BLUE]
+                    = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i - 1][temp_j][BLUE]
+                                                     + imagedata_addboundary[temp_i + 1][temp_j][BLUE]));
+            // redchannel
+            imagedata_addboundary[temp_i][temp_j][RED]
+                    = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i][temp_j - 1][RED]
+                                                     + imagedata_addboundary[temp_i][temp_j + 1][RED]));
+        }
+    }
+    // For blue points
+    for (int i = 1; 2 * i + 1 < info.height - add_boundary; i++)
+    {
+        for (int j = 1; 2 * j + 1 < info.width - add_boundary; j++)
+        {
+            // red channel
+            temp_i = 2 * i + 1;
+            temp_j = 2 * j + 1;
+            imagedata_addboundary[temp_i][temp_j][RED]
+                    = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j- 1][RED]
+                                                      + imagedata_addboundary[temp_i + 1][temp_j - 1][RED]
+                                                      + imagedata_addboundary[temp_i - 1][temp_j + 1][RED]
+                                                      + imagedata_addboundary[temp_i + 1][temp_j + 1][RED]));
+            // green channel
+            imagedata_addboundary[temp_i][temp_j][GREEN]
+                    = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j][GREEN]
+                                                      + imagedata_addboundary[temp_i + 1][temp_j][GREEN]
+                                                      + imagedata_addboundary[temp_i][temp_j - 1][GREEN]
+                                                      + imagedata_addboundary[temp_i][temp_j + 1][GREEN]));
+        }
+    }
+
+
+
+
+    // Test
+    //makeinfo.Info_Print();
     Image_Print_By_Interger(&imagedata_addboundary[0][0][0], &info, "image_print_by_interger2.txt");
-
-
-
-
-
-
-
-
-
 
     // End.Write image data from image data matrix
     info.Info_File_Write();

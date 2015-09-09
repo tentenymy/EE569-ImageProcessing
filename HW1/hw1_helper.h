@@ -27,7 +27,9 @@ const int PLOT_Y_SIZE = 500;
 
 const int DEBUG = 1;
 
-
+const int RED = 0;
+const int GREEN = 1;
+const int BLUE = 2;
 
 // This class is like head information of regular image.
 class Info
