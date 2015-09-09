@@ -17,7 +17,8 @@ using namespace std;
 
 const int MAX_SIZE = 1024;
 const int MAX_BYTE = 3;
-const int DEFAULT_BYTE = 3;
+const int COLOR_BYTE = 3;
+const int GRAY_BYTE = 1;
 const int DEFAULT_SIZE = 512;
 const int COLOR_SIZE = 256;
 

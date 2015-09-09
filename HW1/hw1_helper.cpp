@@ -11,7 +11,7 @@ Info::Info()
     file = NULL;
     filename_read = "the_starry_night.raw";
     filename_write = "output_p1a.raw";
-    byteperpixel = DEFAULT_BYTE;
+    byteperpixel = COLOR_BYTE;
     width = DEFAULT_SIZE;
     height = DEFAULT_SIZE;
 }
@@ -57,7 +57,7 @@ Info::Info(int argc, char *argv[])
     {
         filename_read = argv[1];
         filename_write = argv[2];
-        byteperpixel = DEFAULT_BYTE;
+        byteperpixel = COLOR_BYTE;
         width = DEFAULT_SIZE;
         height = DEFAULT_SIZE;
     }
@@ -159,14 +159,14 @@ void Info::Info_File_Close()
 
 void Image_Print_By_Interger(unsigned char *pt_image, Info *pt_info, string filename)
 {
-    //Usage: Image_Print_By_Interger(&image_data[0][0][0], &info, "image_print_by_interger.txt");
+    //Usage: Image_Print_By_Interger(&imagedata[0][0][0], &info, "image_print_by_interger.txt");
     Check_Debug();
     ofstream fout;
     fout.open(filename);
-    for(int i = 0; i < pt_info->width; i++)
+    for(int i = 0; i < pt_info->height; i++)
     {
         fout << "ROW" << i << ": ";
-        for (int j = 0; j < pt_info->height; j++)
+        for (int j = 0; j < pt_info->width; j++)
         {
             for(int k = 0; k < pt_info->byteperpixel; k++)
             {
@@ -283,9 +283,9 @@ void Image_Plot_All_Line(unsigned char *pt_image, Info *pt_info, string filename
     {
         for (int j = 0; j < pt_info->height; j++)
         {
-            redline[i * pt_info->width + j] = (short)*pt_image++;
-            greenline[i * pt_info->width + j] = (short)*pt_image++;
-            blueline[i * pt_info->width + j] = (short)*pt_image++;
+            redline[i * pt_info->height + j] = (short)*pt_image++;
+            greenline[i * pt_info->height + j] = (short)*pt_image++;
+            blueline[i * pt_info->height + j] = (short)*pt_image++;
         }
     }
 
