@@ -128,16 +128,16 @@ int main(int argc, char *argv[])
             temp_i = 2 * i;
             temp_j = 2 * j;
             imagedata_addboundary[temp_i][temp_j][BLUE]
-                    = (unsigned char)round((0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j- 1][BLUE]
+                    = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j- 1][BLUE]
                                                             + imagedata_addboundary[temp_i + 1][temp_j - 1][BLUE]
                                                             + imagedata_addboundary[temp_i - 1][temp_j + 1][BLUE]
-                                                            + imagedata_addboundary[temp_i + 1][temp_j + 1][BLUE])));
+                                                            + imagedata_addboundary[temp_i + 1][temp_j + 1][BLUE]));
             // green channel
             imagedata_addboundary[temp_i][temp_j][GREEN]
-                    = (unsigned char)round((0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j][GREEN]
+                    = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j][GREEN]
                                                             + imagedata_addboundary[temp_i + 1][temp_j][GREEN]
                                                             + imagedata_addboundary[temp_i][temp_j - 1][GREEN]
-                                                            + imagedata_addboundary[temp_i][temp_j + 1][GREEN])));
+                                                            + imagedata_addboundary[temp_i][temp_j + 1][GREEN]));
         }
     }
     // 2.2 For green points
@@ -149,23 +149,23 @@ int main(int argc, char *argv[])
             temp_i = 2 * i + 1;
             temp_j = 2 * j;
             imagedata_addboundary[temp_i][temp_j][BLUE]
-                    = (unsigned char)round((0.5 * (double)(imagedata_addboundary[temp_i][temp_j - 1][BLUE]
-                                                           + imagedata_addboundary[temp_i][temp_j + 1][BLUE])));
+                    = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i][temp_j - 1][BLUE]
+                                                           + imagedata_addboundary[temp_i][temp_j + 1][BLUE]));
             // redchannel
             imagedata_addboundary[temp_i][temp_j][RED]
-                    = (unsigned char)round((0.5 * (double)(imagedata_addboundary[temp_i + 1][temp_j][RED]
-                                                           + imagedata_addboundary[temp_i - 1][temp_j][RED])));
+                    = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i + 1][temp_j][RED]
+                                                           + imagedata_addboundary[temp_i - 1][temp_j][RED]));
 
             temp_i = 2 * i;
             temp_j = 2 * j + 1;
             // blue channel
             imagedata_addboundary[temp_i][temp_j][BLUE]
-                    = (unsigned char)round((0.5 * (double)(imagedata_addboundary[temp_i - 1][temp_j][BLUE]
-                                                           + imagedata_addboundary[temp_i + 1][temp_j][BLUE])));
+                    = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i - 1][temp_j][BLUE]
+                                                           + imagedata_addboundary[temp_i + 1][temp_j][BLUE]));
             // redchannel
             imagedata_addboundary[temp_i][temp_j][RED]
-                    = (unsigned char)round((0.5 * (double)(imagedata_addboundary[temp_i][temp_j - 1][RED]
-                                                           + imagedata_addboundary[temp_i][temp_j + 1][RED])));
+                    = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i][temp_j - 1][RED]
+                                                           + imagedata_addboundary[temp_i][temp_j + 1][RED]));
         }
     }
     // 2.3 For blue points
@@ -177,16 +177,16 @@ int main(int argc, char *argv[])
             temp_i = 2 * i + 1;
             temp_j = 2 * j + 1;
             imagedata_addboundary[temp_i][temp_j][RED]
-                    = (unsigned char)round((0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j- 1][RED]
+                    = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j- 1][RED]
                                                             + imagedata_addboundary[temp_i + 1][temp_j - 1][RED]
                                                             + imagedata_addboundary[temp_i - 1][temp_j + 1][RED]
-                                                            + imagedata_addboundary[temp_i + 1][temp_j + 1][RED])));
+                                                            + imagedata_addboundary[temp_i + 1][temp_j + 1][RED]));
             // green channel
             imagedata_addboundary[temp_i][temp_j][GREEN]
-                    = (unsigned char)round((0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j][GREEN]
+                    = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j][GREEN]
                                                             + imagedata_addboundary[temp_i + 1][temp_j][GREEN]
                                                             + imagedata_addboundary[temp_i][temp_j - 1][GREEN]
-                                                            + imagedata_addboundary[temp_i][temp_j + 1][GREEN])));
+                                                            + imagedata_addboundary[temp_i][temp_j + 1][GREEN]));
         }
     }
 
