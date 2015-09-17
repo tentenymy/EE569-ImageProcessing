@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
     // Info info("the_starry_night.raw", "output_p1a.raw", 3, 512, 512);
     Info info(argc, argv);
     info.Info_File_Read();
-    unsigned char imagedata_old [info.height][info.width][info.byteperpixel];
-    fread(imagedata_old, sizeof(unsigned char), (size_t)info.width * info.height * info.byteperpixel, info.file);
+    unsigned char image_old [info.height][info.width][info.byteperpixel];
+    fread(image_old, sizeof(unsigned char), (size_t)info.width * info.height * info.byteperpixel, info.file);
     info.Info_File_Close();
 
     ///////////////////////////////////////// INSERT YOUR COMMENT HERE /////////////////////////////////////////
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 
     ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
     // 1. Generate a 650 * 650 * 3 empty array
-    unsigned char imagedata_new [size_new][size_new][info.byteperpixel];
+    unsigned char image_new [size_new][size_new][info.byteperpixel];
 
     const int size_old = info.width;
     double ratio = (double)(size_old - 1) / (double)(size_new - 1);
@@ -90,11 +90,11 @@ int main(int argc, char *argv[])
             // F(p', q') = (1 - a)(1 - b)F(p, q) + b(1- a)F(p, qt) + a(1 - b)F(pt, q) + abF (pt, qt)
             for(int k = 0; k < info.byteperpixel; k++)
             {
-                double value = (1.0 - scale_a) * (1.0 - scale_b) * (double)imagedata_old[point_lt_x][point_lt_y][k]
-                               + (1.0 - scale_a) * scale_b * (double)imagedata_old[point_lt_x][point_lt_y + 1][k]
-                               + (1.0 - scale_b) * scale_a * (double)imagedata_old[point_lt_x + 1][point_lt_y][k]
-                               + scale_a * scale_b * (double)imagedata_old[point_lt_x + 1][point_lt_y + 1][k];
-                imagedata_new[i][j][k] = (unsigned char)round(value);
+                double value = (1.0 - scale_a) * (1.0 - scale_b) * (double)image_old[point_lt_x][point_lt_y][k]
+                               + (1.0 - scale_a) * scale_b * (double)image_old[point_lt_x][point_lt_y + 1][k]
+                               + (1.0 - scale_b) * scale_a * (double)image_old[point_lt_x + 1][point_lt_y][k]
+                               + scale_a * scale_b * (double)image_old[point_lt_x + 1][point_lt_y + 1][k];
+                image_new[i][j][k] = (unsigned char)round(value);
             }
         }
     }
@@ -107,9 +107,9 @@ int main(int argc, char *argv[])
         scale_a = 1.0  - (double)point_rb_x + point_estimate_x;
         for(int k = 0; k < info.byteperpixel; k++)
         {
-            double value = (1.0 - scale_a) * (double)imagedata_old[point_rb_x - 1][size_old - 1][k]
-                           + scale_a * (double)imagedata_old[point_rb_x][size_old - 1][k];
-            imagedata_new[i][size_new - 1][k] = (unsigned char)round(value);
+            double value = (1.0 - scale_a) * (double)image_old[point_rb_x - 1][size_old - 1][k]
+                           + scale_a * (double)image_old[point_rb_x][size_old - 1][k];
+            image_new[i][size_new - 1][k] = (unsigned char)round(value);
         }
     }
 
@@ -121,16 +121,16 @@ int main(int argc, char *argv[])
         scale_b = 1.0 + point_estimate_y - (double)point_rb_y;
         for(int k = 0; k < info.byteperpixel; k++)
         {
-            double value = (1.0 - scale_b) * (double)imagedata_old[size_old - 1][point_rb_y - 1][k]
-                           + scale_b * (double)imagedata_old[size_old - 1][point_rb_y][k];
-            imagedata_new[size_new - 1][j][k] = (unsigned char)round(value);
+            double value = (1.0 - scale_b) * (double)image_old[size_old - 1][point_rb_y - 1][k]
+                           + scale_b * (double)image_old[size_old - 1][point_rb_y][k];
+            image_new[size_new - 1][j][k] = (unsigned char)round(value);
         }
     }
 
     // 7. Calculate Matrix [649][649]
     for(int k = 0; k < info.byteperpixel; k++)
     {
-        imagedata_new[size_new - 1][size_new - 1][k] = imagedata_old[size_old - 1][size_old - 1][k];
+        image_new[size_new - 1][size_new - 1][k] = image_old[size_old - 1][size_old - 1][k];
     }
 
     // 8. Set info class to write file
@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
 
     // End.Write image data from image data matrix
     info.Info_File_Write();
-    fwrite(imagedata_new, sizeof(unsigned char), (size_t)size_new * size_new * info.byteperpixel, info.file);
+    fwrite(image_new, sizeof(unsigned char), (size_t)size_new * size_new * info.byteperpixel, info.file);
     info.Info_File_Close();
     return 0;
 }

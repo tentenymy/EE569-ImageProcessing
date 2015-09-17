@@ -68,3 +68,6 @@ void Image_Plot_All_Line(unsigned char *, Info *, string);
 
 // Check whether in the debug mod, if no, exit!
 void Check_Debug();
+
+unsigned char* Add_Boundary (unsigned char *, Info *, int);
+unsigned char* Delete_Boundary (unsigned char *, Info *, int);

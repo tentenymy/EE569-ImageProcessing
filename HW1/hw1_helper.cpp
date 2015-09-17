@@ -454,3 +454,90 @@ void Image_Plot_All_Line(unsigned char *pt_image, Info *pt_info, string filename
     // 6. Close the file
     fout.close();
 }
+
+
+unsigned char* Delete_Boundary (unsigned char *pt_input, Info *pt_info, int add_boundary)
+{
+    unsigned char image_input[pt_info->height] [pt_info->width] [pt_info->byteperpixel];
+    memcpy(image_input, pt_input, sizeof(image_input));
+
+    pt_info->height -= 2 * add_boundary;
+    pt_info->width -= 2 * add_boundary;
+
+    unsigned char image_output[pt_info->height] [pt_info->width] [pt_info->byteperpixel];
+    unsigned char *pt_output = &image_output[0][0][0];
+    for (int i = 0; i < pt_info->height; i++)
+    {
+        for (int j = 0; j < pt_info->width; j++)
+        {
+            for (int k = 0; k < pt_info->byteperpixel; k++)
+                image_output[i][j][k] = image_input[i + add_boundary][j + add_boundary][k];
+        }
+    }
+    return pt_output;
+}
+
+//
+unsigned char* Add_Boundary (unsigned char *pt_input, Info *pt_info, int add_boundary)
+{
+    bool is_gray = false;
+
+    unsigned char image_input[pt_info->height] [pt_info->width] [pt_info->byteperpixel];
+    memcpy(image_input, pt_input, sizeof(image_input));
+    if (pt_info->byteperpixel == GRAY_BYTE)
+    {
+        is_gray = true;
+        pt_info->byteperpixel = COLOR_BYTE;
+    }
+    unsigned char image_output[pt_info->height + 2 * add_boundary] [pt_info->width + 2 * add_boundary] [pt_info->byteperpixel];
+    unsigned char *pt_output = &image_output[0][0][0];
+
+    // 1.1 get the value of original image to the center of the new image.
+    // This new image is a color image. Each color has the same value now.
+    for (int i = 0; i < pt_info->height; i++)
+    {
+        for (int j = 0; j < pt_info->width; j++)
+        {
+            for (int k = 0; k < pt_info->byteperpixel; k++)
+                image_output[i + add_boundary][j + add_boundary][k] = image_input[i][j][0];
+        }
+    }
+
+    // 1.2 add top and bottom boundary which like a mirror of original image.
+    for (int j = add_boundary; j < pt_info->width + add_boundary; j++)
+    {
+        for (int i = 0; i < add_boundary; i++)
+        {
+            for (int k = 0; k < pt_info->byteperpixel; k++)
+                image_output[add_boundary - 1 - i][j][k]
+                        = image_input[add_boundary + 1 + i][j][k];
+        }
+        for (int i = 0; i < add_boundary; i++)
+        {
+            for (int k = 0; k < pt_info->byteperpixel; k++)
+                image_output[add_boundary + pt_info->height + i][j][k]
+                        = image_input[add_boundary + pt_info->height - 2 - i][j][k];
+        }
+    }
+    cout << "B4" << endl;
+    // 1.3 add right and left boundary which like a mirror of original image.
+    for (int i = 0; i < pt_info->height + 2 * add_boundary; i++)
+    {
+        for (int j = 0; j < add_boundary; j++)
+        {
+            for (int k = 0; k < pt_info->byteperpixel; k++)
+                image_output[i][add_boundary - 1 - j][k]
+                        = image_input[i][add_boundary + 1 + j][k];
+
+        }
+        for (int j = 0; j < add_boundary; j++)
+        {
+            for (int k = 0; k < pt_info->byteperpixel; k++)
+                image_output[i][add_boundary + pt_info->width + j][k]
+                        = image_input[i][add_boundary + pt_info->width - 2 - j][k];
+        }
+    }
+    pt_info->width += 2 * add_boundary;
+    pt_info->height += 2 * add_boundary;
+    return pt_output;
+}

@@ -18,8 +18,8 @@ int main(int argc, char *argv[])
     // Info info("parrot_CFA.raw", "output_p1b.raw", 1, 424, 636);
     Info info(argc, argv);
     info.Info_File_Read();
-    unsigned char imagedata_old [info.height][info.width][info.byteperpixel];
-    fread(imagedata_old, sizeof(unsigned char), (size_t)info.width * info.height * info.byteperpixel, info.file);
+    unsigned char image_old [info.height][info.width][info.byteperpixel];
+    fread(image_old, sizeof(unsigned char), (size_t)info.width * info.height * info.byteperpixel, info.file);
     info.Info_File_Close();
 
     ///////////////////////////////////////// INSERT YOUR COMMENT HERE /////////////////////////////////////////
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     // 1. add 2-line boundary around the image
     info.byteperpixel = COLOR_BYTE;
     int add_boundary = 2;
-    unsigned char imagedata_addboundary [info.height+ 2 * add_boundary] [info.width + 2 * add_boundary] [info.byteperpixel];
+    unsigned char image_addboundary [info.height+ 2 * add_boundary] [info.width + 2 * add_boundary] [info.byteperpixel];
 
     // 1.1 get the value of original image to the center of the new image.
     // This new image is a color image.
@@ -64,50 +64,40 @@ int main(int argc, char *argv[])
         for (int j = 0; j < info.width; j++)
         {
             for (int k = 0; k < info.byteperpixel; k++)
-                imagedata_addboundary[i + add_boundary][j + add_boundary][k] = imagedata_old[i][j][0];
+                image_addboundary[i + add_boundary][j + add_boundary][k] = image_old[i][j][0];
         }
     }
     // 1.2 add top and bottom boundary which like a mirror of original image.
-    // For example, not copy the edge line of the original image [column = 0]
-    // Add a new line up the first line which is the same as the value in the column 1 of the original image
-    // Add a second line up the line we added which has the same value of the column 2 of the original image.
-    // Repeat this in the bottom of the image.
     for (int j = add_boundary; j < info.width + add_boundary; j++)
     {
         for (int i = 0; i < add_boundary; i++)
         {
             for (int k = 0; k < info.byteperpixel; k++)
-                imagedata_addboundary[add_boundary - 1 - i][j][k]
-                        = imagedata_addboundary[add_boundary + 1 + i][j][k];
+                image_addboundary[add_boundary - 1 - i][j][k]
+                        = image_addboundary[add_boundary + 1 + i][j][k];
         }
         for (int i = 0; i < add_boundary; i++)
         {
             for (int k = 0; k < info.byteperpixel; k++)
-                imagedata_addboundary[add_boundary + info.height + i][j][k]
-                        = imagedata_addboundary[add_boundary + info.height - 2 - i][j][k];
+                image_addboundary[add_boundary + info.height + i][j][k]
+                        = image_addboundary[add_boundary + info.height - 2 - i][j][k];
         }
     }
     // 1.3 add right and left boundary which like a mirror of original image.
-    // The similar procedure as 1.2
-    // The only difference between 1.2 is
-    // we only mirror the original image by the first left, right line of the original image
-    // we also mirror some value which we have added in the 1.2.
-    // These points are all in the four corner of the image, totally 16 point.
-    // We will use these in both demosaicing algorithm.
     for (int i = 0; i < info.height + 2 * add_boundary; i++)
     {
         for (int j = 0; j < add_boundary; j++)
         {
             for (int k = 0; k < info.byteperpixel; k++)
-                imagedata_addboundary[i][add_boundary - 1 - j][k]
-                        = imagedata_addboundary[i][add_boundary + 1 + j][k];
+                image_addboundary[i][add_boundary - 1 - j][k]
+                        = image_addboundary[i][add_boundary + 1 + j][k];
 
         }
         for (int j = 0; j < add_boundary; j++)
         {
             for (int k = 0; k < info.byteperpixel; k++)
-                imagedata_addboundary[i][add_boundary + info.width + j][k]
-                        = imagedata_addboundary[i][add_boundary + info.width - 2 - j][k];
+                image_addboundary[i][add_boundary + info.width + j][k]
+                        = image_addboundary[i][add_boundary + info.width - 2 - j][k];
         }
     }
     info.width += 2 * add_boundary;
@@ -125,30 +115,30 @@ int main(int argc, char *argv[])
             // blue channel
             temp_i = 2 * i;
             temp_j = 2 * j;
-            temp_sum = (0.125 * (2.0 * imagedata_addboundary[temp_i - 1][temp_j - 1][BLUE]
-                         + 2 * imagedata_addboundary[temp_i + 1][temp_j - 1][BLUE]
-                         + 2 * imagedata_addboundary[temp_i - 1][temp_j + 1][BLUE]
-                         + 2 * imagedata_addboundary[temp_i + 1][temp_j + 1][BLUE]
-                         + 6 * imagedata_addboundary[temp_i][temp_j][RED]
-                         - 1.5 * imagedata_addboundary[temp_i - 2][temp_j][RED]
-                         - 1.5 * imagedata_addboundary[temp_i + 2][temp_j][RED]
-                         - 1.5 * imagedata_addboundary[temp_i][temp_j - 2][RED]
-                         - 1.5 * imagedata_addboundary[temp_i][temp_j + 2][RED]));
+            temp_sum = (0.125 * (2.0 * image_addboundary[temp_i - 1][temp_j - 1][BLUE]
+                         + 2 * image_addboundary[temp_i + 1][temp_j - 1][BLUE]
+                         + 2 * image_addboundary[temp_i - 1][temp_j + 1][BLUE]
+                         + 2 * image_addboundary[temp_i + 1][temp_j + 1][BLUE]
+                         + 6 * image_addboundary[temp_i][temp_j][RED]
+                         - 1.5 * image_addboundary[temp_i - 2][temp_j][RED]
+                         - 1.5 * image_addboundary[temp_i + 2][temp_j][RED]
+                         - 1.5 * image_addboundary[temp_i][temp_j - 2][RED]
+                         - 1.5 * image_addboundary[temp_i][temp_j + 2][RED]));
             temp_sum = Bound_Color(temp_sum);
-            imagedata_addboundary[temp_i][temp_j][BLUE] = (unsigned char)temp_sum;
+            image_addboundary[temp_i][temp_j][BLUE] = (unsigned char)temp_sum;
 
             // green channel
-            temp_sum = (0.125 * (2.0 * imagedata_addboundary[temp_i - 1][temp_j][GREEN]
-                         + 2 * imagedata_addboundary[temp_i + 1][temp_j][GREEN]
-                         + 2 * imagedata_addboundary[temp_i][temp_j - 1][GREEN]
-                         + 2 * imagedata_addboundary[temp_i][temp_j + 1][GREEN]
-                         + 4 * imagedata_addboundary[temp_i][temp_j][RED]
-                         - imagedata_addboundary[temp_i - 2][temp_j][RED]
-                         - imagedata_addboundary[temp_i + 2][temp_j][RED]
-                         - imagedata_addboundary[temp_i][temp_j - 2][RED]
-                         - imagedata_addboundary[temp_i][temp_j + 2][RED]));
+            temp_sum = (0.125 * (2.0 * image_addboundary[temp_i - 1][temp_j][GREEN]
+                         + 2 * image_addboundary[temp_i + 1][temp_j][GREEN]
+                         + 2 * image_addboundary[temp_i][temp_j - 1][GREEN]
+                         + 2 * image_addboundary[temp_i][temp_j + 1][GREEN]
+                         + 4 * image_addboundary[temp_i][temp_j][RED]
+                         - image_addboundary[temp_i - 2][temp_j][RED]
+                         - image_addboundary[temp_i + 2][temp_j][RED]
+                         - image_addboundary[temp_i][temp_j - 2][RED]
+                         - image_addboundary[temp_i][temp_j + 2][RED]));
             temp_sum = Bound_Color(temp_sum);
-            imagedata_addboundary[temp_i][temp_j][GREEN] = (unsigned char)temp_sum;
+            image_addboundary[temp_i][temp_j][GREEN] = (unsigned char)temp_sum;
 
         }
     }
@@ -161,65 +151,65 @@ int main(int argc, char *argv[])
             // blue channel
             temp_i = 2 * i + 1;
             temp_j = 2 * j;
-            temp_sum = (0.125 * (4.0 * imagedata_addboundary[temp_i][temp_j - 1][BLUE]
-                         + 4 * imagedata_addboundary[temp_i][temp_j + 1][BLUE]
-                         + 5 * imagedata_addboundary[temp_i][temp_j][GREEN]
-                         + 0.5 * imagedata_addboundary[temp_i + 2][temp_j][GREEN]
-                         + 0.5 * imagedata_addboundary[temp_i - 2][temp_j][GREEN]
-                         - imagedata_addboundary[temp_i][temp_j + 2][GREEN]
-                         - imagedata_addboundary[temp_i][temp_j - 2][GREEN]
-                         - imagedata_addboundary[temp_i - 1][temp_j - 1][GREEN]
-                         - imagedata_addboundary[temp_i + 1][temp_j - 1][GREEN]
-                         - imagedata_addboundary[temp_i - 1][temp_j + 1][GREEN]
-                         - imagedata_addboundary[temp_i + 1][temp_j + 1][GREEN]));
+            temp_sum = (0.125 * (4.0 * image_addboundary[temp_i][temp_j - 1][BLUE]
+                         + 4 * image_addboundary[temp_i][temp_j + 1][BLUE]
+                         + 5 * image_addboundary[temp_i][temp_j][GREEN]
+                         + 0.5 * image_addboundary[temp_i + 2][temp_j][GREEN]
+                         + 0.5 * image_addboundary[temp_i - 2][temp_j][GREEN]
+                         - image_addboundary[temp_i][temp_j + 2][GREEN]
+                         - image_addboundary[temp_i][temp_j - 2][GREEN]
+                         - image_addboundary[temp_i - 1][temp_j - 1][GREEN]
+                         - image_addboundary[temp_i + 1][temp_j - 1][GREEN]
+                         - image_addboundary[temp_i - 1][temp_j + 1][GREEN]
+                         - image_addboundary[temp_i + 1][temp_j + 1][GREEN]));
             temp_sum = Bound_Color(temp_sum);
-            imagedata_addboundary[temp_i][temp_j][BLUE] = (unsigned char)temp_sum;
+            image_addboundary[temp_i][temp_j][BLUE] = (unsigned char)temp_sum;
 
             // red channel
-            temp_sum = (0.125 * (4.0 * imagedata_addboundary[temp_i - 1][temp_j][RED]
-                         + 4 * imagedata_addboundary[temp_i + 1][temp_j][RED]
-                         + 5 * imagedata_addboundary[temp_i][temp_j][GREEN]
-                         - imagedata_addboundary[temp_i + 2][temp_j][GREEN]
-                         - imagedata_addboundary[temp_i - 2][temp_j][GREEN]
-                         + 0.5 * imagedata_addboundary[temp_i][temp_j + 2][GREEN]
-                         + 0.5 * imagedata_addboundary[temp_i][temp_j - 2][GREEN]
-                         - imagedata_addboundary[temp_i - 1][temp_j - 1][GREEN]
-                         - imagedata_addboundary[temp_i + 1][temp_j - 1][GREEN]
-                         - imagedata_addboundary[temp_i - 1][temp_j + 1][GREEN]
-                         - imagedata_addboundary[temp_i + 1][temp_j + 1][GREEN]));
+            temp_sum = (0.125 * (4.0 * image_addboundary[temp_i - 1][temp_j][RED]
+                         + 4 * image_addboundary[temp_i + 1][temp_j][RED]
+                         + 5 * image_addboundary[temp_i][temp_j][GREEN]
+                         - image_addboundary[temp_i + 2][temp_j][GREEN]
+                         - image_addboundary[temp_i - 2][temp_j][GREEN]
+                         + 0.5 * image_addboundary[temp_i][temp_j + 2][GREEN]
+                         + 0.5 * image_addboundary[temp_i][temp_j - 2][GREEN]
+                         - image_addboundary[temp_i - 1][temp_j - 1][GREEN]
+                         - image_addboundary[temp_i + 1][temp_j - 1][GREEN]
+                         - image_addboundary[temp_i - 1][temp_j + 1][GREEN]
+                         - image_addboundary[temp_i + 1][temp_j + 1][GREEN]));
             temp_sum = Bound_Color(temp_sum);
-            imagedata_addboundary[temp_i][temp_j][RED] = (unsigned char)temp_sum;
+            image_addboundary[temp_i][temp_j][RED] = (unsigned char)temp_sum;
 
             temp_i = 2 * i;
             temp_j = 2 * j + 1;
             // blue channel
-            temp_sum = (0.125 * (4.0 * imagedata_addboundary[temp_i - 1][temp_j][BLUE]
-                         + 4 * imagedata_addboundary[temp_i + 1][temp_j][BLUE]
-                         + 5 * imagedata_addboundary[temp_i][temp_j][GREEN]
-                         - imagedata_addboundary[temp_i + 2][temp_j][GREEN]
-                         - imagedata_addboundary[temp_i - 2][temp_j][GREEN]
-                         + 0.5 * imagedata_addboundary[temp_i][temp_j + 2][GREEN]
-                         + 0.5 * imagedata_addboundary[temp_i][temp_j - 2][GREEN]
-                         - imagedata_addboundary[temp_i - 1][temp_j - 1][GREEN]
-                         - imagedata_addboundary[temp_i + 1][temp_j - 1][GREEN]
-                         - imagedata_addboundary[temp_i - 1][temp_j + 1][GREEN]
-                         - imagedata_addboundary[temp_i + 1][temp_j + 1][GREEN]));
+            temp_sum = (0.125 * (4.0 * image_addboundary[temp_i - 1][temp_j][BLUE]
+                         + 4 * image_addboundary[temp_i + 1][temp_j][BLUE]
+                         + 5 * image_addboundary[temp_i][temp_j][GREEN]
+                         - image_addboundary[temp_i + 2][temp_j][GREEN]
+                         - image_addboundary[temp_i - 2][temp_j][GREEN]
+                         + 0.5 * image_addboundary[temp_i][temp_j + 2][GREEN]
+                         + 0.5 * image_addboundary[temp_i][temp_j - 2][GREEN]
+                         - image_addboundary[temp_i - 1][temp_j - 1][GREEN]
+                         - image_addboundary[temp_i + 1][temp_j - 1][GREEN]
+                         - image_addboundary[temp_i - 1][temp_j + 1][GREEN]
+                         - image_addboundary[temp_i + 1][temp_j + 1][GREEN]));
             temp_sum = Bound_Color(temp_sum);
-            imagedata_addboundary[temp_i][temp_j][BLUE] = (unsigned char)temp_sum;
+            image_addboundary[temp_i][temp_j][BLUE] = (unsigned char)temp_sum;
             // red channel
-            temp_sum = (0.125 * (4.0 * imagedata_addboundary[temp_i][temp_j + 1][RED]
-                         + 4 * imagedata_addboundary[temp_i][temp_j - 1][RED]
-                         + 5 * imagedata_addboundary[temp_i][temp_j][GREEN]
-                         + 0.5 * imagedata_addboundary[temp_i + 2][temp_j][GREEN]
-                         + 0.5 * imagedata_addboundary[temp_i - 2][temp_j][GREEN]
-                         - imagedata_addboundary[temp_i][temp_j + 2][GREEN]
-                         - imagedata_addboundary[temp_i][temp_j - 2][GREEN]
-                         - imagedata_addboundary[temp_i - 1][temp_j - 1][GREEN]
-                         - imagedata_addboundary[temp_i + 1][temp_j - 1][GREEN]
-                         - imagedata_addboundary[temp_i - 1][temp_j + 1][GREEN]
-                         - imagedata_addboundary[temp_i + 1][temp_j + 1][GREEN]));
+            temp_sum = (0.125 * (4.0 * image_addboundary[temp_i][temp_j + 1][RED]
+                         + 4 * image_addboundary[temp_i][temp_j - 1][RED]
+                         + 5 * image_addboundary[temp_i][temp_j][GREEN]
+                         + 0.5 * image_addboundary[temp_i + 2][temp_j][GREEN]
+                         + 0.5 * image_addboundary[temp_i - 2][temp_j][GREEN]
+                         - image_addboundary[temp_i][temp_j + 2][GREEN]
+                         - image_addboundary[temp_i][temp_j - 2][GREEN]
+                         - image_addboundary[temp_i - 1][temp_j - 1][GREEN]
+                         - image_addboundary[temp_i + 1][temp_j - 1][GREEN]
+                         - image_addboundary[temp_i - 1][temp_j + 1][GREEN]
+                         - image_addboundary[temp_i + 1][temp_j + 1][GREEN]));
             temp_sum = Bound_Color(temp_sum);
-            imagedata_addboundary[temp_i][temp_j][RED] = (unsigned char)temp_sum;
+            image_addboundary[temp_i][temp_j][RED] = (unsigned char)temp_sum;
         }
     }
     // 2.3 For blue points
@@ -230,52 +220,45 @@ int main(int argc, char *argv[])
             // red channel
             temp_i = 2 * i + 1;
             temp_j = 2 * j + 1;
-            temp_sum = 0.125 * (2.0 * imagedata_addboundary[temp_i - 1][temp_j - 1][RED]
-                   + 2 * imagedata_addboundary[temp_i - 1][temp_j + 1][RED]
-                   + 2 * imagedata_addboundary[temp_i + 1][temp_j - 1][RED]
-                   + 2 * imagedata_addboundary[temp_i + 1][temp_j + 1][RED]
-                   + 6 * imagedata_addboundary[temp_i][temp_j][BLUE]
-                   - 1.5 * imagedata_addboundary[temp_i - 2][temp_j][BLUE]
-                   - 1.5 * imagedata_addboundary[temp_i + 2][temp_j][BLUE]
-                   - 1.5 * imagedata_addboundary[temp_i][temp_j - 2][BLUE]
-                   - 1.5 * imagedata_addboundary[temp_i][temp_j + 2][BLUE]);
+            temp_sum = 0.125 * (2.0 * image_addboundary[temp_i - 1][temp_j - 1][RED]
+                   + 2 * image_addboundary[temp_i - 1][temp_j + 1][RED]
+                   + 2 * image_addboundary[temp_i + 1][temp_j - 1][RED]
+                   + 2 * image_addboundary[temp_i + 1][temp_j + 1][RED]
+                   + 6 * image_addboundary[temp_i][temp_j][BLUE]
+                   - 1.5 * image_addboundary[temp_i - 2][temp_j][BLUE]
+                   - 1.5 * image_addboundary[temp_i + 2][temp_j][BLUE]
+                   - 1.5 * image_addboundary[temp_i][temp_j - 2][BLUE]
+                   - 1.5 * image_addboundary[temp_i][temp_j + 2][BLUE]);
             temp_sum = Bound_Color(temp_sum);
-            imagedata_addboundary[temp_i][temp_j][RED] = (unsigned char)temp_sum;
+            image_addboundary[temp_i][temp_j][RED] = (unsigned char)temp_sum;
 
             // green channel
-            temp_sum= 0.125 * (2.0 * imagedata_addboundary[temp_i - 1][temp_j][GREEN]
-                   + 2 * imagedata_addboundary[temp_i + 1][temp_j][GREEN]
-                   + 2 * imagedata_addboundary[temp_i][temp_j - 1][GREEN]
-                   + 2 * imagedata_addboundary[temp_i][temp_j + 1][GREEN]
-                   + 4 * imagedata_addboundary[temp_i][temp_j][BLUE]
-                   - imagedata_addboundary[temp_i - 2][temp_j][BLUE]
-                   - imagedata_addboundary[temp_i + 2][temp_j][BLUE]
-                   - imagedata_addboundary[temp_i][temp_j - 2][BLUE]
-                   - imagedata_addboundary[temp_i][temp_j + 2][BLUE]);
+            temp_sum= 0.125 * (2.0 * image_addboundary[temp_i - 1][temp_j][GREEN]
+                   + 2 * image_addboundary[temp_i + 1][temp_j][GREEN]
+                   + 2 * image_addboundary[temp_i][temp_j - 1][GREEN]
+                   + 2 * image_addboundary[temp_i][temp_j + 1][GREEN]
+                   + 4 * image_addboundary[temp_i][temp_j][BLUE]
+                   - image_addboundary[temp_i - 2][temp_j][BLUE]
+                   - image_addboundary[temp_i + 2][temp_j][BLUE]
+                   - image_addboundary[temp_i][temp_j - 2][BLUE]
+                   - image_addboundary[temp_i][temp_j + 2][BLUE]);
             temp_sum = Bound_Color(temp_sum);
-            imagedata_addboundary[temp_i][temp_j][GREEN] = (unsigned char)temp_sum;
+            image_addboundary[temp_i][temp_j][GREEN] = (unsigned char)temp_sum;
 
 
         }
     }
 
     // 3. delete 2-line boundary to get a new output image
-    info.height -= 2 * add_boundary;
-    info.width -= 2 * add_boundary;
-    unsigned char imagedata_output [info.height] [info.width] [info.byteperpixel];
-    for (int i = 0; i < info.height; i++)
-    {
-        for (int j = 0; j < info.width; j++)
-        {
-            for (int k = 0; k < info.byteperpixel; k++)
-                imagedata_output[i][j][k] = imagedata_addboundary[i + add_boundary][j + add_boundary][k];
-        }
-    }
+    unsigned char *pt_image_output = Delete_Boundary(&image_addboundary[0][0][0], &info, add_boundary);
+    unsigned char image_output[info.height] [info.width] [info.byteperpixel];
+    memcpy(image_output, pt_image_output, sizeof(image_output));
+
 
     ////////////////////////////////////// PROCESSING CODE END //////////////////////////////////////
     // End.Write image data from image data matrix
     info.Info_File_Write();
-    fwrite(imagedata_output, sizeof(unsigned char), (size_t)info.width * info.height * info.byteperpixel, info.file);
+    fwrite(image_output, sizeof(unsigned char), (size_t)info.width * info.height * info.byteperpixel, info.file);
     info.Info_File_Close();
     return 0;
 }
