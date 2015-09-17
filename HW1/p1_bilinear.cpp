@@ -22,7 +22,6 @@ int main(int argc, char *argv[])
     fread(imagedata_old, sizeof(unsigned char), (size_t)info.width * info.height * info.byteperpixel, info.file);
     info.Info_File_Close();
 
-    info.Info_Print();
     //Image_Print_By_Interger(&imagedata_old[0][0][0], &info, "image_print_by_interger.txt");
     //Image_Plot_Gray_Line(&imagedata_old[0][0][0], &info, "image_plot_gray_line.txt");
 
@@ -128,17 +127,17 @@ int main(int argc, char *argv[])
             // blue channel
             temp_i = 2 * i;
             temp_j = 2 * j;
-            imagedata_addboundary[temp_i][temp_j][BLUE]
+            /* imagedata_addboundary[temp_i][temp_j][BLUE]
                     = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j- 1][BLUE]
                                                             + imagedata_addboundary[temp_i + 1][temp_j - 1][BLUE]
                                                             + imagedata_addboundary[temp_i - 1][temp_j + 1][BLUE]
-                                                            + imagedata_addboundary[temp_i + 1][temp_j + 1][BLUE]));
+                                                            + imagedata_addboundary[temp_i + 1][temp_j + 1][BLUE]));*/
             // green channel
-            imagedata_addboundary[temp_i][temp_j][GREEN]
+            /* imagedata_addboundary[temp_i][temp_j][GREEN]
                     = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j][GREEN]
                                                             + imagedata_addboundary[temp_i + 1][temp_j][GREEN]
                                                             + imagedata_addboundary[temp_i][temp_j - 1][GREEN]
-                                                            + imagedata_addboundary[temp_i][temp_j + 1][GREEN]));
+                                                            + imagedata_addboundary[temp_i][temp_j + 1][GREEN]));*/
         }
     }
     // 2.2 For green points
@@ -149,24 +148,24 @@ int main(int argc, char *argv[])
             // blue channel
             temp_i = 2 * i + 1;
             temp_j = 2 * j;
-            imagedata_addboundary[temp_i][temp_j][BLUE]
+            /* imagedata_addboundary[temp_i][temp_j][BLUE]
                     = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i][temp_j - 1][BLUE]
-                                                           + imagedata_addboundary[temp_i][temp_j + 1][BLUE]));
+                                                           + imagedata_addboundary[temp_i][temp_j + 1][BLUE]));*/
             // redchannel
-            imagedata_addboundary[temp_i][temp_j][RED]
+            /*imagedata_addboundary[temp_i][temp_j][RED]
                     = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i + 1][temp_j][RED]
-                                                           + imagedata_addboundary[temp_i - 1][temp_j][RED]));
+                                                           + imagedata_addboundary[temp_i - 1][temp_j][RED]));*/
 
             temp_i = 2 * i;
             temp_j = 2 * j + 1;
             // blue channel
-            imagedata_addboundary[temp_i][temp_j][BLUE]
+            /*imagedata_addboundary[temp_i][temp_j][BLUE]
                     = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i - 1][temp_j][BLUE]
-                                                           + imagedata_addboundary[temp_i + 1][temp_j][BLUE]));
+                                                           + imagedata_addboundary[temp_i + 1][temp_j][BLUE]));*/
             // redchannel
-            imagedata_addboundary[temp_i][temp_j][RED]
+            /*imagedata_addboundary[temp_i][temp_j][RED]
                     = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i][temp_j - 1][RED]
-                                                           + imagedata_addboundary[temp_i][temp_j + 1][RED]));
+                                                           + imagedata_addboundary[temp_i][temp_j + 1][RED]));*/
         }
     }
     // 2.3 For blue points
@@ -177,11 +176,11 @@ int main(int argc, char *argv[])
             // red channel
             temp_i = 2 * i + 1;
             temp_j = 2 * j + 1;
-            imagedata_addboundary[temp_i][temp_j][RED]
+            /*imagedata_addboundary[temp_i][temp_j][RED]
                     = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j- 1][RED]
                                                             + imagedata_addboundary[temp_i + 1][temp_j - 1][RED]
                                                             + imagedata_addboundary[temp_i - 1][temp_j + 1][RED]
-                                                            + imagedata_addboundary[temp_i + 1][temp_j + 1][RED]));
+                                                            + imagedata_addboundary[temp_i + 1][temp_j + 1][RED]));*/
             // green channel
             imagedata_addboundary[temp_i][temp_j][GREEN]
                     = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j][GREEN]
@@ -206,7 +205,7 @@ int main(int argc, char *argv[])
     }
 
 
-    Image_Plot_All_Line(&imagedata_output[0][0][0], &info, "image_plot_all_line_output2.txt");
+    // Image_Plot_All_Line(&imagedata_output[0][0][0], &info, "image_plot_all_line_output2.txt");
 
     // End.Write image data from image data matrix
     info.Info_File_Write();

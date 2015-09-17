@@ -31,7 +31,7 @@ const int COLOR_SIZE = 256;
 const int DEBUG = 1;
 const char FOLDER_READ[]= "Image_read/";
 const char FOLDER_WRITE[]= "Image_write/";
-const string FOLDER_DEBUG = "Debug/";
+const string FOLDER_DEBUG = "Image_write/";
 
 const int PLOT_X_SIZE = 32;
 const int PLOT_Y_SIZE = 500;
