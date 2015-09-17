@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     //Image_Print_By_Interger(&imagedata_old[0][0][0], &info, "image_print_by_interger.txt");
     //Image_Plot_Gray_Line(&imagedata_old[0][0][0], &info, "image_plot_gray_line.txt");
 
-    ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
+    ///////////////////////////////////////// INSERT YOUR COMMENT HERE /////////////////////////////////////////
     // Problem 1b. Demosaicing of Bayer-patterned color image
     // Description : Demosaicing a Bayer-pattered gray image to a three-color image by both bilinear demosaicing
     // and MHC linear image demosaicing
@@ -46,13 +46,14 @@ int main(int argc, char *argv[])
     // Time: O(m * n)
 
     // Result:
-    // This image is a little blur when I use photoshop to view it.
+    // This image is a little blur the color edge when I use photoshop to view it.
     // I think it is because it use an average calculation so the color of each pixel is similar.
     // It smooths the edges when the referenced points have a big difference between each other.
 
 
 
-    ////////////////////////////////////// PROCESSING CODE END //////////////////////////////////////
+
+    ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
     // 1. add 2-line boundary around the image
     info.byteperpixel = COLOR_BYTE;
     int add_boundary = 2;
@@ -127,17 +128,17 @@ int main(int argc, char *argv[])
             // blue channel
             temp_i = 2 * i;
             temp_j = 2 * j;
-            /* imagedata_addboundary[temp_i][temp_j][BLUE]
+            imagedata_addboundary[temp_i][temp_j][BLUE]
                     = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j- 1][BLUE]
                                                             + imagedata_addboundary[temp_i + 1][temp_j - 1][BLUE]
                                                             + imagedata_addboundary[temp_i - 1][temp_j + 1][BLUE]
-                                                            + imagedata_addboundary[temp_i + 1][temp_j + 1][BLUE]));*/
+                                                            + imagedata_addboundary[temp_i + 1][temp_j + 1][BLUE]));
             // green channel
-            /* imagedata_addboundary[temp_i][temp_j][GREEN]
+            imagedata_addboundary[temp_i][temp_j][GREEN]
                     = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j][GREEN]
                                                             + imagedata_addboundary[temp_i + 1][temp_j][GREEN]
                                                             + imagedata_addboundary[temp_i][temp_j - 1][GREEN]
-                                                            + imagedata_addboundary[temp_i][temp_j + 1][GREEN]));*/
+                                                            + imagedata_addboundary[temp_i][temp_j + 1][GREEN]));
         }
     }
     // 2.2 For green points
@@ -148,24 +149,24 @@ int main(int argc, char *argv[])
             // blue channel
             temp_i = 2 * i + 1;
             temp_j = 2 * j;
-            /* imagedata_addboundary[temp_i][temp_j][BLUE]
+            imagedata_addboundary[temp_i][temp_j][BLUE]
                     = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i][temp_j - 1][BLUE]
-                                                           + imagedata_addboundary[temp_i][temp_j + 1][BLUE]));*/
+                                                           + imagedata_addboundary[temp_i][temp_j + 1][BLUE]));
             // redchannel
-            /*imagedata_addboundary[temp_i][temp_j][RED]
+            imagedata_addboundary[temp_i][temp_j][RED]
                     = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i + 1][temp_j][RED]
-                                                           + imagedata_addboundary[temp_i - 1][temp_j][RED]));*/
+                                                           + imagedata_addboundary[temp_i - 1][temp_j][RED]));
 
             temp_i = 2 * i;
             temp_j = 2 * j + 1;
             // blue channel
-            /*imagedata_addboundary[temp_i][temp_j][BLUE]
+            imagedata_addboundary[temp_i][temp_j][BLUE]
                     = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i - 1][temp_j][BLUE]
-                                                           + imagedata_addboundary[temp_i + 1][temp_j][BLUE]));*/
+                                                           + imagedata_addboundary[temp_i + 1][temp_j][BLUE]));
             // redchannel
-            /*imagedata_addboundary[temp_i][temp_j][RED]
+            imagedata_addboundary[temp_i][temp_j][RED]
                     = (unsigned char)(0.5 * (double)(imagedata_addboundary[temp_i][temp_j - 1][RED]
-                                                           + imagedata_addboundary[temp_i][temp_j + 1][RED]));*/
+                                                           + imagedata_addboundary[temp_i][temp_j + 1][RED]));
         }
     }
     // 2.3 For blue points
@@ -176,11 +177,11 @@ int main(int argc, char *argv[])
             // red channel
             temp_i = 2 * i + 1;
             temp_j = 2 * j + 1;
-            /*imagedata_addboundary[temp_i][temp_j][RED]
+            imagedata_addboundary[temp_i][temp_j][RED]
                     = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j- 1][RED]
                                                             + imagedata_addboundary[temp_i + 1][temp_j - 1][RED]
                                                             + imagedata_addboundary[temp_i - 1][temp_j + 1][RED]
-                                                            + imagedata_addboundary[temp_i + 1][temp_j + 1][RED]));*/
+                                                            + imagedata_addboundary[temp_i + 1][temp_j + 1][RED]));
             // green channel
             imagedata_addboundary[temp_i][temp_j][GREEN]
                     = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j][GREEN]
@@ -203,9 +204,7 @@ int main(int argc, char *argv[])
                 imagedata_output[i][j][k] = imagedata_addboundary[i + add_boundary][j + add_boundary][k];
         }
     }
-
-
-    // Image_Plot_All_Line(&imagedata_output[0][0][0], &info, "image_plot_all_line_output2.txt");
+    ////////////////////////////////////// PROCESSING CODE END //////////////////////////////////////
 
     // End.Write image data from image data matrix
     info.Info_File_Write();

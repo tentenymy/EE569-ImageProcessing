@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     fread(imagedata_old, sizeof(unsigned char), (size_t)info.width * info.height * info.byteperpixel, info.file);
     info.Info_File_Close();
 
-    ////////////////////////////////////// INSERT YOUR COMMENT HERE //////////////////////////////////////
+    ///////////////////////////////////////// INSERT YOUR COMMENT HERE /////////////////////////////////////////
     // Problem 1a. Image resizing via bilinear interpolation
     // Description.: resize a 512 * 512 image to 650 * 650 using image manipulation.
 

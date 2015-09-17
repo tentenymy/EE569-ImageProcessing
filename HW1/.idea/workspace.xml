@@ -12,16 +12,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="add86cd5-d5ec-44d8-8eb6-1d9cfa7ca572" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Image_write/output1_MHC2.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Image_write/output1_bilinear2.raw" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Makefile" afterPath="$PROJECT_DIR$/Makefile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.txt" afterPath="$PROJECT_DIR$/README.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hw1_helper.h" afterPath="$PROJECT_DIR$/hw1_helper.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Debug/image_plot_all_line_output3.txt" afterPath="$PROJECT_DIR$/Debug/image_plot_all_line_output3.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Image_write/image_plot_all_line_output3.txt" afterPath="$PROJECT_DIR$/Image_write/image_plot_all_line_output3.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Image_write/output1_MHC1.raw" afterPath="$PROJECT_DIR$/Image_write/output1_MHC1.raw" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Image_write/output1_bilinear1.raw" afterPath="$PROJECT_DIR$/Image_write/output1_bilinear1.raw" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p1_MHC.cpp" afterPath="$PROJECT_DIR$/p1_MHC.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p1_bilinear.cpp" afterPath="$PROJECT_DIR$/p1_bilinear.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p1_resize.cpp" afterPath="$PROJECT_DIR$/p1_resize.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HW1.iws" />
@@ -46,8 +42,8 @@
       <file leaf-file-name="p1_MHC.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/p1_MHC.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.29656607">
-              <caret line="71" column="5" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
+            <state vertical-scroll-proportion="4.147752">
+              <caret line="274" column="101" selection-start-line="274" selection-start-column="101" selection-end-line="274" selection-end-column="101" />
               <folding>
                 <element signature="e#90#108#0" expanded="true" />
               </folding>
@@ -59,7 +55,17 @@
         <entry file="file://$PROJECT_DIR$/p1_bilinear.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="63" column="3" selection-start-line="63" selection-start-column="3" selection-end-line="70" selection-end-column="5" />
+              <caret line="205" column="5" selection-start-line="205" selection-start-column="5" selection-end-line="205" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="p1_resize.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/p1_resize.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="138" column="4" selection-start-line="138" selection-start-column="4" selection-end-line="138" selection-end-column="101" />
               <folding />
             </state>
           </provider>
@@ -114,12 +120,12 @@
         <option value="$PROJECT_DIR$/p1_demosaicing.cpp" />
         <option value="$PROJECT_DIR$/p1_MHC_demosaicing.cpp" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/p1_resize.cpp" />
         <option value="$PROJECT_DIR$/hw1_helper.cpp" />
         <option value="$PROJECT_DIR$/hw1_helper.h" />
         <option value="$PROJECT_DIR$/README.txt" />
-        <option value="$PROJECT_DIR$/p1_bilinear.cpp" />
         <option value="$PROJECT_DIR$/Makefile" />
+        <option value="$PROJECT_DIR$/p1_resize.cpp" />
+        <option value="$PROJECT_DIR$/p1_bilinear.cpp" />
         <option value="$PROJECT_DIR$/p1_MHC.cpp" />
       </list>
     </option>
@@ -247,9 +253,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="596" y="329" width="1757" height="1079" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Terminal" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33119532" sideWeight="0.69868994" order="4" side_tool="false" content_ui="tabs" x="1097" y="304" width="460" height="1075" />
+      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33119532" sideWeight="0.69868994" order="4" side_tool="false" content_ui="tabs" x="1097" y="304" width="460" height="1075" />
       <window_info id="TODO" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2932331" sideWeight="0.48576513" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14518951" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23958333" sideWeight="0.48932385" order="3" side_tool="false" content_ui="tabs" />
@@ -579,16 +585,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/p1_resize.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.86295503">
-          <caret line="39" column="60" selection-start-line="39" selection-start-column="60" selection-end-line="39" selection-end-column="60" />
-          <folding>
-            <element signature="e#132#150#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hw1_helper.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.62434965">
@@ -627,18 +623,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/p1_resize.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="138" column="4" selection-start-line="138" selection-start-column="4" selection-end-line="138" selection-end-column="101" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/p1_bilinear.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="63" column="3" selection-start-line="63" selection-start-column="3" selection-end-line="70" selection-end-column="5" />
+          <caret line="205" column="5" selection-start-line="205" selection-start-column="5" selection-end-line="205" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/p1_MHC.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29656607">
-          <caret line="71" column="5" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
+        <state vertical-scroll-proportion="4.147752">
+          <caret line="274" column="101" selection-start-line="274" selection-start-column="101" selection-end-line="274" selection-end-column="101" />
           <folding>
             <element signature="e#90#108#0" expanded="true" />
           </folding>
