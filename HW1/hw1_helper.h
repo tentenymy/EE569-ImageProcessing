@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <fstream>
+#include <cstring>
 
 #ifndef HW1_HW1_HELPER_H
 #define HW1_HW1_HELPER_H
@@ -14,6 +15,9 @@
 
 using namespace std;
 
+const int RED = 0;
+const int GREEN = 1;
+const int BLUE = 2;
 
 const int MAX_SIZE = 1024;
 const int MAX_BYTE = 3;
@@ -22,14 +26,16 @@ const int GRAY_BYTE = 1;
 const int DEFAULT_SIZE = 512;
 const int COLOR_SIZE = 256;
 
+
+// For debug or compile
+const int DEBUG = 1;
+const char FOLDER_READ[]= "Image_read/";
+const char FOLDER_WRITE[]= "Image_write/";
+const string FOLDER_DEBUG = "Debug/";
+
 const int PLOT_X_SIZE = 32;
 const int PLOT_Y_SIZE = 500;
 
-const int DEBUG = 1;
-
-const int RED = 0;
-const int GREEN = 1;
-const int BLUE = 2;
 
 // This class is like head information of regular image.
 class Info

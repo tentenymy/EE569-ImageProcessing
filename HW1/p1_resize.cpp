@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     fread(imagedata_old, sizeof(unsigned char), (size_t)info.width * info.height * info.byteperpixel, info.file);
     info.Info_File_Close();
 
-    ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
+    ////////////////////////////////////// INSERT YOUR COMMENT HERE //////////////////////////////////////
     // Problem 1a. Image resizing via bilinear interpolation
     // Description.: resize a 512 * 512 image to 650 * 650 using image manipulation.
 
@@ -34,6 +34,10 @@ int main(int argc, char *argv[])
     // This four points are the nearest four referenced points of the estimated point.
     // The value of the nearest four points are the color value ranged from 0 to 256.
     // Calculate those value by R, G, B colors separately.
+    // By Formula: F(p', q') = (1 - a)(1 - b)F(p, q) + b(1- a)F(p, qt) + a(1 - b)F(pt, q) + abF (pt, qt)
+    // F(p,q), F(p, qt), F(pt, q), F(pt, qt): four nearest points
+    // F(p', q'):estimated point
+    // a, b are the distance between the estimated point to the F(p, q) along x/y line.
     // Time: O(3*m*n)
 
     // Explanation:
@@ -47,45 +51,49 @@ int main(int argc, char *argv[])
     // In this case, those special estimated points are the right and bottom boundary.
     // Then use the left or top point of the estimated point.
 
+    // Result:
+    // The result is much more clear to see than I thought.
 
+    ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
     // 1. Generate a 650 * 650 * 3 empty array
     unsigned char imagedata_new [size_new][size_new][info.byteperpixel];
 
     const int size_old = info.width;
     double ratio = (double)(size_old - 1) / (double)(size_new - 1);
 
-    double d_estimate_point_x;
-    double d_estimate_point_y;
-    int i_left_top_point_x;
-    int i_left_top_point_y;
-    double d_scale_a;
-    double d_scale_b;
-    int i_right_buttom_point_x;
-    int i_right_buttom_point_y;
+    double point_estimate_x;
+    double point_estimate_y;
+    int point_lt_x; //left top
+    int point_lt_y;
+    double scale_a;
+    double scale_b;
+    int point_rb_x; //right buttom
+    int point_rb_y;
 
     for(int i = 0; i < size_new - 1; i++)
     {
         for(int j = 0; j < size_new - 1; j++)
         {
             // 2. Scale 650 * 650 to 512 * 512 by ratio (512 - 1)/ ( 650 - 1)
-            d_estimate_point_x = ratio * (double)i;
-            d_estimate_point_y = ratio *  (double)j;
+            point_estimate_x = ratio * (double)i;
+            point_estimate_y = ratio *  (double)j;
 
             // 3. Find the nearest 4 points in the original 512*512 image of the estimated point
             // and get a and b (distance between estimated point to the top left point
-            i_left_top_point_x = (int)d_estimate_point_x;
-            i_left_top_point_y = (int)d_estimate_point_y;
-            d_scale_a = d_estimate_point_x - (double)i_left_top_point_x;
-            d_scale_b = d_estimate_point_y - (double)i_left_top_point_y;
+            point_lt_x = (int)point_estimate_x;
+            point_lt_y = (int)point_estimate_y;
+            scale_a = point_estimate_x - (double)point_lt_x;
+            scale_b = point_estimate_y - (double)point_lt_y;
 
             // 4. Calculate each estimated point by weighted the value of four nearest points
             // Calculate 649 * 649 points Matrix[0->648][0->648] first
+            // F(p', q') = (1 - a)(1 - b)F(p, q) + b(1- a)F(p, qt) + a(1 - b)F(pt, q) + abF (pt, qt)
             for(int k = 0; k < info.byteperpixel; k++)
             {
-                double value = (1.0 - d_scale_a) * (1.0 - d_scale_b) * (double)imagedata_old[i_left_top_point_x][i_left_top_point_y][k]
-                               + (1.0 - d_scale_a) * d_scale_b * (double)imagedata_old[i_left_top_point_x][i_left_top_point_y + 1][k]
-                               + (1.0 - d_scale_b) * d_scale_a * (double)imagedata_old[i_left_top_point_x + 1][i_left_top_point_y][k]
-                               + d_scale_a * d_scale_b * (double)imagedata_old[i_left_top_point_x + 1][i_left_top_point_y + 1][k];
+                double value = (1.0 - scale_a) * (1.0 - scale_b) * (double)imagedata_old[point_lt_x][point_lt_y][k]
+                               + (1.0 - scale_a) * scale_b * (double)imagedata_old[point_lt_x][point_lt_y + 1][k]
+                               + (1.0 - scale_b) * scale_a * (double)imagedata_old[point_lt_x + 1][point_lt_y][k]
+                               + scale_a * scale_b * (double)imagedata_old[point_lt_x + 1][point_lt_y + 1][k];
                 imagedata_new[i][j][k] = (unsigned char)round(value);
             }
         }
@@ -94,13 +102,13 @@ int main(int argc, char *argv[])
     // 5. Repeat 2 -> 4. Calculate Matrix [0->648][649]
     for (int i = 0; i < size_new - 1; i++)
     {
-        d_estimate_point_x = ratio * (double)i;
-        i_right_buttom_point_x = (int)d_estimate_point_x + 1;
-        d_scale_a = 1.0  - (double)i_right_buttom_point_x + d_estimate_point_x;
+        point_estimate_x = ratio * (double)i;
+        point_rb_x = (int)point_estimate_x + 1;
+        scale_a = 1.0  - (double)point_rb_x + point_estimate_x;
         for(int k = 0; k < info.byteperpixel; k++)
         {
-            double value = (1.0 - d_scale_a) * (double)imagedata_old[i_right_buttom_point_x - 1][size_old - 1][k]
-                           + d_scale_a * (double)imagedata_old[i_right_buttom_point_x][size_old - 1][k];
+            double value = (1.0 - scale_a) * (double)imagedata_old[point_rb_x - 1][size_old - 1][k]
+                           + scale_a * (double)imagedata_old[point_rb_x][size_old - 1][k];
             imagedata_new[i][size_new - 1][k] = (unsigned char)round(value);
         }
     }
@@ -108,13 +116,13 @@ int main(int argc, char *argv[])
     // 6. Repeat 2 -> 4. Calculate Matrix [649][0->648]
     for (int j = 0; j < size_new - 1; j++)
     {
-        d_estimate_point_y = ratio * (double)j;
-        i_right_buttom_point_y = (int)d_estimate_point_y + 1;
-        d_scale_b = 1.0 + d_estimate_point_y - (double)i_right_buttom_point_y;
+        point_estimate_y = ratio * (double)j;
+        point_rb_y = (int)point_estimate_y + 1;
+        scale_b = 1.0 + point_estimate_y - (double)point_rb_y;
         for(int k = 0; k < info.byteperpixel; k++)
         {
-            double value = (1.0 - d_scale_b) * (double)imagedata_old[size_old - 1][i_right_buttom_point_y - 1][k]
-                           + d_scale_b * (double)imagedata_old[size_old - 1][i_right_buttom_point_y][k];
+            double value = (1.0 - scale_b) * (double)imagedata_old[size_old - 1][point_rb_y - 1][k]
+                           + scale_b * (double)imagedata_old[size_old - 1][point_rb_y][k];
             imagedata_new[size_new - 1][j][k] = (unsigned char)round(value);
         }
     }

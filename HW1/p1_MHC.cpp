@@ -31,14 +31,15 @@ int main(int argc, char *argv[])
     // Description : Demosaicing a Bayer-pattered gray image to a three-color image by both bilinear demosaicing
     // and MHC linear image demosaicing
 
-    // Algorithm: Bilinear demosaicing; MHC (Malvar-He-Cutler) linear image demosaicing
+    // Algorithm: Bilinear demosaicing;
+    //            MHC (Malvar-He-Cutler) linear image demosaicing
     // Description: To get three colors in each pixel of the digital camera, the camera have to put three sensors in each pixel.
     // To avoid this wasting, the digital camera only puts one sensor in each pixel by Bayer Array to catch one color each.
     // And then use demosaicing algorithm to translate the Bayer Array to a three-color image.
     // There are two algorithms we need to implementation in this problem: bilinear demosaicing and MHC linear image demosaicing
 
     // MHC linear image demosaicing
-
+    //
 
 
 
@@ -47,7 +48,7 @@ int main(int argc, char *argv[])
     // 1. add 2-line boundary around the image
     info.byteperpixel = COLOR_BYTE;
     int add_boundary = 2;
-    unsigned char imagedata_addboundary2 [info.height+ 2 * add_boundary] [info.width + 2 * add_boundary] [info.byteperpixel];
+    unsigned char imagedata_addboundary [info.height+ 2 * add_boundary] [info.width + 2 * add_boundary] [info.byteperpixel];
 
     // 1.1 get the value of original image to the center of the new image.
     // This new image is a color image.
@@ -57,7 +58,7 @@ int main(int argc, char *argv[])
         for (int j = 0; j < info.width; j++)
         {
             for (int k = 0; k < info.byteperpixel; k++)
-                imagedata_addboundary2[i + add_boundary][j + add_boundary][k] = imagedata_old[i][j][0];
+                imagedata_addboundary[i + add_boundary][j + add_boundary][k] = imagedata_old[i][j][0];
         }
     }
     // 1.2 add top and bottom boundary which like a mirror of original image.
@@ -70,14 +71,14 @@ int main(int argc, char *argv[])
         for (int i = 0; i < add_boundary; i++)
         {
             for (int k = 0; k < info.byteperpixel; k++)
-                imagedata_addboundary2[add_boundary - 1 - i][j][k]
-                        = imagedata_addboundary2[add_boundary + 1 + i][j][k];
+                imagedata_addboundary[add_boundary - 1 - i][j][k]
+                        = imagedata_addboundary[add_boundary + 1 + i][j][k];
         }
         for (int i = 0; i < add_boundary; i++)
         {
             for (int k = 0; k < info.byteperpixel; k++)
-                imagedata_addboundary2[add_boundary + info.height + i][j][k]
-                        = imagedata_addboundary2[add_boundary + info.height - 2 - i][j][k];
+                imagedata_addboundary[add_boundary + info.height + i][j][k]
+                        = imagedata_addboundary[add_boundary + info.height - 2 - i][j][k];
         }
     }
     // 1.3 add right and left boundary which like a mirror of original image.
@@ -92,15 +93,15 @@ int main(int argc, char *argv[])
         for (int j = 0; j < add_boundary; j++)
         {
             for (int k = 0; k < info.byteperpixel; k++)
-                imagedata_addboundary2[i][add_boundary - 1 - j][k]
-                        = imagedata_addboundary2[i][add_boundary + 1 + j][k];
+                imagedata_addboundary[i][add_boundary - 1 - j][k]
+                        = imagedata_addboundary[i][add_boundary + 1 + j][k];
 
         }
         for (int j = 0; j < add_boundary; j++)
         {
             for (int k = 0; k < info.byteperpixel; k++)
-                imagedata_addboundary2[i][add_boundary + info.width + j][k]
-                        = imagedata_addboundary2[i][add_boundary + info.width - 2 - j][k];
+                imagedata_addboundary[i][add_boundary + info.width + j][k]
+                        = imagedata_addboundary[i][add_boundary + info.width - 2 - j][k];
         }
     }
     info.width += 2 * add_boundary;
@@ -117,28 +118,41 @@ int main(int argc, char *argv[])
             // blue channel
             temp_i = 2 * i;
             temp_j = 2 * j;
-            imagedata_addboundary2[temp_i][temp_j][BLUE] = (unsigned char)round((0.125 *
-                                                                                 (2.0 * imagedata_addboundary2[temp_i - 1][temp_j - 1][BLUE]
-                                                                                  + 2 * imagedata_addboundary2[temp_i + 1][temp_j - 1][BLUE]
-                                                                                  + 2 * imagedata_addboundary2[temp_i - 1][temp_j + 1][BLUE]
-                                                                                  + 2 * imagedata_addboundary2[temp_i + 1][temp_j + 1][BLUE]
-                                                                                  + 6 * imagedata_addboundary2[temp_i][temp_j][RED]
-                                                                                  - 1.5 * imagedata_addboundary2[temp_i - 2][temp_j][RED]
-                                                                                  - 1.5 * imagedata_addboundary2[temp_i + 2][temp_j][RED]
-                                                                                  - 1.5 * imagedata_addboundary2[temp_i][temp_j - 2][RED]
-                                                                                  - 1.5 * imagedata_addboundary2[temp_i][temp_j + 2][RED])));
+            /*imagedata_addboundary[temp_i][temp_j][BLUE] =
+                    (unsigned char)(0.125 *
+                            (2.0 * imagedata_addboundary[temp_i - 1][temp_j - 1][BLUE]
+                             + 2 * imagedata_addboundary[temp_i + 1][temp_j - 1][BLUE]
+                             + 2 * imagedata_addboundary[temp_i - 1][temp_j + 1][BLUE]
+                             + 2 * imagedata_addboundary[temp_i + 1][temp_j + 1][BLUE]
+                             + 6 * imagedata_addboundary[temp_i][temp_j][RED]
+                             - 1.5 * imagedata_addboundary[temp_i - 2][temp_j][RED]
+                             - 1.5 * imagedata_addboundary[temp_i + 2][temp_j][RED]
+                             - 1.5 * imagedata_addboundary[temp_i][temp_j - 2][RED]
+                             - 1.5 * imagedata_addboundary[temp_i][temp_j + 2][RED]));*/
+
+            // blue channel
+            temp_i = 2 * i;
+            temp_j = 2 * j;
+            imagedata_addboundary[temp_i][temp_j][BLUE]
+                    = (unsigned char)(0.25 * (double)(imagedata_addboundary[temp_i - 1][temp_j- 1][BLUE]
+                                                      + imagedata_addboundary[temp_i + 1][temp_j - 1][BLUE]
+                                                      + imagedata_addboundary[temp_i - 1][temp_j + 1][BLUE]
+                                                      + imagedata_addboundary[temp_i + 1][temp_j + 1][BLUE]));
+
 
             // green channel
-            imagedata_addboundary2[temp_i][temp_j][GREEN] = (unsigned char)round((0.125 *
-                                                                                  (2.0 * imagedata_addboundary2[temp_i - 1][temp_j][GREEN]
-                                                                                   + 2 * imagedata_addboundary2[temp_i + 1][temp_j][GREEN]
-                                                                                   + 2 * imagedata_addboundary2[temp_i][temp_j - 1][GREEN]
-                                                                                   + 2 * imagedata_addboundary2[temp_i][temp_j + 1][GREEN]
-                                                                                   + 4 * imagedata_addboundary2[temp_i][temp_j][RED]
-                                                                                   - imagedata_addboundary2[temp_i - 2][temp_j][RED]
-                                                                                   - imagedata_addboundary2[temp_i + 2][temp_j][RED]
-                                                                                   - imagedata_addboundary2[temp_i][temp_j - 2][RED]
-                                                                                   - imagedata_addboundary2[temp_i][temp_j + 2][RED])));
+            imagedata_addboundary[temp_i][temp_j][GREEN] =
+                    (unsigned char)(0.125 *
+                            (2.0 * imagedata_addboundary[temp_i - 1][temp_j][GREEN]
+                             + 2 * imagedata_addboundary[temp_i + 1][temp_j][GREEN]
+                             + 2 * imagedata_addboundary[temp_i][temp_j - 1][GREEN]
+                             + 2 * imagedata_addboundary[temp_i][temp_j + 1][GREEN]
+                             + 4 * imagedata_addboundary[temp_i][temp_j][RED]
+                             - imagedata_addboundary[temp_i - 2][temp_j][RED]
+                             - imagedata_addboundary[temp_i + 2][temp_j][RED]
+                             - imagedata_addboundary[temp_i][temp_j - 2][RED]
+                             - imagedata_addboundary[temp_i][temp_j + 2][RED]));
+
         }
     }
 
@@ -150,60 +164,64 @@ int main(int argc, char *argv[])
             // blue channel
             temp_i = 2 * i + 1;
             temp_j = 2 * j;
-            imagedata_addboundary2[temp_i][temp_j][BLUE] = (unsigned char)round((0.125 *
-                                                                                 (4.0 * imagedata_addboundary2[temp_i][temp_j - 1][BLUE]
-                                                                                  + 4 * imagedata_addboundary2[temp_i][temp_j + 1][BLUE]
-                                                                                  + 5 * imagedata_addboundary2[temp_i][temp_j][GREEN]
-                                                                                  + 0.5 * imagedata_addboundary2[temp_i + 2][temp_j][GREEN]
-                                                                                  + 0.5 * imagedata_addboundary2[temp_i - 2][temp_j][GREEN]
-                                                                                  - imagedata_addboundary2[temp_i][temp_j + 2][GREEN]
-                                                                                  - imagedata_addboundary2[temp_i][temp_j - 2][GREEN]
-                                                                                  - imagedata_addboundary2[temp_i - 1][temp_j - 1][GREEN]
-                                                                                  - imagedata_addboundary2[temp_i + 1][temp_j - 1][GREEN]
-                                                                                  - imagedata_addboundary2[temp_i - 1][temp_j + 1][GREEN]
-                                                                                  - imagedata_addboundary2[temp_i + 1][temp_j + 1][GREEN])));
+            imagedata_addboundary[temp_i][temp_j][BLUE] =
+                    (unsigned char)(0.125 *
+                                    (4.0 * imagedata_addboundary[temp_i][temp_j - 1][BLUE]
+                                     + 4 * imagedata_addboundary[temp_i][temp_j + 1][BLUE]
+                                     + 5 * imagedata_addboundary[temp_i][temp_j][GREEN]
+                                     + 0.5 * imagedata_addboundary[temp_i + 2][temp_j][GREEN]
+                                     + 0.5 * imagedata_addboundary[temp_i - 2][temp_j][GREEN]
+                                     - imagedata_addboundary[temp_i][temp_j + 2][GREEN]
+                                     - imagedata_addboundary[temp_i][temp_j - 2][GREEN]
+                                     - imagedata_addboundary[temp_i - 1][temp_j - 1][GREEN]
+                                     - imagedata_addboundary[temp_i + 1][temp_j - 1][GREEN]
+                                     - imagedata_addboundary[temp_i - 1][temp_j + 1][GREEN]
+                                     - imagedata_addboundary[temp_i + 1][temp_j + 1][GREEN]));
             // red channel
-            imagedata_addboundary2[temp_i][temp_j][RED] = (unsigned char)round((0.125 *
-                                                                                (4.0 * imagedata_addboundary2[temp_i - 1][temp_j][RED]
-                                                                                 + 4 * imagedata_addboundary2[temp_i + 1][temp_j][RED]
-                                                                                 + 5 * imagedata_addboundary2[temp_i][temp_j][GREEN]
-                                                                                 - imagedata_addboundary2[temp_i + 2][temp_j][GREEN]
-                                                                                 - imagedata_addboundary2[temp_i - 2][temp_j][GREEN]
-                                                                                 + 0.5 * imagedata_addboundary2[temp_i][temp_j + 2][GREEN]
-                                                                                 + 0.5 * imagedata_addboundary2[temp_i][temp_j - 2][GREEN]
-                                                                                 - imagedata_addboundary2[temp_i - 1][temp_j - 1][GREEN]
-                                                                                 - imagedata_addboundary2[temp_i + 1][temp_j - 1][GREEN]
-                                                                                 - imagedata_addboundary2[temp_i - 1][temp_j + 1][GREEN]
-                                                                                 - imagedata_addboundary2[temp_i + 1][temp_j + 1][GREEN])));
+            imagedata_addboundary[temp_i][temp_j][RED] =
+                    (unsigned char)(0.125 *
+                                    (4.0 * imagedata_addboundary[temp_i - 1][temp_j][RED]
+                                     + 4 * imagedata_addboundary[temp_i + 1][temp_j][RED]
+                                     + 5 * imagedata_addboundary[temp_i][temp_j][GREEN]
+                                     - imagedata_addboundary[temp_i + 2][temp_j][GREEN]
+                                     - imagedata_addboundary[temp_i - 2][temp_j][GREEN]
+                                     + 0.5 * imagedata_addboundary[temp_i][temp_j + 2][GREEN]
+                                     + 0.5 * imagedata_addboundary[temp_i][temp_j - 2][GREEN]
+                                     - imagedata_addboundary[temp_i - 1][temp_j - 1][GREEN]
+                                     - imagedata_addboundary[temp_i + 1][temp_j - 1][GREEN]
+                                     - imagedata_addboundary[temp_i - 1][temp_j + 1][GREEN]
+                                     - imagedata_addboundary[temp_i + 1][temp_j + 1][GREEN]));
 
             temp_i = 2 * i;
             temp_j = 2 * j + 1;
             // blue channel
-            imagedata_addboundary2[temp_i][temp_j][BLUE] = (unsigned char)round((0.125 *
-                                                                                 (4.0 * imagedata_addboundary2[temp_i - 1][temp_j][BLUE]
-                                                                                  + 4 * imagedata_addboundary2[temp_i + 1][temp_j][BLUE]
-                                                                                  + 5 * imagedata_addboundary2[temp_i][temp_j][GREEN]
-                                                                                  - imagedata_addboundary2[temp_i + 2][temp_j][GREEN]
-                                                                                  - imagedata_addboundary2[temp_i - 2][temp_j][GREEN]
-                                                                                  + 0.5 * imagedata_addboundary2[temp_i][temp_j + 2][GREEN]
-                                                                                  + 0.5 * imagedata_addboundary2[temp_i][temp_j - 2][GREEN]
-                                                                                  - imagedata_addboundary2[temp_i - 1][temp_j - 1][GREEN]
-                                                                                  - imagedata_addboundary2[temp_i + 1][temp_j - 1][GREEN]
-                                                                                  - imagedata_addboundary2[temp_i - 1][temp_j + 1][GREEN]
-                                                                                  - imagedata_addboundary2[temp_i + 1][temp_j + 1][GREEN])));
+            imagedata_addboundary[temp_i][temp_j][BLUE] =
+                    (unsigned char)(0.125 *
+                                    (4.0 * imagedata_addboundary[temp_i - 1][temp_j][BLUE]
+                                     + 4 * imagedata_addboundary[temp_i + 1][temp_j][BLUE]
+                                     + 5 * imagedata_addboundary[temp_i][temp_j][GREEN]
+                                     - imagedata_addboundary[temp_i + 2][temp_j][GREEN]
+                                     - imagedata_addboundary[temp_i - 2][temp_j][GREEN]
+                                     + 0.5 * imagedata_addboundary[temp_i][temp_j + 2][GREEN]
+                                     + 0.5 * imagedata_addboundary[temp_i][temp_j - 2][GREEN]
+                                     - imagedata_addboundary[temp_i - 1][temp_j - 1][GREEN]
+                                     - imagedata_addboundary[temp_i + 1][temp_j - 1][GREEN]
+                                     - imagedata_addboundary[temp_i - 1][temp_j + 1][GREEN]
+                                     - imagedata_addboundary[temp_i + 1][temp_j + 1][GREEN]));
             // red channel
-            imagedata_addboundary2[temp_i][temp_j][RED] = (unsigned char)round((0.125 *
-                                                                                (4.0 * imagedata_addboundary2[temp_i][temp_j + 1][RED]
-                                                                                 + 4 * imagedata_addboundary2[temp_i][temp_j - 1][RED]
-                                                                                 + 5 * imagedata_addboundary2[temp_i][temp_j][GREEN]
-                                                                                 + 0.5 * imagedata_addboundary2[temp_i + 2][temp_j][GREEN]
-                                                                                 + 0.5 * imagedata_addboundary2[temp_i - 2][temp_j][GREEN]
-                                                                                 - imagedata_addboundary2[temp_i][temp_j + 2][GREEN]
-                                                                                 - imagedata_addboundary2[temp_i][temp_j - 2][GREEN]
-                                                                                 - imagedata_addboundary2[temp_i - 1][temp_j - 1][GREEN]
-                                                                                 - imagedata_addboundary2[temp_i + 1][temp_j - 1][GREEN]
-                                                                                 - imagedata_addboundary2[temp_i - 1][temp_j + 1][GREEN]
-                                                                                 - imagedata_addboundary2[temp_i + 1][temp_j + 1][GREEN])));
+            imagedata_addboundary[temp_i][temp_j][RED] =
+                    (unsigned char)(0.125 *
+                                    (4.0 * imagedata_addboundary[temp_i][temp_j + 1][RED]
+                                     + 4 * imagedata_addboundary[temp_i][temp_j - 1][RED]
+                                     + 5 * imagedata_addboundary[temp_i][temp_j][GREEN]
+                                     + 0.5 * imagedata_addboundary[temp_i + 2][temp_j][GREEN]
+                                     + 0.5 * imagedata_addboundary[temp_i - 2][temp_j][GREEN]
+                                     - imagedata_addboundary[temp_i][temp_j + 2][GREEN]
+                                     - imagedata_addboundary[temp_i][temp_j - 2][GREEN]
+                                     - imagedata_addboundary[temp_i - 1][temp_j - 1][GREEN]
+                                     - imagedata_addboundary[temp_i + 1][temp_j - 1][GREEN]
+                                     - imagedata_addboundary[temp_i - 1][temp_j + 1][GREEN]
+                                     - imagedata_addboundary[temp_i + 1][temp_j + 1][GREEN]));
         }
     }
     // 2.3 For blue points
@@ -214,27 +232,29 @@ int main(int argc, char *argv[])
             // red channel
             temp_i = 2 * i + 1;
             temp_j = 2 * j + 1;
-            imagedata_addboundary2[temp_i][temp_j][RED] = (unsigned char)round((0.125 *
-                                                                                (2.0 * imagedata_addboundary2[temp_i - 1][temp_j - 1][RED]
-                                                                                 + 2 * imagedata_addboundary2[temp_i - 1][temp_j + 1][RED]
-                                                                                 + 2 * imagedata_addboundary2[temp_i + 1][temp_j - 1][RED]
-                                                                                 + 2 * imagedata_addboundary2[temp_i + 1][temp_j + 1][RED]
-                                                                                 + 6 * imagedata_addboundary2[temp_i][temp_j][BLUE]
-                                                                                 - 1.5 * imagedata_addboundary2[temp_i - 2][temp_j][BLUE]
-                                                                                 - 1.5 * imagedata_addboundary2[temp_i + 2][temp_j][BLUE]
-                                                                                 - 1.5 * imagedata_addboundary2[temp_i][temp_j - 2][BLUE]
-                                                                                 - 1.5 * imagedata_addboundary2[temp_i][temp_j + 2][BLUE])));
+            imagedata_addboundary[temp_i][temp_j][RED] =
+                    (unsigned char)(0.125 *
+                                    (2.0 * imagedata_addboundary[temp_i - 1][temp_j - 1][RED]
+                                     + 2 * imagedata_addboundary[temp_i - 1][temp_j + 1][RED]
+                                     + 2 * imagedata_addboundary[temp_i + 1][temp_j - 1][RED]
+                                     + 2 * imagedata_addboundary[temp_i + 1][temp_j + 1][RED]
+                                     + 6 * imagedata_addboundary[temp_i][temp_j][BLUE]
+                                     - 1.5 * imagedata_addboundary[temp_i - 2][temp_j][BLUE]
+                                     - 1.5 * imagedata_addboundary[temp_i + 2][temp_j][BLUE]
+                                     - 1.5 * imagedata_addboundary[temp_i][temp_j - 2][BLUE]
+                                     - 1.5 * imagedata_addboundary[temp_i][temp_j + 2][BLUE]));
             // green channel
-            imagedata_addboundary2[temp_i][temp_j][GREEN] = (unsigned char)round((0.125 *
-                                                                                  (2.0 * imagedata_addboundary2[temp_i - 1][temp_j][GREEN]
-                                                                                   + 2 * imagedata_addboundary2[temp_i + 1][temp_j][GREEN]
-                                                                                   + 2 * imagedata_addboundary2[temp_i][temp_j - 1][GREEN]
-                                                                                   + 2 * imagedata_addboundary2[temp_i][temp_j + 1][GREEN]
-                                                                                   + 4 * imagedata_addboundary2[temp_i][temp_j][BLUE]
-                                                                                   - imagedata_addboundary2[temp_i - 2][temp_j][BLUE]
-                                                                                   - imagedata_addboundary2[temp_i + 2][temp_j][BLUE]
-                                                                                   - imagedata_addboundary2[temp_i][temp_j - 2][BLUE]
-                                                                                   - imagedata_addboundary2[temp_i][temp_j + 2][BLUE])));
+            imagedata_addboundary[temp_i][temp_j][GREEN] =
+                    (unsigned char)(0.125 *
+                                    (2.0 * imagedata_addboundary[temp_i - 1][temp_j][GREEN]
+                                     + 2 * imagedata_addboundary[temp_i + 1][temp_j][GREEN]
+                                     + 2 * imagedata_addboundary[temp_i][temp_j - 1][GREEN]
+                                     + 2 * imagedata_addboundary[temp_i][temp_j + 1][GREEN]
+                                     + 4 * imagedata_addboundary[temp_i][temp_j][BLUE]
+                                     - imagedata_addboundary[temp_i - 2][temp_j][BLUE]
+                                     - imagedata_addboundary[temp_i + 2][temp_j][BLUE]
+                                     - imagedata_addboundary[temp_i][temp_j - 2][BLUE]
+                                     - imagedata_addboundary[temp_i][temp_j + 2][BLUE]));
         }
     }
 
@@ -247,10 +267,12 @@ int main(int argc, char *argv[])
         for (int j = 0; j < info.width; j++)
         {
             for (int k = 0; k < info.byteperpixel; k++)
-                imagedata_output[i][j][k] = imagedata_addboundary2[i + add_boundary][j + add_boundary][k];
+                imagedata_output[i][j][k] = imagedata_addboundary[i + add_boundary][j + add_boundary][k];
         }
     }
 
+
+    Image_Plot_All_Line(&imagedata_output[0][0][0], &info, "image_plot_all_line_output3.txt");
 
     // End.Write image data from image data matrix
     info.Info_File_Write();

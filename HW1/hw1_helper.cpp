@@ -122,6 +122,7 @@ Info::Info(int argc, char *argv[])
 // print the information for me.
 void Info::Info_Print()
 {
+    Check_Debug();
     cout << "File_read: " << filename_read << endl;
     cout << "File_write: " << filename_write << endl;
     cout << "Byte per pixel: " << byteperpixel << endl;
@@ -132,7 +133,11 @@ void Info::Info_Print()
 // read filename_read
 void Info::Info_File_Read()
 {
-    if (!(file = fopen(filename_read, "rb")))
+    char new_filename[60];
+    strcpy(new_filename, FOLDER_READ);
+    strcat(new_filename, filename_read);
+
+    if (!(file = fopen(new_filename, "rb")))
     {
         cout << "Cannot open file: " << filename_read <<endl;
         exit(1);
@@ -142,7 +147,11 @@ void Info::Info_File_Read()
 // write filename_write
 void Info::Info_File_Write()
 {
-    if (!(file = fopen(filename_write, "wb")))
+    char new_filename[60];
+    strcpy(new_filename, FOLDER_WRITE);
+    strcat(new_filename, filename_write);
+
+    if (!(file = fopen(new_filename, "wb")))
     {
         cout << "Cannot open file: " << filename_write <<endl;
         exit(1);
@@ -156,11 +165,14 @@ void Info::Info_File_Close()
 }
 
 
-
+// Some Helper function for debug
 void Image_Print_By_Interger(unsigned char *pt_image, Info *pt_info, string filename)
 {
     //Usage: Image_Print_By_Interger(&imagedata[0][0][0], &info, "image_print_by_interger.txt");
     Check_Debug();
+    cout << "Image_Print_By_Interger() begin" << endl;
+
+    filename = FOLDER_DEBUG + filename;
     ofstream fout;
     fout.open(filename);
     for(int i = 0; i < pt_info->height; i++)
@@ -185,6 +197,8 @@ void Image_Plot_Gray_Line(unsigned char *pt_image, Info *pt_info, string filenam
     // Usage: Image_Plot_Gray_Line(&image_data[0][0][0], &info, "image_plot_gray_line.txt");
     Check_Debug();
     cout << "Image_Plot_Line() begin" << endl;
+
+
 
     // 1. Get gray line
     short grayline[pt_info->width * pt_info->height];
@@ -235,6 +249,7 @@ void Image_Plot_Gray_Line(unsigned char *pt_image, Info *pt_info, string filenam
         }
     }
 
+    filename = FOLDER_DEBUG + filename;
     ofstream fout;
     fout.open(filename);
     fout << "Max: " << max << " Min: " << min << endl;
@@ -260,9 +275,13 @@ void Image_Plot_Gray_Line(unsigned char *pt_image, Info *pt_info, string filenam
 void Check_Debug()
 {
     // Usage: Check_Debug();
-    if (DEBUG == 0)
+    if (DEBUG == 1)
     {
-        cout << "DEBUG" << endl;
+        cout << "------DEBUG------" << endl;
+    }
+    else
+    {
+        cout << "------DEBUG------" << endl;
         exit(1);
     }
 }
@@ -316,6 +335,7 @@ void Image_Plot_All_Line(unsigned char *pt_image, Info *pt_info, string filename
     int color_per_group = (int)ceil(COLOR_SIZE/(double)PLOT_X_SIZE);
 
     // for file
+    filename = FOLDER_DEBUG + filename;
     ofstream fout;
     fout.open(filename);
 

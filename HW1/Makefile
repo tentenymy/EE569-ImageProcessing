@@ -2,12 +2,8 @@ CC = gcc
 LN = gcc
 All : prob1a prob1b
 prob1a:
-	@echo "****** Problem 1.a ******"
-	@g++ -c hw1_helper.cpp
-	@g++ -c p1_resize.cpp
-	@g++ -o p1_resize p1_resize.o hw1_helper.o
-	@echo "USAGE: ./p1_resize [inputImageName] [outputImageName] 3 512 512"
-	@./p1_resize the_starry_night.raw output1_resize.raw 3 512 512
+
+
 prob1b:
 	@echo "****** Problem 1.b ******"
 	g++ -c hw1_helper.cpp
@@ -17,9 +13,9 @@ prob1b:
 	g++ -o p1_MHC p1_MHC.o hw1_helper.o
 	@echo "USAGE: ./p1_bilinear [inputImageName] [outputImageName] 1 [width] [height]"
 	@echo "USAGE: ./p1_MHC [inputImageName] [outputImageName] 1 [width] [height]"
-	./p1_bilinear parrot_CFA.raw output1_bilinear1.raw 1 424 636
-	./p1_MHC parrot_CFA.raw output1_MHC1.raw 1 424 636
-	./p1_MHC fruit_shop_CFA.raw output1_bilinear2.raw 1 574 800
+	@./p1_bilinear parrot_CFA.raw output1_bilinear1.raw 1 424 636
+	@./p1_MHC parrot_CFA.raw output1_MHC1.raw 1 424 636
+	./p1_bilinear fruit_shop_CFA.raw output1_bilinear2.raw 1 574 800
 	./p1_MHC fruit_shop_CFA.raw output1_MHC2.raw 1 574 800
 
 

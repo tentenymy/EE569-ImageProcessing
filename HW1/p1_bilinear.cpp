@@ -31,7 +31,8 @@ int main(int argc, char *argv[])
     // Description : Demosaicing a Bayer-pattered gray image to a three-color image by both bilinear demosaicing
     // and MHC linear image demosaicing
 
-    // Algorithm: Bilinear demosaicing; MHC (Malvar-He-Cutler) linear image demosaicing
+    // Algorithm: Bilinear demosaicing;
+    //            MHC (Malvar-He-Cutler) linear image demosaicing
     // Description: To get three colors in each pixel of the digital camera, the camera have to put three sensors in each pixel.
     // To avoid this wasting, the digital camera only puts one sensor in each pixel by Bayer Array to catch one color each.
     // And then use demosaicing algorithm to translate the Bayer Array to a three-color image.
@@ -44,11 +45,11 @@ int main(int argc, char *argv[])
     // For red or blue color in Bayer Array, they have two neighbor pixels of the same color each.
     // Combine R, G, B three color of one pixel together to generate a colorful image.
     // Time: O(m * n)
+
     // Result:
     // This image is a little blur when I use photoshop to view it.
     // I think it is because it use an average calculation so the color of each pixel is similar.
     // It smooths the edges when the referenced points have a big difference between each other.
-
 
 
 
@@ -204,6 +205,8 @@ int main(int argc, char *argv[])
         }
     }
 
+
+    Image_Plot_All_Line(&imagedata_output[0][0][0], &info, "image_plot_all_line_output2.txt");
 
     // End.Write image data from image data matrix
     info.Info_File_Write();
