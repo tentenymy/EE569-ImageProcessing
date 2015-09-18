@@ -12,6 +12,9 @@ using namespace std;
 double Bound_Color(double);
 Image* Delete_Boundary (Image *, Info *, int);
 
+// Command
+// ./p1_MHC parrot_CFA.raw p1_MHC1.raw 1 424 636
+
 int main(int argc, char *argv[])
 {
     // Begin.Read the input image data from file
@@ -46,7 +49,6 @@ int main(int argc, char *argv[])
     // The color value of one pixel may be out of the range [0, 255] during the calculation.
     // The maximum of these value may even large to 270, 280 or more, and I have to bound them to 0 or 255.
     // I think this is where we could try to improving in the future because we still lose some information.
-
 
     ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
     // 1. add 2-line boundary around the image

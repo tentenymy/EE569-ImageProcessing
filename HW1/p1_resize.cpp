@@ -8,9 +8,11 @@
 #include "hw1_helper.h"
 using namespace std;
 
-// Set parameters
+// Set parameters and helper function
 const int size_new = 650;
 
+// Command
+// ./p1_resize the_starry_night.raw p1_resize.raw 3 512 512
 
 int main(int argc, char *argv[])
 {

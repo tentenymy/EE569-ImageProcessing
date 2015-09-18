@@ -12,6 +12,9 @@ using namespace std;
 // Set parameters and function
 Image* Delete_Boundary (Image *, Info *, int);
 
+// Command
+// ./p1_bilinear parrot_CFA.raw p1_bilinear.raw 1 424 636
+
 int main(int argc, char *argv[])
 {
     // Begin.Read the input image data from file
@@ -44,9 +47,6 @@ int main(int argc, char *argv[])
     // This image is a little blur the color edge when I use photoshop to view it.
     // I think it is because it use an average calculation so the color of each pixel is similar.
     // It smooths the edges when the referenced points have a big difference between each other.
-
-
-
 
     ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
     // 1. add 2-line boundary around the image

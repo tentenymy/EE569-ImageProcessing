@@ -56,6 +56,7 @@ public:
 
     Image* Info_File_Read();
     void Info_File_Write(Image*);
+    void Info_File_Write(Image*, string);
 };
 
 // Print all the image to a file, by changing every pixel (R -> G -> B) to interger
@@ -70,4 +71,3 @@ void Image_Plot_All_Line(Image *, Info *, string);
 // Check whether in the debug mod, if no, exit!
 void Check_Debug();
 
-Image* Add_Boundary (Image *, Info *, int);
