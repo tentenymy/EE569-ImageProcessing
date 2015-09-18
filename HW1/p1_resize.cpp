@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
     // Description.: resize a 512 * 512 image to 650 * 650 using image manipulation.
 
     // Algorithm: Bilinear interpolation
+
     // Description: Interpolate a value along column direction, and then use this value to interpolate the value along row direction linearly.
     // This results in a weighted function of the value of four points.
     // This four points are the nearest four referenced points of the estimated point.
@@ -36,6 +37,7 @@ int main(int argc, char *argv[])
     // F(p,q), F(p, qt), F(pt, q), F(pt, qt): four nearest points
     // F(p', q'):estimated point
     // a, b are the distance between the estimated point to the F(p, q) along x/y line.
+
     // Time: O(3*m*n)
 
     // Explanation:
