@@ -24,7 +24,7 @@ make
 	@g++ -c p1_resize.cpp
 	@g++ -o p1_resize p1_resize.o hw1_helper.o
 	@echo "USAGE: ./p1_resize [inputImageName] [outputImageName] 3 512 512"
-	./p1_resize the_starry_night.raw output1_resize.raw 3 512 512
+	./p1_resize the_starry_night.raw p1_resize.raw 3 512 512
 
 # b.	Demosaicing of Bayer-patterned color image
 	@echo "****** Problem 1.b ******"
@@ -35,15 +35,21 @@ make
 	g++ -o p1_MHC p1_MHC.o hw1_helper.o
 	@echo "USAGE: ./p1_bilinear [inputImageName] [outputImageName] 1 [width] [height]"
 	@echo "USAGE: ./p1_MHC [inputImageName] [outputImageName] 1 [width] [height]"
+	./p1_bilinear parrot_CFA.raw p1_bilinear.raw 1 424 636
+	./p1_MHC parrot_CFA.raw p1_MHC1.raw 1 424 636
+
+# Problem 2: Histogram equalization and image filtering
+# a.	Histogram equalization
+	@echo "****** Problem 2.a ******"
+	g++ -c hw1_helper.cpp
+	g++ -c p1_bilinear.cpp
+	g++ -c p1_MHC.cpp
+	g++ -o p1_bilinear p1_bilinear.o hw1_helper.o
+	g++ -o p1_MHC p1_MHC.o hw1_helper.o
+	@echo "USAGE: ./p1_bilinear [inputImageName] [outputImageName] 1 [width] [height]"
+	@echo "USAGE: ./p1_MHC [inputImageName] [outputImageName] 1 [width] [height]"
 	./p1_bilinear parrot_CFA.raw output1_bilinear1.raw 1 424 636
 	./p1_MHC parrot_CFA.raw output1_MHC1.raw 1 424 636
-
-# 1.	Bilinear Demosaicing (10%)
-
-
-# 2.	Malvar-He-Culter (MHC) linear image demosaicing (10%)
-
-
 
 
 

@@ -8,21 +8,17 @@
 #include "hw1_helper.h"
 using namespace std;
 
-// Set parameters:
-// width must equal to height
-// only resize to 650
+// Set parameters
 const int size_new = 650;
 
 
 int main(int argc, char *argv[])
 {
     // Begin.Read the input image data from file
-    // Info info("the_starry_night.raw", "output_p1a.raw", 3, 512, 512);
     Info info(argc, argv);
-    info.Info_File_Read();
-    unsigned char image_old [info.height][info.width][info.byteperpixel];
-    fread(image_old, sizeof(unsigned char), (size_t)info.width * info.height * info.byteperpixel, info.file);
-    info.Info_File_Close();
+    Image image_old [info.height][info.width][info.byteperpixel];
+    Image *pt_image_old = info.Info_File_Read();
+    memcpy(image_old, pt_image_old, sizeof(image_old));
 
     ///////////////////////////////////////// INSERT YOUR COMMENT HERE /////////////////////////////////////////
     // Problem 1a. Image resizing via bilinear interpolation
@@ -56,7 +52,7 @@ int main(int argc, char *argv[])
 
     ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
     // 1. Generate a 650 * 650 * 3 empty array
-    unsigned char image_new [size_new][size_new][info.byteperpixel];
+    Image image_new [size_new][size_new][info.byteperpixel];
 
     const int size_old = info.width;
     double ratio = (double)(size_old - 1) / (double)(size_new - 1);
@@ -94,7 +90,7 @@ int main(int argc, char *argv[])
                                + (1.0 - scale_a) * scale_b * (double)image_old[point_lt_x][point_lt_y + 1][k]
                                + (1.0 - scale_b) * scale_a * (double)image_old[point_lt_x + 1][point_lt_y][k]
                                + scale_a * scale_b * (double)image_old[point_lt_x + 1][point_lt_y + 1][k];
-                image_new[i][j][k] = (unsigned char)round(value);
+                image_new[i][j][k] = (Image)round(value);
             }
         }
     }
@@ -109,7 +105,7 @@ int main(int argc, char *argv[])
         {
             double value = (1.0 - scale_a) * (double)image_old[point_rb_x - 1][size_old - 1][k]
                            + scale_a * (double)image_old[point_rb_x][size_old - 1][k];
-            image_new[i][size_new - 1][k] = (unsigned char)round(value);
+            image_new[i][size_new - 1][k] = (Image)round(value);
         }
     }
 
@@ -123,7 +119,7 @@ int main(int argc, char *argv[])
         {
             double value = (1.0 - scale_b) * (double)image_old[size_old - 1][point_rb_y - 1][k]
                            + scale_b * (double)image_old[size_old - 1][point_rb_y][k];
-            image_new[size_new - 1][j][k] = (unsigned char)round(value);
+            image_new[size_new - 1][j][k] = (Image)round(value);
         }
     }
 
@@ -138,11 +134,8 @@ int main(int argc, char *argv[])
     info.height = size_new;
     ////////////////////////////////////// PROCESSING CODE END //////////////////////////////////////
 
-
     // End.Write image data from image data matrix
-    info.Info_File_Write();
-    fwrite(image_new, sizeof(unsigned char), (size_t)size_new * size_new * info.byteperpixel, info.file);
-    info.Info_File_Close();
+    info.Info_File_Write(&image_new[0][0][0]);
     return 0;
 }
 

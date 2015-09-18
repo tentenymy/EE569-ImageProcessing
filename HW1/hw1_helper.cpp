@@ -16,33 +16,6 @@ Info::Info()
     height = DEFAULT_SIZE;
 }
 
-Info::Info(const char* new_filename_read, const char* new_filename_write, int new_byteperpixel, int new_weight, int new_height)
-{
-    // Set value
-    file = NULL;
-    filename_read = new_filename_read;
-    filename_write = new_filename_write;
-    byteperpixel = new_byteperpixel;
-    width = new_weight;
-    height = new_height;
-
-    // Validation
-    if (filename_read == NULL || filename_write == NULL)
-    {
-        cout << "Filename_read or filename_write is invalid" << endl;
-        exit(1);
-    }
-    if (byteperpixel <= 0 || byteperpixel > MAX_BYTE)
-    {
-        cout << "Byte per pixel is invalid" << endl;
-        exit(1);
-    }
-    if (width <= 0 || width > MAX_SIZE || height <= 0 || height > MAX_SIZE)
-    {
-        cout << "width or height is invalid" << endl;
-        exit(1);
-    }
-}
 
 Info::Info(int argc, char *argv[])
 {
@@ -131,42 +104,44 @@ void Info::Info_Print()
 }
 
 // read filename_read
-void Info::Info_File_Read()
+Image* Info::Info_File_Read()
 {
     char new_filename[60];
     strcpy(new_filename, FOLDER_READ);
     strcat(new_filename, filename_read);
-
-    if (!(file = fopen(new_filename, "rb")))
-    {
-        cout << "Cannot open file: " << filename_read <<endl;
+    if (!(file = fopen(new_filename, "rb"))) {
+        cout << "Cannot open file: " << filename_read << endl;
         exit(1);
     }
+
+    Image image[height][width][byteperpixel];
+    fread(image, sizeof(Image), (size_t) width * height * byteperpixel, file);
+    fclose(file);
+
+    Image *pt_image = &image[0][0][0];
+    return pt_image;
 }
 
 // write filename_write
-void Info::Info_File_Write()
+void Info::Info_File_Write(Image *pt_image)
 {
     char new_filename[60];
     strcpy(new_filename, FOLDER_WRITE);
     strcat(new_filename, filename_write);
-
     if (!(file = fopen(new_filename, "wb")))
     {
         cout << "Cannot open file: " << filename_write <<endl;
         exit(1);
     }
-}
 
-// Close this->file
-void Info::Info_File_Close()
-{
+    Image image[height] [width] [byteperpixel];
+    memcpy(image, pt_image, sizeof(image));
+    fwrite(image, sizeof(Image), (size_t)width * height * byteperpixel, file);
     fclose(file);
 }
 
-
 // Some Helper function for debug
-void Image_Print_By_Interger(unsigned char *pt_image, Info *pt_info, string filename)
+void Image_Print_By_Interger(Image *pt_image, Info *pt_info, string filename)
 {
     //Usage: Image_Print_By_Interger(&imagedata[0][0][0], &info, "image_print_by_interger.txt");
     Check_Debug();
@@ -191,7 +166,7 @@ void Image_Print_By_Interger(unsigned char *pt_image, Info *pt_info, string file
     fout.close();
 }
 
-void Image_Plot_Gray_Line(unsigned char *pt_image, Info *pt_info, string filename)
+void Image_Plot_Gray_Line(Image *pt_image, Info *pt_info, string filename)
 {
 
     // Usage: Image_Plot_Gray_Line(&image_data[0][0][0], &info, "image_plot_gray_line.txt");
@@ -287,7 +262,7 @@ void Check_Debug()
 }
 
 // Re-write if have time OMG TOO LONG;
-void Image_Plot_All_Line(unsigned char *pt_image, Info *pt_info, string filename)
+void Image_Plot_All_Line(Image *pt_image, Info *pt_info, string filename)
 {
     // Usage: Image_Plot_All_Line(&image_data[0][0][0], &info, "image_plot_all_line.txt");
     Check_Debug();
@@ -456,41 +431,22 @@ void Image_Plot_All_Line(unsigned char *pt_image, Info *pt_info, string filename
 }
 
 
-unsigned char* Delete_Boundary (unsigned char *pt_input, Info *pt_info, int add_boundary)
-{
-    unsigned char image_input[pt_info->height] [pt_info->width] [pt_info->byteperpixel];
-    memcpy(image_input, pt_input, sizeof(image_input));
 
-    pt_info->height -= 2 * add_boundary;
-    pt_info->width -= 2 * add_boundary;
-
-    unsigned char image_output[pt_info->height] [pt_info->width] [pt_info->byteperpixel];
-    unsigned char *pt_output = &image_output[0][0][0];
-    for (int i = 0; i < pt_info->height; i++)
-    {
-        for (int j = 0; j < pt_info->width; j++)
-        {
-            for (int k = 0; k < pt_info->byteperpixel; k++)
-                image_output[i][j][k] = image_input[i + add_boundary][j + add_boundary][k];
-        }
-    }
-    return pt_output;
-}
 
 //
-unsigned char* Add_Boundary (unsigned char *pt_input, Info *pt_info, int add_boundary)
+Image* Add_Boundary (Image *pt_input, Info *pt_info, int add_boundary)
 {
     bool is_gray = false;
 
-    unsigned char image_input[pt_info->height] [pt_info->width] [pt_info->byteperpixel];
+    Image image_input[pt_info->height] [pt_info->width] [pt_info->byteperpixel];
     memcpy(image_input, pt_input, sizeof(image_input));
     if (pt_info->byteperpixel == GRAY_BYTE)
     {
         is_gray = true;
         pt_info->byteperpixel = COLOR_BYTE;
     }
-    unsigned char image_output[pt_info->height + 2 * add_boundary] [pt_info->width + 2 * add_boundary] [pt_info->byteperpixel];
-    unsigned char *pt_output = &image_output[0][0][0];
+    Image image_output[pt_info->height + 2 * add_boundary] [pt_info->width + 2 * add_boundary] [pt_info->byteperpixel];
+    Image *pt_output = &image_output[0][0][0];
 
     // 1.1 get the value of original image to the center of the new image.
     // This new image is a color image. Each color has the same value now.

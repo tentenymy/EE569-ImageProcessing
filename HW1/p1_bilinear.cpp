@@ -10,19 +10,15 @@
 using namespace std;
 
 // Set parameters and function
+Image* Delete_Boundary (Image *, Info *, int);
 
 int main(int argc, char *argv[])
 {
     // Begin.Read the input image data from file
-    // Info info("parrot_CFA.raw", "output_p1b.raw", 1, 424, 636);
     Info info(argc, argv);
-    info.Info_File_Read();
-    unsigned char image_old [info.height][info.width][info.byteperpixel];
-    fread(image_old, sizeof(unsigned char), (size_t)info.width * info.height * info.byteperpixel, info.file);
-    info.Info_File_Close();
-
-    //Image_Print_By_Interger(&image_old[0][0][0], &info, "image_print_by_interger.txt");
-    //Image_Plot_Gray_Line(&image_old[0][0][0], &info, "image_plot_gray_line.txt");
+    Image image_old [info.height][info.width][info.byteperpixel];
+    Image *pt_image_old = info.Info_File_Read();
+    memcpy(image_old, pt_image_old, sizeof(image_old));
 
     ///////////////////////////////////////// INSERT YOUR COMMENT HERE /////////////////////////////////////////
     // Problem 1b. Demosaicing of Bayer-patterned color image
@@ -56,7 +52,7 @@ int main(int argc, char *argv[])
     // 1. add 2-line boundary around the image
     info.byteperpixel = COLOR_BYTE;
     int add_boundary = 2;
-    unsigned char image_addboundary [info.height+ 2 * add_boundary] [info.width + 2 * add_boundary] [info.byteperpixel];
+    Image image_addboundary [info.height+ 2 * add_boundary] [info.width + 2 * add_boundary] [info.byteperpixel];
 
     // 1.1 get the value of original image to the center of the new image.
     // This new image is a color image.
@@ -117,13 +113,13 @@ int main(int argc, char *argv[])
             temp_i = 2 * i;
             temp_j = 2 * j;
             image_addboundary[temp_i][temp_j][BLUE]
-                    = (unsigned char)(0.25 * (double)(image_addboundary[temp_i - 1][temp_j- 1][BLUE]
+                    = (Image)(0.25 * (double)(image_addboundary[temp_i - 1][temp_j- 1][BLUE]
                                                             + image_addboundary[temp_i + 1][temp_j - 1][BLUE]
                                                             + image_addboundary[temp_i - 1][temp_j + 1][BLUE]
                                                             + image_addboundary[temp_i + 1][temp_j + 1][BLUE]));
             // green channel
             image_addboundary[temp_i][temp_j][GREEN]
-                    = (unsigned char)(0.25 * (double)(image_addboundary[temp_i - 1][temp_j][GREEN]
+                    = (Image)(0.25 * (double)(image_addboundary[temp_i - 1][temp_j][GREEN]
                                                             + image_addboundary[temp_i + 1][temp_j][GREEN]
                                                             + image_addboundary[temp_i][temp_j - 1][GREEN]
                                                             + image_addboundary[temp_i][temp_j + 1][GREEN]));
@@ -138,22 +134,22 @@ int main(int argc, char *argv[])
             temp_i = 2 * i + 1;
             temp_j = 2 * j;
             image_addboundary[temp_i][temp_j][BLUE]
-                    = (unsigned char)(0.5 * (double)(image_addboundary[temp_i][temp_j - 1][BLUE]
+                    = (Image)(0.5 * (double)(image_addboundary[temp_i][temp_j - 1][BLUE]
                                                            + image_addboundary[temp_i][temp_j + 1][BLUE]));
             // redchannel
             image_addboundary[temp_i][temp_j][RED]
-                    = (unsigned char)(0.5 * (double)(image_addboundary[temp_i + 1][temp_j][RED]
+                    = (Image)(0.5 * (double)(image_addboundary[temp_i + 1][temp_j][RED]
                                                            + image_addboundary[temp_i - 1][temp_j][RED]));
 
             temp_i = 2 * i;
             temp_j = 2 * j + 1;
             // blue channel
             image_addboundary[temp_i][temp_j][BLUE]
-                    = (unsigned char)(0.5 * (double)(image_addboundary[temp_i - 1][temp_j][BLUE]
+                    = (Image)(0.5 * (double)(image_addboundary[temp_i - 1][temp_j][BLUE]
                                                            + image_addboundary[temp_i + 1][temp_j][BLUE]));
             // redchannel
             image_addboundary[temp_i][temp_j][RED]
-                    = (unsigned char)(0.5 * (double)(image_addboundary[temp_i][temp_j - 1][RED]
+                    = (Image)(0.5 * (double)(image_addboundary[temp_i][temp_j - 1][RED]
                                                            + image_addboundary[temp_i][temp_j + 1][RED]));
         }
     }
@@ -166,13 +162,13 @@ int main(int argc, char *argv[])
             temp_i = 2 * i + 1;
             temp_j = 2 * j + 1;
             image_addboundary[temp_i][temp_j][RED]
-                    = (unsigned char)(0.25 * (double)(image_addboundary[temp_i - 1][temp_j- 1][RED]
+                    = (Image)(0.25 * (double)(image_addboundary[temp_i - 1][temp_j- 1][RED]
                                                             + image_addboundary[temp_i + 1][temp_j - 1][RED]
                                                             + image_addboundary[temp_i - 1][temp_j + 1][RED]
                                                             + image_addboundary[temp_i + 1][temp_j + 1][RED]));
             // green channel
             image_addboundary[temp_i][temp_j][GREEN]
-                    = (unsigned char)(0.25 * (double)(image_addboundary[temp_i - 1][temp_j][GREEN]
+                    = (Image)(0.25 * (double)(image_addboundary[temp_i - 1][temp_j][GREEN]
                                                             + image_addboundary[temp_i + 1][temp_j][GREEN]
                                                             + image_addboundary[temp_i][temp_j - 1][GREEN]
                                                             + image_addboundary[temp_i][temp_j + 1][GREEN]));
@@ -180,15 +176,33 @@ int main(int argc, char *argv[])
     }
 
     // 3. delete 2-line boundary to get a new output image
-    unsigned char *pt_image_output = Delete_Boundary(&image_addboundary[0][0][0], &info, add_boundary);
-    unsigned char image_output[info.height] [info.width] [info.byteperpixel];
-    memcpy(image_output, pt_image_output, sizeof(image_output));
-
+    Image *pt_image_output = Delete_Boundary(&image_addboundary[0][0][0], &info, add_boundary);
     ////////////////////////////////////// PROCESSING CODE END //////////////////////////////////////
 
     // End.Write image data from image data matrix
-    info.Info_File_Write();
-    fwrite(image_output, sizeof(unsigned char), (size_t)info.width * info.height * info.byteperpixel, info.file);
-    info.Info_File_Close();
+    info.Info_File_Write(pt_image_output);
     return 0;
+}
+
+
+// Delete the extra lines of an image
+Image* Delete_Boundary (Image *pt_input, Info *pt_info, int add_boundary)
+{
+    Image image_input[pt_info->height] [pt_info->width] [pt_info->byteperpixel];
+    memcpy(image_input, pt_input, sizeof(image_input));
+
+    pt_info->height -= 2 * add_boundary;
+    pt_info->width -= 2 * add_boundary;
+
+    Image image_output[pt_info->height] [pt_info->width] [pt_info->byteperpixel];
+    Image *pt_output = &image_output[0][0][0];
+    for (int i = 0; i < pt_info->height; i++)
+    {
+        for (int j = 0; j < pt_info->width; j++)
+        {
+            for (int k = 0; k < pt_info->byteperpixel; k++)
+                image_output[i][j][k] = image_input[i + add_boundary][j + add_boundary][k];
+        }
+    }
+    return pt_output;
 }
