@@ -1,7 +1,7 @@
 // EE569 Homework Assignment #1
 // Date: Sep 12, 2015
 // Name: Meiyi Yang
-// Problem 2.b
+// Problem 2.a2
 
 #include <stdio.h>
 #include <iostream>
@@ -9,10 +9,10 @@
 using namespace std;
 
 // Set parameters and helper function
-const string filename[3] = {"p2_plot_red.txt", "p2_plot_green.txt", "p2_plot_blue.txt"};
-const string FILE_INDEX_CDF = "CDF";
-const string FILE_INDEX_PDF = "PDF";
-const string FILE_INDEX_METHOD = "TF";
+const string filename[3] = {"red.txt", "green.txt", "blue.txt"};
+const string FILE_INDEX_CDF = "p2a1_CDF_";
+const string FILE_INDEX_PDF = "p2a1_PDF_";
+const string FILE_INDEX_METHOD = "p2a1_TF_";
 
 // Command
 double* Plot_PDF(Image*, Info*);
@@ -80,6 +80,7 @@ int main(int argc, char *argv[]) {
             fout << tranferfunc[k][i] << endl;
         fout.close();
     }
+
 
     // 3. Apply the transfer function to the image
     for (int i = 0; i < info.height; i++)
