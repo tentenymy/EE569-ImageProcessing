@@ -43,9 +43,15 @@ make
 	@echo "****** Problem 2.a ******"
 	g++ -c hw1_helper.cpp
 	g++ -c p2_transfer.cpp
-	g++ -o p2_transfer p2_transfer hw1_helper.o
+	g++ -c p2_cumulative.cpp
+	g++ -o p2_transfer p2_transfer.o hw1_helper.o
+	g++ -o p2_cumulative p2_cumulative.o hw1_helper.o
 	@echo "USAGE: ./p2_transfer [inputImageName] [outputImageName] 3 [width] [height]"
+	@echo "USAGE: ./p2_cumulative [inputImageName] [outputImageName] 3 [width] [height]"
 	./p2_transfer jet.raw p2_transfer.raw 3 512 512
+	./p2_cumulative jet.raw p2_cumulative.raw 3 512 512
+
+# b. Image Filtering - Creating oil painting effect
 
 
 
