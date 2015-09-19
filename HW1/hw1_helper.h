@@ -56,7 +56,7 @@ public:
 
     Image* Info_File_Read();
     void Info_File_Write(Image*);
-    void Info_File_Write(Image*, string);
+    void Info_File_Write(Image*, char*);
 };
 
 // Print all the image to a file, by changing every pixel (R -> G -> B) to interger

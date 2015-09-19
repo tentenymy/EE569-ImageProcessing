@@ -52,7 +52,14 @@ make
 	./p2_cumulative jet.raw p2_cumulative.raw 3 512 512
 
 # b. Image Filtering - Creating oil painting effect
-
+prob2b:
+	@echo "****** Problem 2.b ******"
+	g++ -c hw1_helper.cpp
+	g++ -c p2_oilpainting.cpp
+	g++ -o p2_oilpainting p2_oilpainting.o hw1_helper.o
+	@echo "USAGE: ./p2_oilpainting [inputImageName] [outputImageName] 3 [width] [height]"
+	@./p2_oilpainting barn.raw p2_oilpainting_barn.raw 3 380 275
+	./p2_oilpainting coliseum.raw p2_oilpainting_coliseum.raw 3 580 247
 
 
 # Clean compiling files:

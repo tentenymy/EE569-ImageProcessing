@@ -122,6 +122,7 @@ Image* Info::Info_File_Read()
     return pt_image;
 }
 
+
 // write filename_write
 void Info::Info_File_Write(Image *pt_image)
 {
@@ -139,6 +140,24 @@ void Info::Info_File_Write(Image *pt_image)
     fwrite(image, sizeof(Image), (size_t)width * height * byteperpixel, file);
     fclose(file);
 }
+
+void Info::Info_File_Write(Image *pt_image, char* filename)
+{
+    char new_filename[60];
+    strcpy(new_filename, FOLDER_WRITE);
+    strcat(new_filename, filename);
+    if (!(file = fopen(new_filename, "wb")))
+    {
+        cout << "Cannot open file: " << filename <<endl;
+        exit(1);
+    }
+
+    Image image[height] [width] [byteperpixel];
+    memcpy(image, pt_image, sizeof(image));
+    fwrite(image, sizeof(Image), (size_t)width * height * byteperpixel, file);
+    fclose(file);
+}
+
 
 // Some Helper function for debug
 void Image_Print_By_Interger(Image *pt_image, Info *pt_info, string filename)
