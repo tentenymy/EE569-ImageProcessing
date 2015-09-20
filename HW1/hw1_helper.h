@@ -55,6 +55,7 @@ public:
     void Info_Print();// print the information for me.
 
     Image* Info_File_Read();
+    Image* Info_File_Read(char*);
     void Info_File_Write(Image*);
     void Info_File_Write(Image*, char*);
 };

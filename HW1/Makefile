@@ -1,6 +1,6 @@
 CC = gcc
 LN = gcc
-All : prob1a prob1b prob2a prob2b
+All : prob1a prob1b prob2a prob2b prob3a
 prob1a:
 
 prob1b:
@@ -8,17 +8,19 @@ prob1b:
 prob2a:
 
 prob2b:
-	@echo "****** Problem 2.b ******"
+
+prob3a:
+	@echo "****** Problem 3.a ******"
 	g++ -c hw1_helper.cpp
-	g++ -c p2_oilpainting.cpp
-	g++ -o p2_oilpainting p2_oilpainting.o hw1_helper.o
-	@echo "USAGE: ./p2_oilpainting [inputImageName] [outputImageName] 3 [width] [height]"
-	./p2_oilpainting barn.raw p2_oilpainting_barn_512.raw 3 380 275
+	g++ -c p3_gaussian.cpp
+	g++ -o p3_gaussian p3_gaussian.o hw1_helper.o
+	@echo "USAGE: ./p3_gaussian [inputImageName] [outputImageName] 3 [width] [height]"
+	./p3_gaussian peppers_noisy.raw p3_gaussian.raw 3 512 512
 
 
 
 clean:
-	rm -f *.o p1_resize p1_bilinear p1_MHC p2_transfer p2_cumulative
+	rm -f *.o p1_resize p1_bilinear p1_MHC p2_transfer p2_cumulative p2_oilpainting p3_gaussian
 
 
 

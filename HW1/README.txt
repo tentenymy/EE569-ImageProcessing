@@ -58,9 +58,17 @@ prob2b:
 	g++ -c p2_oilpainting.cpp
 	g++ -o p2_oilpainting p2_oilpainting.o hw1_helper.o
 	@echo "USAGE: ./p2_oilpainting [inputImageName] [outputImageName] 3 [width] [height]"
-	@./p2_oilpainting barn.raw p2_oilpainting_barn.raw 3 380 275
-	./p2_oilpainting coliseum.raw p2_oilpainting_coliseum.raw 3 580 247
+	./p2_oilpainting barn.raw p2_oilpainting_barn_512.raw 3 380 275
 
+
+# Problem 3. Noise Removal
+prob3a:
+	@echo "****** Problem 3.a ******"
+	g++ -c hw1_helper.cpp
+	g++ -c p3_oilpainting.cpp
+	g++ -o p2_oilpainting p2_oilpainting.o hw1_helper.o
+	@echo "USAGE: ./p2_oilpainting [inputImageName] [outputImageName] 3 [width] [height]"
+	./p2_oilpainting barn.raw p2_oilpainting_barn_512.raw 3 380 275
 
 # Clean compiling files:
 
