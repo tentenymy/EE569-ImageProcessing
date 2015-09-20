@@ -1,0 +1,62 @@
+Gassuain
+Window: 0  sigma: 0
+   MSE: 871.184 1868.41 1437.18 AVE: 1392.26
+Window: 3  sigma: 0.5
+   MSE: 379.326 827.745 633.606 AVE: 613.559
+Window: 3  sigma: 0.8
+   MSE: 194.833 394.235 297.481 AVE: 295.516
+Window: 3  sigma: 1.2
+   MSE: 183.913 354.717 266.119 AVE: 268.25
+Window: 3  sigma: 1.8
+   MSE: 183.659 353.703 264.764 AVE: 267.375
+Window: 5  sigma: 0.5
+   MSE: 389.477 829.585 633.342 AVE: 617.468
+Window: 5  sigma: 0.8
+   MSE: 182.991 356.945 267.236 AVE: 269.057
+Window: 5  sigma: 1.2
+   MSE: 150.501 284.949 203.294 AVE: 212.915
+Window: 5  sigma: 1.8
+   MSE: 149.873 285.006 194.561 AVE: 209.813
+
+Median
+Window: 0  sigma: 0 
+   MSE: 870.866 1869.01 1437.72 AVE: 1392.53
+Window: 3  sigma: 0
+   MSE: 201.234 455.377 242.613 AVE: 299.741
+Window: 3  sigma: 0 update
+   MSE: 381.658 882.679 488.86 AVE: 584.399
+Window: 5  sigma: 0
+   MSE: 155.258 300.079 169.867 AVE: 208.401
+Window: 5  sigma: 0 update
+   MSE: 512.652 1152.23 659.147 AVE: 774.675
+
+
+Window: 0  sigma: 0 
+   MSE: 871.242 1869.45 1436.92 AVE: 1392.53
+Window: 3  sigma: 1.2  MM
+   MSE: 157.116 331.854 177.347 AVE: 222.106
+Window: 3  sigma: 1.2  GG
+   MSE: 154.346 290.058 202.75 AVE: 215.718
+Window: 3  sigma: 1.2  MG
+   MSE: 153.869 295.344 159.503 AVE: 202.905
+Window: 3  sigma: 1.2  GM
+   MSE: 150.411 302.609 199.89 AVE: 217.636
+Window: 3  sigma: 1.2  UU
+   MSE: 165.314 338.443 172.605 AVE: 225.454
+
+
+Window: 3  sigma: 1.2 MMG
+   MSE: 143.022 282.925 152.32 AVE: 192.756
+Window: 3  sigma: 1.2 MGG
+   MSE: 151.378 272.394 150.271 AVE: 191.347
+Window: 3  sigma: 1.2 MMM
+   MSE: 152.257 306.763 158.72 AVE: 205.914
+Window: 3  sigma: 1.2 GGG
+   MSE: 148.684 284.266 186.315 AVE: 206.422
+
+
+
+
+
+
+

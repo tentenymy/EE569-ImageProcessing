@@ -12,9 +12,11 @@ using namespace std;
 const double PI  = 3.141592653;
 
 Image* Filter_Gaussian(Image*, Info*, int, double);
+Image* Filter_Median(Image*, Info*, int, bool isupdate);
 void Find_Window(int, int, Info*, int*, int);
 double Bound_Color(double);
-void Get_PSNR(Image *, Image *p, Info *);
+void Print_PSNR(Image *, Image *p, Info *, int, double);
+int Get_median(int *, int);
 
 // Command
 
@@ -43,22 +45,150 @@ int main(int argc, char *argv[])
     // Explanation:
     // Result:
     ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
-    Image *pt_image_new = NULL;
+    Image *pt_image_new = &image_noisy[0][0][0];
+    int window_size = 0;
+    double sigma = 0;
+    char filename[30];
 
-    cout << "0, 0" << endl;
-    Get_PSNR(&image_noisy[0][0][0], &image_ori[0][0][0], &info);
+    Print_PSNR(&image_noisy[0][0][0], &image_ori[0][0][0], &info, window_size, sigma);
 
-    cout << "G 3, 1.8" << endl;
-    pt_image_new = Filter_Gaussian(&image_noisy[0][0][0], &info, 3, 1.8);
-    char filename1[] = "p2_filter_G3.raw";
-    info.Info_File_Write(pt_image_new, filename1);
-    Get_PSNR(pt_image_new, &image_ori[0][0][0], &info);
+    window_size = 3;
+    sigma = 1.2;
 
-    cout << "G 5, 1.8" << endl;
-    pt_image_new = Filter_Gaussian(&image_noisy[0][0][0], &info, 5, 1.8);
-    char filename2[] = "p2_filter_G5.raw";
-    info.Info_File_Write(pt_image_new, filename2);
-    Get_PSNR(pt_image_new, &image_ori[0][0][0], &info);
+    pt_image_new = Filter_Median(pt_image_new, &info, window_size, false);
+    pt_image_new = Filter_Median(pt_image_new, &info, window_size, false);
+    strcpy(filename, "p2_filter_MM.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    pt_image_new = &image_noisy[0][0][0];
+    pt_image_new = Filter_Gaussian(pt_image_new, &info, window_size, sigma);
+    pt_image_new = Filter_Gaussian(pt_image_new, &info, window_size, sigma);
+    strcpy(filename, "p2_filter_GG.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    pt_image_new = &image_noisy[0][0][0];
+    pt_image_new = Filter_Median(pt_image_new, &info, window_size, false);
+    pt_image_new = Filter_Gaussian(pt_image_new, &info, window_size, sigma);
+    strcpy(filename, "p2_filter_MG.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    pt_image_new = &image_noisy[0][0][0];
+    pt_image_new = Filter_Gaussian(pt_image_new, &info, window_size, sigma);
+    pt_image_new = Filter_Median(pt_image_new, &info, window_size, false);
+    strcpy(filename, "p2_filter_GM.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    /*pt_image_new = &image_noisy[0][0][0];
+    pt_image_new = Filter_Median(pt_image_new, &info, window_size, false);
+    pt_image_new = Filter_Median(pt_image_new, &info, window_size, false);
+    pt_image_new = Filter_Gaussian(pt_image_new, &info, window_size, sigma);
+    strcpy(filename, "p2_filter_MMG.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    pt_image_new = &image_noisy[0][0][0];
+    pt_image_new = Filter_Median(pt_image_new, &info, window_size, false);
+    pt_image_new = Filter_Gaussian(pt_image_new, &info, window_size, sigma);
+    pt_image_new = Filter_Gaussian(pt_image_new, &info, window_size, sigma);
+    strcpy(filename, "p2_filter_MGG.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    pt_image_new = &image_noisy[0][0][0];
+    pt_image_new = Filter_Median(pt_image_new, &info, window_size, false);
+    pt_image_new = Filter_Median(pt_image_new, &info, window_size, false);
+    pt_image_new = Filter_Median(pt_image_new, &info, window_size, false);
+    strcpy(filename, "p2_filter_MMM.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    pt_image_new = &image_noisy[0][0][0];
+    pt_image_new = Filter_Gaussian(pt_image_new, &info, window_size, sigma);
+    pt_image_new = Filter_Gaussian(pt_image_new, &info, window_size, sigma);
+    pt_image_new = Filter_Gaussian(pt_image_new, &info, window_size, sigma);
+    strcpy(filename, "p2_filter_GGG.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);*/
+
+
+
+    /*window_size = 3;
+    pt_image_new = Filter_Median(&image_noisy[0][0][0], &info, window_size, false);
+    strcpy(filename, "p2_filter_M3.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    pt_image_new = Filter_Median(&image_noisy[0][0][0], &info, window_size, true);
+    strcpy(filename, "p2_filter_M3_update.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    window_size = 5;
+    pt_image_new = Filter_Median(&image_noisy[0][0][0], &info, window_size, false);
+    strcpy(filename, "p2_filter_M5.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    pt_image_new = Filter_Median(&image_noisy[0][0][0], &info, window_size, true);
+    strcpy(filename, "p2_filter_M5_update.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);*/
+
+
+    /*window_size = 3;
+    sigma = 0.5;
+    pt_image_new = Filter_Gaussian(&image_noisy[0][0][0], &info, window_size, sigma);
+    strcpy(filename, "p2_filter_G3_05.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    sigma = 0.8;
+    pt_image_new = Filter_Gaussian(&image_noisy[0][0][0], &info, window_size, sigma);
+    strcpy(filename, "p2_filter_G3_08.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    sigma = 1.2;
+    pt_image_new = Filter_Gaussian(&image_noisy[0][0][0], &info, window_size, sigma);
+    strcpy(filename, "p2_filter_G3_12.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    sigma = 1.8;
+    pt_image_new = Filter_Gaussian(&image_noisy[0][0][0], &info, window_size, sigma);
+    strcpy(filename, "p2_filter_G3_18.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+
+    window_size = 5;
+    sigma = 0.5;
+    pt_image_new = Filter_Gaussian(&image_noisy[0][0][0], &info, window_size, sigma);
+    strcpy(filename, "p2_filter_G5_05.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    sigma = 0.8;
+    pt_image_new = Filter_Gaussian(&image_noisy[0][0][0], &info, window_size, sigma);
+    strcpy(filename, "p2_filter_G5_08.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    sigma = 1.2;
+    pt_image_new = Filter_Gaussian(&image_noisy[0][0][0], &info, window_size, sigma);
+    strcpy(filename, "p2_filter_G5_12.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);
+
+    sigma = 1.8;
+    pt_image_new = Filter_Gaussian(&image_noisy[0][0][0], &info, window_size, sigma);
+    strcpy(filename, "p2_filter_G5_18.raw");
+    info.Info_File_Write(pt_image_new, filename);
+    Print_PSNR(pt_image_new, &image_ori[0][0][0], &info, window_size, sigma);*/
     ////////////////////////////////////// PROCESSING CODE END //////////////////////////////////////
 
     // End.Write image data from image data matrix
@@ -154,7 +284,7 @@ double Bound_Color(double temp_sum)
     return temp_sum;
 }
 
-void Get_PSNR(Image *pt_image_new, Image *pt_image_old, Info *pt_info)
+void Print_PSNR(Image *pt_image_new, Image *pt_image_old, Info *pt_info, int window_size, double sigma)
 {
 
     //Image image_noisy[pt_info->height][pt_info->width][pt_info->byteperpixel];
@@ -162,7 +292,9 @@ void Get_PSNR(Image *pt_image_new, Image *pt_image_old, Info *pt_info)
 
     double psnr[3];
     double mse[3] = {};
-    int total;
+
+    double average;
+
     int intensity_old, intensity_new;
     int size = pt_info->height * pt_info->width;
 
@@ -180,15 +312,87 @@ void Get_PSNR(Image *pt_image_new, Image *pt_image_old, Info *pt_info)
         intensity_old = (int)*pt_image_old++;
         intensity_new = (int)*pt_image_new++;
         mse[2] += (intensity_old - intensity_new) * (intensity_old - intensity_new) / (double)size;
-        //cout << intensity_old << " " << intensity_new << endl;
-        //cout << "MSE: " << mse[0] << " " << mse[1] << " " << mse[2] << endl;
     }
 
 
     psnr[0] = 10.0 * log10(255 * 255.0 / mse[0]);
     psnr[1] = 10.0 * log10(255 * 255.0 / mse[1]);
     psnr[2] = 10.0 * log10(255 * 255.0 / mse[2]);
-    cout << "MSE: " << mse[0] << " " << mse[1] << " " << mse[2] << endl;
-    cout << "PSNR:" << psnr[0] << " " << psnr[1] << " " << psnr[2] << endl;
 
+    average = (mse[0] + mse[1] + mse[2]) / 3;
+
+    cout << "Window: " << window_size << "  sigma: " << sigma << endl;
+    cout << "   MSE: " << mse[0] << " " << mse[1] << " " << mse[2] << " AVE: " << average << endl;
+    //cout << "   PSNR:" << psnr[0] << " " << psnr[1] << " " << psnr[2] << endl;
+
+}
+
+Image * Filter_Median(Image *pt_image, Info *pt_info, int window_size, bool isupdate)
+{
+    // Set image
+    Image image[pt_info->height][pt_info->width][pt_info->byteperpixel];
+    Image image_new[pt_info->height][pt_info->width][pt_info->byteperpixel];
+    Image *pt_image_new = &image_new[0][0][0];
+    memcpy(image, pt_image, sizeof(image));
+
+    // Set Gaussian template
+    int center_size = window_size / 2;
+
+    // Apply Gaussian filter to the image
+    for (int i = 0; i < pt_info->height; i++)
+    {
+        for (int j = 0; j < pt_info->width; j++)
+        {
+            int window[4];
+            Find_Window(i, j, pt_info, window, window_size);
+            for (int k = 0; k < pt_info->byteperpixel; k++)
+            {
+                int window_value[window_size * window_size];
+                int median;
+                int window_count = 0;
+                for (int m = window[0]; m <= window[2]; m++)
+                {
+                    for (int n = window[1]; n <= window[3]; n++)
+                    {
+                        window_value[window_count] = (int)image[m][n][k];
+                        window_count++;
+                    }
+                }
+                median = Get_median(window_value, window_count);
+
+                /*if (isupdate)
+                {
+                    if (image[i][j][k] == window_value[0] || image[i][j][k] == window_value[window_count - 1])
+                        image_new[i][j][k] = median;
+                    else
+                        image_new[i][j][k] = image[i][j][k];
+                }
+                else*/
+                    image_new[i][j][k] = median;
+            }
+        }
+
+    }
+    return pt_image_new;
+}
+
+int Get_median(int *window_value, int window_count)
+{
+    int temp;
+    //int window_value[window_count];
+    //memcpy(window_value, pt_window_value, sizeof(window_value));
+
+    for (int i = 0; i < window_count - 1; i++)
+    {
+        for (int j = 0; j < window_count - 1 - i; j++)
+        {
+            if (window_value[j] > window_value[j + 1])
+            {
+                temp = window_value[j];
+                window_value[j] = window_value[j + 1];
+                window_value[j + 1] = temp;
+            }
+        }
+    }
+    return window_value[window_count/2];
 }
