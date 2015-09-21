@@ -1,5 +1,5 @@
 # EE569 Homework Assignment #1
-# Date:     Sep 5, 2015
+# Date:     Sep 20, 2015
 # Name:     Meiyi Yang
 # ID:       6761-0405-85
 # Email:    meiyiyan@usc.edu
@@ -9,75 +9,11 @@
 # Define compiler and linker in Makefile
 # Coding in C++11
 
-
 # 1. Usage for compiling, linking and runing
 
 # Compile, link and default run:
 
 make
-
-
-# Problem 1: Image manipulation and interpolation:
-# a.	Image resizing via bilinear interpolation (10%)
-	@echo "****** Problem 1.a ******"
-	@g++ -c hw1_helper.cpp
-	@g++ -c p1_resize.cpp
-	@g++ -o p1_resize p1_resize.o hw1_helper.o
-	@echo "USAGE: ./p1_resize [inputImageName] [outputImageName] 3 512 512"
-	./p1_resize the_starry_night.raw p1_resize.raw 3 512 512
-
-# b.	Demosaicing of Bayer-patterned color image
-	@echo "****** Problem 1.b ******"
-	g++ -c hw1_helper.cpp
-	g++ -c p1_bilinear.cpp
-	g++ -c p1_MHC.cpp
-	g++ -o p1_bilinear p1_bilinear.o hw1_helper.o
-	g++ -o p1_MHC p1_MHC.o hw1_helper.o
-	@echo "USAGE: ./p1_bilinear [inputImageName] [outputImageName] 1 [width] [height]"
-	@echo "USAGE: ./p1_MHC [inputImageName] [outputImageName] 1 [width] [height]"
-	./p1_bilinear parrot_CFA.raw p1_bilinear.raw 1 424 636
-	./p1_MHC parrot_CFA.raw p1_MHC1.raw 1 424 636
-
-# Problem 2: Histogram equalization and image filtering
-# a.	Histogram equalization
-	@echo "****** Problem 2.a ******"
-	g++ -c hw1_helper.cpp
-	g++ -c p2_transfer.cpp
-	g++ -c p2_cumulative.cpp
-	g++ -o p2_transfer p2_transfer.o hw1_helper.o
-	g++ -o p2_cumulative p2_cumulative.o hw1_helper.o
-	@echo "USAGE: ./p2_transfer [inputImageName] [outputImageName] 3 [width] [height]"
-	@echo "USAGE: ./p2_cumulative [inputImageName] [outputImageName] 3 [width] [height]"
-	./p2_transfer jet.raw p2_transfer.raw 3 512 512
-	./p2_cumulative jet.raw p2_cumulative.raw 3 512 512
-
-# b. Image Filtering - Creating oil painting effect
-prob2b:
-	@echo "****** Problem 2.b ******"
-	g++ -c hw1_helper.cpp
-	g++ -c p2_oilpainting.cpp
-	g++ -o p2_oilpainting p2_oilpainting.o hw1_helper.o
-	@echo "USAGE: ./p2_oilpainting [inputImageName] [outputImageName] 3 [width] [height]"
-	./p2_oilpainting barn.raw p2_oilpainting_barn_512.raw 3 380 275
-
-
-# Problem 3. Noise Removal
-prob3a:
-	@echo "****** Problem 3.a ******"
-	g++ -c hw1_helper.cpp
-	g++ -c p3_gaussian.cpp
-	g++ -o p3_gaussian p3_gaussian.o hw1_helper.o
-	@echo "USAGE: ./p3_gaussian [inputImageName] [outputImageName] 3 [width] [height]"
-	./p3_gaussian peppers_noisy.raw p3_gaussian.raw 3 512 512
-
-# Problem 3. Noise Removal
-prob3b:
-	@echo "****** Problem 3.a ******"
-	g++ -c hw1_helper.cpp
-	g++ -c p3_guided.cpp
-	g++ -o p3_guided p3_guided.o hw1_helper.o
-	@echo "USAGE: ./p3_guided [inputImageName] [outputImageName] 3 [width] [height]"
-	./p3_guided peppers_noisy.raw p3_guided.raw 3 512 512
 
 # Clean compiling files:
 
@@ -85,4 +21,17 @@ make clean
 
 
 # 2. File list and explanation
+#
+# p1_resize.cpp:        Problem 1.a
+# p1_bilinear.cpp :     Problem 1.b.1
+# p1_MHC.cpp:           Problem 1.b.2
+# p2_transfer:          Problem 2.a.methodA
+# p2_cumulative:        Problem 2.a.methodB
+# p2_oilpainting.cpp    Problem 2.b
+# p3_gaussian.cpp       Problem 3.a
+# p3_median.cpp         Problem 3.a
+# p3_guided.cpp         Problem 3.b
+#
+# hw1_helper.cpp
+# hw1_helper.h
 

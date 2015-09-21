@@ -1,7 +1,8 @@
 // EE569 Homework Assignment #1
-// Date: Sep 17, 2015
-// Name: Meiyi Yang
-// Problem 1.b
+// Date:     Sep 20, 2015
+// Name:     Meiyi Yang
+// ID:       6761-0405-85
+// Email:    meiyiyan@usc.edu
 
 #include <stdio.h>
 #include <iostream>
@@ -272,7 +273,6 @@ void Find_Window(int x, int y, Info* pt_info, int* window, int window_size)
         window[2] = pt_info->height;
     if (window[3] > pt_info->width)
         window[3] = pt_info->width;
-    //cout << "WINDOW:(" << x << "," << y << ")" << window[0] << " " <<  window[1] << " " <<  window[2] << " " <<  window[3] << endl;
 }
 
 double Bound_Color(double temp_sum)
@@ -286,9 +286,6 @@ double Bound_Color(double temp_sum)
 
 void Print_PSNR(Image *pt_image_new, Image *pt_image_old, Info *pt_info, int window_size, double sigma)
 {
-
-    //Image image_noisy[pt_info->height][pt_info->width][pt_info->byteperpixel];
-    //Image image_noisy[pt_info->height][pt_info->width][pt_info->byteperpixel];
 
     double psnr[3];
     double mse[3] = {};
@@ -321,10 +318,8 @@ void Print_PSNR(Image *pt_image_new, Image *pt_image_old, Info *pt_info, int win
 
     average = (mse[0] + mse[1] + mse[2]) / 3;
 
-    cout << "Window: " << window_size << "  sigma: " << sigma << endl;
-    cout << "   MSE: " << mse[0] << " " << mse[1] << " " << mse[2] << " AVE: " << average << endl;
-    //cout << "   PSNR:" << psnr[0] << " " << psnr[1] << " " << psnr[2] << endl;
-
+    //cout << "Window: " << window_size << "  sigma: " << sigma << endl;
+    //cout << "   MSE: " << mse[0] << " " << mse[1] << " " << mse[2] << " AVE: " << average << endl;
 }
 
 Image * Filter_Median(Image *pt_image, Info *pt_info, int window_size, bool isupdate)
@@ -359,7 +354,6 @@ Image * Filter_Median(Image *pt_image, Info *pt_info, int window_size, bool isup
                     }
                 }
                 median = Get_median(window_value, window_count);
-
                 /*if (isupdate)
                 {
                     if (image[i][j][k] == window_value[0] || image[i][j][k] == window_value[window_count - 1])
@@ -379,9 +373,6 @@ Image * Filter_Median(Image *pt_image, Info *pt_info, int window_size, bool isup
 int Get_median(int *window_value, int window_count)
 {
     int temp;
-    //int window_value[window_count];
-    //memcpy(window_value, pt_window_value, sizeof(window_value));
-
     for (int i = 0; i < window_count - 1; i++)
     {
         for (int j = 0; j < window_count - 1 - i; j++)

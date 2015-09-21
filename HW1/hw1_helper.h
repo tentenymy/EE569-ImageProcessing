@@ -1,6 +1,9 @@
-//
-// Created by Maggie on 9/5/15.
-//
+// EE569 Homework Assignment #1
+// Date:     Sep 20, 2015
+// Name:     Meiyi Yang
+// ID:       6761-0405-85
+// Email:    meiyiyan@usc.edu
+
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>

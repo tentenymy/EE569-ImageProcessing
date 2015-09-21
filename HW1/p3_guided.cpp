@@ -1,7 +1,8 @@
 // EE569 Homework Assignment #1
-// Date: Sep 18, 2015
-// Name: Meiyi Yang
-// Problem 1.b
+// Date:     Sep 20, 2015
+// Name:     Meiyi Yang
+// ID:       6761-0405-85
+// Email:    meiyiyan@usc.edu
 
 #include <stdio.h>
 #include <iostream>
@@ -9,19 +10,15 @@
 using namespace std;
 
 // Set parameters and helper function
-const double PI  = 3.141592653;
-
-void Find_Window(int, int, Info*, int*, int);
-double Bound_Color(double);
 void Print_PSNR(Image*, Image *p, Info *, int, double);
 int* Filter_Box(int*, Info*, int);
 double* Filter_Box(double *, Info *, int);
-int Bound_Index(int, int);
+
 int* Get_Mean(int*, int *, Info *, int);
 double* Get_Mean(double*, int *, Info *, int);
-// Command
-Image* Filter_Guided(int*, Info*, int, double);
 
+Image* Filter_Guided(int*, Info*, int, double);
+Image* Filter_Guided_Color(int*, int*, int*, int, Info*, int, double);
 
 int main(int argc, char *argv[])
 {
@@ -47,19 +44,6 @@ int main(int argc, char *argv[])
     // Explanation:
     // Result:
     ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
-    /*Image *pt_image_new = &image_noisy[0][0][0];
-    int window_size = 0;
-    double sigma = 0;
-    char filename[30];
-
-    Print_PSNR(&image_noisy[0][0][0], &image_ori[0][0][0], &info, window_size, sigma);
-
-    window_size = 3;
-    sigma = 1.2;*/
-
-
-    Image_Print_By_Interger(&image_noisy[0][0][0], &info, "image_print_by_interger.txt");
-
     // Set I, P, I * I, I * P
     int image_I_R[info.height][info.width];
     int image_I_G[info.height][info.width];
@@ -81,13 +65,13 @@ int main(int argc, char *argv[])
     double eps[3] = {0.1, 0.2, 0.4};
     strcpy(filename[0], "p3_guided_0.raw");
     strcpy(filename[1], "p3_guided_1.raw");
-    strcpy(filename[2], "p3_guided_1.raw");
-    strcpy(filename[3], "p3_guided_1.raw");
-    strcpy(filename[4], "p3_guided_1.raw");
-    strcpy(filename[5], "p3_guided_1.raw");
-    strcpy(filename[6], "p3_guided_1.raw");
-    strcpy(filename[7], "p3_guided_1.raw");
-    strcpy(filename[8], "p3_guided_1.raw");
+    strcpy(filename[2], "p3_guided_2.raw");
+    strcpy(filename[3], "p3_guided_3.raw");
+    strcpy(filename[4], "p3_guided_4.raw");
+    strcpy(filename[5], "p3_guided_5.raw");
+    strcpy(filename[6], "p3_guided_6.raw");
+    strcpy(filename[7], "p3_guided_7.raw");
+    strcpy(filename[8], "p3_guided_8.raw");
 
     Image image_Q[info.height][info.width][info.byteperpixel];
     Image *image_q;
@@ -121,12 +105,143 @@ int main(int argc, char *argv[])
             Print_PSNR(&image_Q[0][0][0], &image_ori[0][0][0], &info, radius[m], eps[n]);
         }
     }
-
-
     ////////////////////////////////////// PROCESSING CODE END //////////////////////////////////////
 
     // End.Write image data from image data matrix
     return 0;
+}
+
+Image* Filter_Guided_Color(int *pt_image_I_R, int *pt_image_I_G, int *pt_image_I_B, int color, Info *pt_info, int radius, double eps)
+{
+    // Set N
+    int height = pt_info->height;
+    int width = pt_info->width;
+    int num_box[height][width];
+    int size = sizeof(num_box);
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+            num_box[i][j] = 1;
+    }
+    memcpy(num_box, Filter_Box(&num_box[0][0], pt_info, radius), size);
+
+    // Set mean(I)
+    int image_I[3][height][width];
+    memcpy(image_I[0], pt_image_I_R, size);
+    memcpy(image_I[1], pt_image_I_G, size);
+    memcpy(image_I[2], pt_image_I_B, size);
+    double mean_I[3][height][width];
+    memcpy(mean_I[0], Get_Mean(pt_image_I_R, (int*)&num_box[0][0], pt_info, radius), size);
+    memcpy(mean_I[1], Get_Mean(pt_image_I_G, (int*)&num_box[0][0], pt_info, radius), size);
+    memcpy(mean_I[2], Get_Mean(pt_image_I_B, (int*)&num_box[0][0], pt_info, radius), size);
+
+    // Set mean(P)
+    int image_P[height][width];
+    if (color == 0)
+        memcpy(image_P, pt_image_I_R, size);
+    else if (color == 1)
+        memcpy(image_P, pt_image_I_G, size);
+    else
+        memcpy(image_P, pt_image_I_B, size);
+    int mean_P[height][width];
+    memcpy(mean_P, Get_Mean(&image_P[0][0], (int*)&num_box[0][0], pt_info, radius), size);
+
+    // Set (I * I)
+    int image_I_I[3][height][width];
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            image_I_I[0][i][j] = image_I[0][i][j] * image_I[0][i][j];
+            image_I_I[1][i][j] = image_I[1][i][j] * image_I[1][i][j];
+            image_I_I[2][i][j] = image_I[2][i][j] * image_I[2][i][j];
+        }
+    }
+
+    // mean(I * I)
+    double mean_I_I[3][height][width];
+    memcpy(mean_I_I[0], Get_Mean(&image_I_I[0][0][0], (int*)&num_box[0][0], pt_info, radius), size);
+    memcpy(mean_I_I[1], Get_Mean(&image_I_I[1][0][0], (int*)&num_box[0][0], pt_info, radius), size);
+    memcpy(mean_I_I[2], Get_Mean(&image_I_I[2][0][0], (int*)&num_box[0][0], pt_info, radius), size);
+
+    // mean(I * P)
+    int image_I_P[3][height][width];
+    int image_I_extra[3][height][width];
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            image_I_P[0][i][j] = image_I[0][i][j] * image_P[i][j];
+            image_I_P[1][i][j] = image_I[1][i][j] * image_P[i][j];
+            image_I_P[2][i][j] = image_I[2][i][j] * image_P[i][j];
+        }
+    }
+    int mean_I_P[3][height][width];
+    memcpy(mean_I_P[0], Get_Mean(&image_I_P[0][0][0], (int*)&num_box[0][0], pt_info, radius), size);
+    memcpy(mean_I_P[1], Get_Mean(&image_I_P[1][0][0], (int*)&num_box[0][0], pt_info, radius), size);
+    memcpy(mean_I_P[2], Get_Mean(&image_I_P[2][0][0], (int*)&num_box[0][0], pt_info, radius), size);
+
+    // cov(IP)
+    int cov_I_P[3][height][width];
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            cov_I_P[0][i][j] = mean_I_P[0][i][j] - mean_I[0][i][j] * mean_I[0][i][j];
+            cov_I_P[1][i][j] = mean_I_P[1][i][j] - mean_I[0][i][j] * mean_I[0][i][j];
+            cov_I_P[2][i][j] = mean_I_P[2][i][j] - mean_I[0][i][j] * mean_I[0][i][j];
+        }
+    }
+
+    // var(I)
+    int var_I[6][height][width];
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            var_I[0][i][j] = mean_I_I[0][i][j] - mean_I[0][i][j] * mean_I[0][i][j];
+            var_I[1][i][j] = mean_I_I[0][i][j] - mean_I[0][i][j] * mean_I[1][i][j];
+            var_I[2][i][j] = mean_I_I[0][i][j] - mean_I[0][i][j] * mean_I[2][i][j];
+            var_I[3][i][j] = mean_I_I[0][i][j] - mean_I[1][i][j] * mean_I[1][i][j];
+            var_I[4][i][j] = mean_I_I[0][i][j] - mean_I[1][i][j] * mean_I[2][i][j];
+            var_I[5][i][j] = mean_I_I[0][i][j] - mean_I[2][i][j] * mean_I[2][i][j];
+
+        }
+    }
+
+    // a, b
+    double para_a[height][width];
+    double para_b[height][width];
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            para_a[i][j] = cov_I_P[0][i][j] / (var_I[0][i][j] + eps);
+        }
+    }
+
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+            para_b[i][j] = mean_I[0][i][j] / (para_a[i][j] * mean_I[0][i][j]);
+    }
+
+    // mean_a, mean_b
+    double mean_a[height][width];
+    memcpy(mean_a, Get_Mean(&para_a[0][0], (int*)&num_box[0][0], pt_info, radius), sizeof(mean_a));
+    double mean_b[height][width];
+    memcpy(mean_b, Get_Mean(&para_b[0][0], (int*)&num_box[0][0], pt_info, radius), sizeof(mean_a));
+
+
+    Image image_Q[height][width];
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+            image_Q[i][j] = mean_a[i][j] * image_I[0][i][j] + mean_b[i][j];
+    }
+
+    Image *pt_image_q = &image_Q[0][0];
+    return pt_image_q;
 }
 
 Image* Filter_Guided(int *pt_image_I, Info *pt_info, int radius, double eps)
@@ -148,7 +263,7 @@ Image* Filter_Guided(int *pt_image_I, Info *pt_info, int radius, double eps)
     int image_I[height][width];
     memcpy(image_I, pt_image_I, sizeof(image_I));
     int mean_I[height][width];
-    memcpy(mean_I, Get_Mean(pt_image_I, (int*)&num_box[0][0], pt_info, radius), size);
+    memcpy(mean_I, Get_Mean(pt_image_I, (int*)&num_box[0][0], pt_info, radius), sizeof(mean_I));
 
     // Set (I * P)
     int image_I_I[height][width];
@@ -160,10 +275,10 @@ Image* Filter_Guided(int *pt_image_I, Info *pt_info, int radius, double eps)
 
     // mean(I * P)
     int mean_I_I[height][width];
-    memcpy(mean_I_I, Get_Mean(&image_I_I[0][0], (int*)&num_box[0][0], pt_info, radius), size);
+    memcpy(mean_I_I, Get_Mean(&image_I_I[0][0], (int*)&num_box[0][0], pt_info, radius), sizeof(mean_I));
 
     // cov(IP)
-    int cov_I_I[height][width];
+    double cov_I_I[height][width];
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
@@ -171,7 +286,7 @@ Image* Filter_Guided(int *pt_image_I, Info *pt_info, int radius, double eps)
     }
 
     // var(I)
-    int var_I_I[height][width];
+    double var_I_I[height][width];
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
@@ -197,10 +312,9 @@ Image* Filter_Guided(int *pt_image_I, Info *pt_info, int radius, double eps)
 
     // mean_a, mean_b
     double mean_a[height][width];
-    memcpy(mean_a, Get_Mean(&para_a[0][0], (int*)&num_box[0][0], pt_info, radius), sizeof(mean_a));
+    memcpy(mean_a, Get_Mean((double*)&para_a[0][0], (int*)&num_box[0][0], pt_info, radius), sizeof(mean_a));
     double mean_b[height][width];
-    memcpy(mean_b, Get_Mean(&para_b[0][0], (int*)&num_box[0][0], pt_info, radius), sizeof(mean_a));
-
+    memcpy(mean_b, Get_Mean((double*)&para_b[0][0], (int*)&num_box[0][0], pt_info, radius), sizeof(mean_a));
 
     Image image_Q[height][width];
     for (int i = 0; i < height; i++)
@@ -212,7 +326,6 @@ Image* Filter_Guided(int *pt_image_I, Info *pt_info, int radius, double eps)
     Image *pt_image_q = &image_Q[0][0];
     return pt_image_q;
 }
-
 
 
 
@@ -237,7 +350,6 @@ double* Get_Mean(double *pt_image, int *pt_N, Info *pt_info, int radius)
 
     }
     double *pt_mean = &mean[0][0];
-    //cout << "MEAN: " << mean[500][500] << endl;
     return pt_mean;
 }
 
@@ -249,7 +361,7 @@ int* Get_Mean(int *pt_image, int *pt_N, Info *pt_info, int radius)
     double temp_N;
     int mean[pt_info->height][pt_info->width];
 
-    //cout << "MEAN: " << mean[0][0] << endl;
+
     for (int i = 0; i < pt_info->height; i++)
     {
         for (int j = 0; j < pt_info->width; j++)
@@ -292,7 +404,6 @@ int* Filter_Box(int *pt_image, Info *pt_info, int radius)
         }
 
     }
-    //cout << "1: " << sum[0][0] << endl;
 
     for(int i = 0; i < pt_info->height;i++)
     {
@@ -321,7 +432,6 @@ int* Filter_Box(int *pt_image, Info *pt_info, int radius)
         for (int j = 1; j < radius + 1; j++)
             sum[0][i] += sum[j][i];
     }
-    //cout << "2: " << sum[0][0] << endl;
 
     for(int i = 1; i < pt_info->height; i++)
     {
@@ -338,7 +448,7 @@ int* Filter_Box(int *pt_image, Info *pt_info, int radius)
             sum[i][j] = sum[i - 1][j] + input_after - input_before;
         }
     }
-    //cout << "3: " << sum[0][0] << endl;
+
     int *pt_sum = &sum[0][0];
     return pt_sum;
 }
@@ -367,7 +477,6 @@ double* Filter_Box(double *pt_image, Info *pt_info, int radius)
         }
 
     }
-    //cout << "1: " << sum[0][0] << endl;
 
     for(int i = 0; i < pt_info->height;i++)
     {
@@ -396,7 +505,6 @@ double* Filter_Box(double *pt_image, Info *pt_info, int radius)
         for (int j = 1; j < radius + 1; j++)
             sum[0][i] += sum[j][i];
     }
-    //cout << "2: " << sum[0][0] << endl;
 
     for(int i = 1; i < pt_info->height; i++)
     {
@@ -413,53 +521,14 @@ double* Filter_Box(double *pt_image, Info *pt_info, int radius)
             sum[i][j] = sum[i - 1][j] + input_after - input_before;
         }
     }
-    //cout << "3: " << sum[0][0] << endl;
     double *pt_sum = &sum[0][0];
     return pt_sum;
 }
 
-int Bound_Index(int index, int bound)
-{
-    if (index > bound)
-        index = bound;
-    if (index < 0)
-        index = 0;
-    return index;
-}
 
-
-void Find_Window(int x, int y, Info* pt_info, int* window, int window_size)
-{
-    int boundary = window_size / 2;
-    window[0] = x - boundary;
-    window[1] = y - boundary;
-    window[2] = x + boundary;
-    window[3] = y + boundary;
-    if (window[0] < 0)
-        window[0] = 0;
-    if (window[1] < 0)
-        window[1] = 0;
-    if (window[2] > pt_info->height)
-        window[2] = pt_info->height;
-    if (window[3] > pt_info->width)
-        window[3] = pt_info->width;
-    //cout << "WINDOW:(" << x << "," << y << ")" << window[0] << " " <<  window[1] << " " <<  window[2] << " " <<  window[3] << endl;
-}
-
-double Bound_Color(double temp_sum)
-{
-    if (temp_sum > 255)
-        temp_sum = 255;
-    if (temp_sum < 0)
-        temp_sum = 0;
-    return temp_sum;
-}
 
 void Print_PSNR(Image *pt_image_new, Image *pt_image_old, Info *pt_info, int window_size, double sigma)
 {
-
-    //Image image_noisy[pt_info->height][pt_info->width][pt_info->byteperpixel];
-    //Image image_noisy[pt_info->height][pt_info->width][pt_info->byteperpixel];
 
     double psnr[3];
     double mse[3] = {};
@@ -492,10 +561,8 @@ void Print_PSNR(Image *pt_image_new, Image *pt_image_old, Info *pt_info, int win
 
     average = (mse[0] + mse[1] + mse[2]) / 3;
 
-    cout << "Window: " << window_size << "  sigma: " << sigma << endl;
-    cout << "   MSE: " << mse[0] << " " << mse[1] << " " << mse[2] << " AVE: " << average << endl;
-    //cout << "   PSNR:" << psnr[0] << " " << psnr[1] << " " << psnr[2] << endl;
-
+    //cout << "Window: " << window_size << "  sigma: " << sigma << endl;
+    //cout << "   MSE: " << mse[0] << " " << mse[1] << " " << mse[2] << " AVE: " << average << endl;
 }
 
 

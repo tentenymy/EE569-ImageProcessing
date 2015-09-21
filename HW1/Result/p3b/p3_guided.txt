@@ -1,0 +1,18 @@
+Window: 2  sigma: 0.1
+   MSE: 5807.93 5002.61 1731.17 AVE: 4180.57
+Window: 2  sigma: 0.2
+   MSE: 5807.93 5002.61 1731.17 AVE: 4180.57
+Window: 2  sigma: 0.4
+   MSE: 5807.93 5002.61 1731.17 AVE: 4180.57
+Window: 4  sigma: 0.1
+   MSE: 6090.48 5205.53 1792.05 AVE: 4362.69
+Window: 4  sigma: 0.2
+   MSE: 6090.48 5205.53 1792.05 AVE: 4362.69
+Window: 4  sigma: 0.4
+   MSE: 6090.66 5205.53 1792.05 AVE: 4362.75
+Window: 8  sigma: 0.1
+   MSE: 6143.21 5249.57 1800.96 AVE: 4397.91
+Window: 8  sigma: 0.2
+   MSE: 6143.24 5249.58 1800.96 AVE: 4397.93
+Window: 8  sigma: 0.4
+   MSE: 6143.29 5249.59 1800.97 AVE: 4397.95

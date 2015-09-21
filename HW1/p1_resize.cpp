@@ -1,7 +1,8 @@
 // EE569 Homework Assignment #1
-// Date: Sep 06, 2015
-// Name: Meiyi Yang
-// Problem 1.a Image resizing via bilinear interpolation
+// Date:     Sep 20, 2015
+// Name:     Meiyi Yang
+// ID:       6761-0405-85
+// Email:    meiyiyan@usc.edu
 
 #include <stdio.h>
 #include <iostream>
