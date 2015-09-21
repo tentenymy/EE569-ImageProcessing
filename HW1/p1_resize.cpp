@@ -25,36 +25,7 @@ int main(int argc, char *argv[])
 
     ///////////////////////////////////////// INSERT YOUR COMMENT HERE /////////////////////////////////////////
     // Problem 1a. Image resizing via bilinear interpolation
-    // Description.: resize a 512 * 512 image to 650 * 650 using image manipulation.
-
     // Algorithm: Bilinear interpolation
-
-    // Description: Interpolate a value along column direction, and then use this value to interpolate the value along row direction linearly.
-    // This results in a weighted function of the value of four points.
-    // This four points are the nearest four referenced points of the estimated point.
-    // The value of the nearest four points are the color value ranged from 0 to 256.
-    // Calculate those value by R, G, B colors separately.
-    // By Formula: F(p', q') = (1 - a)(1 - b)F(p, q) + b(1- a)F(p, qt) + a(1 - b)F(pt, q) + abF (pt, qt)
-    // F(p,q), F(p, qt), F(pt, q), F(pt, qt): four nearest points
-    // F(p', q'):estimated point
-    // a, b are the distance between the estimated point to the F(p, q) along x/y line.
-
-    // Time: O(3*m*n)
-
-    // Explanation:
-    // if the nearest four points of the estimated point are more than four.
-    // I assume the estimated point is on the top and left of its four referenced points as the first order.
-    // For instance, the estimated point (A, B) is on the original point.
-    // Then the four nearest points are (A, B) (A, B+1), (A+1, B), (A+1, B+1)
-    // Or (A, B) is on the line between (A-0.1,B) and (A+0.9,B).
-    // Then the four nearest points are (A-0.1,B), (A+0.9,B), (A-0.1, B+1), (A+0.9, B+1)
-    // If the estimated point has no right or bottom point.
-    // In this case, those special estimated points are the right and bottom boundary.
-    // Then use the left or top point of the estimated point.
-
-    // Result:
-    // The result is much more clear to see than I thought.
-
     ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
     // 1. Generate a 650 * 650 * 3 empty array
     Image image_new [size_new][size_new][info.byteperpixel];
@@ -88,7 +59,6 @@ int main(int argc, char *argv[])
 
             // 4. Calculate each estimated point by weighted the value of four nearest points
             // Calculate 649 * 649 points Matrix[0->648][0->648] first
-            // F(p', q') = (1 - a)(1 - b)F(p, q) + b(1- a)F(p, qt) + a(1 - b)F(pt, q) + abF (pt, qt)
             for(int k = 0; k < info.byteperpixel; k++)
             {
                 double value = (1.0 - scale_a) * (1.0 - scale_b) * (double)image_old[point_lt_x][point_lt_y][k]

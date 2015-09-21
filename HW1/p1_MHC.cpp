@@ -26,31 +26,7 @@ int main(int argc, char *argv[])
 
     ///////////////////////////////////////// INSERT YOUR COMMENT HERE /////////////////////////////////////////
     // Problem 1b. Demosaicing of Bayer-patterned color image
-    // Description : Demosaicing a Bayer-pattered gray image to a three-color image by both bilinear demosaicing
-    // and MHC linear image demosaicing
-
-    // Algorithm: Bilinear demosaicing;
-    //            MHC (Malvar-He-Cutler) linear image demosaicing
-    // Description: To get three colors in each pixel of the digital camera, the camera have to put three sensors in each pixel.
-    // To avoid this wasting, the digital camera only puts one sensor in each pixel by Bayer Array to catch one color each.
-    // And then use demosaicing algorithm to translate the Bayer Array to a three-color image.
-    // There are two algorithms we need to implementation in this problem: bilinear demosaicing and MHC linear image demosaicing
-
-    // MHC linear image demosaicing
-    // Compared to the Bilinear demosaicing, MHC use additional points to evaluate the color.
-    // The evaluation function still have the average of the neighbor points which have the same color we are being calculate.
-    // Also have a weighted sum of points which have the same local color.
-    // The weighted values is positive for the point which is being evaluated and is negative for the points which are nearby.
-    // Different colors in this case have different weighted parameter.
-
-    // Result:
-    // Compared to the Bilinear demosaicing, the result of MHC is sharper.
-    // By adding the correction term, we get more details in the image when the colors change quick in the small area.
-    // But there is a special case in MHC.
-    // The color value of one pixel may be out of the range [0, 255] during the calculation.
-    // The maximum of these value may even large to 270, 280 or more, and I have to bound them to 0 or 255.
-    // I think this is where we could try to improving in the future because we still lose some information.
-
+    // Algorithm: MHC (Malvar-He-Cutle) linear image demosaicing
     ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
     // 1. add 2-line boundary around the image
     info.byteperpixel = COLOR_BYTE;

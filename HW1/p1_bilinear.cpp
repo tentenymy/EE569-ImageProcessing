@@ -26,29 +26,7 @@ int main(int argc, char *argv[])
 
     ///////////////////////////////////////// INSERT YOUR COMMENT HERE /////////////////////////////////////////
     // Problem 1b. Demosaicing of Bayer-patterned color image
-    // Description : Demosaicing a Bayer-pattered gray image to a three-color image by both bilinear demosaicing
-    // and MHC linear image demosaicing
-
-    // Algorithm: Bilinear demosaicing;
-    //            MHC (Malvar-He-Cutler) linear image demosaicing
-    // Description: To get three colors in each pixel of the digital camera, the camera have to put three sensors in each pixel.
-    // To avoid this wasting, the digital camera only puts one sensor in each pixel by Bayer Array to catch one color each.
-    // And then use demosaicing algorithm to translate the Bayer Array to a three-color image.
-    // There are two algorithms we need to implementation in this problem: bilinear demosaicing and MHC linear image demosaicing
-
-    // Bilinear demosaicing:
-    // For each pixel, we already know one color value.
-    // The value of other two colors need to be estimated by their own nearest pixels of the same color.
-    // For green color in Bayer Array, it has four neighbor pixels of green color.
-    // For red or blue color in Bayer Array, they have two neighbor pixels of the same color each.
-    // Combine R, G, B three color of one pixel together to generate a colorful image.
-    // Time: O(m * n)
-
-    // Result:
-    // This image is a little blur the color edge when I use photoshop to view it.
-    // I think it is because it use an average calculation so the color of each pixel is similar.
-    // It smooths the edges when the referenced points have a big difference between each other.
-
+    // Algorithm: Bilinear demosaicing
     ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
     // 1. add 2-line boundary around the image
     info.byteperpixel = COLOR_BYTE;
