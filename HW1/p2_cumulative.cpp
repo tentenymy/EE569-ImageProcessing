@@ -30,27 +30,9 @@ int main(int argc, char *argv[]) {
     pt_image = &image[0][0][0];
 
     ///////////////////////////////////////// INSERT YOUR COMMENT HERE /////////////////////////////////////////
-    // Problem 2b. Histogram Equalization
+    // Problem 2a. Histogram Equalization
     // Description.: Use histogram equalization methods to enhance the contrast
-
-    // Algorithm: Transfer-function-based histogram equalization method
-    //            Cumulative-probability-based histogram equalization method
-
-    // Description: These two methods are all using histogram equalization to enhance the contrast.
-    // The core idea is that by getting the CDF(Cumulative distribution Function) and PDF (Probability pdfbution Function) of each color of the image,
-    // we can get the probability of each color value the image have from 0 to 255.
-    // In most cases, especially for real image, the distributions of each color value are not balanced.
-    // And the range of color value may not exactly from 0 to 255, sometimes, the range is smaller.
-    // So to enhance the contrast, we can normalize or equalize the distribution of each color of the image to make the range of the color larger
-    // and to enhance the "important part" of the color intensity.
-
-
-    // Cumulative-probability-based histogram equalization method
-    // Description: this method enhances the image by change the pdf of each color intensity to the same.
-    // It likes a bucket filling.
-    // Here we have 255 color intensity (255 buckets) and 512 * 512 pixels (512 * 512 balls).
-    // Method B make every color intensity has the same number of pixels, which is 512 * 512 / 255.
-    // The order of putting balls is intensity and bucket number increasing.
+    // Algorithm: Cumulative-probability-based histogram equalization method
 
     // Result: Compared to the transfer-function-based histogram equalization method,
     // this cumulative-probability-based method is harder to implement.

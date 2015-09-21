@@ -36,18 +36,7 @@ int main(int argc, char *argv[])
     ///////////////////////////////////////// INSERT YOUR COMMENT HERE /////////////////////////////////////////
     // Problem 2b. Image filtering - creating oil painting effect
     // Description.: create a oil-painting effect for images and discuss its filter parameter.
-
     // Algorithm: Image filtering for oil-painting effect
-    // Description: 
-    // First we decrease the number of each color intensity to 4,
-    // by getting the mean of 4 same-number-pixel area in the color histogram of the image.
-    // Then we use a N * N window to pick the most frequent color.
-    // This frequent color is a combination of RGB image.
-
-    // Explanation:
-
-    // Result:
-    
     ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
     // Get histogram
     int channel[info.byteperpixel][info.width * info.height];

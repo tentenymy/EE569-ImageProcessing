@@ -12,9 +12,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="add86cd5-d5ec-44d8-8eb6-1d9cfa7ca572" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p1_MHC.cpp" afterPath="$PROJECT_DIR$/p1_MHC.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p1_bilinear.cpp" afterPath="$PROJECT_DIR$/p1_bilinear.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p1_resize.cpp" afterPath="$PROJECT_DIR$/p1_resize.cpp" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Makefile" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/README.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_barn_512_0.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_barn_512_11.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_barn_512_3.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_barn_512_5.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_barn_512_7.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_barn_512_9.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_coliseum11.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_coliseum3.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_coliseum5.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_coliseum7.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_coliseum9.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_colliseum0.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G3_05.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G3_08.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G3_12.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G3_13.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G3_18.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G5_05.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G5_08.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G5_12.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G5_13.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_M3.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_M5.raw" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/hw1_helper.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/hw1_helper.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/p1_MHC.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/p1_bilinear.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/p1_resize.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/p2_cumulative.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/p2_oilpainting.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/p2_transfer.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/p3_gaussian.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/p3_guided.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/p3_median.cpp" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HW1.iws" />
@@ -35,38 +68,7 @@
     <favorites_list name="HW1" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="p1_resize.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/p1_resize.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="89" column="39" selection-start-line="89" selection-start-column="39" selection-end-line="89" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="p1_bilinear.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/p1_bilinear.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="28" column="38" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="p1_MHC.cpp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/p1_MHC.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.27590513">
-              <caret line="28" column="64" selection-start-line="28" selection-start-column="64" selection-end-line="28" selection-end-column="64" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -91,14 +93,14 @@
         <option value="$PROJECT_DIR$/hw1_helper.h" />
         <option value="$PROJECT_DIR$/p3_guided.cpp" />
         <option value="$PROJECT_DIR$/p3_gaussian.cpp" />
-        <option value="$PROJECT_DIR$/p2_oilpainting.cpp" />
         <option value="$PROJECT_DIR$/p3_median.cpp" />
-        <option value="$PROJECT_DIR$/p2_transfer.cpp" />
-        <option value="$PROJECT_DIR$/p2_cumulative.cpp" />
         <option value="$PROJECT_DIR$/Makefile" />
         <option value="$PROJECT_DIR$/p1_resize.cpp" />
         <option value="$PROJECT_DIR$/p1_bilinear.cpp" />
         <option value="$PROJECT_DIR$/p1_MHC.cpp" />
+        <option value="$PROJECT_DIR$/p2_oilpainting.cpp" />
+        <option value="$PROJECT_DIR$/p2_transfer.cpp" />
+        <option value="$PROJECT_DIR$/p2_cumulative.cpp" />
       </list>
     </option>
   </component>
@@ -111,9 +113,9 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="1026" />
-    <option name="y" value="387" />
-    <option name="width" value="1117" />
+    <option name="x" value="1166" />
+    <option name="y" value="155" />
+    <option name="width" value="1418" />
     <option name="height" value="921" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -227,14 +229,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1026" y="387" width="1117" height="921" extended-state="0" />
-    <editor active="true" />
+    <frame x="1166" y="155" width="1418" height="921" extended-state="0" />
+    <editor active="false" />
     <layout>
-      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20723847" sideWeight="0.6835187" order="4" side_tool="false" content_ui="tabs" x="1097" y="304" width="460" height="1075" />
+      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41061047" sideWeight="0.6835187" order="4" side_tool="false" content_ui="tabs" x="1097" y="304" width="460" height="1075" />
       <window_info id="TODO" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2932331" sideWeight="0.48576513" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12596402" sideWeight="0.45491388" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14774418" sideWeight="0.46705106" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20279069" sideWeight="0.5329489" order="0" side_tool="true" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15843023" sideWeight="0.5329489" order="0" side_tool="true" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.10025707" sideWeight="0.07583418" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0" sideWeight="0.50250626" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27197942" sideWeight="0.3164813" order="7" side_tool="true" content_ui="tabs" />
@@ -286,366 +288,6 @@
       <option name="time" value="10" />
     </breakpoint-manager>
     <watches-manager />
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/p1_bilinear.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="3" selection-start-line="55" selection-start-column="3" selection-end-line="105" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hw1_helper.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#5461#7547#0" expanded="false" />
-            <element signature="e#7549#7760#0" expanded="false" />
-            <element signature="e#7762#13098#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="38" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hw1_helper.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="59" selection-start-line="71" selection-start-column="59" selection-end-line="71" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p1_MHC.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p1_bilinear.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="195" column="27" selection-start-line="195" selection-start-column="27" selection-end-line="195" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hw1_helper.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="272" column="4" selection-start-line="272" selection-start-column="4" selection-end-line="272" selection-end-column="90" />
-          <folding>
-            <element signature="e#5461#7547#0" expanded="false" />
-            <element signature="e#7549#7760#0" expanded="false" />
-            <element signature="e#7762#13098#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p1_MHC.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hw1_helper.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="191" column="32" selection-start-line="191" selection-start-column="32" selection-end-line="191" selection-end-column="37" />
-          <folding>
-            <element signature="e#5461#7547#0" expanded="false" />
-            <element signature="e#7549#7760#0" expanded="false" />
-            <element signature="e#7762#13098#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p1_bilinear.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="119" column="4" selection-start-line="119" selection-start-column="4" selection-end-line="120" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p1_MHC.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hw1_helper.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#5461#7547#0" expanded="false" />
-            <element signature="e#7549#7760#0" expanded="false" />
-            <element signature="e#7762#13098#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p1_bilinear.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="19" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p1_resize.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hw1_helper.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p1_resize.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hw1_helper.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="160" column="0" selection-start-line="160" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
-          <folding>
-            <element signature="e#5461#7547#0" expanded="false" />
-            <element signature="e#7549#7760#0" expanded="false" />
-            <element signature="e#7762#13098#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hw1_helper.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p1_resize.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hw1_helper.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-          <folding>
-            <element signature="e#5461#7547#0" expanded="false" />
-            <element signature="e#7549#7760#0" expanded="false" />
-            <element signature="e#7762#13098#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hw1_helper.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p1_resize.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="1" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p1_resize.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hw1_helper.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hw1_helper.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="29" />
-          <folding>
-            <element signature="e#5461#7547#0" expanded="false" />
-            <element signature="e#7549#7760#0" expanded="false" />
-            <element signature="e#7762#13098#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="32" selection-start-line="13" selection-start-column="32" selection-end-line="13" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p3_guided.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.2222223">
-          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p2_oilpainting.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.05059022">
-          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p3_median.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.05059022">
-          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7116105">
-          <caret line="38" column="29" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p3_gaussian.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.074906364">
-          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p2_cumulative.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.074906364">
-          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p2_transfer.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.074906364">
-          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p1_resize.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="89" column="39" selection-start-line="89" selection-start-column="39" selection-end-line="89" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p1_bilinear.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="38" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p1_MHC.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27590513">
-          <caret line="28" column="64" selection-start-line="28" selection-start-column="64" selection-end-line="28" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
   </component>
   <component name="masterDetails">
     <states>

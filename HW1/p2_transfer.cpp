@@ -28,39 +28,9 @@ int main(int argc, char *argv[]) {
     pt_image_old = &image_old[0][0][0];
 
     ///////////////////////////////////////// INSERT YOUR COMMENT HERE /////////////////////////////////////////
-    // Problem 2b. Histogram Equalization
+    // Problem 2a. Histogram Equalization
     // Description.: Use histogram equalization methods to enhance the contrast
-
     // Algorithm: Transfer-function-based histogram equalization method
-    //            Cumulative-probability-based histogram equalization method
-
-    // Description: These two methods are all using histogram equalization to enhance the contrast.
-    // The core idea is that by getting the CDF(Cumulative pdfbution Function) and PDF (Probability pdfbution Function) of each color of the image,
-    // we can get the probability of each color value the image have from 0 to 255.
-    // In most cases, especially for real image, the pdfbutions of each color value are not balanced.
-    // And the range of color value may not exactly from 0 to 255, sometimes, the range is smaller.
-    // So to enhance the contrast, we can normalize or equalize the pdfbution of each color of the image to make the range of the color larger
-    // and to enhance the "important part" of the color intensity.
-
-
-    // Transfer-function-based histogram equalization method
-    // Description: Using normalized probability function to normalized the original CDF of each color channel in the image.
-    // The formula is really easy to implementation.
-    // For the intensity value x in the CDF of each color channel,
-    // TF(x) = CDF(x) * 255;
-    // x : the intensity in the CDF of each color channel
-    // CDF(x): the cumulative probability of x
-    // TF(x): the transfer function of x
-
-    // Time: O(M * N)
-    // Explanation:
-
-    // Result: The enhancement result is more efficient than I thought.
-    // A large number of details are revealed by applying the transfer function.
-    // By plotting a PDF and CDF figure of each channel for the original image, I find that the range of each color is relatively concentrated.
-    // But after the enhancement, the pdf of the image changed separately.
-
-
     ////////////////////////////////////// INSERT YOUR PROCESSING CODE HERE //////////////////////////////////////
     // 1. Get CDF and plot
     double *pt_cdf = Plot_CDF(&image_old[0][0][0], &info);
