@@ -11,45 +11,7 @@
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="add86cd5-d5ec-44d8-8eb6-1d9cfa7ca572" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Makefile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/README.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_barn_512_0.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_barn_512_11.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_barn_512_3.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_barn_512_5.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_barn_512_7.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_barn_512_9.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_coliseum11.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_coliseum3.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_coliseum5.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_coliseum7.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_coliseum9.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p2b/p2_oilpainting_colliseum0.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G3_05.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G3_08.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G3_12.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G3_13.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G3_18.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G5_05.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G5_08.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G5_12.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_G5_13.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_M3.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Result/p3a/p2_filter_M5.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hw1_helper.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hw1_helper.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/p1_MHC.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/p1_bilinear.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/p1_resize.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/p2_cumulative.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/p2_oilpainting.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/p2_transfer.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/p3_gaussian.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/p3_guided.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/p3_median.cpp" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="add86cd5-d5ec-44d8-8eb6-1d9cfa7ca572" name="Default" comment="" />
     <ignored path="HW1.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -113,10 +75,10 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="1166" />
-    <option name="y" value="155" />
-    <option name="width" value="1418" />
-    <option name="height" value="921" />
+    <option name="x" value="242" />
+    <option name="y" value="129" />
+    <option name="width" value="726" />
+    <option name="height" value="516" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -229,27 +191,27 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1166" y="155" width="1418" height="921" extended-state="0" />
+    <frame x="242" y="129" width="726" height="516" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41061047" sideWeight="0.6835187" order="4" side_tool="false" content_ui="tabs" x="1097" y="304" width="460" height="1075" />
       <window_info id="TODO" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2932331" sideWeight="0.48576513" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12596402" sideWeight="0.45491388" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="CMake" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14774418" sideWeight="0.46705106" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15843023" sideWeight="0.5329489" order="0" side_tool="true" content_ui="combo" />
+      <window_info id="CMake" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14766082" sideWeight="0.45754716" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14766082" sideWeight="0.5424528" order="0" side_tool="true" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.10025707" sideWeight="0.07583418" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0" sideWeight="0.50250626" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27197942" sideWeight="0.3164813" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.101277374" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.63126594" sideWeight="0.46325582" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30033478" sideWeight="0.5367442" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -267,9 +229,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12596402" sideWeight="0.46309403" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12596402" sideWeight="0.53690594" order="0" side_tool="true" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30033478" sideWeight="0.5367442" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30033478" sideWeight="0.5367442" order="3" side_tool="true" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
