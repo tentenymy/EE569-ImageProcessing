@@ -43,6 +43,17 @@ const int PLOT_Y_SIZE = 500;
 // Define the image type
 typedef unsigned char Image;
 
+
+
+
+
+
+
+
+
+
+
+
 // This class is like head information of regular image.
 class Info
 {

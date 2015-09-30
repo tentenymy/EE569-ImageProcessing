@@ -48,10 +48,10 @@ RM = /usr/local/Cellar/cmake/3.3.1/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/tenten/Documents/github/github_569/569_HW2
+CMAKE_SOURCE_DIR = /Users/tenten/Documents/github/github_569/569_HW2/p1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/tenten/Documents/github/github_569/569_HW2
+CMAKE_BINARY_DIR = /Users/tenten/Documents/github/github_569/569_HW2/p1
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/tenten/Documents/github/github_569/569_HW2/CMakeFiles /Users/tenten/Documents/github/github_569/569_HW2/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/tenten/Documents/github/github_569/569_HW2/p1/CMakeFiles /Users/tenten/Documents/github/github_569/569_HW2/p1/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/tenten/Documents/github/github_569/569_HW2/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/tenten/Documents/github/github_569/569_HW2/p1/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,44 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named 569_HW2
+# Target rules for targets named p1
 
 # Build rule for target.
-569_HW2: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 569_HW2
-.PHONY : 569_HW2
+p1: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 p1
+.PHONY : p1
 
 # fast build rule for target.
-569_HW2/fast:
-	$(MAKE) -f CMakeFiles/569_HW2.dir/build.make CMakeFiles/569_HW2.dir/build
-.PHONY : 569_HW2/fast
+p1/fast:
+	$(MAKE) -f CMakeFiles/p1.dir/build.make CMakeFiles/p1.dir/build
+.PHONY : p1/fast
 
-hw1_helper.o: hw1_helper.cpp.o
+hw2_helper.o: hw2_helper.cpp.o
 
-.PHONY : hw1_helper.o
+.PHONY : hw2_helper.o
 
 # target to build an object file
-hw1_helper.cpp.o:
-	$(MAKE) -f CMakeFiles/569_HW2.dir/build.make CMakeFiles/569_HW2.dir/hw1_helper.cpp.o
-.PHONY : hw1_helper.cpp.o
+hw2_helper.cpp.o:
+	$(MAKE) -f CMakeFiles/p1.dir/build.make CMakeFiles/p1.dir/hw2_helper.cpp.o
+.PHONY : hw2_helper.cpp.o
 
-hw1_helper.i: hw1_helper.cpp.i
+hw2_helper.i: hw2_helper.cpp.i
 
-.PHONY : hw1_helper.i
+.PHONY : hw2_helper.i
 
 # target to preprocess a source file
-hw1_helper.cpp.i:
-	$(MAKE) -f CMakeFiles/569_HW2.dir/build.make CMakeFiles/569_HW2.dir/hw1_helper.cpp.i
-.PHONY : hw1_helper.cpp.i
+hw2_helper.cpp.i:
+	$(MAKE) -f CMakeFiles/p1.dir/build.make CMakeFiles/p1.dir/hw2_helper.cpp.i
+.PHONY : hw2_helper.cpp.i
 
-hw1_helper.s: hw1_helper.cpp.s
+hw2_helper.s: hw2_helper.cpp.s
 
-.PHONY : hw1_helper.s
+.PHONY : hw2_helper.s
 
 # target to generate assembly for a file
-hw1_helper.cpp.s:
-	$(MAKE) -f CMakeFiles/569_HW2.dir/build.make CMakeFiles/569_HW2.dir/hw1_helper.cpp.s
-.PHONY : hw1_helper.cpp.s
+hw2_helper.cpp.s:
+	$(MAKE) -f CMakeFiles/p1.dir/build.make CMakeFiles/p1.dir/hw2_helper.cpp.s
+.PHONY : hw2_helper.cpp.s
 
 p1a.o: p1a.cpp.o
 
@@ -156,7 +156,7 @@ p1a.o: p1a.cpp.o
 
 # target to build an object file
 p1a.cpp.o:
-	$(MAKE) -f CMakeFiles/569_HW2.dir/build.make CMakeFiles/569_HW2.dir/p1a.cpp.o
+	$(MAKE) -f CMakeFiles/p1.dir/build.make CMakeFiles/p1.dir/p1a.cpp.o
 .PHONY : p1a.cpp.o
 
 p1a.i: p1a.cpp.i
@@ -165,7 +165,7 @@ p1a.i: p1a.cpp.i
 
 # target to preprocess a source file
 p1a.cpp.i:
-	$(MAKE) -f CMakeFiles/569_HW2.dir/build.make CMakeFiles/569_HW2.dir/p1a.cpp.i
+	$(MAKE) -f CMakeFiles/p1.dir/build.make CMakeFiles/p1.dir/p1a.cpp.i
 .PHONY : p1a.cpp.i
 
 p1a.s: p1a.cpp.s
@@ -174,7 +174,7 @@ p1a.s: p1a.cpp.s
 
 # target to generate assembly for a file
 p1a.cpp.s:
-	$(MAKE) -f CMakeFiles/569_HW2.dir/build.make CMakeFiles/569_HW2.dir/p1a.cpp.s
+	$(MAKE) -f CMakeFiles/p1.dir/build.make CMakeFiles/p1.dir/p1a.cpp.s
 .PHONY : p1a.cpp.s
 
 # Help Target
@@ -185,10 +185,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... 569_HW2"
-	@echo "... hw1_helper.o"
-	@echo "... hw1_helper.i"
-	@echo "... hw1_helper.s"
+	@echo "... p1"
+	@echo "... hw2_helper.o"
+	@echo "... hw2_helper.i"
+	@echo "... hw2_helper.s"
 	@echo "... p1a.o"
 	@echo "... p1a.i"
 	@echo "... p1a.s"

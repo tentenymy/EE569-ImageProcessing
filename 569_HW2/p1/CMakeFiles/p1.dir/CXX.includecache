@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/Users/tenten/Documents/github/github_569/569_HW2/hw1_helper.cpp
-hw1_helper.h
-/Users/tenten/Documents/github/github_569/569_HW2/hw1_helper.h
+/Users/tenten/Documents/github/github_569/569_HW2/p1/hw2_helper.cpp
+hw2_helper.h
+/Users/tenten/Documents/github/github_569/569_HW2/p1/hw2_helper.h
 
-/Users/tenten/Documents/github/github_569/569_HW2/hw1_helper.h
+/Users/tenten/Documents/github/github_569/569_HW2/p1/hw2_helper.h
 stdio.h
 -
 iostream
@@ -26,9 +26,9 @@ cstring
 opencv2/opencv.hpp
 -
 
-/Users/tenten/Documents/github/github_569/569_HW2/p1a.cpp
-hw1_helper.h
-/Users/tenten/Documents/github/github_569/569_HW2/hw1_helper.h
+/Users/tenten/Documents/github/github_569/569_HW2/p1/p1a.cpp
+hw2_helper.h
+/Users/tenten/Documents/github/github_569/569_HW2/p1/hw2_helper.h
 
 /usr/local/include/opencv/cxcore.h
 opencv2/core/core_c.h

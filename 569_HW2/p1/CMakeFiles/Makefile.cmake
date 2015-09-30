@@ -117,5 +117,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/569_HW2.dir/DependInfo.cmake"
+  "CMakeFiles/p1.dir/DependInfo.cmake"
   )

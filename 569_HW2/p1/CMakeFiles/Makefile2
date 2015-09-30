@@ -54,45 +54,45 @@ RM = /usr/local/Cellar/cmake/3.3.1/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/tenten/Documents/github/github_569/569_HW2
+CMAKE_SOURCE_DIR = /Users/tenten/Documents/github/github_569/569_HW2/p1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/tenten/Documents/github/github_569/569_HW2
+CMAKE_BINARY_DIR = /Users/tenten/Documents/github/github_569/569_HW2/p1
 
 #=============================================================================
-# Target rules for target CMakeFiles/569_HW2.dir
+# Target rules for target CMakeFiles/p1.dir
 
 # All Build rule for target.
-CMakeFiles/569_HW2.dir/all:
-	$(MAKE) -f CMakeFiles/569_HW2.dir/build.make CMakeFiles/569_HW2.dir/depend
-	$(MAKE) -f CMakeFiles/569_HW2.dir/build.make CMakeFiles/569_HW2.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/tenten/Documents/github/github_569/569_HW2/CMakeFiles --progress-num=1,2,3 "Built target 569_HW2"
-.PHONY : CMakeFiles/569_HW2.dir/all
+CMakeFiles/p1.dir/all:
+	$(MAKE) -f CMakeFiles/p1.dir/build.make CMakeFiles/p1.dir/depend
+	$(MAKE) -f CMakeFiles/p1.dir/build.make CMakeFiles/p1.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/tenten/Documents/github/github_569/569_HW2/p1/CMakeFiles --progress-num=1,2,3 "Built target p1"
+.PHONY : CMakeFiles/p1.dir/all
 
 # Include target in all.
-all: CMakeFiles/569_HW2.dir/all
+all: CMakeFiles/p1.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/569_HW2.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/tenten/Documents/github/github_569/569_HW2/CMakeFiles 3
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/569_HW2.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/tenten/Documents/github/github_569/569_HW2/CMakeFiles 0
-.PHONY : CMakeFiles/569_HW2.dir/rule
+CMakeFiles/p1.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/tenten/Documents/github/github_569/569_HW2/p1/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/p1.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/tenten/Documents/github/github_569/569_HW2/p1/CMakeFiles 0
+.PHONY : CMakeFiles/p1.dir/rule
 
 # Convenience name for target.
-569_HW2: CMakeFiles/569_HW2.dir/rule
+p1: CMakeFiles/p1.dir/rule
 
-.PHONY : 569_HW2
-
-# clean rule for target.
-CMakeFiles/569_HW2.dir/clean:
-	$(MAKE) -f CMakeFiles/569_HW2.dir/build.make CMakeFiles/569_HW2.dir/clean
-.PHONY : CMakeFiles/569_HW2.dir/clean
+.PHONY : p1
 
 # clean rule for target.
-clean: CMakeFiles/569_HW2.dir/clean
+CMakeFiles/p1.dir/clean:
+	$(MAKE) -f CMakeFiles/p1.dir/build.make CMakeFiles/p1.dir/clean
+.PHONY : CMakeFiles/p1.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/p1.dir/clean
 
 .PHONY : clean
 

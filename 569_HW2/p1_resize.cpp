@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 #include <iostream>
-#include "hw1_helper.h"
+#include "hw2_helper.h"
 using namespace std;
 
 // Set parameters and helper function
