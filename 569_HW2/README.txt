@@ -13,7 +13,9 @@
 
 # Compile, link and default run:
 
+cmake .
 make
+./569_HW2
 
 # Clean compiling files:
 
@@ -22,16 +24,4 @@ make clean
 
 # 2. File list and explanation
 #
-# p1_resize.cpp:        Problem 1.a
-# p1_bilinear.cpp :     Problem 1.b.1
-# p1_MHC.cpp:           Problem 1.b.2
-# p2_transfer:          Problem 2.a.methodA
-# p2_cumulative:        Problem 2.a.methodB
-# p2_oilpainting.cpp    Problem 2.b
-# p3_gaussian.cpp       Problem 3.a
-# p3_median.cpp         Problem 3.a
-# p3_guided.cpp         Problem 3.b
-#
-# hw1_helper.cpp
-# hw1_helper.h
 
