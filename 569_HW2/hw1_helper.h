@@ -10,6 +10,7 @@
 #include <math.h>
 #include <fstream>
 #include <cstring>
+#include <opencv2/opencv.hpp>
 
 #ifndef HW1_HW1_HELPER_H
 #define HW1_HW1_HELPER_H

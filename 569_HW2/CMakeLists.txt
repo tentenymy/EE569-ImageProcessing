@@ -1,7 +1,5 @@
-cmake_minimum_required(VERSION 3.3)
-project(569_HW2)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-
-set(SOURCE_FILES main.cpp)
-add_executable(569_HW2 ${SOURCE_FILES})
+cmake_minimum_required(VERSION 2.8)
+project( 569_HW2 )
+find_package( OpenCV REQUIRED )
+add_executable( 569_HW2 p1a.cpp hw1_helper.h hw1_helper.cpp)
+target_link_libraries( 569_HW2 ${OpenCV_LIBS} )
