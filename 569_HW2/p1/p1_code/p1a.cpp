@@ -4,7 +4,8 @@
 using namespace cv;
 using namespace std;
 
-
+void File_Read(char*, Image*, int, int, int);
+void File_Write(char*, Image*, int, int, int);
 
 
 class TextureClassifier
@@ -17,62 +18,59 @@ class ImageOperater
 
 };
 
-char* StringChar(string str)
-{
-    int length = str.length();
-    char *ch = new char[length + 1];
-    strcpy(ch, str.c_str());
-}
 
-void File_Read (string filename, Image *ptr_image, int height, int width, int byteperpixel)
+void File_Read (char *filename, Image *image, int height, int width, int byteperpixel)
 {
     FILE *file;
-    char *ch_filename = StringChar(filename);
-    if (!(file = fopen(ch_filename, "rb"))) {
+    if (!(file = fopen(filename, "rb")))
+    {
         cout << "Cannot open file: " << filename << endl;
         exit(1);
     }
+
     size_t size = height * width * byteperpixel;
-    Image image[size];
-    fread(image, sizeof(Image), size, file);
+    Image image_buffer[size];
+    fread(image_buffer, sizeof(Image), size, file);
     fclose(file);
-    ptr_image = image;
+    image = image_buffer;
 }
 
 
 
-/*void File_Write (string filename, int height, int width, int byteperpixel)
+void File_Write (char* filename, Image *image, int height, int width, int byteperpixel)
 {
-    char new_filename[60];
-    strcpy(new_filename, FOLDER_WRITE);
-    strcat(new_filename, filename_write);
-    if (!(file = fopen(new_filename, "wb")))
+    FILE *file;
+    if (!(file = fopen(filename, "rb")))
     {
-        cout << "Cannot open file: " << filename_write <<endl;
+        cout << "Cannot open file: " << filename << endl;
         exit(1);
     }
 
-    Image image[height] [width] [byteperpixel];
-    memcpy(image, pt_image, sizeof(image));
-    fwrite(image, sizeof(Image), (size_t)width * height * byteperpixel, file);
+    size_t size = height * width * byteperpixel;
+    Image image_buffer[size];
+    fread(image_buffer, sizeof(Image), size, file);
     fclose(file);
-}*/
+    image = image_buffer;
+}
 
 
+void Feature_Extract ()
+{
+    Mat
+}
 
 int main(int argc, char *argv[]){
 
     cout << "Hello World" << endl;
 
-
-
     // Test
-    string filename = "p1/p1_image/p1_image_a/grass_01.raw";
-    Image *ptr_image = NULL;
-    File_Read(filename, ptr_image, 128, 128, 1);
-    cout << ptr_image[0] << endl;
+    char *filename = "p1_image/p1_image_a/grass_01.raw";
+    Image image [128 * 128];
+    File_Read(filename, image, 128, 128, 1);
 
 
 
 
+
+    return 0;
 }
