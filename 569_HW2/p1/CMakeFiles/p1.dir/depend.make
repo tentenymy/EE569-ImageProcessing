@@ -56,6 +56,7 @@ CMakeFiles/p1.dir/hw2_helper.cpp.o: /usr/local/include/opencv2/videoio/videoio_c
 
 CMakeFiles/p1.dir/p1a.cpp.o: hw2_helper.h
 CMakeFiles/p1.dir/p1a.cpp.o: p1a.cpp
+CMakeFiles/p1.dir/p1a.cpp.o: p1a.h
 CMakeFiles/p1.dir/p1a.cpp.o: /usr/local/include/opencv/cxcore.h
 CMakeFiles/p1.dir/p1a.cpp.o: /usr/local/include/opencv2/calib3d.hpp
 CMakeFiles/p1.dir/p1a.cpp.o: /usr/local/include/opencv2/calib3d/calib3d_c.h
