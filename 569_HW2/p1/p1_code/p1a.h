@@ -40,6 +40,8 @@ public:
 
     void Mat_Raw_Write_Gray(Mat mat, string filename);
 
+    Mat Mat_Raw_Read ();
+
     void Test();
 };
 

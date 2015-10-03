@@ -133,6 +133,27 @@ void ImgMatOperator::Mat_Raw_Write_Gray(Mat mat, string filename)
 
 }
 
+Mat ImgMatOperator::Mat_Raw_Read ()
+{
+    Mat input = Mat(128, 128, CV_8UC1);
+    input = imread("p1_image/p1_image_a/grass_01.raw", IMREAD_GRAYSCALE);
+    cout << input << endl;
+
+    char filename[] = "p1_image/p1_image_a/straw_01.raw";
+    Img *img = new Img[128 * 128];
+    Img *pt_img = Img_Raw_Read(filename, 128, 128, 1);
+
+
+    for (int i = 0; i < 128 * 128; i++)
+    {
+        img[i] = *pt_img++;
+
+    }
+    Mat mat = Mat(128, 128, CV_8UC1, img);
+    //cout << mat << endl;
+    return mat;
+}
+
 void ImgMatOperator::Test()
 {
     cout << "Test" << endl;
@@ -148,6 +169,9 @@ void ImgMatOperator::Test()
     Mat_File_Print(mat, "test_mat_file_print.txt");
     Mat_Raw_Write_Gray(mat, "test_mat_raw_write.raw");
     Mat_XML_Print(mat, "test_mat_xml_print.txt");
+
+    Mat mat2 = Mat_Raw_Read();
+    cout << mat2 << endl;
 }
 
 
@@ -183,11 +207,11 @@ int main(int argc, char *argv[]){
     cout << "Hello World!" << endl;
     cout << "Problem 1" << endl;
 
-    //ImgMatOperator img_op;
-    //img_op.Test();
+    ImgMatOperator img_op;
+    img_op.Test();
 
     //Feature_Extract();
-    Report();
+    //Report();
 
 
     return 0;
