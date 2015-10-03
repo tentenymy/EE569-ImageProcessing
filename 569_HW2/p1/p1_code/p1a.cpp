@@ -4,13 +4,17 @@
 using namespace cv;
 using namespace std;
 
+const int HEIGHT = 128;
+const int WIDTH = 128;
+const int WINDOW_SIZE = 5;
+
 class TextureClassifier
 {
 
 
 };
 
-
+// ImgMatOperator
 ImgMatOperator::ImgMatOperator()
 {
 
@@ -85,6 +89,23 @@ void ImgMatOperator::Img_File_Print (Img *image, string filename, int height, in
     fout.close();
 }
 
+void ImgMatOperator::Mat_XML_Print(Mat mat, string filename)
+{
+    cout << "Mat_XML_Print: " << filename << endl;
+    fstream fout;
+    fout.open(filename, ios_base::out);
+    if (!fout.is_open())
+    {
+        cerr << "Cannot open file: " << filename << endl;
+    }
+    for (int i = 0; i < mat.rows; i++)
+    {
+        for (int j = 0; j < mat.cols; j++)
+            fout << (int)mat.data[i * mat.cols + j] << endl;
+    }
+    fout.close();
+}
+
 Mat ImgMatOperator::Img_To_Mat_Convert (Img *image, int height, int width, int byteperpixel)
 {
     cout << "Img_To_Mat_Convert" << endl;
@@ -92,7 +113,7 @@ Mat ImgMatOperator::Img_To_Mat_Convert (Img *image, int height, int width, int b
     return mat;
 }
 
-void ImgMatOperator::Mat_Raw_Write_Gray(string filename,  Mat mat)
+void ImgMatOperator::Mat_Raw_Write_Gray(Mat mat, string filename)
 {
     cout << "Mat_Raw_Write_Gray: " << filename << endl;
     Img image[128 * 128];
@@ -112,46 +133,62 @@ void ImgMatOperator::Mat_Raw_Write_Gray(string filename,  Mat mat)
 
 }
 
-
-void Test()
+void ImgMatOperator::Test()
 {
-    ImgMatOperator img_op;
-
+    cout << "Test" << endl;
     char filename[] = "p1_image/p1_image_a/grass_01.raw";
-    Img *pt_image;
-    pt_image = img_op.Img_Raw_Read(filename, 128, 128, 1);
+    Img *pt_image = Img_Raw_Read(filename, 128, 128, 1);
     Img image[128 * 128];
-
-    for (int i = 0; i < 128 * 128; i++)
+    for (int i = 0; i < 128 * 128 * 1; i++)
             image[i] = pt_image[i];
-
-
     strcpy(filename, "test_img_raw_write.raw");
-    img_op.Img_Raw_Write(filename, image, 128, 128, 1);
-
-    img_op.Img_File_Print(image, "test_img_file_print.txt", 128, 128, 1);
-
-    Mat mat = img_op.Img_To_Mat_Convert(image, 128, 128, 1);
-    img_op.Mat_File_Print(mat, "test_mat_file_print.txt");
-
-    img_op.Mat_Raw_Write_Gray("test_mat_raw_write.raw", mat);
-
-
+    Img_Raw_Write(filename, image, 128, 128, 1);
+    Img_File_Print(image, "test_img_file_print.txt", 128, 128, 1);
+    Mat mat = Img_To_Mat_Convert(image, 128, 128, 1);
+    Mat_File_Print(mat, "test_mat_file_print.txt");
+    Mat_Raw_Write_Gray(mat, "test_mat_raw_write.raw");
+    Mat_XML_Print(mat, "test_mat_xml_print.txt");
 }
 
 
-void Feature_Extract (Mat image)
+Mat Feature_Extract (Mat mat)
 {
     cout << "Feature_Extract" << endl;
-    Mat mat_mean, mat_offset;
 
+    Mat mat_mean, mat_new;
+    boxFilter(mat, mat_mean, -1, Size(WINDOW_SIZE, WINDOW_SIZE));
+    subtract(mat, mat_mean, mat_new);
+    return mat_new;
+}
+
+void Report()
+{
+    cout << "Report" << endl;
+
+    ImgMatOperator img_op;
+    char filename[] = "p1_image/p1_image_a/grass_01.raw";
+    Img *pt_image = img_op.Img_Raw_Read(filename, 128, 128, 1);
+    Img image[128 * 128];
+    for (int i = 0; i < 128 * 128; i++)
+        image[i] = pt_image[i];
+    Mat mat = img_op.Img_To_Mat_Convert(image, 128, 128, 1);
+    mat = Feature_Extract(mat);
+
+    img_op.Mat_Raw_Write_Gray(mat, "test.raw");
 
 }
 
 int main(int argc, char *argv[]){
 
-    cout << "Hello World" << endl;
-    Test();
+    cout << "Hello World!" << endl;
+    cout << "Problem 1" << endl;
+
+    //ImgMatOperator img_op;
+    //img_op.Test();
+
+    //Feature_Extract();
+    Report();
+
 
     return 0;
 }

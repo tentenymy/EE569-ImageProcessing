@@ -32,11 +32,14 @@ public:
 
     void Mat_File_Print (Mat mat, string filename);
 
+    void Mat_XML_Print(Mat mat, string filename);
+
     void Img_File_Print (Img *image, string filename, int height, int width, int byteperpixel);
 
     Mat Img_To_Mat_Convert (Img *image, int height, int width, int byteperpixel);
 
-    void Mat_Raw_Write_Gray(string filename, Mat mat);
+    void Mat_Raw_Write_Gray(Mat mat, string filename);
+
+    void Test();
 };
 
-void Test();
