@@ -15,11 +15,6 @@ const int NUM_LABEL = 2;
 
 const string FOLDER1 = "p1_image/p1_image_a/";
 
-
-
-
-
-
 class ClassifierTexture
 {
 private:
@@ -28,9 +23,18 @@ private:
     string list_filename_label1[36];
     string list_filename_label2[36];
     string list_filename_unknown[24];
+
+    Mat list_label_known;
     string list_label_unknown[24];
 
     vector <Mat> mat_feature;
+    Mat mat_feature_pca_lda;
+
+    Mat mat_feature_average_pca[NUM_LABEL];
+    Mat mat_feature_average_lda[NUM_LABEL];
+
+    vector <Mat> mat_feature_pca;
+    vector <Mat> mat_feature_lda;
 
     // Generate File name list
     string Get_Filename (string label, int num) {
@@ -116,6 +120,14 @@ public:
         for (int i = 0; i < 24; i++) {
             list_label_unknown[i] = temp_list_label_unknown[i];
         }
+        int list_label[72];
+        for (int i = 0; i < NUM_LABEL; i++) {
+            for (int j = 0; j < 36; j++) {
+                list_label[i * 36 + j] = i;
+            }
+        }
+        list_label_known = Mat(1, 72, CV_32S, list_label);
+        cout << list_label_known << endl;
     }
     // p1a1: Feature Extraction
     double *Extract_Feature (Img *pt_img, int height, int width, int byteperpixel) {
@@ -214,6 +226,11 @@ public:
         for (int i = 0; i < NUM_LABEL; i++) {
             mat_feature_average[i] = Mat(1, NUM_DATA, CV_64F, feature_average[i]).clone();
         }
+        // Set a big matrix for later use (PCA, LDA)
+        mat_feature_pca_lda = mat_feature[0];
+        for (int i = 1; i < 72; i++) {
+            vconcat(mat_feature_pca_lda, mat_feature[i], mat_feature_pca_lda);
+        }
     }
     void Set_Feature_Unknown() {
         cout << "Set_Feature_Unknown" << endl;
@@ -242,6 +259,7 @@ public:
             cout << mat_feature[i] << endl;
         }
     }
+
     // p1a2: MM
     int Get_Minimum_Mean_Distance (int no_feature, string label) {
         Mat temp_covar, temp_covar_invert;
@@ -265,9 +283,7 @@ public:
             cout << label << " " << no_feature << ": " << min_label << endl;
             return 0;
         }
-
     }
-
     void Classifier_MM() {
         cout << "Minimum Mean Distance" << endl;
         ImgMatOperator img_op;
@@ -285,6 +301,166 @@ public:
         double error_rate = 100.0 * count_error / (36.0 + 36.0 + 24.0);
         cout << "ERROR RATE: " << error_rate << endl;
     }
+
+    // p1a3: PCA
+    void Classifier_PCA(int num) {
+        // Use PCA reduce the feature matrix
+        cout << "Classifier_PCA" << endl;
+        // Get 36 num-dimension feature matrix
+        PCA pca = PCA (mat_feature_pca_lda, Mat(), CV_PCA_DATA_AS_ROW, num);
+        Mat mat_projected = Mat(72, num, CV_64F);
+        pca.project(mat_feature_pca_lda, mat_projected);
+        for (int i = 0; i < 72; i++) {
+            Mat mat_temp;
+            mat_projected.row(i).copyTo(mat_temp);
+            mat_feature_pca.push_back(mat_temp);
+        }
+        cout << mat_projected << endl << endl;
+        // Get 24 unknown image 2-D
+        for (int i = 0; i < 24; i++) {
+            mat_projected = pca.project(mat_feature[72 + i]);
+            mat_feature_pca.push_back(mat_projected);
+            cout << mat_projected << endl;
+        }
+        cout << endl;
+        // Get 2 classes num-dismension mean matrix
+        cout << "Average: " << endl;
+        Mat mat_temp[2];
+        for (int i = 0; i < 2; i++) {
+            mat_temp[i] = mat_feature_pca[0];
+            for (int j = 0; j < 36; j++) {
+                vconcat(mat_temp[i], mat_feature_pca[i * 36 + j], mat_temp[i]);
+            }
+            reduce(mat_temp[i], mat_feature_average_pca[i], 0, CV_REDUCE_AVG);
+            cout << mat_feature_average_pca[i] << endl << endl;
+        }
+        cout << "Classifier_PCA" << endl;
+        // Use Minimum_Mean_Distance to get error rate
+        ImgMatOperator img_op;
+        int count_error = 0;
+        for (int k = 0; k < 36; k++) {
+            count_error += Get_Minimum_Mean_Distance_PCA (k, LIST_LABEL[0]);
+        }
+        for (int k = 0; k < 36; k++) {
+            count_error += Get_Minimum_Mean_Distance_PCA (k + 36, LIST_LABEL[1]);
+        }
+        for (int k = 0; k < 24; k++) {
+            count_error += Get_Minimum_Mean_Distance_PCA (k + 72, list_label_unknown[k]);
+        }
+        double error_rate = 100.0 * count_error / (36.0 + 36.0 + 24.0);
+        cout << "ERROR RATE: " << error_rate << endl;
+    }
+    int Get_Minimum_Mean_Distance_PCA (int no_feature, string label) {
+        Mat temp_covar, temp_covar_invert;
+        double distance[NUM_LABEL];
+        double min_distance = 100;
+        string min_label = "";
+        for (int i = 0; i < NUM_LABEL; i++) {
+            calcCovarMatrix(mat_feature_pca[no_feature], temp_covar, mat_feature_average_pca[i], CV_COVAR_NORMAL|CV_COVAR_ROWS|CV_COVAR_USE_AVG);
+            invert(temp_covar, temp_covar_invert, DECOMP_SVD);
+            distance[i] = Mahalanobis(mat_feature_pca[no_feature], mat_feature_average_pca[i], temp_covar);
+            if (min_distance > distance[i]) {
+                min_distance = distance[i];
+                min_label = LIST_LABEL[i];
+            }
+        }
+        if (min_label != label) {
+            cout << label << " " << no_feature << ": " << min_label << " (*)" << endl;
+            return 1;
+        }
+        else  {
+            cout << label << " " << no_feature << ": " << min_label << endl;
+            return 0;
+        }
+    }
+    void Print_Feature_PCA() {
+        cout << "Print_Feature_PCA" << endl;
+        for (int i = 0; i < mat_feature_pca.size(); i++) {
+            cout << mat_feature_pca[i] << endl;
+        }
+    }
+
+    // p1a4: LDA
+    void Classifier_LDA(int num) {
+        // Use LDA reduce the feature matrix
+        cout << "Classifier_LDA" << endl;
+        // Get 36 num-dimension feature matrix
+        LDA lda = LDA (mat_feature_pca_lda, list_label_known, num);
+        Mat mat_projected = Mat(72, num, CV_64F);
+        mat_projected = lda.project(mat_feature_pca_lda);
+        for (int i = 0; i < 72; i++) {
+            Mat mat_temp;
+            mat_projected.row(i).copyTo(mat_temp);
+            mat_feature_lda.push_back(mat_temp);
+        }
+        cout << mat_projected << endl << endl;
+        // Get 24 unknown image 2-D
+        for (int i = 0; i < 24; i++) {
+            mat_projected = lda.project(mat_feature[72 + i]);
+            mat_feature_lda.push_back(mat_projected);
+            cout << mat_projected << endl;
+        }
+        cout << endl;
+        // Get 2 classes num-dismension mean matrix
+        cout << "Average: " << endl;
+        Mat mat_temp[2];
+        for (int i = 0; i < 2; i++) {
+            mat_temp[i] = mat_feature_lda[0];
+            for (int j = 0; j < 36; j++) {
+                vconcat(mat_temp[i], mat_feature_lda[i * 36 + j], mat_temp[i]);
+            }
+            reduce(mat_temp[i], mat_feature_average_lda[i], 0, CV_REDUCE_AVG);
+            cout << mat_feature_average_lda[i] << endl;
+        }
+        cout << "Classifier_LDA" << endl;
+        // Use Minimum_Mean_Distance to get error rate
+        ImgMatOperator img_op;
+        int count_error = 0;
+        for (int k = 0; k < 36; k++) {
+            count_error += Get_Minimum_Mean_Distance_LDA (k, LIST_LABEL[0]);
+        }
+        cout << "Classifier_LDA" << endl;
+        for (int k = 0; k < 36; k++) {
+            count_error += Get_Minimum_Mean_Distance_LDA (k + 36, LIST_LABEL[1]);
+        }
+        cout << "Classifier_LDA" << endl;
+        for (int k = 0; k < 24; k++) {
+            count_error += Get_Minimum_Mean_Distance_LDA (k + 72, list_label_unknown[k]);
+        }
+        double error_rate = 100.0 * count_error / (36.0 + 36.0 + 24.0);
+        cout << "ERROR RATE: " << error_rate << endl;
+    }
+    int Get_Minimum_Mean_Distance_LDA (int no_feature, string label) {
+        Mat temp_covar, temp_covar_invert;
+        double distance[NUM_LABEL];
+        double min_distance = 100;
+        string min_label = "";
+        for (int i = 0; i < NUM_LABEL; i++) {
+            calcCovarMatrix(mat_feature_lda[no_feature], temp_covar, mat_feature_average_lda[i], CV_COVAR_NORMAL|CV_COVAR_ROWS|CV_COVAR_USE_AVG);
+            invert(temp_covar, temp_covar_invert, DECOMP_SVD);
+            distance[i] = Mahalanobis(mat_feature_lda[no_feature], mat_feature_average_lda[i], temp_covar);
+            if (min_distance > distance[i]) {
+                min_distance = distance[i];
+                min_label = LIST_LABEL[i];
+            }
+        }
+        if (min_label != label) {
+            cout << label << " " << no_feature << ": " << min_label << " (*)" << endl;
+            return 1;
+        }
+        else  {
+            cout << label << " " << no_feature << ": " << min_label << endl;
+            return 0;
+        }
+    }
+    void Print_Feature_LDA() {
+        cout << "Print_Feature_LDA" << endl;
+        for (int i = 0; i < mat_feature_lda.size(); i++) {
+            cout << mat_feature_lda[i] << endl;
+        }
+    }
+
+
     void Test()
     {
         // Extract_Feature
@@ -308,7 +484,11 @@ void Prob1a()
 
     //classifier.Print_Feature_Average();
     //classifier.Print_Feature();
-    classifier.Classifier_MM();
+    //classifier.Classifier_MM();
+    // classifier.Classifier_PCA(2);
+    //classifier.Print_Feature_PCA();
+    //classifier.Classifier_PCA(2);
+    classifier.Classifier_LDA(1);
 }
 
 int main(int argc, char *argv[])
