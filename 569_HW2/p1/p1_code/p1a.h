@@ -15,33 +15,9 @@
 #include <cstring>
 #include <opencv2/opencv.hpp>
 
-typedef unsigned char Img;
+
 
 using namespace cv;
 using namespace std;
 
-class ImgMatOperator
-{
-public:
-    ImgMatOperator();
-
-
-    Img* Img_Raw_Read (char *filename, int height, int width, int byteperpixel);
-
-    void Img_Raw_Write (char* filename, Img *image, int height, int width, int byteperpixel);
-
-    void Mat_File_Print (Mat mat, string filename);
-
-    void Mat_XML_Print(Mat mat, string filename);
-
-    void Img_File_Print (Img *image, string filename, int height, int width, int byteperpixel);
-
-    Mat Img_To_Mat_Convert (Img *image, int height, int width, int byteperpixel);
-
-    void Mat_Raw_Write_Gray(Mat mat, string filename);
-
-    Mat Mat_Raw_Read ();
-
-    void Test();
-};
 
