@@ -29,6 +29,9 @@ private:
     string list_filename_label2[36];
     string list_filename_unknown[24];
     string list_label_unknown[24];
+
+    vector <Mat> mat_feature;
+
     // Generate File name list
     string Get_Filename (string label, int num) {
         string str_num;
@@ -102,7 +105,7 @@ private:
         return res;
     }
 public:
-    ClassifierTexture(int mode) {
+    ClassifierTexture() {
         Get_List_Filename();
         Set_Filter();
         string temp_list_label_unknown[24] =
@@ -182,30 +185,47 @@ public:
         double *res = pixel_total;
         return res;
     }
-    void Get_Feature_Average () {
-        cout << "Get_Feature_Average" << endl;
+    void Set_Feature_Known () {
+        cout << "Set_Feature_Known" << endl;
         // Read all labeled image and get mean
         ImgMatOperator img_op;
         Img *temp_img;
         double *temp_feature;
         double feature_average[NUM_LABEL][NUM_DATA] = {};
-        for (int i = 0; i < LIST_NUM_LABEL[0]; i++) {
+        for (int i = 0; i < 36; i++) {
             temp_img = img_op.Img_Raw_Read(list_filename_label1[i], HEIGHT, WIDTH, BYTEPERPIXEL);
             temp_feature = Extract_Feature(temp_img, HEIGHT, WIDTH, BYTEPERPIXEL);
             for (int j = 0; j < NUM_DATA; j++) {
-                feature_average[0][j] += temp_feature[j] / LIST_NUM_LABEL[0];
+                feature_average[0][j] += temp_feature[j] /36;
             }
+            Mat temp_mat = Mat(1, NUM_DATA, CV_64F, temp_feature).clone();
+            mat_feature.push_back(temp_mat);
         }
-        for (int i = 0; i < LIST_NUM_LABEL[1]; i++) {
+        for (int i = 0; i < 36; i++) {
             temp_img = img_op.Img_Raw_Read(list_filename_label2[i], HEIGHT, WIDTH, BYTEPERPIXEL);
             temp_feature = Extract_Feature(temp_img, HEIGHT, WIDTH, BYTEPERPIXEL);
             for (int j = 0; j < NUM_DATA; j++) {
-                feature_average[1][j] += temp_feature[j] / LIST_NUM_LABEL[1];
+                feature_average[1][j] += temp_feature[j] /36;
             }
+            Mat temp_mat = Mat(1, NUM_DATA, CV_64F, temp_feature).clone();
+            mat_feature.push_back(temp_mat);
         }
         // Save in Mat
         for (int i = 0; i < NUM_LABEL; i++) {
             mat_feature_average[i] = Mat(1, NUM_DATA, CV_64F, feature_average[i]).clone();
+        }
+    }
+    void Set_Feature_Unknown() {
+        cout << "Set_Feature_Unknown" << endl;
+        // Read all labeled image and get mean
+        ImgMatOperator img_op;
+        Img *temp_img;
+        double *temp_feature;
+        for (int i = 0; i < 24; i++) {
+            temp_img = img_op.Img_Raw_Read(list_filename_unknown[i], HEIGHT, WIDTH, BYTEPERPIXEL);
+            temp_feature = Extract_Feature(temp_img, HEIGHT, WIDTH, BYTEPERPIXEL);
+            Mat temp_mat = Mat(1, NUM_DATA, CV_64F, temp_feature).clone();
+            mat_feature.push_back(temp_mat);
         }
     }
     void Print_Feature_Average() {
@@ -216,93 +236,55 @@ public:
             cout << mat_feature_average[i] << endl << endl;
         }
     }
+    void Print_Feature() {
+        cout << "Print_Feature" << endl;
+        for (int i = 0; i < mat_feature.size(); i++) {
+            cout << mat_feature[i] << endl;
+        }
+    }
     // p1a2: MM
-    void MM() {
-        cout << "MM" << endl;
+    int Get_Minimum_Mean_Distance (int no_feature, string label) {
+        Mat temp_covar, temp_covar_invert;
+        double distance[NUM_LABEL];
+        double min_distance = 100;
+        string min_label = "";
+        for (int i = 0; i < NUM_LABEL; i++) {
+            calcCovarMatrix(mat_feature[no_feature], temp_covar, mat_feature_average[i], CV_COVAR_NORMAL|CV_COVAR_ROWS|CV_COVAR_USE_AVG);
+            invert(temp_covar, temp_covar_invert, DECOMP_SVD);
+            distance[i] = Mahalanobis(mat_feature[no_feature], mat_feature_average[i], temp_covar);
+            if (min_distance > distance[i]) {
+                min_distance = distance[i];
+                min_label = LIST_LABEL[i];
+            }
+        }
+        if (min_label != label) {
+            cout << label << " " << no_feature << ": " << min_label << " (*)" << endl;
+            return 1;
+        }
+        else  {
+            cout << label << " " << no_feature << ": " << min_label << endl;
+            return 0;
+        }
+
+    }
+
+    void Classifier_MM() {
+        cout << "Minimum Mean Distance" << endl;
         ImgMatOperator img_op;
         int count_error = 0;
-        // Grass 1-36
+        // Read Extracted Feature
         for (int k = 0; k < 36; k++) {
-            //cout << LIST_LABEL[0] << " " << k << ": ";
-            Img *temp_img = img_op.Img_Raw_Read(list_filename_label1[k], 128, 128, 1);
-            double *sample_feature = Extract_Feature(temp_img, HEIGHT, WIDTH, BYTEPERPIXEL);
-            Mat mat_sample_feature = Mat(1, NUM_DATA, CV_64F, sample_feature);
-
-            Mat temp_covar, temp_covar_invert;
-            double distance[NUM_LABEL];
-            double min_distance = 100;
-            string min_label = "";
-            for (int i = 0; i < NUM_LABEL; i++) {
-                calcCovarMatrix(mat_sample_feature, temp_covar, mat_feature_average[i], CV_COVAR_NORMAL|CV_COVAR_ROWS|CV_COVAR_USE_AVG);
-                invert(temp_covar, temp_covar_invert, DECOMP_SVD);
-                distance[i] = Mahalanobis(mat_sample_feature, mat_feature_average[i], temp_covar);
-                if (min_distance > distance[i]) {
-                    min_distance = distance[i];
-                    min_label = LIST_LABEL[i];
-                }
-            }
-            if (min_label != LIST_LABEL[0]) {
-                //cout << "*********";
-                count_error++;
-            }
-            //cout << min_label << endl;
+            count_error += Get_Minimum_Mean_Distance (k, LIST_LABEL[0]);
         }
-        // Straw 1-36
         for (int k = 0; k < 36; k++) {
-            //cout << LIST_LABEL[1] << " " << k << ": ";
-            Img *temp_img = img_op.Img_Raw_Read(list_filename_label2[k], 128, 128, 1);
-            double *sample_feature = Extract_Feature(temp_img, HEIGHT, WIDTH, BYTEPERPIXEL);
-            Mat mat_sample_feature = Mat(1, NUM_DATA, CV_64F, sample_feature);
-
-            Mat temp_covar, temp_covar_invert;
-            double distance[NUM_LABEL];
-            double min_distance = 100;
-            string min_label = "";
-            for (int i = 0; i < NUM_LABEL; i++) {
-                calcCovarMatrix(mat_sample_feature, temp_covar, mat_feature_average[i], CV_COVAR_NORMAL|CV_COVAR_ROWS|CV_COVAR_USE_AVG);
-                invert(temp_covar, temp_covar_invert, DECOMP_SVD);
-                distance[i] = Mahalanobis(mat_sample_feature, mat_feature_average[i], temp_covar);
-                if (min_distance > distance[i]) {
-                    min_distance = distance[i];
-                    min_label = LIST_LABEL[i];
-                }
-            }
-            if (min_label != LIST_LABEL[1]) {
-                //cout << "*********";
-                count_error++;
-            }
-            //cout << min_label << endl;
+            count_error += Get_Minimum_Mean_Distance (k + 36, LIST_LABEL[1]);
         }
         for (int k = 0; k < 24; k++) {
-            //cout << list_label_unknown[k] << " " << k << ": ";
-            Img *temp_img = img_op.Img_Raw_Read(list_filename_unknown[k], 128, 128, 1);
-            double *sample_feature = Extract_Feature(temp_img, HEIGHT, WIDTH, BYTEPERPIXEL);
-            Mat mat_sample_feature = Mat(1, NUM_DATA, CV_64F, sample_feature);
-
-            Mat temp_covar, temp_covar_invert;
-            double distance[NUM_LABEL];
-            double min_distance = 100;
-            string min_label = "";
-            for (int i = 0; i < NUM_LABEL; i++) {
-                calcCovarMatrix(mat_sample_feature, temp_covar, mat_feature_average[i], CV_COVAR_NORMAL|CV_COVAR_ROWS|CV_COVAR_USE_AVG);
-                invert(temp_covar, temp_covar_invert, DECOMP_SVD);
-                distance[i] = Mahalanobis(mat_sample_feature, mat_feature_average[i], temp_covar);
-                if (min_distance > distance[i]) {
-                    min_distance = distance[i];
-                    min_label = LIST_LABEL[i];
-                }
-            }
-            if (min_label != list_label_unknown[k]) {
-                //cout << "*********";
-                count_error++;
-            }
-            //cout << min_label << endl;
+            count_error += Get_Minimum_Mean_Distance (k + 72, list_label_unknown[k]);
         }
         double error_rate = 100.0 * count_error / (36.0 + 36.0 + 24.0);
         cout << "ERROR RATE: " << error_rate << endl;
     }
-
-
     void Test()
     {
         // Extract_Feature
@@ -321,9 +303,12 @@ void Prob1a()
 {
     cout << "Prob1a" << endl;
     ClassifierTexture classifier = ClassifierTexture();
-    classifier.Get_Feature_Average();
+    classifier.Set_Feature_Known();
+    classifier.Set_Feature_Unknown();
+
     //classifier.Print_Feature_Average();
-    classifier.MM();
+    //classifier.Print_Feature();
+    classifier.Classifier_MM();
 }
 
 int main(int argc, char *argv[])
