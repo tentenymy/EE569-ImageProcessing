@@ -13,57 +13,51 @@ const string LIST_LABEL[3] = {"grass", "straw", "unknown"};
 const int LIST_NUM_LABEL[3] = {36, 36, 24};
 const int NUM_LABEL = 2;
 
-
 const string FOLDER1 = "p1_image/p1_image_a/";
-string list_filename_label1[36];
-string list_filename_label2[36];
-string list_filename_unknown[24];
 
 
-// File name
-string Get_Filename (string label, int num)
-{
-    string str_num;
-    num++;
-    if (num < 10)
-        str_num = "0" + to_string(num);
-    else
-        str_num = to_string(num);
-    return label + "_" + str_num + ".raw";
-}
 
-void Get_List_Filename ()
-{
-    string filename = "";
-    for (int i = 0; i < LIST_NUM_LABEL[0]; i++)
-    {
-        filename = FOLDER1 + Get_Filename(LIST_LABEL[0], i);
-        list_filename_label1[i] = filename;
-    }
-    for (int i = 0; i < LIST_NUM_LABEL[1]; i++)
-    {
-        filename = FOLDER1 + Get_Filename(LIST_LABEL[1], i);
-        list_filename_label2[i] = filename;
-    }
-    for (int i = 0; i < LIST_NUM_LABEL[2]; i++)
-    {
-        filename = FOLDER1 + Get_Filename(LIST_LABEL[2], i);
-        list_filename_unknown[i] = filename;
-    }
-}
+
 
 
 class ClassifierTexture
 {
 private:
-    map<string, Mat> info_label;
     int filter_bank[25][25];
-
-public:
-    ClassifierTexture() {
-        Set_Filter();
+    Mat mat_feature_average[NUM_LABEL];
+    string list_filename_label1[36];
+    string list_filename_label2[36];
+    string list_filename_unknown[24];
+    string list_label_unknown[24];
+    // Generate File name list
+    string Get_Filename (string label, int num) {
+        string str_num;
+        num++;
+        if (num < 10)
+            str_num = "0" + to_string(num);
+        else
+            str_num = to_string(num);
+        return label + "_" + str_num + ".raw";
     }
-
+    void Get_List_Filename () {
+        string filename = "";
+        for (int i = 0; i < LIST_NUM_LABEL[0]; i++)
+        {
+            filename = FOLDER1 + Get_Filename(LIST_LABEL[0], i);
+            list_filename_label1[i] = filename;
+        }
+        for (int i = 0; i < LIST_NUM_LABEL[1]; i++)
+        {
+            filename = FOLDER1 + Get_Filename(LIST_LABEL[1], i);
+            list_filename_label2[i] = filename;
+        }
+        for (int i = 0; i < LIST_NUM_LABEL[2]; i++)
+        {
+            filename = FOLDER1 + Get_Filename(LIST_LABEL[2], i);
+            list_filename_unknown[i] = filename;
+        }
+    }
+    // Create Filter
     void Set_Filter() {
         cout << "Set_filter" << endl;
         int coef_laws_filter[5][5] = {{1, 4, 6, 4, 1}, {-1, -2, 0, 2, 1}, {-1, 0, 2, 0, -1},
@@ -78,7 +72,6 @@ public:
             }
         }
     }
-
     void Print_Filter() {
         cout << "Print_Filter" << endl;
         for (int i = 0; i < 5; i++) {
@@ -94,7 +87,6 @@ public:
             }
         }
     }
-
     int *Get_Window(int i, int j, int height, int width, int half_window) {
         // top, bottom, left, right
         int window[4] = {i - 2, i + 2, j - 2, j + 2};
@@ -109,9 +101,22 @@ public:
         int *res = window;
         return res;
     }
-
+public:
+    ClassifierTexture(int mode) {
+        Get_List_Filename();
+        Set_Filter();
+        string temp_list_label_unknown[24] =
+                {"straw", "straw", "grass", "grass", "grass", "straw",
+                 "grass", "straw", "straw", "grass", "grass", "grass",
+                "straw", "grass", "straw" , "straw", "straw", "straw",
+                "grass", "grass", "grass", "straw", "straw", "grass"};
+        for (int i = 0; i < 24; i++) {
+            list_label_unknown[i] = temp_list_label_unknown[i];
+        }
+    }
+    // p1a1: Feature Extraction
     double *Extract_Feature (Img *pt_img, int height, int width, int byteperpixel) {
-        cout << "Feature Extract: ";
+        //cout << "Feature Extract: " << endl;
         // 1. Set original image
         int img[128 * 128];
         for (int i = 0; i < 128; i++) {
@@ -174,22 +179,17 @@ public:
         for (int i = 0; i < 25; i++) {
             pixel_total[i] = (pixel_total[i] - pixel_min) / (pixel_max - pixel_min);
         }
-        for (int i = 0; i < 25; i++) {
-            cout << pixel_total[i] << " ";
-        }
-        cout << endl;
         double *res = pixel_total;
         return res;
     }
-
-    void Get_Feature_Vector () {
+    void Get_Feature_Average () {
+        cout << "Get_Feature_Average" << endl;
         // Read all labeled image and get mean
         ImgMatOperator img_op;
         Img *temp_img;
         double *temp_feature;
         double feature_average[NUM_LABEL][NUM_DATA] = {};
         for (int i = 0; i < LIST_NUM_LABEL[0]; i++) {
-            cout << list_filename_label1[i] << endl;
             temp_img = img_op.Img_Raw_Read(list_filename_label1[i], HEIGHT, WIDTH, BYTEPERPIXEL);
             temp_feature = Extract_Feature(temp_img, HEIGHT, WIDTH, BYTEPERPIXEL);
             for (int j = 0; j < NUM_DATA; j++) {
@@ -197,21 +197,111 @@ public:
             }
         }
         for (int i = 0; i < LIST_NUM_LABEL[1]; i++) {
-            cout << list_filename_label2[i] << endl;
             temp_img = img_op.Img_Raw_Read(list_filename_label2[i], HEIGHT, WIDTH, BYTEPERPIXEL);
             temp_feature = Extract_Feature(temp_img, HEIGHT, WIDTH, BYTEPERPIXEL);
             for (int j = 0; j < NUM_DATA; j++) {
                 feature_average[1][j] += temp_feature[j] / LIST_NUM_LABEL[1];
             }
         }
-        // Print average of each label
+        // Save in Mat
         for (int i = 0; i < NUM_LABEL; i++) {
-            cout << endl << LIST_LABEL[i] << endl;
-            for (int j = 0; j < NUM_DATA; j++) {
-                cout << feature_average[i][j] << endl;
-            }
+            mat_feature_average[i] = Mat(1, NUM_DATA, CV_64F, feature_average[i]).clone();
         }
     }
+    void Print_Feature_Average() {
+        // Print average of each label
+        cout << "Print_Feature_Average" << endl;
+        for (int i = 0; i < NUM_LABEL; i++) {
+            cout << LIST_LABEL[i] << endl;
+            cout << mat_feature_average[i] << endl << endl;
+        }
+    }
+    // p1a2: MM
+    void MM() {
+        cout << "MM" << endl;
+        ImgMatOperator img_op;
+        int count_error = 0;
+        // Grass 1-36
+        for (int k = 0; k < 36; k++) {
+            //cout << LIST_LABEL[0] << " " << k << ": ";
+            Img *temp_img = img_op.Img_Raw_Read(list_filename_label1[k], 128, 128, 1);
+            double *sample_feature = Extract_Feature(temp_img, HEIGHT, WIDTH, BYTEPERPIXEL);
+            Mat mat_sample_feature = Mat(1, NUM_DATA, CV_64F, sample_feature);
+
+            Mat temp_covar, temp_covar_invert;
+            double distance[NUM_LABEL];
+            double min_distance = 100;
+            string min_label = "";
+            for (int i = 0; i < NUM_LABEL; i++) {
+                calcCovarMatrix(mat_sample_feature, temp_covar, mat_feature_average[i], CV_COVAR_NORMAL|CV_COVAR_ROWS|CV_COVAR_USE_AVG);
+                invert(temp_covar, temp_covar_invert, DECOMP_SVD);
+                distance[i] = Mahalanobis(mat_sample_feature, mat_feature_average[i], temp_covar);
+                if (min_distance > distance[i]) {
+                    min_distance = distance[i];
+                    min_label = LIST_LABEL[i];
+                }
+            }
+            if (min_label != LIST_LABEL[0]) {
+                //cout << "*********";
+                count_error++;
+            }
+            //cout << min_label << endl;
+        }
+        // Straw 1-36
+        for (int k = 0; k < 36; k++) {
+            //cout << LIST_LABEL[1] << " " << k << ": ";
+            Img *temp_img = img_op.Img_Raw_Read(list_filename_label2[k], 128, 128, 1);
+            double *sample_feature = Extract_Feature(temp_img, HEIGHT, WIDTH, BYTEPERPIXEL);
+            Mat mat_sample_feature = Mat(1, NUM_DATA, CV_64F, sample_feature);
+
+            Mat temp_covar, temp_covar_invert;
+            double distance[NUM_LABEL];
+            double min_distance = 100;
+            string min_label = "";
+            for (int i = 0; i < NUM_LABEL; i++) {
+                calcCovarMatrix(mat_sample_feature, temp_covar, mat_feature_average[i], CV_COVAR_NORMAL|CV_COVAR_ROWS|CV_COVAR_USE_AVG);
+                invert(temp_covar, temp_covar_invert, DECOMP_SVD);
+                distance[i] = Mahalanobis(mat_sample_feature, mat_feature_average[i], temp_covar);
+                if (min_distance > distance[i]) {
+                    min_distance = distance[i];
+                    min_label = LIST_LABEL[i];
+                }
+            }
+            if (min_label != LIST_LABEL[1]) {
+                //cout << "*********";
+                count_error++;
+            }
+            //cout << min_label << endl;
+        }
+        for (int k = 0; k < 24; k++) {
+            //cout << list_label_unknown[k] << " " << k << ": ";
+            Img *temp_img = img_op.Img_Raw_Read(list_filename_unknown[k], 128, 128, 1);
+            double *sample_feature = Extract_Feature(temp_img, HEIGHT, WIDTH, BYTEPERPIXEL);
+            Mat mat_sample_feature = Mat(1, NUM_DATA, CV_64F, sample_feature);
+
+            Mat temp_covar, temp_covar_invert;
+            double distance[NUM_LABEL];
+            double min_distance = 100;
+            string min_label = "";
+            for (int i = 0; i < NUM_LABEL; i++) {
+                calcCovarMatrix(mat_sample_feature, temp_covar, mat_feature_average[i], CV_COVAR_NORMAL|CV_COVAR_ROWS|CV_COVAR_USE_AVG);
+                invert(temp_covar, temp_covar_invert, DECOMP_SVD);
+                distance[i] = Mahalanobis(mat_sample_feature, mat_feature_average[i], temp_covar);
+                if (min_distance > distance[i]) {
+                    min_distance = distance[i];
+                    min_label = LIST_LABEL[i];
+                }
+            }
+            if (min_label != list_label_unknown[k]) {
+                //cout << "*********";
+                count_error++;
+            }
+            //cout << min_label << endl;
+        }
+        double error_rate = 100.0 * count_error / (36.0 + 36.0 + 24.0);
+        cout << "ERROR RATE: " << error_rate << endl;
+    }
+
 
     void Test()
     {
@@ -230,15 +320,15 @@ public:
 void Prob1a()
 {
     cout << "Prob1a" << endl;
-
     ClassifierTexture classifier = ClassifierTexture();
-    classifier. Get_Feature_Vector();
+    classifier.Get_Feature_Average();
+    //classifier.Print_Feature_Average();
+    classifier.MM();
 }
 
 int main(int argc, char *argv[])
 {
     cout << "Problem 1" << endl;
-    Get_List_Filename();
     Prob1a();
 
     return 0;
