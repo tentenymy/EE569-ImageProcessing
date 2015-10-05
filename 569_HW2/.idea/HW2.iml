@@ -5,8 +5,8 @@
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/p1/p1_code/hw2_helper.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/p1/p1_code/hw2_helper.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/p1/p1_code/p1a.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/p1/p1_code/p1a.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/p1/p1_code/p1a_mm.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/p1/p1_code/p1a_mm.h" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

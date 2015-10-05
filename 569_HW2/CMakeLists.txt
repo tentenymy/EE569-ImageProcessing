@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3)
 project( p1 )
 find_package( OpenCV REQUIRED )
-add_executable( p1 p1/p1_code/p1a.cpp p1/p1_code/p1a.h p1/p1_code/hw2_helper.h p1/p1_code/hw2_helper.cpp)
+add_executable( p1 p1/p1_code/p1a_mm.cpp p1/p1_code/p1a_mm.h p1/p1_code/hw2_helper.h p1/p1_code/hw2_helper.cpp)
 target_link_libraries( p1 ${OpenCV_LIBS} )
