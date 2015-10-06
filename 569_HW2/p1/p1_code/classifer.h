@@ -6,6 +6,14 @@
 #define P1_CLASSIFER_H
 
 #include "hw2_helper.h"
+#include <opencv2/core.hpp>
+#include <opencv2/imgproc.hpp>
+#include "opencv2/imgcodecs.hpp"
+#include <opencv2/highgui.hpp>
+#include <opencv2/ml.hpp>
+
+using namespace cv;
+using namespace cv::ml;
 
 
 // Image
@@ -62,22 +70,19 @@ private:
     vector <Mat> mat_feature_pca;
     vector <Mat> mat_feature_lda;
     double *Extract_Feature (Img *pt_img, int height, int width, int byteperpixel);
-    int Get_Minimum_Mean_Distance (int no_feature, string label, int mode);
     void Decrease_Dimension_PCA(int num);
     void Decrease_Dimension_LDA(int num);
+    int Get_Minimum_Mean_Distance (int no_feature, string label, int mode);
 
 public:
     Classifier(vector <string>, vector <string>, vector <string>, vector <string>);
-
     void Set_Feature();
-    void Classify_MM(int mode);
+    void Classify_MM(int mode, int num);
+    void Classify_SVM(int mode, int num);
 
-    void Classifier_PCA(int num);
-    void Classifier_LDA(int num);
-    void Classifier_SVM(int mode, int num);
 
-    void Print_Error_Rate();
     void Print_Label();
+    void Print_Error_Rate();
     void Print_Stat(int);
 };
 

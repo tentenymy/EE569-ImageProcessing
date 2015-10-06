@@ -1,12 +1,5 @@
 #include "classifer.h"
-#include <opencv2/core.hpp>
-#include <opencv2/imgproc.hpp>
-#include "opencv2/imgcodecs.hpp"
-#include <opencv2/highgui.hpp>
-#include <opencv2/ml.hpp>
 
-using namespace cv;
-using namespace cv::ml;
 
 // Get file and label
 const string LABEL[5] = {"grass", "straw", "sand", "leather", "unknown"};
@@ -100,28 +93,27 @@ void Prob1a()
     classifier.Print_Label();
     classifier.Set_Feature();
 
-    classifier.Classify_MM(MODE_MM);
+    classifier.Classify_MM(MODE_MM, 0);
     classifier.Print_Error_Rate();
 
-    classifier.Classifier_PCA(1);
+    classifier.Classify_MM(MODE_PCA, 1);
     classifier.Print_Error_Rate();
 
-    classifier.Classifier_PCA(2);
+    classifier.Classify_MM(MODE_PCA, 2);
     classifier.Print_Error_Rate();
 
-    classifier.Classifier_LDA(1);
+    classifier.Classify_MM(MODE_LDA, 1);
     classifier.Print_Error_Rate();
 }
 
 void ClassifierSVM() {
-    int width = 512, height = 512;
-    Mat image = Mat::zeros(height, width, CV_8UC3);
+
 
     int labels[4] = {1, -1, -1, -1};
-    float trainingData[4][3] = {{9, 0, 1},
-                                {-3, -6, -5},
-                                {4, 12, -2},
-                                {-4, 11, 3}};
+    float trainingData[4][3] = {{0.09, 0.00, 0.01},
+                                {-0.03, -0.06, -0.05},
+                                {0.04, 0.12, -0.02},
+                                {-0.04, 0.11, 0.03}};
     Mat trainingDataMat(4, 3, CV_32FC1, trainingData);
     Mat labelsMat(4, 1, CV_32SC1, labels);
 
@@ -137,7 +129,7 @@ void ClassifierSVM() {
     cout << "labelsMat" << endl;
     cout << labelsMat << endl << endl;
 
-    float pre[3] = {-3, -6, -5};
+    float pre[3] = {0.09, 0.00, 0.01};
     Mat mat_pre = Mat(1, 3, CV_32F, pre);
 
     float res = svm->predict(mat_pre);
@@ -157,52 +149,44 @@ void Prob1b() {
                              {1, 0, 2, 3},
                              {2, 0, 1, 3},
                              {3, 0, 1, 2}};
-
-    int index = 1;
-    if (index == 1) {
-        cout << "----------------------" << LABEL[0] << "--------------------" << endl;
-        Get_List_Filename_Label_b(&list_filename_train, &list_label_train, &list_filename_test, &list_label_test, index_label[0]);
+    // problem1b 2): Minimum distance (PDA)
+    for (int i = 0; i < 4; i++) {
+        cout << "----------------------" << LABEL[i] << "--------------------" << endl;
+        Get_List_Filename_Label_b(&list_filename_train, &list_label_train,
+                                  &list_filename_test, &list_label_test, index_label[i]);
         Classifier classifier = Classifier(list_filename_train, list_label_train,
                                            list_filename_test, list_label_test);
-        classifier.Print_Label();
         classifier.Set_Feature();
-        classifier.Classifier_PCA(3);
-        //classifier.Print_Stat(1);
+        classifier.Classify_MM(MODE_PCA, 3);
         classifier.Print_Error_Rate();
-    } else {
-        ClassifierSVM();
     }
-
-
-
-    /*for (int i = 0; i < 4; i++) {
+    // problem1b 2): Minimum distance (LDA)
+    for (int i = 0; i < 4; i++) {
         cout << "----------------------" << LABEL[i] << "--------------------" << endl;
-        Get_List_Filename_Label_b(&list_filename_train, &list_label_train, &list_filename_test, &list_label_test, index_label[i]);
-        Classifier classifier = Classifier(list_filename_train, list_label_train,
-                                            list_filename_test, list_label_test);
-        classifier.Set_Feature();
-        classifier.Classifier_PCA(3);
-        classifier.Print_Error_Rate();
-    }*/
-
-    /* for (int i = 0; i < 4; i++) {
-        cout << "----------------------" << LABEL[i] << "--------------------" << endl;
-        Get_List_Filename_Label_b(&list_filename_train, &list_label_train, &list_filename_test, &list_label_test, index_label[i]);
+        Get_List_Filename_Label_b(&list_filename_train, &list_label_train,
+                                  &list_filename_test, &list_label_test, index_label[i]);
         Classifier classifier = Classifier(list_filename_train, list_label_train,
                                            list_filename_test, list_label_test);
         classifier.Set_Feature();
-        classifier.Classifier_LDA(3);
+        classifier.Classify_MM(MODE_LDA, 3);
         classifier.Print_Error_Rate();
-    }*/
-
-
-
-    /**/
+    }
+    // Problem1b 3): SVM (PDA)
+    for (int i = 0; i < 4; i++) {
+        cout << "----------------------" << LABEL[i] << "--------------------" << endl;
+        Get_List_Filename_Label_b(&list_filename_train, &list_label_train,
+                                  &list_filename_test, &list_label_test, index_label[i]);
+        Classifier classifier = Classifier(list_filename_train, list_label_train,
+                                           list_filename_test, list_label_test);
+        classifier.Set_Feature();
+        classifier.Classify_SVM(MODE_PCA, 3);
+        classifier.Print_Error_Rate();
+    }
 }
 
 int main(int argc, char *argv[])
 {
     cout << "Problem 1" << endl;
-    Prob1a();
+    Prob1b();
     return 0;
 }
