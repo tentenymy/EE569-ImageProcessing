@@ -1,17 +1,21 @@
 #include "classifer.h"
 
 
-// Get file and label
+// Declaration of default parameter
 const string LABEL[5] = {"grass", "straw", "sand", "leather", "unknown"};
-const int GRASS = 0;
-const int STRAW = 1;
-const int SAND = 2;
-const int LEATHER = 3;
-const int UNKOWN = 4;
-
 const string FOLDER1 = "p1_image/p1_image_a/";
 const string FOLDER2 = "p1_image/p1_image_b/";
 
+
+// Declaration of functions
+string Convert_Filename (string, int);
+void Get_List_Filename_Label_a (vector<string>*, vector<string>*, vector<string>*, vector<string>*);
+void Get_List_Filename_Label_b (vector<string>*, vector<string>*, vector<string>*, vector<string>*, int*);
+void Prob1a();
+void Prob1b();
+
+
+// Functions for get filename
 string Convert_Filename (string label, int num) {
     string str_num;
     num++;
@@ -21,6 +25,7 @@ string Convert_Filename (string label, int num) {
         str_num = to_string(num);
     return label + "_" + str_num + ".raw";
 }
+
 void Get_List_Filename_Label_a (vector <string> *list_filename_train, vector <string> *list_label_train,
                                     vector <string> *list_filename_test, vector <string> *list_label_test) {
     // Get filename and label list for training set
@@ -43,7 +48,7 @@ void Get_List_Filename_Label_a (vector <string> *list_filename_train, vector <st
     for (int i = 0; i < 24; i++)
     {
         list_label_test->push_back(temp_list_label_test[i]);
-        list_filename_test->push_back(FOLDER1 + Convert_Filename(LIST_LABEL[2], i));
+        list_filename_test->push_back(FOLDER1 + Convert_Filename(LABEL[4], i));
     }
 }
 
@@ -79,6 +84,8 @@ void Get_List_Filename_Label_b (vector <string> *list_filename_train, vector <st
     }
 }
 
+
+// Function to implement problem 1
 void Prob1a()
 {
     cout << "Problem1a" << endl;
@@ -86,57 +93,27 @@ void Prob1a()
     vector <string> list_label_train;
     vector <string> list_filename_test;
     vector <string> list_label_test;
-
     Get_List_Filename_Label_a(&list_filename_train, &list_label_train, &list_filename_test, &list_label_test);
     Classifier classifier = Classifier(list_filename_train, list_label_train,
                                        list_filename_test, list_label_test);
-    classifier.Print_Label();
+    // problem1a 1): Feature Extract
     classifier.Set_Feature();
 
+    // problem1a 2): MM
     classifier.Classify_MM(MODE_MM, 0);
     classifier.Print_Error_Rate();
 
+    // problem1a 3 & 5): PCA, dimension = 1
     classifier.Classify_MM(MODE_PCA, 1);
     classifier.Print_Error_Rate();
 
+    // problem1a 3 & 5): PCA, dimension = 2
     classifier.Classify_MM(MODE_PCA, 2);
     classifier.Print_Error_Rate();
 
+    // problem1a 4 & 5): PCA, dimension = 1
     classifier.Classify_MM(MODE_LDA, 1);
     classifier.Print_Error_Rate();
-}
-
-void ClassifierSVM() {
-
-
-    int labels[4] = {1, -1, -1, -1};
-    float trainingData[4][3] = {{0.09, 0.00, 0.01},
-                                {-0.03, -0.06, -0.05},
-                                {0.04, 0.12, -0.02},
-                                {-0.04, 0.11, 0.03}};
-    Mat trainingDataMat(4, 3, CV_32FC1, trainingData);
-    Mat labelsMat(4, 1, CV_32SC1, labels);
-
-    Ptr<SVM> svm = SVM::create();
-    svm->setType(SVM::C_SVC);
-    svm->setKernel(SVM::LINEAR);
-    svm->setTermCriteria(TermCriteria(TermCriteria::MAX_ITER, 100, 1e-6));
-    svm->train(trainingDataMat, ROW_SAMPLE, labelsMat);
-
-    cout << "trainingdatamat" << endl;
-    cout << trainingDataMat << endl << endl;
-
-    cout << "labelsMat" << endl;
-    cout << labelsMat << endl << endl;
-
-    float pre[3] = {0.09, 0.00, 0.01};
-    Mat mat_pre = Mat(1, 3, CV_32F, pre);
-
-    float res = svm->predict(mat_pre);
-    cout << res;
-
-
-
 }
 
 void Prob1b() {
@@ -160,6 +137,7 @@ void Prob1b() {
         classifier.Classify_MM(MODE_PCA, 3);
         classifier.Print_Error_Rate();
     }
+
     // problem1b 2): Minimum distance (LDA)
     for (int i = 0; i < 4; i++) {
         cout << "----------------------" << LABEL[i] << "--------------------" << endl;
@@ -171,6 +149,7 @@ void Prob1b() {
         classifier.Classify_MM(MODE_LDA, 3);
         classifier.Print_Error_Rate();
     }
+
     // Problem1b 3): SVM (PDA)
     for (int i = 0; i < 4; i++) {
         cout << "----------------------" << LABEL[i] << "--------------------" << endl;
@@ -187,6 +166,7 @@ void Prob1b() {
 int main(int argc, char *argv[])
 {
     cout << "Problem 1" << endl;
-    Prob1b();
+    Prob1a();
+    //Prob1b();
     return 0;
 }

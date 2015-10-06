@@ -34,6 +34,7 @@ public:
     void Mat_XML_Print(Mat mat, string filename);
     void Mat_Raw_Write(Mat mat, string filename);
     Mat Mat_Raw_Read(string filename, int height, int width, int byteperpixel);
+
     static int *Get_Window(int i, int j, int height, int width, int half_window);
     void Test();
 };

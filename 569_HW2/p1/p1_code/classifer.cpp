@@ -4,6 +4,7 @@
 
 #include "classifer.h"
 
+
 Classifier::Classifier(vector <string> new_list_filename_train, vector <string> new_list_label_train,
         vector <string> new_list_filename_test, vector <string> new_list_label_test) {
     // Create Laws' Filter
@@ -23,8 +24,8 @@ Classifier::Classifier(vector <string> new_list_filename_train, vector <string> 
     list_filename_test = new_list_filename_test;
     list_label_train = new_list_label_train;
     list_label_test = new_list_label_test;
-    num_train = list_filename_train.size();
-    num_test = list_filename_test.size();
+    num_train = (int)list_filename_train.size();
+    num_test = (int)list_filename_test.size();
     // Calculate the number of different labels in the training data
     // Labels must be continuous
     string temp_label = list_label_train[0];
@@ -40,7 +41,7 @@ Classifier::Classifier(vector <string> new_list_filename_train, vector <string> 
         temp_num_per_label++;
     }
     list_num_per_label.push_back(temp_num_per_label);
-    num_label = list_num_per_label.size();
+    num_label = (int)list_num_per_label.size();
 }
 
 double *Classifier::Extract_Feature (Img *pt_img, int height, int width, int byteperpixel) {
@@ -370,8 +371,6 @@ void Classifier::Classify_SVM(int mode, int num) {
     }
 }
 
-
-
 void Classifier::Print_Label() {
     cout << "num_train: " << num_train << " num_test: " << num_test << endl;
     for (int i = 0; i < num_train; i++) {
@@ -387,11 +386,13 @@ void Classifier::Print_Label() {
     }
     cout << endl;
 }
+
 void Classifier::Print_Error_Rate() {
     cout << "error_rate_total: " << 100 * (double)(count_error_train + count_error_test) / (double)(num_train + num_test) << " %" << endl;
     cout << "error_rate_train: " << 100 * (double)count_error_train / (double)num_train << " %" << endl;
     cout << "error_rate_test: " << 100 * (double)count_error_test / (double)num_test << " %" << endl;
 }
+
 void Classifier::Print_Stat(int mode) {
     if (mode == 0) {
         cout << "----------mat_feature----------" << endl;
