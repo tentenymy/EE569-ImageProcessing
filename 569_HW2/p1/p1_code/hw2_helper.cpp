@@ -151,6 +151,21 @@ Mat ImgMatOperator::Mat_Raw_Read (string filename, int height, int width, int by
     return mat;
 }
 
+int *ImgMatOperator::Get_Window(int i, int j, int height, int width, int half_window) {
+    // top, bottom, left, right
+    int window[4] = {i - half_window, i + half_window, j - half_window, j + 2};
+    if (window[0] < 0)
+        window[0] = 0;
+    if (window[2] < 0)
+        window[2] = 0;
+    if (window[1] > height - 1)
+        window[1] = height - 1;
+    if (window[3] > width - 1)
+        window[3] = width - 1;
+    int *res = window;
+    return res;
+}
+
 void ImgMatOperator::Test()
 {
     cout << "Test" << endl;
