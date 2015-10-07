@@ -167,6 +167,6 @@ int main(int argc, char *argv[])
 {
     cout << "Problem 1" << endl;
     Prob1a();
-    //Prob1b();
+    Prob1b();
     return 0;
 }

@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.3)
-project( p1 )
-find_package( OpenCV REQUIRED )
-add_executable( p1 p1/p1_code/p1a_mm.cpp p1/p1_code/classifer.cpp p1/p1_code/classifer.h p1/p1_code/hw2_helper.h p1/p1_code/hw2_helper.cpp)
-target_link_libraries( p1 ${OpenCV_LIBS} )
+project(p2)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+set(SOURCE_FILES main.cpp)
+add_executable(p2 ${SOURCE_FILES})

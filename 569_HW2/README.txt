@@ -10,15 +10,28 @@
 # Coding in C++11
 
 # 1. Usage for compiling, linking and runing
-
 # Compile, link and default run:
+# make sure you are in the HW2 folder: three sub-folder p1, p2, p3
 
+# Problem1
+cd p1
 cmake .
 make
-./569_HW2
+./p1
+
+# Problem2
+cd p1
+cmake .
+make
+./p2
+
+#Problem3
+cd p3
+cmake .
+make
+./p3
 
 # Clean compiling files:
-
 make clean
 
 
