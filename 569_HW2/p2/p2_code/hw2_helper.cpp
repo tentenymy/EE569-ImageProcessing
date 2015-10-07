@@ -132,23 +132,54 @@ void ImgMatOperator::Mat_Raw_Write (Mat mat, string filename)
         fout << (Img)mat.data[i];
     }
     fout.close();
-
 }
 
 Mat ImgMatOperator::Mat_Raw_Read (string filename, int height, int width, int byteperpixel)
 {
-    //cout << "Mat_Raw_Read: " << filename << endl;
+    cout << "Mat_Raw_Read: " << filename << endl;
     char *c_filename = new char[filename.length() + 1];
     strcpy(c_filename, filename.c_str());
+    Mat mat;
+    FILE *file;
+    if (!(file = fopen(c_filename, "rb")))
+    {
+        cout << "Cannot open file: " << filename << endl;
+        exit(1);
+    }
+    size_t size = height * width * byteperpixel;
+    Img image[size];
+    fread(image, sizeof(Img), size, file);
+    fclose(file);
 
-    Img *img = new Img[128 * 128];
-    Img *pt_img = Img_Raw_Read(c_filename, 128, 128, 1);
-
-    for (int i = 0; i < 128 * 128; i++)
-        img[i] = *pt_img++;
-
-    Mat mat = Mat(128, 128, CV_8UC1, img).clone();
-    return mat;
+    if (byteperpixel == 1) {
+        double d_image[size];
+        int count = 0;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                d_image[count] = (double)image[count] / 255.0;
+                count++;
+            }
+        }
+        mat = Mat(height, width, CV_64F, d_image).clone();
+    } if (byteperpixel == 3) {
+        double d_image[size];
+        int count = 0;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                for (int k = 0; k < byteperpixel; k++) {
+                    if (k == 0) {
+                        Img temp = image[count];
+                        image[count] = image[count + 2];
+                        image[count + 2] = temp;
+                    }
+                    d_image[count] = (double)image[count] / 255.0;
+                    count++;
+                }
+            }
+        }
+        mat = Mat(height, width, CV_64FC3, d_image).clone();
+        return mat;
+    }
 }
 
 int *ImgMatOperator::Get_Window(int i, int j, int height, int width, int half_window) {
@@ -187,9 +218,3 @@ void ImgMatOperator::Test()
 }
 
 
-int main(int argc, char *argv[])
-{
-    cout << "Problem 2" << endl;
-
-    return 0;
-}
