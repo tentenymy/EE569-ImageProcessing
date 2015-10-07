@@ -92,7 +92,7 @@ public:
                 for (int j = 0; j < width; j++) {
                     img_gray[count++] = mat_color.at<double>(i, j * 3) * 0.21
                             + mat_color.at<double>(i, j * 3 + 1) * 0.72
-                            + mat_color.at<double>(i, j * 3 + 2) * 0.72;
+                            + mat_color.at<double>(i, j * 3 + 2) * 0.07;
                 }
             }
             mat_gray = Mat(height, width, CV_64F, img_gray).clone();
@@ -144,7 +144,6 @@ public:
                 mat_magnitude.at<double>(i, j) = sqrt(mat_gradient_x.at<double>(i, j) * mat_gradient_x.at<double>(i, j)
                                                       + mat_gradient_y.at<double>(i, j) *
                                                         mat_gradient_y.at<double>(i, j));
-                //mat_oritentation.at<double(i, j) =
             }
         }
 
@@ -167,37 +166,24 @@ public:
                 mat_magnitude.at<double>(i, j) = (mat_magnitude.at<double>(i, j) - min) * 255.0 / (max - min);
             }
         }
-        //imshow("magnitude", mat_magnitude / 255.0);
-        //waitKey(0);
-        for (int i = 0; i < 50; i++) {
-            for (int j = 0; j < 50; j++) {
-                cout << mat_magnitude.at<double>(i, j) << ", ";
-            }
-            cout << endl;
-        }
-        cout << endl;
 
         // Threshold
         vector<double> vector_temp;
+        Mat mat_threshold = Mat(height, width, CV_64F);
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 vector_temp.push_back(mat_magnitude.at<double>(i, j));
             }
         }
         sort(vector_temp.begin(), vector_temp.end());
-        for (int i = 0; i < 20; i++) {
-            cout << vector_temp[i] << ", ";
-        }
-        cout << endl;
-        cout << vector_temp[height * width - 1] << endl;
         double threshold_value = vector_temp[height * width * (1 - threshold)];
-        cout << threshold_value;
+        cout << "threshold_value: " << threshold_value << endl;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (mat_magnitude.at<double>(i, j) >= threshold_value) {
-                    mat_magnitude.at<double>(i, j) = 0;
+                    mat_threshold.at<double>(i, j) = 0;
                 } else {
-                    mat_magnitude.at<double>(i, j) = 1;
+                    mat_threshold.at<double>(i, j) = 1;
                 }
             }
         }
@@ -210,18 +196,18 @@ public:
                 double temp_y = mat_gradient_x.at<double>(i, j);
                 double temp_value;
                 if (temp_x * temp_x >= temp_y * temp_y) {
-                    temp_value = mat_magnitude.at<double>(i, j);
-                    if (temp_value >= mat_magnitude.at<double>(i, j - 1)
-                            && temp_value >= mat_magnitude.at<double>(i, j + 1)) {
+                    temp_value = mat_threshold.at<double>(i, j);
+                    if (temp_value >= mat_threshold.at<double>(i, j - 1)
+                            && temp_value >= mat_threshold.at<double>(i, j + 1)) {
                         mat_suppress.at<double>(i, j) = 1;
                     } else {
                         mat_suppress.at<double>(i, j) = 0;
 
                     }
                 } else {
-                    temp_value = mat_magnitude.at<double>(i, j);
-                    if (temp_value >= mat_magnitude.at<double>(i - 1, j)
-                        && temp_value >= mat_magnitude.at<double>(i + 1, j)) {
+                    temp_value = mat_threshold.at<double>(i, j);
+                    if (temp_value >= mat_threshold.at<double>(i - 1, j)
+                        && temp_value >= mat_threshold.at<double>(i + 1, j)) {
                         mat_suppress.at<double>(i, j) = 1;
                     } else {
                         mat_suppress.at<double>(i, j) = 0;
@@ -229,6 +215,12 @@ public:
                 }
             }
         }
+        Print_Mat(mat_gray, "mat_gray");
+        Print_Mat(mat_gradient_x, "mat_gradient_x");
+        Print_Mat(mat_gradient_y, "mat_gradient_y");
+        Print_Mat(mat_magnitude, "mat_magnitude");
+        Print_Mat(mat_threshold, "mat_threshold");
+        Print_Mat(mat_suppress, "mat_suppress");
     }
 
     void Print_Mat(Mat mat, string name) {
@@ -244,7 +236,6 @@ public:
             cout << endl;
         }
         cout << endl;
-
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 double temp = mat.at<double> (i, j);
@@ -265,7 +256,6 @@ public:
         waitKey(0);
     }
 
-
     void Print_Detail() {
         cout << "Print_Detail" << endl;
         cout << "height: " << height << " width: " << width << " byteperpixel: " << byteperpixel << endl;
@@ -284,6 +274,23 @@ public:
         }
         waitKey(0);
     }
+
+    void Detector_Canny (double coef_A, double coef_B) {
+        Mat mat_canny  = Mat(height, width, CV_8U);
+        Mat mat_temp = Mat(height, width, CV_8U);
+
+        mat_gray.convertTo(mat_temp, CV_8U);
+        Canny(mat_temp, mat_canny, coef_A * 255, coef_B * 255);
+        string str = "Canny A = " + to_string(coef_A) + " B = " + to_string(coef_B);
+        imshow(str, mat_canny);
+        for (int i = 0; i < 100; i++) {
+            for (int j = 0; j < 20; j++) {
+                cout << mat_canny.at<double>(i, j) << ", ";
+            }
+            cout << endl;
+        }
+        waitKey(0);
+    }
 };
 
 void prob2a() {
@@ -291,8 +298,36 @@ void prob2a() {
     Img *img = ImgMatOperator::Img_Raw_Read (FILENAME1, HEIGHT, WIDTH, BYTEPERPIXEL);
     EdgeDetector ed = EdgeDetector(img, HEIGHT, WIDTH, BYTEPERPIXEL);
     ed.ConvertRGB(ed.mat_original);
-    ed.Filter_Sobel(0.1);
+    //ed.Filter_Sobel(0.1);
+    //ed.Filter_Sobel(0.15);
     //ed.Print_Detail();
+
+    Img *img2 = ImgMatOperator::Img_Raw_Read (FILENAME2, HEIGHT, WIDTH, BYTEPERPIXEL);
+    EdgeDetector ed2 = EdgeDetector(img2, HEIGHT, WIDTH, BYTEPERPIXEL);
+    ed2.ConvertRGB(ed2.mat_original);
+    //ed2.Filter_Sobel(0.1);
+    //ed2.Filter_Sobel(0.15);
+}
+
+void prob2b() {
+    Img *img = ImgMatOperator::Img_Raw_Read (FILENAME1, HEIGHT, WIDTH, BYTEPERPIXEL);
+    EdgeDetector ed = EdgeDetector(img, HEIGHT, WIDTH, BYTEPERPIXEL);
+    ed.ConvertRGB(ed.mat_original);
+    ed.Detector_Canny(0.3, 0.6);
+    ed.Detector_Canny(0.2, 0.7);
+    ed.Detector_Canny(0.2, 0.5);
+    ed.Detector_Canny(0.4, 0.7);
+    ed.Detector_Canny(0.4, 0.5);
+
+
+    Img *img2 = ImgMatOperator::Img_Raw_Read (FILENAME2, HEIGHT, WIDTH, BYTEPERPIXEL);
+    EdgeDetector ed2 = EdgeDetector(img2, HEIGHT, WIDTH, BYTEPERPIXEL);
+    ed2.ConvertRGB(ed2.mat_original);
+    ed2.Detector_Canny(0.3, 0.6);
+    ed2.Detector_Canny(0.2, 0.7);
+    ed2.Detector_Canny(0.2, 0.5);
+    ed2.Detector_Canny(0.4, 0.7);
+    ed2.Detector_Canny(0.4, 0.5);
 }
 
 
@@ -300,6 +335,7 @@ void prob2a() {
 int main(int argc, char *argv[])
 {
     cout << "Problem 2" << endl;
-    prob2a();
+    //prob2a();
+    //prob2b();
     return 0;
 }

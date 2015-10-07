@@ -12,8 +12,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0a8a1d4-ac7c-467e-9432-604f12784be1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/hw2_helper.cpp" afterPath="$PROJECT_DIR$/p2_code/hw2_helper.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/hw2_helper.h" afterPath="$PROJECT_DIR$/p2_code/hw2_helper.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/p2_main.cpp" afterPath="$PROJECT_DIR$/p2_code/p2_main.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -39,11 +37,9 @@
       <file leaf-file-name="p2_main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/p2_code/p2_main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3798127">
-              <caret line="202" column="9" selection-start-line="202" selection-start-column="9" selection-end-line="202" selection-end-column="9" />
-              <folding>
-                <element signature="e#868#2268#0" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="0.8907388">
+              <caret line="338" column="6" selection-start-line="338" selection-start-column="6" selection-end-line="338" selection-end-column="6" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -100,8 +96,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="714" />
-    <option name="y" value="46" />
+    <option name="x" value="549" />
+    <option name="y" value="310" />
     <option name="width" value="1568" />
     <option name="height" value="1081" />
   </component>
@@ -202,18 +198,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="714" y="46" width="1568" height="1081" extended-state="0" />
+    <frame x="549" y="310" width="1568" height="1081" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39056358" sideWeight="0.4974722" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39056358" sideWeight="0.054600608" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39056358" sideWeight="0.5055612" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39056358" sideWeight="0.2841254" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295099" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39056358" sideWeight="0.35356456" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2346194" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39056358" sideWeight="0.7704752" order="4" side_tool="true" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39056358" sideWeight="0.50252783" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39056358" sideWeight="0.49443883" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22836287" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -286,11 +282,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/p2_code/p2_main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3798127">
-          <caret line="202" column="9" selection-start-line="202" selection-start-column="9" selection-end-line="202" selection-end-column="9" />
-          <folding>
-            <element signature="e#868#2268#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.8907388">
+          <caret line="338" column="6" selection-start-line="338" selection-start-column="6" selection-end-line="338" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
