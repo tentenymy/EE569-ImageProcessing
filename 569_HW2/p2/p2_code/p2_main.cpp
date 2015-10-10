@@ -28,7 +28,6 @@ const string FOLDER = "p2_image/";
 const int WIDTH = 481;
 const int HEIGHT = 321;
 const int BYTEPERPIXEL = 3;
-
 const string FILENAME1 = "p2_image/Farm.raw";
 const string FILENAME2 = "p2_image/Cougar.raw";
 
@@ -331,11 +330,23 @@ void prob2b() {
 }
 
 
+void prob2c() {
+    Img *img = ImgMatOperator::Img_Raw_Read (FILENAME1, HEIGHT, WIDTH, BYTEPERPIXEL);
+    ImgMatOperator img_op;
+    img_op.Img_File_Print(img, "test111.txt", HEIGHT, WIDTH, 3);
+}
+
+void prob2d() {
+
+}
+
+
 
 int main(int argc, char *argv[])
 {
     cout << "Problem 2" << endl;
     //prob2a();
     //prob2b();
+    prob2c();
     return 0;
 }

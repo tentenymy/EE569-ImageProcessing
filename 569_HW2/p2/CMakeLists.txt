@@ -7,7 +7,7 @@ find_package( OpenCV REQUIRED )
 
 set(SOURCE_FILES
         p2_code/hw2_helper.cpp
-        p2_code/hw2_helper.h p2_code/p2_main.cpp)
+        p2_code/hw2_helper.h p2_code/p2_main.cpp p2_code/EdgeDetector.cpp p2_code/EdgeDetector.h)
 
 add_executable(p2 ${SOURCE_FILES})
 
