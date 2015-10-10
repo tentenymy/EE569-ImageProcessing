@@ -1,5 +1,5 @@
-# EE569 Homework Assignment #1
-# Date:     Sep 20, 2015
+# EE569 Homework Assignment #2
+# Date:     Oct 20, 2015
 # Name:     Meiyi Yang
 # ID:       6761-0405-85
 # Email:    meiyiyan@usc.edu
@@ -13,19 +13,19 @@
 # Compile, link and default run:
 # make sure you are in the HW2 folder: three sub-folder p1, p2, p3
 
-# Problem1
+# Problem1:
 cd p1
 cmake .
 make
 ./p1
 
-# Problem2
+# Problem2:
 cd p1
 cmake .
 make
 ./p2
 
-#Problem3
+#Problem3:
 cd p3
 cmake .
 make
@@ -34,7 +34,20 @@ make
 # Clean compiling files:
 make clean
 
-
 # 2. File list and explanation
-#
+# Problem2:
+# Main function:
+# 	p2_main.cpp
+
+# Class EdgeDetector:
+# 	EdgeDetector.h
+# 	EdgeDetector.cpp
+# 
+# Class ImgMatOperator (General class for whole HW2)
+# 	hw2_helper.h
+# 	hw2_helper.cpp
+# 
+# p2c: matlab code
+# 	prob2c.m
+# 	detector_SE.m
 

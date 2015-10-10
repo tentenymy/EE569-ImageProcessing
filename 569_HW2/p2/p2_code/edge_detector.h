@@ -1,9 +1,29 @@
-//
-// Created by Maggie on 10/10/15.
-//
+/* EE569 Homework Assignment #2
+ * Date: October 11, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem2. Edge Detection
+ *
+ *
+ * Main function:
+ * p2_main.cpp
+ *
+ * Class EdgeDetector:
+ * EdgeDetector.h
+ * EdgeDetector.cpp
+ *
+ * Class ImgMatOperator (General class for whole HW2)
+ * hw2_helper.h
+ * hw2_helper.cpp
+ *
+ * p2c: matlab code
+ * prob2c.m
+ * detector_SE.m
+ */
 
-#ifndef P2_EDGEDETECTOR_H
-#define P2_EDGEDETECTOR_H
+#ifndef P2_EDGE_DETECTOR_H
+#define P2_EDGE_DETECTOR_H
 
 #include "hw2_helper.h"
 using namespace std;
@@ -35,7 +55,4 @@ public:
     //void Print_Mat(Mat mat, string name);
     //void Print_Detail();
 };
-
-
-
-#endif //P2_EDGEDETECTOR_H
+#endif //P2_EDGE_DETECTOR_H

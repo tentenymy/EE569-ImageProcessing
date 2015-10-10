@@ -1,28 +1,37 @@
-//
-// Created by Maggie on 10/6/15.
-//
-#include "EdgeDetector.h"
-using namespace std;
+/* EE569 Homework Assignment #2
+ * Date: October 11, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem2. Edge Detection
+ *
+ *
+ * Main function:
+ * p2_main.cpp
+ *
+ * Class EdgeDetector:
+ * EdgeDetector.h
+ * EdgeDetector.cpp
+ *
+ * Class ImgMatOperator (General class for whole HW2)
+ * hw2_helper.h
+ * hw2_helper.cpp
+ *
+ * p2c: matlab code
+ * prob2c.m
+ * detector_SE.m
+ */
 
 /*
+ * Problem2. Edge Detection
  * Prob2a. Sobel edge detector and non-maximal suppression
- * Convert RGB to gray
- * Sobel Filter
- * Normalization
- * Threshodls edge
- * Non-Max suppression
- *
  * prob2b. Canny edge detector
- * Convert RGB to gray
- * Canny Filter (open)
- *
- * prob2c. Structured edge (matlab)
- * Structured edge > probability edge map
- * Threshold
- *
+ * prob2c. Structured edge (Matlab code)
  * prob2d. Performance evaluation
- * Get mean of P/R for each Ground Truth
  */
+
+#include "edge_detector.h"
+using namespace std;
 
 const string FOLDER = "p2_image/";
 const int WIDTH = 481;
@@ -32,6 +41,7 @@ const string NAME[2] = {"Farm", "Cougar"};
 const string FILENAME[2] =
         {"p2_image/Farm.raw", "p2_image/Cougar.raw"};
 
+// Prob2a. Sobel edge detector and non-maximal suppression
 void prob2a() {
     cout << "Problem 2a" << endl;
     for (int i = 0; i < 1; i++) {
@@ -42,6 +52,7 @@ void prob2a() {
     }
 }
 
+// Prob2b. Canny edge detector
 void prob2b() {
     cout << "Problem 2b" << endl;
     for (int i = 1; i < 2; i++) {
@@ -55,6 +66,7 @@ void prob2b() {
     }
 }
 
+// Prob2d. Performance evaluation
 void prob2d() {
     cout << "Problem 2d" << endl;
     for (int i = 0; i < 2; i++) {

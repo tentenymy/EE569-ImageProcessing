@@ -1,10 +1,29 @@
-//
-// Created by Maggie on 9/30/15.
-//
+/* EE569 Homework Assignment #2
+ * Date: October 11, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem2. Edge Detection
+ *
+ *
+ * Main function:
+ * p2_main.cpp
+ *
+ * Class EdgeDetector:
+ * EdgeDetector.h
+ * EdgeDetector.cpp
+ *
+ * Class ImgMatOperator (General class for whole HW2)
+ * hw2_helper.h
+ * hw2_helper.cpp
+ *
+ * p2c: matlab code
+ * prob2c.m
+ * detector_SE.m
+ */
 
 #ifndef HW2_HELPER_H
 #define HW2_HELPER_H
-#endif //HW2_P1A_H
 
 #include <stdio.h>
 #include <iostream>
@@ -14,9 +33,7 @@
 #include <cstring>
 #include <opencv2/opencv.hpp>
 
-
 typedef unsigned char Img;
-
 using namespace cv;
 using namespace std;
 
@@ -40,3 +57,5 @@ public:
     static int *Get_Window(int i, int j, int height, int width, int half_window);
     void Test();
 };
+#endif //HW2_P1A_H
+

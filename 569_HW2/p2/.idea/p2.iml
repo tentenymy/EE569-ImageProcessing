@@ -3,8 +3,8 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/p2_code/EdgeDetector.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/p2_code/EdgeDetector.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/p2_code/edge_detector.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/p2_code/edge_detector.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/p2_code/hw2_helper.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/p2_code/hw2_helper.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/p2_code/p2_main.cpp" isTestSource="false" />

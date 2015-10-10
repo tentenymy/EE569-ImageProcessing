@@ -1,8 +1,28 @@
-//
-// Created by Maggie on 10/10/15.
-//
+/* EE569 Homework Assignment #2
+ * Date: October 11, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem2. Edge Detection
+ *
+ *
+ * Main function:
+ * p2_main.cpp
+ *
+ * Class EdgeDetector:
+ * EdgeDetector.h
+ * EdgeDetector.cpp
+ *
+ * Class ImgMatOperator (General class for whole HW2)
+ * hw2_helper.h
+ * hw2_helper.cpp
+ *
+ * p2c: matlab code
+ * prob2c.m
+ * detector_SE.m
+ */
 
-#include "EdgeDetector.h"
+#include "edge_detector.h"
 
 // Constructor
 EdgeDetector::EdgeDetector(string filename, int new_height, int new_width, int new_byteperpixel) {
@@ -293,6 +313,4 @@ void EdgeDetector::Print_Detail() {
     cout << endl;
     waitKey(0);
 }*/
-
-
 
