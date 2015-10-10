@@ -4,6 +4,7 @@
 
 #include "EdgeDetector.h"
 
+// Constructor
 EdgeDetector::EdgeDetector(string filename, int new_height, int new_width, int new_byteperpixel) {
     Mat mat = ImgMatOperator::Mat_Raw_Read(filename, new_height, new_width, new_byteperpixel);
     height = new_height;
@@ -12,53 +13,9 @@ EdgeDetector::EdgeDetector(string filename, int new_height, int new_width, int n
     mat_original = mat.clone();
 }
 
-EdgeDetector::EdgeDetector(Mat mat, int new_height, int new_width, int new_byteperpixel) {
-    height = new_height;
-    width = new_width;
-    byteperpixel = new_byteperpixel;
-    mat_original = mat.clone();
-}
-
-EdgeDetector::EdgeDetector(Img *pt_img, int new_height, int new_width, int new_byteperpixel) {
-    height = new_height;
-    width = new_width;
-    byteperpixel = new_byteperpixel;
-    size_t size = height * width * byteperpixel;
-    Img image[size];
-    memcpy(image, pt_img, size);
-    if (byteperpixel == 1) {
-        double d_image[size];
-        int count = 0;
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                d_image[count] = (double) image[count];
-                count++;
-            }
-        }
-        mat_original = Mat(height, width, CV_64F, d_image).clone();
-    }
-    if (byteperpixel == 3) {
-        double d_image[size];
-        int count = 0;
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                for (int k = 0; k < byteperpixel; k++) {
-                    if (k == 0) {
-                        Img temp = image[count];
-                        image[count] = image[count + 2];
-                        image[count + 2] = temp;
-                    }
-                    d_image[count] = (double) image[count];
-                    count++;
-                }
-            }
-        }
-        mat_original = Mat(height, width, CV_64FC3, d_image).clone();
-    }
-}
-
-void EdgeDetector::ConvertRGB(Mat mat_color) {
-    cout << "ConvertRGB" << endl;
+// p2a & p2b: Convert RGB image to grayscale for Sobel detector / Canny detector
+void EdgeDetector::ConvertRGB() {
+    Mat mat_color = mat_original.clone();
     if (mat_color.channels() == 3) {
         double img_gray[height * width];
         int count = 0;
@@ -69,17 +26,15 @@ void EdgeDetector::ConvertRGB(Mat mat_color) {
                                     + mat_color.at<double>(i, j * 3 + 2) * 0.07;
         }
         mat_gray = Mat(height, width, CV_64F, img_gray).clone();
-    } else {
+    } else
         mat_gray = mat_color.clone();
-    }
 }
 
+// p2a:Sobel edge detector and non-maximual-suppression
 void EdgeDetector::Detector_Sobel(double threshold) {
     // 1. Check parameter
-    if (threshold >= 1 || threshold <= 0) {
-        cerr << "threshold " << threshold << " is invalid";
+    if (threshold >= 1 || threshold <= 0)
         exit(1);
-    }
 
     // 2. Apply Sobel filter to x, y two dimensions
     // 2.1 Generate Sobel mask
@@ -93,9 +48,8 @@ void EdgeDetector::Detector_Sobel(double threshold) {
             double temp_total = 0;
             int *window = ImgMatOperator::Get_Window(i, j, height, width, 1);
             for (int m = window[0]; m <= window[1]; m++) {
-                for (int n = window[2]; n <= window[3]; n++) {
+                for (int n = window[2]; n <= window[3]; n++)
                     temp_total += filter[0][3 * (1 + m - i) + (1 + n - j)] * mat_gray.at<double>(m, n);
-                }
             }
             mat_gradient_x.at<double>(i, j) = temp_total;
         }
@@ -106,9 +60,8 @@ void EdgeDetector::Detector_Sobel(double threshold) {
             double temp_total = 0;
             int *window = ImgMatOperator::Get_Window(i, j, height, width, 1);
             for (int m = window[0]; m <= window[1]; m++) {
-                for (int n = window[2]; n <= window[3]; n++) {
+                for (int n = window[2]; n <= window[3]; n++)
                     temp_total += filter[1][3 * (1 + m - i) + (1 + n - j)] * mat_gray.at<double>(m, n);
-                }
             }
             mat_gradient_y.at<double>(i, j) = temp_total;
         }
@@ -117,16 +70,14 @@ void EdgeDetector::Detector_Sobel(double threshold) {
     Mat mat_magnitude = Mat(height, width, CV_64F);
     Mat mat_oritentation = Mat(height, width, CV_64F);
     for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
+        for (int j = 0; j < width; j++)
             mat_magnitude.at<double>(i, j) =
                     sqrt(mat_gradient_x.at<double>(i, j) * mat_gradient_x.at<double>(i, j)
                          + mat_gradient_y.at<double>(i, j) * mat_gradient_y.at<double>(i, j));
-        }
     }
 
     // 3. Normalize the magnitude matrix to 0 ~ 255
-    double min = 10000;
-    double max = -10000;
+    double min = 10000, max = -10000;
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             double temp = mat_magnitude.at<double>(i, j);
@@ -162,7 +113,7 @@ void EdgeDetector::Detector_Sobel(double threshold) {
     }
 
     // 5. non-maximum suprression
-    Mat mat_suppress = Mat(height, width, CV_64F);
+    Mat mat_suppress = Mat::ones(height, width, CV_64F);
     for (int i = 1; i < height - 1; i++) {
         for (int j = 1; j < width - 1; j++) {
             double temp_x = mat_gradient_x.at<double>(i, j);
@@ -171,40 +122,39 @@ void EdgeDetector::Detector_Sobel(double threshold) {
             if (temp_x * temp_x >= temp_y * temp_y) {
                 temp_value = mat_threshold.at<double>(i, j);
                 if (temp_value >= mat_threshold.at<double>(i, j - 1)
-                    && temp_value >= mat_threshold.at<double>(i, j + 1)) {
+                    && temp_value >= mat_threshold.at<double>(i, j + 1))
                     mat_suppress.at<double>(i, j) = 1;
-                } else {
+                else
                     mat_suppress.at<double>(i, j) = 0;
-
-                }
             } else {
                 temp_value = mat_threshold.at<double>(i, j);
                 if (temp_value >= mat_threshold.at<double>(i - 1, j)
-                    && temp_value >= mat_threshold.at<double>(i + 1, j)) {
+                    && temp_value >= mat_threshold.at<double>(i + 1, j))
                     mat_suppress.at<double>(i, j) = 1;
-                } else {
+                else
                     mat_suppress.at<double>(i, j) = 0;
-                }
             }
         }
     }
 
     // 6. Print raw image for report
-    Print_Raw(mat_original, "Cougar_original.raw", 0, 3);
-    Print_Raw(mat_gray, "Cougar_gary.raw", 0, 1);
-    Print_Raw(mat_gradient_x, "Cougar_gradient_x.raw", 1, 1);
-    Print_Raw(mat_gradient_y, "Cougar_gradient_y.raw", 1, 1);
-    Print_Raw(mat_magnitude, "Cougar_magnitude.raw", 0, 1);
-    Print_Raw(mat_threshold, "Cougar_threshold_015.raw", 1, 1);
-    Print_Raw(mat_suppress, "Cougar_suppression_015.raw", 1, 1);
+    Print_Raw(mat_original, "Farm_original.raw", 0, 3);
+    Print_Raw(mat_gray, "Farm_gary.raw", 0, 1);
+    Print_Raw(mat_gradient_x, "Farm_gradient_x.raw", 1, 1);
+    Print_Raw(mat_gradient_y, "Farm_gradient_y.raw", 1, 1);
+    Print_Raw(mat_magnitude, "Farm_magnitude.raw", 0, 1);
+    Print_Raw(mat_threshold, "Farm_threshold_015.raw", 1, 1);
+    Print_Raw(mat_suppress, "Farm_suppression_015.raw", 1, 1);
 }
 
+// p2b: Canny edge detector
 void EdgeDetector::Detector_Canny(double coef_A, double coef_B) {
     // Apply Canny
     Mat mat_canny;
     Mat mat_temp = Mat(height, width, CV_8U);
     mat_gray.convertTo(mat_temp, CV_8U);
     Canny(mat_temp, mat_canny, coef_A * 255, coef_B * 255);
+
     // Convert the result to print raw image
     mat_canny.convertTo(mat_canny, CV_64F);
     Mat mat_temp2 = Mat::ones(height, width, CV_64F) * 255;
@@ -213,6 +163,52 @@ void EdgeDetector::Detector_Canny(double coef_A, double coef_B) {
     Print_Raw(mat_canny, str, 0, 1);
 }
 
+// p2d: performation evaluation function
+void EdgeDetector::Evaluation(string filename_measure, vector<string> filename_gt,
+                              int new_height, int new_width, int new_byteperpixel) {
+    double measure_p = 0;
+    double measure_r = 0;
+    int size = filename_gt.size();
+    for(int i = 0; i < size; i++) {
+        // Get Ground truth image
+        Img *pt_img_gt = ImgMatOperator::Img_Raw_Read(filename_gt[i], new_height, new_width, new_byteperpixel);
+        Img img_gt[new_height * new_width];
+        memcpy(img_gt, pt_img_gt, new_height * new_width);
+
+        // Get evaluation image
+        Img *pt_img = ImgMatOperator::Img_Raw_Read(filename_measure, new_height, new_width, new_byteperpixel);
+        Img img[new_height * new_width];
+        memcpy(img, pt_img, new_height * new_width);
+
+        // Begin to count tp, tn, fp, fn
+        double num_tp = 0, num_tn = 0, num_fp = 0, num_fn = 0;
+        for(int i = 0; i < new_height * new_width; i++) {
+            if (img[i] == 0 && img_gt[i] == 0) {
+                num_tp++;
+            } else if (img[i] != 0 && img_gt[i] != 0) {
+                num_tn++;
+            } else if (img[i] == 0 && img_gt[i] != 0) {
+                num_fp++;
+            } else if (img[i] != 0 && img_gt[i] == 0) {
+                num_fn++;
+            }
+        }
+        measure_p += num_tp / (num_tp + num_fp);
+        measure_r += num_tp / (num_tp + num_fn);
+    }
+
+    // Get mean of five P, R and calcuate F
+    measure_p /= size;
+    measure_r /= size;
+    double measure_f = 2 * measure_p * measure_r / (measure_p + measure_r);
+
+    // Print
+    cout << filename_measure << "\t\t";
+    cout << "P: " << measure_p * 100 << "%  R: " << measure_r * 100 << "%  F: " << measure_f * 100 << "%" << endl;
+}
+
+
+// Helper function: print the result to report
 //@Para mode: 1 normalization; 0 no normalization;
 void EdgeDetector::Print_Raw(Mat mat, string filename, int mode, int byte) {
     if (mode == 1) {
@@ -244,7 +240,7 @@ void EdgeDetector::Print_Raw(Mat mat, string filename, int mode, int byte) {
 
 }
 
-void EdgeDetector::Print_Mat(Mat mat, string name) {
+/* void EdgeDetector::Print_Mat(Mat mat, string name) {
     int cols = mat.cols;
     int rows = mat.rows;
     double min = 10000;
@@ -296,7 +292,7 @@ void EdgeDetector::Print_Detail() {
     }
     cout << endl;
     waitKey(0);
-}
+}*/
 
 
 

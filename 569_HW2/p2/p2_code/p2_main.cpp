@@ -4,7 +4,6 @@
 #include "EdgeDetector.h"
 using namespace std;
 
-
 /*
  * Prob2a. Sobel edge detector and non-maximal suppression
  * Convert RGB to gray
@@ -13,38 +12,41 @@ using namespace std;
  * Threshodls edge
  * Non-Max suppression
  *
- * Prob2b. Canny edge detector
+ * prob2b. Canny edge detector
  * Convert RGB to gray
  * Canny Filter (open)
  *
- * Prob2c. Structured edge (matlab)
+ * prob2c. Structured edge (matlab)
  * Structured edge > probability edge map
  * Threshold
  *
- * Prob2d. Performance evaluation
+ * prob2d. Performance evaluation
+ * Get mean of P/R for each Ground Truth
  */
 
 const string FOLDER = "p2_image/";
 const int WIDTH = 481;
 const int HEIGHT = 321;
 const int BYTEPERPIXEL = 3;
-const string FILENAME[2] = {"p2_image/Farm.raw", "p2_image/Cougar.raw"};
-
-
+const string NAME[2] = {"Farm", "Cougar"};
+const string FILENAME[2] =
+        {"p2_image/Farm.raw", "p2_image/Cougar.raw"};
 
 void prob2a() {
-    for (int i = 0; i < 2; i++) {
+    cout << "Problem 2a" << endl;
+    for (int i = 0; i < 1; i++) {
         EdgeDetector ed = EdgeDetector(FILENAME[i], HEIGHT, WIDTH, BYTEPERPIXEL);
-        ed.ConvertRGB(ed.mat_original);
+        ed.ConvertRGB();
         ed.Detector_Sobel(0.1);
         ed.Detector_Sobel(0.15);
     }
 }
 
 void prob2b() {
+    cout << "Problem 2b" << endl;
     for (int i = 1; i < 2; i++) {
         EdgeDetector ed = EdgeDetector(FILENAME[i], HEIGHT, WIDTH, BYTEPERPIXEL);
-        ed.ConvertRGB(ed.mat_original);
+        ed.ConvertRGB();
         ed.Detector_Canny(0.3, 0.6);
         ed.Detector_Canny(0.2, 0.7);
         ed.Detector_Canny(0.2, 0.5);
@@ -53,27 +55,44 @@ void prob2b() {
     }
 }
 
-
-void prob2c() {
-    Img *pt_img = ImgMatOperator::Img_Raw_Read (FILENAME[0], HEIGHT, WIDTH, BYTEPERPIXEL);
-    char filename[] = "test.raw";
-    ImgMatOperator img_op;
-    Img img[HEIGHT * WIDTH * BYTEPERPIXEL];
-    memcpy(img, pt_img, HEIGHT * WIDTH * BYTEPERPIXEL);
-    img_op.Img_Raw_Write(filename, img, HEIGHT, WIDTH, BYTEPERPIXEL);
-}
-
 void prob2d() {
+    cout << "Problem 2d" << endl;
+    for (int i = 0; i < 2; i++) {
+        cout << endl << NAME[i] << endl;
+        vector<string> filename_gt;
+        for (int j = 0; j < 5; j++) {
+            string temp_str = FOLDER + NAME[i] + "_GT" + to_string(j+1) + ".raw";
+            filename_gt.push_back(temp_str);
+        }
+        cout << endl << "p2a: Sobel" << endl;
+        EdgeDetector::Evaluation("p2a_result/" + NAME[i] + "_suppression_010.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
+        EdgeDetector::Evaluation("p2a_result/" + NAME[i] + "_suppression_015.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
 
+        cout << endl << "p2b: Canny" << endl;
+        EdgeDetector::Evaluation("p2b_result/" + NAME[i] + "_3_6.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
+        EdgeDetector::Evaluation("p2b_result/" + NAME[i] + "_2_7.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
+        EdgeDetector::Evaluation("p2b_result/" + NAME[i] + "_2_5.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
+        EdgeDetector::Evaluation("p2b_result/" + NAME[i] + "_4_7.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
+        EdgeDetector::Evaluation("p2b_result/" + NAME[i] + "_4_5.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
+
+        cout << endl << "p2c: SE" << endl;
+        EdgeDetector::Evaluation("p2c_result/" + NAME[i] + "_SE_02.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
+        EdgeDetector::Evaluation("p2c_result/" + NAME[i] + "_SE_03.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
+        EdgeDetector::Evaluation("p2c_result/" + NAME[i] + "_SE_04.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
+        EdgeDetector::Evaluation("p2c_result/" + NAME[i] + "_SE_05.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
+        EdgeDetector::Evaluation("p2c_result/" + NAME[i] + "_SE_06.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
+        EdgeDetector::Evaluation("p2c_result/" + NAME[i] + "_SE_07.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
+        EdgeDetector::Evaluation("p2c_result/" + NAME[i] + "_SE_08.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
+        EdgeDetector::Evaluation("p2c_result/" + NAME[i] + "_SE_09.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
+        EdgeDetector::Evaluation("p2c_result/" + NAME[i] + "_SE_10.raw", filename_gt, HEIGHT, WIDTH, BYTEPERPIXEL);
+    }
 }
-
-
 
 int main(int argc, char *argv[])
 {
     cout << "Problem 2" << endl;
     prob2a();
     prob2b();
-    //prob2c();
+    prob2d();
     return 0;
 }
