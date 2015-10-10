@@ -12,13 +12,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0a8a1d4-ac7c-467e-9432-604f12784be1" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2a_result/Cougar_threshold_015.jpg" afterPath="$PROJECT_DIR$/p2a_result/Cougar_threshold_015.jpg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/EdgeDetector.cpp" afterPath="$PROJECT_DIR$/p2_code/EdgeDetector.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/EdgeDetector.h" afterPath="$PROJECT_DIR$/p2_code/EdgeDetector.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/hw2_helper.cpp" afterPath="$PROJECT_DIR$/p2_code/hw2_helper.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/hw2_helper.h" afterPath="$PROJECT_DIR$/p2_code/hw2_helper.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/p2.iml" afterPath="$PROJECT_DIR$/.idea/p2.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/p2_main.cpp" afterPath="$PROJECT_DIR$/p2_code/p2_main.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="p2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,8 +41,28 @@
       <file leaf-file-name="p2_main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/p2_code/p2_main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8719317">
-              <caret line="384" column="6" selection-start-line="384" selection-start-column="6" selection-end-line="384" selection-end-column="6" />
+            <state vertical-scroll-proportion="-0.008537887">
+              <caret line="21" column="12" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EdgeDetector.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/p2_code/EdgeDetector.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EdgeDetector.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/p2_code/EdgeDetector.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="215" column="8" selection-start-line="215" selection-start-column="8" selection-end-line="215" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -53,7 +72,7 @@
         <entry file="file://$PROJECT_DIR$/p2_code/hw2_helper.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="152" column="54" selection-start-line="152" selection-start-column="54" selection-end-line="152" selection-end-column="54" />
+              <caret line="196" column="57" selection-start-line="196" selection-start-column="57" selection-end-line="196" selection-end-column="57" />
               <folding>
                 <element signature="e#1902#2463#0" expanded="false" />
                 <element signature="e#2908#3106#0" expanded="false" />
@@ -66,7 +85,7 @@
         <entry file="file://$PROJECT_DIR$/p2_code/hw2_helper.h">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="38" column="11" selection-start-line="38" selection-start-column="11" selection-end-line="38" selection-end-column="11" />
+              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -92,10 +111,10 @@
       <list>
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/test111.txt" />
-        <option value="$PROJECT_DIR$/p2_code/EdgeDetector.h" />
-        <option value="$PROJECT_DIR$/p2_code/EdgeDetector.cpp" />
         <option value="$PROJECT_DIR$/p2_code/hw2_helper.cpp" />
+        <option value="$PROJECT_DIR$/p2_code/EdgeDetector.h" />
         <option value="$PROJECT_DIR$/p2_code/hw2_helper.h" />
+        <option value="$PROJECT_DIR$/p2_code/EdgeDetector.cpp" />
         <option value="$PROJECT_DIR$/p2_code/p2_main.cpp" />
       </list>
     </option>
@@ -108,9 +127,9 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="985" />
-    <option name="y" value="183" />
-    <option name="width" value="1448" />
+    <option name="x" value="468" />
+    <option name="y" value="220" />
+    <option name="width" value="1845" />
     <option name="height" value="1084" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -216,23 +235,23 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="985" y="183" width="1448" height="1084" extended-state="0" />
+    <frame x="468" y="220" width="1845" height="1084" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43172118" sideWeight="0.5171371" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43765432" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43704936" sideWeight="0.5080645" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.43704936" sideWeight="0.4919355" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39020362" sideWeight="0.72334003" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2346194" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.43172118" sideWeight="0.5171371" order="4" side_tool="true" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.43704936" sideWeight="0.5080645" order="4" side_tool="true" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.43172118" sideWeight="0.4828629" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5169163" sideWeight="0.47883064" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22836287" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32897383" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -244,7 +263,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <option name="time" value="6" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -387,39 +406,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/p2_code/EdgeDetector.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p2_code/EdgeDetector.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10892116">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/suppression.raw">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/original.raw">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49733192">
-          <caret line="0" column="8087" selection-start-line="0" selection-start-column="8087" selection-end-line="0" selection-end-column="8087" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/p2_code/hw2_helper.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="11" selection-start-line="38" selection-start-column="11" selection-end-line="38" selection-end-column="11" />
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -427,7 +417,7 @@
     <entry file="file://$PROJECT_DIR$/p2_code/hw2_helper.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="152" column="54" selection-start-line="152" selection-start-column="54" selection-end-line="152" selection-end-column="54" />
+          <caret line="196" column="57" selection-start-line="196" selection-start-column="57" selection-end-line="196" selection-end-column="57" />
           <folding>
             <element signature="e#1902#2463#0" expanded="false" />
             <element signature="e#2908#3106#0" expanded="false" />
@@ -435,10 +425,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/p2_code/EdgeDetector.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/p2_code/EdgeDetector.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="215" column="8" selection-start-line="215" selection-start-column="8" selection-end-line="215" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/p2_code/p2_main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8719317">
-          <caret line="384" column="6" selection-start-line="384" selection-start-column="6" selection-end-line="384" selection-end-column="6" />
+        <state vertical-scroll-proportion="-0.008537887">
+          <caret line="21" column="12" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="12" />
           <folding />
         </state>
       </provider>

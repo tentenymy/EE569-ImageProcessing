@@ -15,7 +15,6 @@
 #include <opencv2/opencv.hpp>
 
 
-
 typedef unsigned char Img;
 
 using namespace cv;

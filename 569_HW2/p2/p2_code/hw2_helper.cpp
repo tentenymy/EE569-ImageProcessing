@@ -177,7 +177,7 @@ Mat ImgMatOperator::Mat_Raw_Read (string filename, int height, int width, int by
         int count = 0;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                d_image[count] = (double)image[count] / 255.0;
+                d_image[count] = (double)image[count];
                 count++;
             }
         }
@@ -194,7 +194,7 @@ Mat ImgMatOperator::Mat_Raw_Read (string filename, int height, int width, int by
                         image[count] = image[count + 2];
                         image[count + 2] = temp;
                     }
-                    d_image[count] = (double)image[count] / 255.0;
+                    d_image[count] = (double)image[count];
                     count++;
                 }
             }
