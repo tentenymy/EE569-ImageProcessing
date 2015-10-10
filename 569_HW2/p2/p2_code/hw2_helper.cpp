@@ -115,27 +115,48 @@ Mat ImgMatOperator::Img_To_Mat_Convert (Img *image, int height, int width, int b
     return mat;
 }
 
-void ImgMatOperator::Mat_Raw_Write (Mat mat, string filename)
+void ImgMatOperator::Mat_Raw_Write_Gray (Mat mat, string filename)
 {
     cout << "Mat_Raw_Write_Gray: " << filename << endl;
-    Img image[128 * 128];
+    const int width = mat.cols;
+    const int height = mat.rows;
+    Img image[mat.cols * mat.rows];
     fstream fout;
-
     fout.open(filename, ios_base::out);
     if (!fout.is_open())
+        cerr << "Cannot open file: " << filename << endl;
+    for (int i = 0; i < height; i++)
     {
-        cerr << "Cannot open file: " << "testxx.raw" << endl;
-    }
-
-    for (int i = 0; i < 128 * 128; i++)
-    {
-        fout << (Img)mat.data[i];
+        for (int j = 0; j < width; j++) {
+            fout << (Img) mat.at<double>(i, j);
+        }
     }
     fout.close();
 }
 
-Mat ImgMatOperator::Mat_Raw_Read (string filename, int height, int width, int byteperpixel)
+void ImgMatOperator::Mat_Raw_Write_Color (Mat mat, string filename)
 {
+    cout << "Mat_Raw_Write_Color: " << filename << endl;
+    const int width = mat.cols;
+    const int height = mat.rows;
+    vector<Mat> channels(3);
+    split(mat, channels);
+    fstream fout;
+    fout.open(filename, ios_base::out);
+    if (!fout.is_open())
+        cerr << "Cannot open file: " << filename << endl;
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++) {
+            fout << (Img)channels[2].at<double>(i, j);
+            fout << (Img)channels[1].at<double>(i, j);
+            fout << (Img)channels[0].at<double>(i, j);
+        }
+    }
+    fout.close();
+}
+
+Mat ImgMatOperator::Mat_Raw_Read (string filename, int height, int width, int byteperpixel) {
     cout << "Mat_Raw_Read: " << filename << endl;
     char *c_filename = new char[filename.length() + 1];
     strcpy(c_filename, filename.c_str());
@@ -161,7 +182,8 @@ Mat ImgMatOperator::Mat_Raw_Read (string filename, int height, int width, int by
             }
         }
         mat = Mat(height, width, CV_64F, d_image).clone();
-    } if (byteperpixel == 3) {
+    }
+    if (byteperpixel == 3) {
         double d_image[size];
         int count = 0;
         for (int i = 0; i < height; i++) {
@@ -178,8 +200,8 @@ Mat ImgMatOperator::Mat_Raw_Read (string filename, int height, int width, int by
             }
         }
         mat = Mat(height, width, CV_64FC3, d_image).clone();
-        return mat;
     }
+    return mat;
 }
 
 int *ImgMatOperator::Get_Window(int i, int j, int height, int width, int half_window) {
@@ -210,7 +232,7 @@ void ImgMatOperator::Test()
     Img_File_Print(image, "test_img_file_print.txt", 128, 128, 1);
     Mat mat = Img_To_Mat_Convert(image, 128, 128, 1);
     Mat_File_Print(mat, "test_mat_file_print.txt");
-    Mat_Raw_Write(mat, "test_mat_raw_write.raw");
+    Mat_Raw_Write_Gray(mat, "test_mat_raw_write.raw");
     Mat_XML_Print(mat, "test_mat_xml_print.txt");
 
     Mat mat2 = Mat_Raw_Read("p1_image/p1_image_a/grass_01.raw", 128, 128, 1);
