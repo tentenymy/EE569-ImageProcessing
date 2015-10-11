@@ -1,8 +1,23 @@
-//
-// Created by Maggie on 10/6/15.
-//
+/* EE569 Homework Assignment #2
+ * Date: October 11, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem1. Texture Analysis and Classification
+ *
+ * Main function:
+ * p1_main.cpp
+ *
+ * Class EdgeDetector:
+ * classifier.h
+ * classifier.cpp
+ *
+ * Class ImgMatOperator (General class for whole HW2)
+ * hw2_helper.h
+ * hw2_helper.cpp
+ */
 
-#include "classifer.h"
+#include "classifier.h"
 
 
 Classifier::Classifier(vector <string> new_list_filename_train, vector <string> new_list_label_train,
@@ -94,7 +109,7 @@ double *Classifier::Extract_Feature (Img *pt_img, int height, int width, int byt
         pixel_total[k] = pixel_total[k] / pixel_num;
     }
     // 4. Normalization X' = (X - Xmin) / (Xmax - Xmin)
-    double pixel_min = pixel_total[0];
+    /*double pixel_min = pixel_total[0];
     double pixel_max = pixel_total[0];
     for (int i = 1; i < 25; i++) {
         if (pixel_total[i] < pixel_min) {
@@ -106,38 +121,67 @@ double *Classifier::Extract_Feature (Img *pt_img, int height, int width, int byt
     }
     for (int i = 0; i < 25; i++) {
         pixel_total[i] = (pixel_total[i] - pixel_min) / (pixel_max - pixel_min);
-    }
+    }*/
     double *res = pixel_total;
     return res;
 }
+
 void Classifier::Set_Feature () {
     cout << "Set_Feature_Train: " << num_train << endl;
     // For training data
     int count_train = 0;
     for (int i = 0; i < num_label; i++) {
-        double temp_feature_average[NUM_DATA] = {};
         for (int j = 0; j < list_num_per_label[i]; j++) {
             Img *temp_img = ImgMatOperator::Img_Raw_Read(list_filename_train[count_train++], HEIGHT, WIDTH, BYTEPERPIXEL);
             double *temp_feature = Extract_Feature(temp_img, HEIGHT, WIDTH, BYTEPERPIXEL);
-            for (int j = 0; j < NUM_DATA; j++) {
-                temp_feature_average[j] += temp_feature[j] /list_num_per_label[i];
-            }
             Mat temp_mat = Mat(1, NUM_DATA, CV_64F, temp_feature).clone();
             mat_feature.push_back(temp_mat);
         }
-        mat_feature_average.push_back(Mat(1, NUM_DATA, CV_64F, temp_feature_average).clone());
     }
+
+    // Normalization
+    double temp_max[NUM_DATA] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    double temp_min[NUM_DATA] = {100000, 100000, 100000, 100000, 100000,
+                                 100000, 100000, 100000, 100000, 100000,
+                                 100000, 100000, 100000, 100000, 100000,
+                                 100000, 100000, 100000, 100000, 100000,
+                                 100000, 100000, 100000, 100000, 100000};
+    for (int i = 0; i < num_train; i++) {
+        for (int j = 0; j < NUM_DATA; j++) {
+            if (temp_max[j] < mat_feature[i].at<double>(j))
+                temp_max[j] = mat_feature[i].at<double>(j);
+            if (temp_min[j] > mat_feature[i].at<double>(j))
+                temp_min[j] = mat_feature[i].at<double>(j);
+        }
+    }
+    for (int i = 0; i < num_train; i++) {
+        for (int j = 0; j < NUM_DATA; j++)
+            mat_feature[i].at<double>(j) = (mat_feature[i].at<double>(j) - temp_min[j]) / (temp_max[j] - temp_min[j]);
+    }
+    int count = 0;
+    for (int i = 0; i < num_label; i++) {
+        Mat temp_feature_average = Mat::zeros(1, NUM_DATA, CV_64F);
+        for (int j = 0; j < list_num_per_label[i]; j++) {
+            temp_feature_average += mat_feature[count++];
+        }
+        mat_feature_average.push_back(temp_feature_average / list_num_per_label[i]);
+    }
+
     // Set a big matrix for later use (PCA, LDA)
     mat_feature_pca_lda = mat_feature[0];
     for (int i = 1; i < num_train; i++) {
         vconcat(mat_feature_pca_lda, mat_feature[i], mat_feature_pca_lda);
     }
-    cout << "Set_Feature_Test: " << num_test << endl;
+
+    cout << "Set_Feature_Train: " << num_test << endl;
     // For testing data
     for (int i = 0; i < num_test; i++) {
         Img *temp_img = ImgMatOperator::Img_Raw_Read(list_filename_test[i], HEIGHT, WIDTH, BYTEPERPIXEL);
         double *temp_feature = Extract_Feature(temp_img, HEIGHT, WIDTH, BYTEPERPIXEL);
         Mat temp_mat = Mat(1, NUM_DATA, CV_64F, temp_feature).clone();
+        for (int j = 0; j < NUM_DATA; j++) {
+            temp_mat.at<double>(j) = (temp_mat.at<double>(j) - temp_min[j]) / (temp_max[j] - temp_min[j]);
+        }
         mat_feature.push_back(temp_mat);
     }
 }
@@ -169,12 +213,15 @@ int Classifier::Get_Minimum_Mean_Distance (int num, string label, int mode) {
             distance.push_back(Mahalanobis(mat_feature_lda[num], mat_feature_average_lda[i], temp_covar));
         }
     }
+    //cout << "N0. " << num << "\t  Distance: ";
     for (int i = 0; i < num_label; i++) {
+        //cout << distance[i] << "  ";
         if (min_distance > distance[i]) {
             min_distance = distance[i];
             min_label = list_label_name[i];
         }
     }
+    //cout << "   label: " << min_label << "   true_label: " << label << endl;
     // Print result details
     if (num < num_train) {
         if (min_label != label) {
@@ -196,6 +243,7 @@ int Classifier::Get_Minimum_Mean_Distance (int num, string label, int mode) {
         }
     }
 }
+
 void Classifier::Classify_MM(int mode, int num) {
     cout << endl << "Classify_MM  Mode: " << mode << " num: " << num << endl;
     if (mode == MODE_PCA && num > 0 && num < 25) {
@@ -247,6 +295,7 @@ void Classifier::Decrease_Dimension_PCA(int num) {
         mat_feature_average_pca.push_back(temp_average);
     }
 }
+
 void Classifier::Decrease_Dimension_LDA(int num) {
     cout << "Decrease_Dimension_LDA" << endl;
     //Convert Label
@@ -300,12 +349,20 @@ void Classifier::Classify_SVM(int mode, int num) {
     // SVM
     // Label
     const int NUM_TRAIN = num_train;
+    const int NUM_TEST = num_test;
     int list_label[NUM_TRAIN];
     for (int i = 0; i < num_train; i++) {
         if (i < list_num_per_label[0])
             list_label[i] = 1;
         else
             list_label[i] = -1;
+    }
+    int list_label_test_temp[NUM_TEST];
+    for (int i = 0; i < num_test; i++) {
+        if (i < 12)
+            list_label_test_temp[i] = 1;
+        else
+            list_label_test_temp[i] = -1;
     }
     Mat labelsMat = Mat(num_train, 1, CV_32SC1, list_label).clone();
     // Scaling!!!!
@@ -324,7 +381,7 @@ void Classifier::Classify_SVM(int mode, int num) {
             total += (value - mat_mean.at<float>(0, i)) * (value - mat_mean.at<float>(0, i)) / (num_train - 1);
         }
         scale[i] = sqrt(total);
-        cout << "scale: " << scale[1] << endl;
+        //cout << "scale: " << scale[1] << endl;
     }
     // Set Training data
     Mat mat_train = Mat(num_train, num, CV_32F).clone();
@@ -362,11 +419,11 @@ void Classifier::Classify_SVM(int mode, int num) {
         }
     }
     for (int i = 0; i < num_test; i++) {
-        if (res[i + num_train] != 1) {
-            //cout << "No" << i + num_train << ": " << list_label[i] << "  " << res[i + num_train] << "  (*)" << endl;
+        if (res[i + num_train] != list_label_test_temp[i]) {
+            //cout << "No" << i + num_train << ": " << list_label_test_temp[i] << "  " << res[i + num_train] << "  (*)" << endl;
             count_error_test++;
         } else {
-            //cout << "No" << i + num_train << ": " << list_label[i] << "  " << res[i + num_train] << endl;
+            //cout << "No" << i + num_train << ": " << list_label_test_temp[i] << "  " << res[i + num_train] << endl;
         }
     }
 }
@@ -395,31 +452,37 @@ void Classifier::Print_Error_Rate() {
 
 void Classifier::Print_Stat(int mode) {
     if (mode == 0) {
-        cout << "----------mat_feature----------" << endl;
+        //cout << "----------mat_feature----------" << endl;
         for (int i = 0; i < mat_feature.size(); i++) {
-            cout << mat_feature[i] << endl;
+            //cout << mat_feature[i] << endl;
         }
         cout << "----------mat_feature_average----------" << endl;
         for (int i = 0; i < mat_feature_average.size(); i++) {
-            cout << mat_feature_average[i] << endl;
+            Mat temp;
+            transpose(mat_feature_average[i], temp);
+            cout << temp << endl;
         }
     } else if (mode == 1) {
-        cout << "----------mat_feature_pca----------" << endl;
+        //cout << "----------mat_feature_pca----------" << endl;
         for (int i = 0; i < mat_feature_pca.size(); i++) {
-            cout << mat_feature_pca[i] << endl;
+            //cout << mat_feature_pca[i] << endl;
         }
         cout << "----------mat_feature_average_pca----------" << endl;
         for (int i = 0; i < mat_feature_average_pca.size(); i++) {
-            cout << mat_feature_average_pca[i] << endl;
+            Mat temp;
+            transpose(mat_feature_average_pca[i], temp);
+            cout << temp << endl;
         }
     } else if (mode == 2) {
-        cout << "----------mat_feature_lda----------" << endl;
+        //cout << "----------mat_feature_lda----------" << endl;
         for (int i = 0; i < mat_feature_lda.size(); i++) {
-            cout << mat_feature_lda[i] << endl;
+            //cout << mat_feature_lda[i] << endl;
         }
         cout << "----------mat_feature_average_lda----------" << endl;
         for (int i = 0; i < mat_feature_average_lda.size(); i++) {
-            cout << mat_feature_average_lda[i] << endl;
+            Mat temp;
+            transpose(mat_feature_average_lda[i], temp);
+            cout << temp << endl;
         }
     } else {
         cout << "ERROR" << endl << endl;

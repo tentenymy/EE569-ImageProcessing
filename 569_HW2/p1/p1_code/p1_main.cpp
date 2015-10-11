@@ -1,5 +1,23 @@
-#include "classifer.h"
+/* EE569 Homework Assignment #2
+ * Date: October 11, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem1. Texture Analysis and Classification
+ *
+ * Main function:
+ * p1_main.cpp
+ *
+ * Class EdgeDetector:
+ * classifier.h
+ * classifier.cpp
+ *
+ * Class ImgMatOperator (General class for whole HW2)
+ * hw2_helper.h
+ * hw2_helper.cpp
+ */
 
+#include "classifier.h"
 
 // Declaration of default parameter
 const string LABEL[5] = {"grass", "straw", "sand", "leather", "unknown"};
@@ -52,7 +70,7 @@ void Get_List_Filename_Label_a (vector <string> *list_filename_train, vector <st
     }
 }
 
-void Get_List_Filename_Label_b (vector <string> *list_filename_train, vector <string> *list_label_train,
+void Get_List_Filename_Label_b(vector <string> *list_filename_train, vector <string> *list_label_train,
                                     vector <string> *list_filename_test, vector <string> *list_label_test,
                                     int* pt_index_label) {
     // Clear vector list
@@ -82,6 +100,12 @@ void Get_List_Filename_Label_b (vector <string> *list_filename_train, vector <st
         list_label_test->push_back(LABEL[index_label[0]]);
         list_filename_test->push_back(FOLDER2 + Convert_Filename(LABEL[index_label[0]], i));
     }
+    for (int i = 0; i < 3; i++) {
+        for (int j = 12; j < 16; j++) {
+            list_label_test->push_back(LABEL[index_label[i + 1]]);
+            list_filename_test->push_back(FOLDER2 + Convert_Filename(LABEL[index_label[i + 1]], j));
+        }
+    }
 }
 
 
@@ -98,6 +122,7 @@ void Prob1a()
                                        list_filename_test, list_label_test);
     // problem1a 1): Feature Extract
     classifier.Set_Feature();
+    classifier.Print_Stat(0);
 
     // problem1a 2): MM
     classifier.Classify_MM(MODE_MM, 0);
@@ -106,14 +131,32 @@ void Prob1a()
     // problem1a 3 & 5): PCA, dimension = 1
     classifier.Classify_MM(MODE_PCA, 1);
     classifier.Print_Error_Rate();
+    classifier.Print_Stat(1);
 
     // problem1a 3 & 5): PCA, dimension = 2
     classifier.Classify_MM(MODE_PCA, 2);
     classifier.Print_Error_Rate();
+    classifier.Print_Stat(1);
+
+    // problem1a 3 & 5): PCA, dimension = 3
+    classifier.Classify_MM(MODE_PCA, 3);
+    classifier.Print_Error_Rate();
+    classifier.Print_Stat(1);
 
     // problem1a 4 & 5): PCA, dimension = 1
     classifier.Classify_MM(MODE_LDA, 1);
     classifier.Print_Error_Rate();
+    classifier.Print_Stat(2);
+
+    // problem1a 4 & 5): PCA, dimension = 2
+    classifier.Classify_MM(MODE_LDA, 2);
+    classifier.Print_Error_Rate();
+    classifier.Print_Stat(2);
+
+    // problem1a 4 & 5): PCA, dimension = 3
+    classifier.Classify_MM(MODE_LDA, 3);
+    classifier.Print_Error_Rate();
+    classifier.Print_Stat(2);
 }
 
 void Prob1b() {
@@ -127,7 +170,7 @@ void Prob1b() {
                              {2, 0, 1, 3},
                              {3, 0, 1, 2}};
     // problem1b 2): Minimum distance (PDA)
-    for (int i = 0; i < 4; i++) {
+    /*for (int i = 0; i < 4; i++) {
         cout << "----------------------" << LABEL[i] << "--------------------" << endl;
         Get_List_Filename_Label_b(&list_filename_train, &list_label_train,
                                   &list_filename_test, &list_label_test, index_label[i]);
@@ -160,13 +203,24 @@ void Prob1b() {
         classifier.Set_Feature();
         classifier.Classify_SVM(MODE_PCA, 3);
         classifier.Print_Error_Rate();
+    }*/
+
+    for (int i = 0; i < 4; i++) {
+        cout << "----------------------" << LABEL[i] << "--------------------" << endl;
+        Get_List_Filename_Label_b(&list_filename_train, &list_label_train,
+                                  &list_filename_test, &list_label_test, index_label[i]);
+        Classifier classifier = Classifier(list_filename_train, list_label_train,
+                                           list_filename_test, list_label_test);
+        classifier.Set_Feature();
+        classifier.Classify_SVM(MODE_PCA, 2);
+        classifier.Print_Error_Rate();
     }
 }
 
 int main(int argc, char *argv[])
 {
     cout << "Problem 1" << endl;
-    Prob1a();
+    //Prob1a();
     Prob1b();
     return 0;
 }

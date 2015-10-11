@@ -1,9 +1,24 @@
-//
-// Created by Maggie on 10/6/15.
-//
+/* EE569 Homework Assignment #2
+ * Date: October 11, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem1. Texture Analysis and Classification
+ *
+ * Main function:
+ * p1_main.cpp
+ *
+ * Class EdgeDetector:
+ * classifier.h
+ * classifier.cpp
+ *
+ * Class ImgMatOperator (General class for whole HW2)
+ * hw2_helper.h
+ * hw2_helper.cpp
+ */
 
-#ifndef P1_CLASSIFER_H
-#define P1_CLASSIFER_H
+#ifndef CLASSIFIER_H
+#define CLASSIFIER_H
 
 #include "hw2_helper.h"
 #include <opencv2/core.hpp>
@@ -70,9 +85,9 @@ public:
     void Classify_MM(int mode, int num);
     void Classify_SVM(int mode, int num);
 
-    void Print_Label();
     void Print_Error_Rate();
     void Print_Stat(int);
+    void Print_Label();
 };
 
 #endif //P1_CLASSIFER_H

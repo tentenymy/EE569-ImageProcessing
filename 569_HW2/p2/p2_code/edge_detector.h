@@ -10,8 +10,8 @@
  * p2_main.cpp
  *
  * Class EdgeDetector:
- * EdgeDetector.h
- * EdgeDetector.cpp
+ * edge_detector.h
+ * edge_detector.cpp
  *
  * Class ImgMatOperator (General class for whole HW2)
  * hw2_helper.h

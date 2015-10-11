@@ -1,10 +1,24 @@
-//
-// Created by Maggie on 9/30/15.
-//
+/* EE569 Homework Assignment #2
+ * Date: October 11, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem1. Texture Analysis and Classification
+ *
+ * Main function:
+ * p1_main.cpp
+ *
+ * Class EdgeDetector:
+ * classifier.h
+ * classifier.cpp
+ *
+ * Class ImgMatOperator (General class for whole HW2)
+ * hw2_helper.h
+ * hw2_helper.cpp
+ */
 
 #ifndef HW2_HELPER_H
 #define HW2_HELPER_H
-#endif //HW2_P1A_H
 
 #include <stdio.h>
 #include <iostream>
@@ -38,3 +52,7 @@ public:
     static int *Get_Window(int i, int j, int height, int width, int half_window);
     void Test();
 };
+
+
+#endif //HW2_P1A_H
+

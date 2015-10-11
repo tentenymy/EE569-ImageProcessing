@@ -1,3 +1,23 @@
+/* EE569 Homework Assignment #2
+ * Date: October 11, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem1. Texture Analysis and Classification
+ *
+ * Main function:
+ * p1_main.cpp
+ *
+ * Class EdgeDetector:
+ * classifier.h
+ * classifier.cpp
+ *
+ * Class ImgMatOperator (General class for whole HW2)
+ * hw2_helper.h
+ * hw2_helper.cpp
+ */
+
+
 #include "hw2_helper.h"
 
 ImgMatOperator::ImgMatOperator()
