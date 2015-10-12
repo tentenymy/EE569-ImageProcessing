@@ -170,7 +170,29 @@ void Prob1b() {
                              {2, 0, 1, 3},
                              {3, 0, 1, 2}};
     // problem1b 2): Minimum distance (PDA)
+    for (int i = 0; i < 4; i++) {
+        cout << "----------------------" << LABEL[i] << "--------------------" << endl;
+        Get_List_Filename_Label_b(&list_filename_train, &list_label_train,
+                                  &list_filename_test, &list_label_test, index_label[i]);
+        Classifier classifier = Classifier(list_filename_train, list_label_train,
+                                           list_filename_test, list_label_test);
+        classifier.Set_Feature();
+        classifier.Classify_MM(MODE_PCA, 1);
+        classifier.Print_Error_Rate();
+    }
+
+    // Cases for discussion
     /*for (int i = 0; i < 4; i++) {
+        cout << "----------------------" << LABEL[i] << "--------------------" << endl;
+        Get_List_Filename_Label_b(&list_filename_train, &list_label_train,
+                                  &list_filename_test, &list_label_test, index_label[i]);
+        Classifier classifier = Classifier(list_filename_train, list_label_train,
+                                           list_filename_test, list_label_test);
+        classifier.Set_Feature();
+        classifier.Classify_MM(MODE_PCA, 2);
+        classifier.Print_Error_Rate();
+    }
+    for (int i = 0; i < 4; i++) {
         cout << "----------------------" << LABEL[i] << "--------------------" << endl;
         Get_List_Filename_Label_b(&list_filename_train, &list_label_train,
                                   &list_filename_test, &list_label_test, index_label[i]);
@@ -179,7 +201,7 @@ void Prob1b() {
         classifier.Set_Feature();
         classifier.Classify_MM(MODE_PCA, 3);
         classifier.Print_Error_Rate();
-    }
+    }*/
 
     // problem1b 2): Minimum distance (LDA)
     for (int i = 0; i < 4; i++) {
@@ -189,9 +211,31 @@ void Prob1b() {
         Classifier classifier = Classifier(list_filename_train, list_label_train,
                                            list_filename_test, list_label_test);
         classifier.Set_Feature();
-        classifier.Classify_MM(MODE_LDA, 3);
+        classifier.Classify_MM(MODE_LDA, 1);
         classifier.Print_Error_Rate();
     }
+
+    // Cases for discussion
+    /*for (int i = 0; i < 4; i++) {
+        cout << "----------------------" << LABEL[i] << "--------------------" << endl;
+        Get_List_Filename_Label_b(&list_filename_train, &list_label_train,
+                                  &list_filename_test, &list_label_test, index_label[i]);
+        Classifier classifier = Classifier(list_filename_train, list_label_train,
+                                           list_filename_test, list_label_test);
+        classifier.Set_Feature();
+        classifier.Classify_MM(MODE_LDA, 2);
+        classifier.Print_Error_Rate();
+    }
+    for (int i = 0; i < 4; i++) {
+        cout << "----------------------" << LABEL[i] << "--------------------" << endl;
+        Get_List_Filename_Label_b(&list_filename_train, &list_label_train,
+                                  &list_filename_test, &list_label_test, index_label[i]);
+        Classifier classifier = Classifier(list_filename_train, list_label_train,
+                                           list_filename_test, list_label_test);
+        classifier.Set_Feature();
+        classifier.Classify_MM(MODE_LDA, 3);
+        classifier.Print_Error_Rate();
+    }*/
 
     // Problem1b 3): SVM (PDA)
     for (int i = 0; i < 4; i++) {
@@ -201,11 +245,12 @@ void Prob1b() {
         Classifier classifier = Classifier(list_filename_train, list_label_train,
                                            list_filename_test, list_label_test);
         classifier.Set_Feature();
-        classifier.Classify_SVM(MODE_PCA, 3);
+        classifier.Classify_SVM(MODE_PCA, 1);
         classifier.Print_Error_Rate();
-    }*/
+    }
 
-    for (int i = 0; i < 4; i++) {
+    // Cases for discussion
+    /*for (int i = 0; i < 4; i++) {
         cout << "----------------------" << LABEL[i] << "--------------------" << endl;
         Get_List_Filename_Label_b(&list_filename_train, &list_label_train,
                                   &list_filename_test, &list_label_test, index_label[i]);
@@ -214,13 +259,24 @@ void Prob1b() {
         classifier.Set_Feature();
         classifier.Classify_SVM(MODE_PCA, 2);
         classifier.Print_Error_Rate();
-    }
+    }*/
+
+    /*for (int i = 0; i < 4; i++) {
+       cout << "----------------------" << LABEL[i] << "--------------------" << endl;
+       Get_List_Filename_Label_b(&list_filename_train, &list_label_train,
+                                 &list_filename_test, &list_label_test, index_label[i]);
+       Classifier classifier = Classifier(list_filename_train, list_label_train,
+                                          list_filename_test, list_label_test);
+       classifier.Set_Feature();
+       classifier.Classify_SVM(MODE_PCA, 3);
+       classifier.Print_Error_Rate();
+   }*/
 }
 
 int main(int argc, char *argv[])
 {
     cout << "Problem 1" << endl;
-    //Prob1a();
+    Prob1a();
     Prob1b();
     return 0;
 }
