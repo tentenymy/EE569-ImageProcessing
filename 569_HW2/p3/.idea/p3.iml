@@ -5,6 +5,8 @@
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/p3_code/hw2_helper.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/p3_code/hw2_helper.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/p3_code/meanshift.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/p3_code/meanshift.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/p3_code/p3_main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/p3_code/slic.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/p3_code/slic.h" isTestSource="false" />
