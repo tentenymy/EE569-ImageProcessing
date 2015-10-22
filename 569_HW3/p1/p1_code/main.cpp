@@ -208,7 +208,8 @@ void Test() {
 
 void prob1a () {
 
-    Test();
+    //Test();
+    Image img_ori(512, 512, 3, "p1_image/lenna.raw");
 
 }
 
