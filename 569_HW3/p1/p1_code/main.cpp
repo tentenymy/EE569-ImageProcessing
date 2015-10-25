@@ -17,12 +17,16 @@ float TAN (float degree) {
 
 
 void Test() {
-    ImgPixel img[18] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17};
-    Image img_ori(3, 2, 3, &img[0]);
-    img_ori.Print();
-    //Image img2 (512, 512, 3, "p1_image/lenna.raw");
-    //img2.Print();
-    //img2.Write(&img2, "test.raw");
+    ImgPixel img[18] = {};
+    for (int i = 0; i < 36; i++) {
+        img[i] = i;
+    }
+    Image img_ori(3, 4, 3, &img[0]);
+    img_ori.Print_Data();
+
+    img_ori.Initial_Geodata();
+    img_ori.Convert_Cartesian_Coordinate();
+    img_ori.Print_Geodata_Coord();
 
 }
 

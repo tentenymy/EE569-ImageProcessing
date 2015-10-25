@@ -18,6 +18,8 @@ typedef unsigned char ImgPixel;
 typedef float ImgCoord[3];
 typedef float ImgColor[3];
 
+typedef float Matrix[3][3];
+
 typedef struct GeoPixel {
     ImgCoord coord;
     ImgColor color;
@@ -38,11 +40,13 @@ public:
     ~Image();
 
     void Write (Image *image, string filename);
-    void Print();
+    void Print_Data();
+    void Print_Geodata_Color();
+    void Print_Geodata_Coord();
 
-    void Get_Image_Coordinate();
-    void Get_Cartesian_Coordinate();
-
+    int Initial_Geodata();
+    int Convert_Cartesian_Coordinate();
+    int Convert_Image_Coordinate();
 
     ImgPixel Get_Value(int i, int j, int k);
     int Get_Row(int index);

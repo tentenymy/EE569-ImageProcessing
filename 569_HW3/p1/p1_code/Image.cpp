@@ -82,9 +82,8 @@ void Image::Write (Image *image, string filename) {
     fclose(file);
 }
 
-void Image::Print() {
+void Image::Print_Data() {
     cout << endl << "Image: " << row << ", " << col << ", " << byte << endl;
-    int count = 0;
     int new_col = col;
     int max_col = 100;
     if (col * byte > max_col) {
@@ -100,6 +99,37 @@ void Image::Print() {
     }
 }
 
+void Image::Print_Geodata_Color() {
+    cout << endl << "Image: " << row << ", " << col << ", " << byte << endl;
+    if (geo_data) {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                cout << "(" << geo_data[i * col + j].coord[0] << " "
+                << geo_data[i * col + j].coord[1] << " "
+                << geo_data[i * col + j].coord[2] << " "
+                << geo_data[i * col + j].color[0] << " "
+                << geo_data[i * col + j].color[1] << " "
+                << geo_data[i * col + j].color[2] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+void Image::Print_Geodata_Coord() {
+    cout << endl << "Image: " << row << ", " << col << ", " << byte << endl;
+    if (geo_data) {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                cout << "(" << geo_data[i * col + j].coord[0] << " "
+                << geo_data[i * col + j].coord[1] << " "
+                << geo_data[i * col + j].coord[2] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
 ImgPixel Image::Get_Value(int i, int j, int k) {
     return data[i * byte * col + j * byte + k];
 }
@@ -107,29 +137,94 @@ ImgPixel Image::Get_Value(int i, int j, int k) {
 int Image::Get_Row(int index) {
     return index / (col * byte);
 }
+
 int Image::Get_Col(int index) {
     return (index % (byte * col)) / byte;
 }
+
 int Image::Get_Byte(int index) {
     return index % byte;
 }
 
-
-void Image::Get_Image_Coordinate() {
+int Image::Initial_Geodata() {
+    // allocate memory to geo_data
+    if (geo_data) {
+        cerr << "geo data already exist" << endl;
+        return 0;
+    }
     geo_data = new GeoPixel[row * col];
     if (!geo_data) {
         cerr << "Wrong allocate memory" << endl;
-        exit(1);
+        return 0;
     }
 
+    // image coordinate
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
-            geo_data[i * col + j];
+            geo_data[i * col + j].coord[0] = i;
+            geo_data[i * col + j].coord[1] = j;
+            geo_data[i * col + j].coord[2] = 1;
+            geo_data[i * col + j].color[0] = Get_Value(i, j, 0);
+            geo_data[i * col + j].color[1] = Get_Value(i, j, 1);
+            geo_data[i * col + j].color[2] = Get_Value(i, j, 2);
         }
     }
+    return 1;
+}
 
 
+// Convert image data to Cartesian Coordinate
+int Image::Convert_Cartesian_Coordinate() {
+    // check geo_data
+    if (!geo_data) {
+        cerr << "geo data is still null" << endl;
+        return 0;
+    }
 
+    // Initial matrix
+    float temp_row = (float)row - 0.5f;
+    Matrix matrix = {{0.0f, 1.0f, 0.5f}, {-1.0f, 0.0f, temp_row}, {0.0f, 0.0f, 1.0f}};
 
+    // apply matrix to Image coordinate
+    ImgCoord temp_coord = {};
+    for(int i = 0; i < row * col; i++) {
+        for (int j = 0; j < 3; j++) {
+            temp_coord[j] = 0;
+            for (int k = 0; k < 3; k++) {
+                temp_coord[j] += matrix[j][k] * geo_data[i].coord[k];
+            }
+        }
+        geo_data[i].coord[0] = temp_coord[0];
+        geo_data[i].coord[1] = temp_coord[1];
+        geo_data[i].coord[2] = temp_coord[2];
+    }
+    return 1;
+}
 
+// Convert Cartesian Coordiante to Image Coordiante
+int Image::Convert_Image_Coordinate() {
+    // check geo_data
+    if (!geo_data) {
+        cerr << "geo data is still null" << endl;
+        return 0;
+    }
+
+    // Initial matrix
+    float temp_row = (float)row - 0.5f;
+    Matrix matrix = {{0.0f, 1.0f, 0.5f}, {-1.0f, 0.0f, temp_row}, {0.0f, 0.0f, 1.0f}};
+
+    // apply matrix to Image coordinate
+    ImgCoord temp_coord = {};
+    for(int i = 0; i < row * col; i++) {
+        for (int j = 0; j < 3; j++) {
+            temp_coord[j] = 0;
+            for (int k = 0; k < 3; k++) {
+                temp_coord[j] += matrix[j][k] * geo_data[i].coord[k];
+            }
+        }
+        geo_data[i].coord[0] = temp_coord[0];
+        geo_data[i].coord[1] = temp_coord[1];
+        geo_data[i].coord[2] = temp_coord[2];
+    }
+    return 1;
 }
