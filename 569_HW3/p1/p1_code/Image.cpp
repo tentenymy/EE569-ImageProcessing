@@ -4,11 +4,20 @@
 
 #include "Image.h"
 
+float COS(float degree) {
+    return cos(degree / DEGREE * PI);
+}
+float SIN(float degree) {
+    return sin(degree / DEGREE * PI);
+}
+float TAN (float degree) {
+    return tan(degree / DEGREE * PI);
+}
 
 
-///////////////////////////////
-/////////// image /////////////
-///////////////////////////////
+////////////////////////////////////
+/////////// Contructor /////////////
+////////////////////////////////////
 
 Image::Image(int new_row, int new_col, int new_byte, ImgPixel *pt_img) {
     if (new_col <= 0 || new_col > 1024) {
@@ -69,7 +78,12 @@ Image::~Image() {
         delete geo_data;
 }
 
+/////////////////////////////////
+/////////// Display /////////////
+/////////////////////////////////
+
 void Image::Write (Image *image, string filename) {
+    cout << "Write " << filename << endl;
     char *c_filename = new char[filename.length() + 1];
     strcpy(c_filename, filename.c_str());
     FILE *file;
@@ -82,8 +96,8 @@ void Image::Write (Image *image, string filename) {
     fclose(file);
 }
 
-void Image::Print_Data() {
-    cout << endl << "Image: " << row << ", " << col << ", " << byte << endl;
+void Image::Print_Data(string str) {
+    cout << endl << "Image " << str << ": " << row << ", " << col << ", " << byte << endl;
     int new_col = col;
     int max_col = 100;
     if (col * byte > max_col) {
@@ -99,8 +113,8 @@ void Image::Print_Data() {
     }
 }
 
-void Image::Print_Geodata_Color() {
-    cout << endl << "Image: " << row << ", " << col << ", " << byte << endl;
+void Image::Print_Geodata_Color(string str) {
+    cout << endl << "Image " << str << ": " << row << ", " << col << ", " << byte << endl;
     if (geo_data) {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -116,8 +130,8 @@ void Image::Print_Geodata_Color() {
     }
 }
 
-void Image::Print_Geodata_Coord() {
-    cout << endl << "Image: " << row << ", " << col << ", " << byte << endl;
+void Image::Print_Geodata_Coord(string str) {
+    cout << endl << "Image " << str << ": " << row << ", " << col << ", " << byte << endl;
     if (geo_data) {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -146,7 +160,13 @@ int Image::Get_Byte(int index) {
     return index % byte;
 }
 
+
+//////////////////////////////////
+/////////// Geometry /////////////
+//////////////////////////////////
+
 int Image::Initial_Geodata() {
+    cout << "Initial Geodata" << endl;
     // allocate memory to geo_data
     if (geo_data) {
         cerr << "geo data already exist" << endl;
@@ -157,7 +177,6 @@ int Image::Initial_Geodata() {
         cerr << "Wrong allocate memory" << endl;
         return 0;
     }
-
     // image coordinate
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
@@ -173,18 +192,28 @@ int Image::Initial_Geodata() {
 }
 
 
-// Convert image data to Cartesian Coordinate
-int Image::Convert_Cartesian_Coordinate() {
+int Image::Image_to_Cartesian_Coordinate() {
+    cout << "Convert_Cartesian_Coordinate" << endl;
+    float temp_row = (float)row - 0.5f;
+    Matrix matrix = {{0.0f, 1.0f, 0.5f}, {-1.0f, 0.0f, temp_row}, {0.0f, 0.0f, 1.0f}};
+    return Apply_Matrix(matrix);
+}
+
+
+int Image::Cartesian_to_Image_Coordinate() {
+    cout << "Convert_Image_Coordinate" << endl;
+    float temp_row = (float)row - 0.5f;
+    Matrix matrix = {{0.0f, -1.0f, temp_row}, {1.0f, 0.0f, -0.5f}, {0.0f, 0.0f, 1.0f}};
+    return Apply_Matrix(matrix);
+}
+
+
+int Image::Apply_Matrix(Matrix matrix) {
     // check geo_data
     if (!geo_data) {
         cerr << "geo data is still null" << endl;
         return 0;
     }
-
-    // Initial matrix
-    float temp_row = (float)row - 0.5f;
-    Matrix matrix = {{0.0f, 1.0f, 0.5f}, {-1.0f, 0.0f, temp_row}, {0.0f, 0.0f, 1.0f}};
-
     // apply matrix to Image coordinate
     ImgCoord temp_coord = {};
     for(int i = 0; i < row * col; i++) {
@@ -201,21 +230,98 @@ int Image::Convert_Cartesian_Coordinate() {
     return 1;
 }
 
-// Convert Cartesian Coordiante to Image Coordiante
-int Image::Convert_Image_Coordinate() {
+
+int Image::Set_Data() {
+    cout << "Set Data" << endl;
     // check geo_data
     if (!geo_data) {
         cerr << "geo data is still null" << endl;
         return 0;
     }
+    // Set temp data
+    float *temp_data = new float[row * col * byte];
+    if (!temp_data) {
+        cerr << "fail to allocate memory" << endl;
+        return 0;
+    }
+    for (int i = 0; i < row * col * byte; i++) {
+        temp_data[i] = 0.0f;
+    }
+    // bilinear intepolation
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            float point_estimate_x = geo_data[i * col + j].coord[0];
+            float point_estimate_y = geo_data[i * col + j].coord[1];
+            int point_lt_x = (int)floor(point_estimate_x);
+            int point_lt_y = (int)floor(point_estimate_y);
+            float scale_a = point_estimate_x - (float)point_lt_x;
+            float scale_b = point_estimate_y - (float)point_lt_y;
 
-    // Initial matrix
-    float temp_row = (float)row - 0.5f;
-    Matrix matrix = {{0.0f, 1.0f, 0.5f}, {-1.0f, 0.0f, temp_row}, {0.0f, 0.0f, 1.0f}};
+            int point_x[4] = {point_lt_x, point_lt_x, point_lt_x + 1, point_lt_x + 1};
+            int point_y[4] = {point_lt_y, point_lt_y + 1, point_lt_y, point_lt_y + 1};
+            float scale_ab[4] = {(1.0f - scale_a) * (1.0f - scale_b), (1.0f - scale_a) * scale_b, (1.0f - scale_b) * scale_a, scale_a * scale_b};
+            for(int k = 0; k < byte; k++)
+            {
+                float value = 0;
+                for (int m = 0; m < 4; m++) {
+                    if (point_x[m] >= 0 && point_x[m] <= row && point_y[m] >= 0 && point_y[m] <= col)
+                        value += scale_ab[m] * Get_Value(point_x[m], point_y[m], k);
+                }
+                temp_data[i * col * byte + j * byte + k] = value;
+            }
+        }
+    }
+    for (int i = 0; i < row * col * byte; i++) {
+        data[i] = (ImgPixel)temp_data[i];
+    }
+    delete temp_data;
+    return 1;
+}
 
+
+
+////////////////////////////////
+/////////// Effect /////////////
+////////////////////////////////
+
+int Image::Effect_Rotation(float theta) {
+    cout << "Effect_Rotation: " << theta << endl;
+    theta *= -1;
+    Matrix matrix = {{COS(theta), -SIN(theta), 0}, {SIN(theta), COS(theta), 0}, {0.0f, 0.0f, 1.0f}};
+    return Apply_Matrix(matrix);
+}
+
+
+int Image::Effect_Translation(float coef_tx, float coef_ty) {
+    coef_tx *= -1;
+    coef_ty *= -1;
+    cout << "Effect_Translation: " << coef_tx << " " << coef_ty << endl;
+    Matrix matrix = {{1.0f, 0.0f, coef_tx}, {0.0f, 1.0f, coef_ty}, {0.0f, 0.0f, 1.0f}};
+    return Apply_Matrix(matrix);
+}
+
+int Image::Effect_Scaling(float coef_sx, float coef_sy) {
+    coef_sx = 1.0f / coef_sx;
+    coef_sy = 1.0f / coef_sy;
+    cout << "Effect_Scaling: " << coef_sx << " " << coef_sy << endl;
+    Matrix matrix = {{coef_sx, 0.0f, 0.0f}, {0.0f, coef_sy, 0.0f}, {0.0f, 0.0f, 1.0f}};
+    return Apply_Matrix(matrix);
+}
+
+
+int Image::Effect_Swirling(float theta) {
+    cout << "Effect_Swirling: " << theta << endl;
+    // check geo_data
+    if (!geo_data) {
+        cerr << "geo data is still null" << endl;
+        return 0;
+    }
     // apply matrix to Image coordinate
     ImgCoord temp_coord = {};
     for(int i = 0; i < row * col; i++) {
+        float range = geo_data[i].coord[0] * geo_data[i].coord[0] + geo_data[i].coord[1] * geo_data[i].coord[1];
+        float theta_current = -theta * range * 4 / (row * col);
+        Matrix matrix = {{COS(theta_current), -SIN(theta_current), 0}, {SIN(theta_current), COS(theta_current), 0}, {0.0f, 0.0f, 1.0f}};
         for (int j = 0; j < 3; j++) {
             temp_coord[j] = 0;
             for (int k = 0; k < 3; k++) {

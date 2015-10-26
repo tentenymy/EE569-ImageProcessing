@@ -14,6 +14,10 @@
 
 using namespace std;
 
+
+const float PI = 3.1415926f;
+const float DEGREE = 180.0f;
+
 typedef unsigned char ImgPixel;
 typedef float ImgCoord[3];
 typedef float ImgColor[3];
@@ -26,6 +30,12 @@ typedef struct GeoPixel {
 } GeoPixel;
 
 
+float COS(float);
+float SIN(float);
+float TAN(float);
+
+
+
 class Image {
 public:
     int col;
@@ -34,27 +44,42 @@ public:
     ImgPixel *data = NULL;
     GeoPixel *geo_data = NULL;
 
-
+    // Constructor
     Image(int new_row, int new_col, int new_byte, ImgPixel *pt_img);
     Image(int new_row, int new_col, int new_byte, string filename);
     ~Image();
 
+    // Display
     void Write (Image *image, string filename);
-    void Print_Data();
-    void Print_Geodata_Color();
-    void Print_Geodata_Coord();
 
-    int Initial_Geodata();
-    int Convert_Cartesian_Coordinate();
-    int Convert_Image_Coordinate();
+    void Print_Data(string);
+    void Print_Geodata_Color(string);
+    void Print_Geodata_Coord(string);
 
     ImgPixel Get_Value(int i, int j, int k);
     int Get_Row(int index);
     int Get_Col(int index);
     int Get_Byte(int index);
+
+    // Geometry
+    int Initial_Geodata();
+    int Image_to_Cartesian_Coordinate();
+    int Cartesian_to_Image_Coordinate();
+
+    int Apply_Matrix(Matrix);
+    int Set_Data();
+
+
+    // Effect
+    int Effect_Rotation(float);
+    int Effect_Translation(float, float);
+    int Effect_Scaling(float, float);
+    int Effect_Swirling(float);
+
+
+
+
+
+
 };
-
-
-
-
 #endif //P1_IMAGE_H
