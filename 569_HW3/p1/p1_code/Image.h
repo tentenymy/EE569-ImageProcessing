@@ -15,14 +15,18 @@
 using namespace std;
 
 
-const float PI = 3.1415926f;
-const float DEGREE = 180.0f;
+const double PI = 3.14159265;
+
+const int X = 0;
+const int Y = 1;
+const int Z = 2;
 
 typedef unsigned char ImgPixel;
-typedef float ImgCoord[3];
+typedef float ImgCoord[4];
 typedef float ImgColor[3];
 
-typedef float Matrix[3][3];
+typedef float Matrix[4][4];
+
 
 typedef struct GeoPixel {
     ImgCoord coord;
@@ -55,6 +59,7 @@ public:
     void Print_Data(string);
     void Print_Geodata_Color(string);
     void Print_Geodata_Coord(string);
+    void Print_Geodata_Coord(string, int, int);
 
     ImgPixel Get_Value(int i, int j, int k);
     int Get_Row(int index);
@@ -71,12 +76,13 @@ public:
 
 
     // Effect
-    int Effect_Rotation(float);
-    int Effect_Translation(float, float);
-    int Effect_Scaling(float, float);
+    int Effect_Rotation(float, int);
+    int Effect_Translation(float, float, float);
+    int Effect_Scaling(float, float, float);
     int Effect_Swirling(float);
 
 
+    // Camera
 
 
 
