@@ -307,13 +307,49 @@ int Image::Initial_Geodata(vector <Image*> image_list) {
             image_row = 0;
         }
     }
-    return 0;
+    return 1;
+}
+
+int Image::Initial_Geodata(GeoPixel* new_geo_data, int new_geo_row, int new_geo_col) {
+    // resize geo_col, geo row
+    geo_row = new_geo_row;
+    geo_col = new_geo_col;
+    cout << "Initial Geodata " << new_geo_row << " " << new_geo_col << endl;
+    // allocate memory to geo_data
+    if (geo_data) {
+        cerr << "geo data already exist" << endl;
+        return 0;
+    }
+    if (new_geo_row <= 0 && new_geo_col <= 0) {
+        cerr << "geo_row or geo_col is wrong" << endl;
+        return 0;
+    }
+    geo_data = new GeoPixel[geo_row * geo_col];
+    if (!geo_data) {
+        cerr << "Wrong allocate memory" << endl;
+        return 0;
+    }
+    // image coordinate
+    int image_count = 0;
+    int image_row = 0;
+    for (int i = 0; i < geo_row; i++) {
+        for (int j = 0; j < geo_col; j++) {
+            geo_data[i * geo_col + j].coord[0] = new_geo_data[i * geo_col + j].coord[0];
+            geo_data[i * geo_col + j].coord[1] = new_geo_data[i * geo_col + j].coord[1];
+            geo_data[i * geo_col + j].coord[2] = new_geo_data[i * geo_col + j].coord[2];
+            geo_data[i * geo_col + j].coord[3] = new_geo_data[i * geo_col + j].coord[3];
+            geo_data[i * geo_col + j].color[0] = new_geo_data[i * geo_col + j].color[0];
+            geo_data[i * geo_col + j].color[1] = new_geo_data[i * geo_col + j].color[1];
+            geo_data[i * geo_col + j].color[2] = new_geo_data[i * geo_col + j].color[2];
+        }
+    }
+    return 1;
 }
 
 
 int Image::Image_to_Cartesian_Coordinate() {
     cout << "Convert_Cartesian_Coordinate" << endl;
-    float temp_row = (float)geo_row - 0.5f;
+    float temp_row = (float)row - 0.5f;
     Matrix matrix = {{0.0f, 1.0f, 0.0f, 0.5f},
                     {-1.0f, 0.0f, 0.0f, temp_row},
                     {0.0f, 0.0f, 1.0f, 0.0f},
@@ -326,7 +362,7 @@ int Image::Image_to_Cartesian_Coordinate() {
 
 int Image::Cartesian_to_Image_Coordinate() {
     cout << "Convert_Image_Coordinate" << endl;
-    float temp_row = (float)geo_row - 0.5f;
+    float temp_row = (float)row - 0.5f;
     Matrix matrix = {{0.0f, -1.0f, 0.0f, temp_row},
                     {1.0f, 0.0f, 0.0f, -0.5f},
                     {0.0f, 0.0f, 1.0f, 0.0f},
@@ -514,6 +550,43 @@ int Image::Camera_Intrinsic(float coef_f, float coef_cx, float coef_cy) {
     return 1;
 }
 
+int Image::Camera_Intrinsic_Reverse(float coef_f, float coef_cx, float coef_cy) {
+    for (int i = 0; i < geo_row * geo_col; i++) {
+        geo_data[i].coord[0] *= geo_data[i].coord[2];
+        geo_data[i].coord[1] *= geo_data[i].coord[2];
+    }
+    Matrix matrix = {{1.0f / coef_f, 0.0f, -coef_cx / (2.0f * coef_f), 0.0f},
+                     {0.0f, 1.0f / coef_f, -coef_cy / (2.0f * coef_f), 0.0f},
+                     {0.0f, 0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 1.0f}};
+    Apply_Matrix(matrix);
+    return 1;
+}
+
+int Image::Camera_Extrinsic_Reverse(Coord3D coord_xc, Coord3D coord_yc, Coord3D coord_zc, Coord3D coord_r) {
+    // normalize coordinate
+    double scale_xc = 1.0 / sqrt(coord_xc[0] * coord_xc[0] + coord_xc[1] * coord_xc[1] + coord_xc[2] * coord_xc[2]);
+    double scale_yc = 1.0 / sqrt(coord_yc[0] * coord_yc[0] + coord_yc[1] * coord_yc[1] + coord_yc[2] * coord_yc[2]);
+    double scale_zc = 1.0 / sqrt(coord_zc[0] * coord_zc[0] + coord_zc[1] * coord_zc[1] + coord_zc[2] * coord_zc[2]);
+    for (int i = 0; i < 3; i++) {
+        coord_xc[i] *= scale_xc;
+        coord_yc[i] *= scale_yc;
+        coord_zc[i] *= scale_zc;
+    }
+    // Set matrix
+    Matrix matrix =
+            {{coord_xc[0], coord_yc[0], coord_zc[0], coord_r[0]},
+             {coord_xc[1], coord_yc[1], coord_zc[1], coord_r[1]},
+             {coord_xc[2], coord_yc[2], coord_zc[2], coord_r[2]},
+             {0.0f, 0.0f, 0.0f, 1.0f}};
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+    return Apply_Matrix(matrix);
+}
+
 int Image::Set_Camera_Data(int density) {
     cout << "Set Data" << endl;
     // check geo_data
@@ -540,6 +613,7 @@ int Image::Set_Camera_Data(int density) {
     }
     Effect_Translation(100 - density, 100 - density, 0);
 
+
     for (int i = 0; i < geo_row; i++) {
         for (int j = 0; j < geo_col; j++) {
             int temp_i = (int)geo_data[i * geo_col + j].coord[0];
@@ -554,3 +628,51 @@ int Image::Set_Camera_Data(int density) {
     }
     return 1;
 }
+
+int Image::Set_Camera_Data_Reverse() {
+    cout << "Set Data" << endl;
+    // check geo_data
+    if (!geo_data) {
+        cerr << "geo data is still null" << endl;
+        return 0;
+    }
+
+    float max_x = -10000;
+    float max_y = -10000;
+    float min_x = 10000;
+    float min_y = 10000;
+    int density = 50;
+    for (int i = 0; i < geo_row * geo_col; i++) {
+        geo_data[i].coord[0] *= 50;
+        geo_data[i].coord[1] *= 50;
+        if (max_x < geo_data[i].coord[0])
+            max_x = geo_data[i].coord[0];
+        if (max_y < geo_data[i].coord[1])
+            max_y = geo_data[i].coord[1];
+        if (min_x > geo_data[i].coord[0])
+            min_x = geo_data[i].coord[0];
+        if (min_y > geo_data[i].coord[1])
+            min_y = geo_data[i].coord[1];
+    }
+    Effect_Translation(50, 50, 0);
+    Cartesian_to_Image_Coordinate();
+    Print_Geodata_Coord("Image2", 20, 2);
+    Effect_Translation(-50, 50, 0);
+
+    float z_buffer = INT_MAX;
+    for (int i = 0; i < geo_row; i++) {
+        for (int j = 0; j < geo_col; j++) {
+            int temp_i = (int)geo_data[i * geo_col + j].coord[0];
+            int temp_j = (int)geo_data[i * geo_col + j].coord[1];
+            int index =  temp_i * col * byte + temp_j * byte;
+            if (index >= 0 && index < col * byte * row - 2) {
+                data[index] = (ImgPixel)Get_Geo_Value(i, j, 0);
+                data[index + 1] = (ImgPixel)Get_Geo_Value(i, j, 1);
+                data[index + 2] = (ImgPixel)Get_Geo_Value(i, j, 2);
+                z_buffer = Get_Geo_Coord(i, j, 2);
+            }
+        }
+    }
+    return 1;
+}
+

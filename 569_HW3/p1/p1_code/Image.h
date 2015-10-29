@@ -77,6 +77,8 @@ public:
     // Geometry
     int Initial_Geodata();
     int Initial_Geodata(vector<Image*>);
+    int Initial_Geodata(GeoPixel*, int, int);
+
     int Image_to_Cartesian_Coordinate();
     int Cartesian_to_Image_Coordinate();
 
@@ -94,9 +96,12 @@ public:
     // Camera
     int Camera_Extrinsic(Coord3D, Coord3D, Coord3D, Coord3D);
     int Camera_Intrinsic(float, float, float);
-
     int Set_Camera_Data(int);
 
+
+    int Camera_Intrinsic_Reverse(float, float, float);
+    int Camera_Extrinsic_Reverse(Coord3D, Coord3D, Coord3D, Coord3D);
+    int Set_Camera_Data_Reverse();
 
 
 
