@@ -86,41 +86,97 @@ public:
     }
 
     // Effor Diffusion
-    int Apply_Error_Diffusion_Floyd_Steinberg() {
-        // Error Diffusion matrix
-        float error_matrix[9] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 7.0f, 3.0f, 5.0f, 1.0f};
-        for (int i = 0; i < 9; i++)
-            error_matrix[i] /= 16.0f;
-        int threshold = 127;
+    int Apply_Error_Diffusion(int mode) {
+        if (image.byte != 1) {
+            cerr << "Image must be grayscale" << endl;
+            return 0;
+        }
 
+        // Set Error Diffussion matrix
+        int matrix_size, matrix_half, matrix_center;
+        float *error_matrix;
+        float threshold = 127;
+        if (mode == 0) {
+            // Floyd-Steinberg
+            matrix_size = 3;
+            float temp_matrix[9] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 7.0f, 3.0f, 5.0f, 1.0f};
+            error_matrix = new float[matrix_size * matrix_size];
+            for (int i = 0; i < matrix_size * matrix_size; i++)
+                error_matrix[i] = temp_matrix[i] / 16.0f;
+        } else if (mode == 1) {
+            // JJN
+            matrix_size = 5;
+            float temp_matrix[25] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                                    0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                                    0.0f, 0.0f, 0.0f, 7.0f, 5.0f,
+                                    3.0f, 5.0f, 7.0f, 5.0f, 3.0f,
+                                    1.0f, 3.0f, 5.0f, 3.0f, 1.0f};
+            error_matrix = new float[matrix_size * matrix_size];
+            for (int i = 0; i < matrix_size * matrix_size; i++)
+                error_matrix[i] = temp_matrix[i] / 48.0f;
+        } else if (mode == 2) {
+            // Stucki
+            matrix_size = 5;
+            float temp_matrix[25] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                                     0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                                     0.0f, 0.0f, 0.0f, 8.0f, 4.0f,
+                                     2.0f, 4.0f, 8.0f, 4.0f, 2.0f,
+                                     1.0f, 2.0f, 4.0f, 2.0f, 1.0f};
+            error_matrix = new float[matrix_size * matrix_size];
+            for (int i = 0; i < matrix_size * matrix_size; i++)
+                error_matrix[i] = temp_matrix[i] / 42.0f;
+
+        } else {
+            cerr << "Error mode" << endl;
+            return 0;
+        }
+        matrix_half = matrix_size / 2;
+        matrix_center = matrix_half * matrix_size + matrix_half;
+
+        // Initial f~(i, j)
+        float* image_f = new float[image.row * image.col];
+        for (int i = 0; i < image.row * image.col; i++)
+            image_f[i] = (float)image.data[i];
+
+        // For each pixel:  error e, image b, and forward f~
         for (int i = 0; i < image.row; i++) {
             for(int j = 0; j < image.col; j++) {
-                for (int k = 0; k < image.byte; k++) {
-                    ImgPixel temp_color = *image.Get_Pixel(i, j, k);
-                    if (temp_color > 127)
-                        *image.Get_Pixel(i, j, k) = (ImgPixel)1;
-
+                if (image_f[i * image.col + j] > threshold)
+                    *image.Get_Pixel(i, j, 0) = (ImgPixel)255;
+                else
+                    *image.Get_Pixel(i, j, 0) = (ImgPixel)0;
+                float coef_e = image_f[i * image.col + j] - (float)(*image.Get_Pixel(i, j, 0));
+                for (int m = matrix_half; m < matrix_size; m++) {
+                    for (int n = 0; n < matrix_size; n++) {
+                        int temp_index_x = i + m - matrix_half;
+                        int temp_index_y = j + n - matrix_half;
+                        if (temp_index_x >= 0 && temp_index_x < image.row && temp_index_y >= 0 && temp_index_y < image.col && (m * matrix_size + n) > matrix_center) {
+                            image_f[temp_index_x * image.col + temp_index_y] += error_matrix[m * matrix_size + n] * coef_e;
+                        }
+                    }
                 }
             }
         }
         return 1;
     }
-
-    int Apply_Error_Diffusion_JJN() {
-        return 1;
-    }
-
-    int Apply_Error_Diffusion_Stucki() {
-        return 1;
-    }
-
-
 };
 
 void Dithering(int size, int color_number) {
     Halftoning halftoning = Halftoning(512, 512, 1, "p2_image/mandrill.raw");
     halftoning.Apply_Dithering(size, color_number);
     string filename = "Dithering_" + to_string(size) + "_" + to_string(color_number) + ".raw";
+    halftoning.image.Write(&(halftoning.image), filename);
+}
+
+// @para mode
+// 0 Floyd-Steinberg
+// 1 JJN
+// 2 Stucki
+void Error_Diffusion(int mode) {
+    Halftoning halftoning = Halftoning(512, 512, 1, "p2_image/mandrill.raw");
+    halftoning.Apply_Error_Diffusion(mode);
+    halftoning.image.Print_Data("Error", 20, 20);
+    string filename = "ErrorDiffuse_" + to_string(mode) + ".raw";
     halftoning.image.Write(&(halftoning.image), filename);
 }
 
@@ -147,15 +203,15 @@ void prob2a() {
 
 void prob2b() {
     cout << "Problem 2b" << endl;
-
-    Halftoning halftoning = Halftoning(512, 512, 1, "p2_image/mandrill.raw");
-    halftoning.Apply_Error_Diffusion_Floyd_Steinberg();
+    Error_Diffusion(0);
+    Error_Diffusion(1);
+    Error_Diffusion(2);
 }
 
 
 int main() {
     cout << "Hello, World!" << endl;
-    int number = 0;
+    int number = 1;
     switch (number) {
         case 0:
             prob2a();
