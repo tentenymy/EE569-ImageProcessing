@@ -5,7 +5,8 @@ using namespace std;
 class Halftoning {
 public:
     Image image;
-    // constructor
+
+    // Constructor
     Halftoning(int new_row, int new_col, int new_byte, string filename) {
         Image new_image = Image(new_row, new_col, new_byte, filename);
         image.col = new_image.col;
@@ -19,6 +20,23 @@ public:
         for (int i = 0; i < image.col * image.row * image.byte; i++) {
             image.data[i] = new_image.data[i];
         }
+    }
+
+    Halftoning(Image *new_image) {
+        image.col = new_image->col;
+        image.row = new_image->row;
+        image.byte = new_image->byte;
+        image.data = new ImgPixel[image.col * image.row * image.byte];
+        if (!image.data) {
+            cerr << "Wrong allocate memory" << endl;
+            exit(1);
+        }
+        for (int i = 0; i < image.col * image.row * image.byte; i++) {
+            image.data[i] = new_image->data[i];
+        }
+    }
+
+    ~Halftoning() {
     }
 
     // Dithering
@@ -49,44 +67,43 @@ public:
         } else {
             cerr << "Wrong matrix size" << endl;
         }
-
-        cout << endl << "Bayer_Matrix: size " << size << " " << color_number << endl;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                cout << bayer_matrix[i * size + j] << " ";
-            }
-            cout << endl;
-        }
         return bayer_matrix;
     }
 
     int Apply_Dithering(int size, int color_number) {
+        // Check grayscale iamge
+        if (image.byte != 1) {
+            cerr << "Image must be grayscale" << endl;
+            return 0;
+        }
+
+        // Set Dithering Matrix
         float *bayer_matrix = Generate_Bayer_Matrix(size, color_number);
         int bayer_matrix_row = 0;
         int bayer_matrix_col = 0;
         int color_size = 255 / color_number;
         for (int i = 0; i < image.row; i++) {
             for (int j = 0; j < image.col; j++) {
-                for (int k = 0; k < image.byte; k++) {
-                    int value = (int)((int)(*image.Get_Pixel(i, j, k)) / bayer_matrix[bayer_matrix_row * size + bayer_matrix_col]);
+                    int value = (int)((int)(*image.Get_Pixel(i, j, 0)) / bayer_matrix[bayer_matrix_row * size + bayer_matrix_col]);
                     if (value > color_size)
                         value = color_size;
-                    *image.Get_Pixel(i, j, k) = (ImgPixel)(color_number * value);
+                    *image.Get_Pixel(i, j, 0) = (ImgPixel)(color_number * value);
                     bayer_matrix_col++;
                     if (bayer_matrix_col >= size)
                         bayer_matrix_col = 0;
-                }
             }
             bayer_matrix_col = 0;
             bayer_matrix_row++;
             if (bayer_matrix_row >= size)
                 bayer_matrix_row = 0;
         }
+        delete bayer_matrix;
         return 1;
     }
 
-    // Effor Diffusion
+    // Error Diffusion
     int Apply_Error_Diffusion(int mode) {
+        // Check grayscale iamge
         if (image.byte != 1) {
             cerr << "Image must be grayscale" << endl;
             return 0;
@@ -96,36 +113,26 @@ public:
         int matrix_size, matrix_half, matrix_center;
         float *error_matrix;
         float threshold = 127;
-        if (mode == 0) {
-            // Floyd-Steinberg
+        if (mode == 0) { // Floyd-Steinberg
             matrix_size = 3;
             float temp_matrix[9] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 7.0f, 3.0f, 5.0f, 1.0f};
             error_matrix = new float[matrix_size * matrix_size];
             for (int i = 0; i < matrix_size * matrix_size; i++)
                 error_matrix[i] = temp_matrix[i] / 16.0f;
-        } else if (mode == 1) {
-            // JJN
+        } else if (mode == 1) { // JJN
             matrix_size = 5;
-            float temp_matrix[25] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                                    0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                                    0.0f, 0.0f, 0.0f, 7.0f, 5.0f,
-                                    3.0f, 5.0f, 7.0f, 5.0f, 3.0f,
-                                    1.0f, 3.0f, 5.0f, 3.0f, 1.0f};
+            float temp_matrix[25] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 7.0f, 5.0f,
+                                    3.0f, 5.0f, 7.0f, 5.0f, 3.0f, 1.0f, 3.0f, 5.0f, 3.0f, 1.0f};
             error_matrix = new float[matrix_size * matrix_size];
             for (int i = 0; i < matrix_size * matrix_size; i++)
                 error_matrix[i] = temp_matrix[i] / 48.0f;
-        } else if (mode == 2) {
-            // Stucki
+        } else if (mode == 2) { // Stucki
             matrix_size = 5;
-            float temp_matrix[25] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                                     0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                                     0.0f, 0.0f, 0.0f, 8.0f, 4.0f,
-                                     2.0f, 4.0f, 8.0f, 4.0f, 2.0f,
-                                     1.0f, 2.0f, 4.0f, 2.0f, 1.0f};
+            float temp_matrix[25] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 8.0f, 4.0f,
+                                     2.0f, 4.0f, 8.0f, 4.0f, 2.0f, 1.0f, 2.0f, 4.0f, 2.0f, 1.0f};
             error_matrix = new float[matrix_size * matrix_size];
             for (int i = 0; i < matrix_size * matrix_size; i++)
                 error_matrix[i] = temp_matrix[i] / 42.0f;
-
         } else {
             cerr << "Error mode" << endl;
             return 0;
@@ -157,10 +164,68 @@ public:
                 }
             }
         }
+
+        // Delete
+        delete error_matrix;
+        delete image_f;
+        return 1;
+    }
+
+    // Color image
+    int Apply_Scalar_Color_halftoning(int mode) {
+        // check image
+        if (image.byte != 3) {
+            cerr << "image must be color" << endl;
+            return 0;
+        }
+
+        // Separate to three image (CMY)
+        int color_size = 255;
+        ImgPixel *temp_color[3];
+        temp_color[0] = new ImgPixel[image.row * image.col];
+        temp_color[1] = new ImgPixel[image.row * image.col];
+        temp_color[2] = new ImgPixel[image.row * image.col];
+        for (int i = 0; i < image.row; i++) {
+            for (int j = 0; j < image.col; j++) {
+                temp_color[0][i * image.col + j] = (ImgPixel)color_size - image.Get_Value(i, j, 0);
+                temp_color[1][i * image.col + j] = (ImgPixel)color_size - image.Get_Value(i, j, 1);
+                temp_color[2][i * image.col + j] = (ImgPixel)color_size - image.Get_Value(i, j, 2);
+            }
+        }
+        Image image_C(image.row, image.col, 1, temp_color[0]);
+        Image image_M(image.row, image.col, 1, temp_color[1]);
+        Image image_Y(image.row, image.col, 1, temp_color[2]);
+
+        // Apply Error Diffusion
+        Halftoning halftoning_C(&image_C);
+        Halftoning halftoning_M(&image_M);
+        Halftoning halftoning_Y(&image_Y);
+        halftoning_C.Apply_Error_Diffusion(mode);
+        halftoning_M.Apply_Error_Diffusion(mode);
+        halftoning_Y.Apply_Error_Diffusion(mode);
+
+        // Combine three CMY
+        for (int i = 0; i < image.row; i++) {
+            for (int j = 0; j < image.col; j++) {
+                *image.Get_Pixel(i, j, 0) = (ImgPixel)color_size - halftoning_C.image.Get_Value(i, j, 0);
+                *image.Get_Pixel(i, j, 1) = (ImgPixel)color_size - halftoning_M.image.Get_Value(i, j, 0);
+                *image.Get_Pixel(i, j, 2) = (ImgPixel)color_size - halftoning_Y.image.Get_Value(i, j, 0);
+            }
+        }
+
+        // Delete memory
+        delete temp_color[0];
+        delete temp_color[1];
+        delete temp_color[2];
         return 1;
     }
 };
 
+///////////////////////////////////
+/////////// Application ///////////
+///////////////////////////////////
+// @para size: Dithering index matrix size
+// @para color_number: different color number in each range
 void Dithering(int size, int color_number) {
     Halftoning halftoning = Halftoning(512, 512, 1, "p2_image/mandrill.raw");
     halftoning.Apply_Dithering(size, color_number);
@@ -175,30 +240,35 @@ void Dithering(int size, int color_number) {
 void Error_Diffusion(int mode) {
     Halftoning halftoning = Halftoning(512, 512, 1, "p2_image/mandrill.raw");
     halftoning.Apply_Error_Diffusion(mode);
-    halftoning.image.Print_Data("Error", 20, 20);
     string filename = "ErrorDiffuse_" + to_string(mode) + ".raw";
     halftoning.image.Write(&(halftoning.image), filename);
 }
 
+// @para mode
+// 0 Floyd-Steinberg
+// 1 JJN
+// 2 Stucki
+void Scalar_Color_Halftoning(int mode) {
+    Halftoning halftoning = Halftoning(512, 512, 3, "p2_image/Sailboat.raw");
+    halftoning.Apply_Scalar_Color_halftoning(mode);
+    string filename = "ScalarColorHalftoning_" + to_string(mode) + ".raw";
+    halftoning.image.Write(&(halftoning.image), filename);
+}
 
+///////////////////////////////
+/////////// Problem ///////////
+///////////////////////////////
 void prob2a() {
     cout << "Problem 2a" << endl;
-    int number = 0;
-    switch (number) {
-        case 0:
-            Dithering(2, 255);
-            Dithering(4, 255);
-            Dithering(8, 255);
-            break;
-        case 1:
-            Dithering(2, 85);
-            Dithering(4, 85);
-            Dithering(8, 85);
-            break;
-        case 2:
-            Dithering(2, 1);
-            break;
-    }
+    // Intensity: 0, 255
+    Dithering(2, 255);
+    Dithering(4, 255);
+    Dithering(8, 255);
+    // Intensity: 0, 85, 170, 255
+    Dithering(2, 85);
+    Dithering(4, 85);
+    Dithering(8, 85);
+    Dithering(2, 1);
 }
 
 void prob2b() {
@@ -208,16 +278,32 @@ void prob2b() {
     Error_Diffusion(2);
 }
 
+void prob2c() {
+    cout << "Problem 2c" << endl;
+    Scalar_Color_Halftoning(0);
+    Scalar_Color_Halftoning(1);
+    Scalar_Color_Halftoning(2);
+}
 
+void prob2d() {
+
+}
+
+////////////////////////////
+/////////// Main ///////////
+////////////////////////////
 int main() {
     cout << "Hello, World!" << endl;
-    int number = 1;
+    int number = 2;
     switch (number) {
         case 0:
             prob2a();
             break;
         case 1:
             prob2b();
+            break;
+        case 2:
+            prob2c();
             break;
     }
     return 0;

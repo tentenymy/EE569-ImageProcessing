@@ -118,6 +118,20 @@ void Image::Write (Image *image, string filename) {
     fclose(file);
 }
 
+void Image::Write (string filename) {
+    cout << "Write " << filename << endl;
+    char *c_filename = new char[filename.length() + 1];
+    strcpy(c_filename, filename.c_str());
+    FILE *file;
+    if (!(file = fopen(c_filename, "wb"))) {
+        cout << "Cannot open file: " << filename << endl;
+        exit(1);
+    }
+    size_t size = col * row * byte;
+    fwrite(data, sizeof(ImgPixel), col * row * byte, file);
+    fclose(file);
+}
+
 void Image::Print_Data(string str) {
     cout << endl << "Image " << str << ": " << row << ", " << col << ", " << byte << endl;
     int new_col = col;

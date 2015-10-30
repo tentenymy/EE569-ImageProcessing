@@ -64,13 +64,14 @@ public:
     GeoPixel *geo_data = NULL;
 
     // Constructor
-    Image(int new_row, int new_col, int new_byte, ImgPixel *pt_img);
-    Image(int new_row, int new_col, int new_byte, string filename);
+    Image(int, int, int, ImgPixel*);
+    Image(int, int, int, string);
     Image();
     ~Image();
 
     // Display
-    void Write (Image *image, string filename);
+    void Write (Image*, string);
+    void Write (string);
     void Print_Data(string);
     void Print_Data(string, int, int);
     void Print_Geodata_Color(string);

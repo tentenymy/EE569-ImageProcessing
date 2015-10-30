@@ -41,21 +41,51 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Image.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/p2_code/Image.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="123" column="41" selection-start-line="123" selection-start-column="41" selection-end-line="123" selection-end-column="41" />
+              <folding>
+                <element signature="e#0#204#0" expanded="true" />
+                <element signature="e#424#593#0" expanded="true" />
+                <element signature="e#595#1302#0" expanded="true" />
+                <element signature="e#1304#2140#0" expanded="true" />
+                <element signature="e#2142#2238#0" expanded="true" />
+                <element signature="e#2240#2273#0" expanded="true" />
+                <element signature="e#2343#2820#0" expanded="true" />
+                <element signature="e#7085#7122#0" expanded="true" />
+                <element signature="e#7200#7298#0" expanded="true" />
+                <element signature="e#7300#7400#0" expanded="true" />
+                <element signature="e#7981#8015#0" expanded="true" />
+                <element signature="e#15859#15891#0" expanded="true" />
+                <element signature="e#18746#18781#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="p2_main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/p2_code/p2_main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7521739">
-              <caret line="208" column="1" selection-start-line="208" selection-start-column="1" selection-end-line="208" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.13913043">
+              <caret line="225" column="35" selection-start-line="225" selection-start-column="35" selection-end-line="225" selection-end-column="35" />
               <folding>
-                <element signature="e#90#672#0" expanded="true" />
-                <element signature="e#678#2397#0" expanded="true" />
-                <element signature="e#2403#3439#0" expanded="true" />
-                <element signature="e#3445#6848#0" expanded="true" />
-                <element signature="e#6853#7183#0" expanded="true" />
-                <element signature="e#7185#7572#0" expanded="true" />
-                <element signature="e#7575#7991#0" expanded="true" />
-                <element signature="e#7993#8116#0" expanded="true" />
-                <element signature="e#8119#8346#0" expanded="true" />
+                <element signature="e#91#673#0" expanded="true" />
+                <element signature="e#679#1136#0" expanded="true" />
+                <element signature="e#1142#1163#0" expanded="true" />
+                <element signature="e#1169#2606#0" expanded="true" />
+                <element signature="e#2612#3788#0" expanded="true" />
+                <element signature="e#3794#7046#0" expanded="true" />
+                <element signature="e#7052#9071#0" expanded="true" />
+                <element signature="e#9076#9617#0" expanded="true" />
+                <element signature="e#9619#9956#0" expanded="true" />
+                <element signature="e#9958#10320#0" expanded="true" />
+                <element signature="e#10322#10684#0" expanded="true" />
+                <element signature="e#10686#10809#0" expanded="true" />
+                <element signature="e#10811#10958#0" expanded="true" />
+                <element signature="e#10960#10978#0" expanded="true" />
+                <element signature="e#10980#11351#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -67,8 +97,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/p2_code/Image.h" />
         <option value="$PROJECT_DIR$/p2_code/Image.cpp" />
+        <option value="$PROJECT_DIR$/p2_code/Image.h" />
         <option value="$PROJECT_DIR$/p2_code/p2_main.cpp" />
       </list>
     </option>
@@ -204,7 +234,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289829" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24436937" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2439244" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -227,7 +257,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -249,51 +281,54 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/p2_code/Image.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="82" column="44" selection-start-line="82" selection-start-column="4" selection-end-line="82" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#204#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.37391305">
+          <caret line="72" column="32" selection-start-line="72" selection-start-column="32" selection-end-line="72" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/p2_code/Image.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43952483">
-          <caret line="231" column="26" selection-start-line="231" selection-start-column="26" selection-end-line="231" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="123" column="41" selection-start-line="123" selection-start-column="41" selection-end-line="123" selection-end-column="41" />
           <folding>
             <element signature="e#0#204#0" expanded="true" />
             <element signature="e#424#593#0" expanded="true" />
             <element signature="e#595#1302#0" expanded="true" />
             <element signature="e#1304#2140#0" expanded="true" />
+            <element signature="e#2142#2238#0" expanded="true" />
             <element signature="e#2240#2273#0" expanded="true" />
             <element signature="e#2343#2820#0" expanded="true" />
-            <element signature="e#2822#3302#0" expanded="true" />
-            <element signature="e#3304#3788#0" expanded="true" />
-            <element signature="e#6648#6685#0" expanded="true" />
-            <element signature="e#6763#6861#0" expanded="true" />
-            <element signature="e#6863#6963#0" expanded="true" />
-            <element signature="e#7544#7578#0" expanded="true" />
-            <element signature="e#15422#15454#0" expanded="true" />
-            <element signature="e#18309#18344#0" expanded="true" />
+            <element signature="e#7085#7122#0" expanded="true" />
+            <element signature="e#7200#7298#0" expanded="true" />
+            <element signature="e#7300#7400#0" expanded="true" />
+            <element signature="e#7981#8015#0" expanded="true" />
+            <element signature="e#15859#15891#0" expanded="true" />
+            <element signature="e#18746#18781#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/p2_code/p2_main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7521739">
-          <caret line="208" column="1" selection-start-line="208" selection-start-column="1" selection-end-line="208" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.13913043">
+          <caret line="225" column="35" selection-start-line="225" selection-start-column="35" selection-end-line="225" selection-end-column="35" />
           <folding>
-            <element signature="e#90#672#0" expanded="true" />
-            <element signature="e#678#2397#0" expanded="true" />
-            <element signature="e#2403#3439#0" expanded="true" />
-            <element signature="e#3445#6848#0" expanded="true" />
-            <element signature="e#6853#7183#0" expanded="true" />
-            <element signature="e#7185#7572#0" expanded="true" />
-            <element signature="e#7575#7991#0" expanded="true" />
-            <element signature="e#7993#8116#0" expanded="true" />
-            <element signature="e#8119#8346#0" expanded="true" />
+            <element signature="e#91#673#0" expanded="true" />
+            <element signature="e#679#1136#0" expanded="true" />
+            <element signature="e#1142#1163#0" expanded="true" />
+            <element signature="e#1169#2606#0" expanded="true" />
+            <element signature="e#2612#3788#0" expanded="true" />
+            <element signature="e#3794#7046#0" expanded="true" />
+            <element signature="e#7052#9071#0" expanded="true" />
+            <element signature="e#9076#9617#0" expanded="true" />
+            <element signature="e#9619#9956#0" expanded="true" />
+            <element signature="e#9958#10320#0" expanded="true" />
+            <element signature="e#10322#10684#0" expanded="true" />
+            <element signature="e#10686#10809#0" expanded="true" />
+            <element signature="e#10811#10958#0" expanded="true" />
+            <element signature="e#10960#10978#0" expanded="true" />
+            <element signature="e#10980#11351#0" expanded="true" />
           </folding>
         </state>
       </provider>
