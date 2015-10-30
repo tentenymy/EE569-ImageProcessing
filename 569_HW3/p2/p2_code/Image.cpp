@@ -27,6 +27,11 @@ float TAN (float degree) {
 ////////////////////////////////////
 /////////// Contructor /////////////
 ////////////////////////////////////
+Image::Image() {
+    col = 0;
+    row = 0;
+    byte = 0;
+}
 
 Image::Image(int new_row, int new_col, int new_byte, ImgPixel *pt_img) {
     if (new_col <= 0 || new_col > 1024) {
@@ -130,6 +135,22 @@ void Image::Print_Data(string str) {
     }
 }
 
+void Image::Print_Data(string str, int new_row, int new_col) {
+    cout << endl << "Image " << str << ": " << row << ", " << col << ", " << byte << endl;
+    if (new_row > row)
+        new_row = row;
+    if (new_col > col)
+        new_col = col;
+    for (int i = 0; i < new_row; i++) {
+        for (int j = 0; j < new_col; j++) {
+            for (int k = 0; k < byte; k++) {
+                cout << (int)Get_Value(i, j, k) << " ";
+            }
+        }
+        cout << endl;
+    }
+}
+
 void Image::Print_Geodata_Color(string str) {
     cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
     if (geo_data) {
@@ -210,6 +231,10 @@ void Image::Print_Geodata_Coord(string str, int new_row, int new_col) {
 
 ImgPixel Image::Get_Value(int i, int j, int k) {
     return data[i * byte * col + j * byte + k];
+}
+
+ImgPixel* Image::Get_Pixel(int i, int j, int k) {
+    return &data[i * byte * col + j * byte + k];
 }
 
 float Image::Get_Geo_Value(int i, int j, int k) {

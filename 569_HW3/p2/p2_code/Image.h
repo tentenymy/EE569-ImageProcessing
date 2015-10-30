@@ -66,11 +66,13 @@ public:
     // Constructor
     Image(int new_row, int new_col, int new_byte, ImgPixel *pt_img);
     Image(int new_row, int new_col, int new_byte, string filename);
+    Image();
     ~Image();
 
     // Display
     void Write (Image *image, string filename);
     void Print_Data(string);
+    void Print_Data(string, int, int);
     void Print_Geodata_Color(string);
     void Print_Geodata_Color(string, int, int);
     void Print_Geodata_Coord(string);
@@ -78,6 +80,8 @@ public:
 
     // Access data
     ImgPixel Get_Value(int i, int j, int k);
+    ImgPixel* Get_Pixel(int i, int j, int k);
+
     float Get_Geo_Coord(int i, int j, int k);
     float Get_Geo_Value(int i, int j, int k);
     int Get_Row(int index);
