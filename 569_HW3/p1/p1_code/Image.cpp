@@ -13,6 +13,10 @@
 
 #include "Image.h"
 
+
+//////////////////////////////////////////
+/////////// Helper functions /////////////
+//////////////////////////////////////////
 float COS(float degree) {
     return cos(degree * PI / 180.0);
 }
@@ -24,10 +28,9 @@ float TAN (float degree) {
 }
 
 
-////////////////////////////////////
-/////////// Contructor /////////////
-////////////////////////////////////
-
+/////////////////////////////////////
+/////////// Constructor /////////////
+/////////////////////////////////////
 Image::Image(int new_row, int new_col, int new_byte, ImgPixel *pt_img) {
     if (new_col <= 0 || new_col > 1024) {
         cerr << "wrong column" << endl;
@@ -95,10 +98,10 @@ Image::~Image() {
         delete geo_data;
 }
 
+
 /////////////////////////////////
 /////////// Display /////////////
 /////////////////////////////////
-
 void Image::Write (Image *image, string filename) {
     cout << "Write " << filename << endl;
     char *c_filename = new char[filename.length() + 1];
@@ -204,10 +207,10 @@ void Image::Print_Geodata_Coord(string str, int new_row, int new_col) {
     }
 }
 
+
 /////////////////////////////////////
 /////////// Access Data /////////////
 /////////////////////////////////////
-
 ImgPixel Image::Get_Value(int i, int j, int k) {
     return data[i * byte * col + j * byte + k];
 }
@@ -242,7 +245,6 @@ int Image::Get_Byte(int index) {
 //////////////////////////////////
 /////////// Geometry /////////////
 //////////////////////////////////
-
 int Image::Initial_Geodata() {
     cout << "Initial Geodata" << endl;
     // allocate memory to geo_data
@@ -357,7 +359,6 @@ int Image::Initial_Geodata(GeoPixel* new_geo_data, int new_geo_row, int new_geo_
     return 1;
 }
 
-
 int Image::Image_to_Cartesian_Coordinate() {
     cout << "Convert_Cartesian_Coordinate" << endl;
     float temp_row = (float)row - 0.5f;
@@ -368,9 +369,6 @@ int Image::Image_to_Cartesian_Coordinate() {
     return Apply_Matrix(matrix);
 }
 
-
-
-
 int Image::Cartesian_to_Image_Coordinate() {
     cout << "Convert_Image_Coordinate" << endl;
     float temp_row = (float)row - 0.5f;
@@ -380,7 +378,6 @@ int Image::Cartesian_to_Image_Coordinate() {
                     {0.0f, 0.0f, 0.0f, 1.0f}};
     return Apply_Matrix(matrix);
 }
-
 
 int Image::Apply_Matrix(Matrix matrix) {
     // check geo_data
@@ -404,7 +401,6 @@ int Image::Apply_Matrix(Matrix matrix) {
     }
     return 1;
 }
-
 
 int Image::Set_Data() {
     cout << "Set Data" << endl;
@@ -458,11 +454,9 @@ int Image::Set_Data() {
 }
 
 
-
 ////////////////////////////////
 /////////// Effect /////////////
 ////////////////////////////////
-
 int Image::Effect_Rotation(float theta, int mode) {
     cout << "Effect_Rotation: " << theta << " in " << mode << "axie" << endl;
     if (mode == MODE_X) {
@@ -484,7 +478,6 @@ int Image::Effect_Rotation(float theta, int mode) {
 
 }
 
-
 int Image::Effect_Translation(float coef_tx, float coef_ty, float coef_tz) {
     cout << "Effect_Translation: " << coef_tx << " " << coef_ty << " " << coef_tz << endl;
     Matrix matrix = {{1.0f, 0.0f, 0.0f, coef_tx}, {0.0f, 1.0f, 0.0f, coef_ty},
@@ -498,7 +491,6 @@ int Image::Effect_Scaling(float coef_sx, float coef_sy, float coef_sz) {
                      {0.0f, 0.0f, coef_sz, 0.0f}, {0.0f, 0.0f, 0.0f, 1.0f}};
     return Apply_Matrix(matrix);
 }
-
 
 int Image::Effect_Swirling(float theta) {
     cout << "Effect_Swirling: " << theta << endl;
@@ -527,10 +519,10 @@ int Image::Effect_Swirling(float theta) {
     return 1;
 }
 
+
 ///////////////////////////////////
 /////////// 3D camera /////////////
 ///////////////////////////////////
-
 int Image::Camera_Extrinsic(Coord3D coord_xc, Coord3D coord_yc, Coord3D coord_zc, Coord3D coord_r) {
     // normalize coordinate
     double scale_xc = 1.0 / sqrt(coord_xc[0] * coord_xc[0] + coord_xc[1] * coord_xc[1] + coord_xc[2] * coord_xc[2]);

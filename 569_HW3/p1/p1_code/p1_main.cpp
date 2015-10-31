@@ -14,15 +14,52 @@
 #include "Image.h"
 using namespace std;
 
-void prob1a();
-void prob1b();
-void Forward_Mapping(int);
-void Reverse_Mapping(int);
-void Swirling(float);
+/////////////////////////////////////
+/////////// Declaration /////////////
+/////////////////////////////////////
+// @para degree: max rotation degree
+void Swirling(float degree);
+
+// @para degree: max rotation degree
+// @para mode:
+// MODE_X: rotation on X axis
+// MODE_Y: rotation on Y axis
+// MODE_Z: rotation on Z axis
 void Test_Rotation(float degree, int mode);
+
+// @para tx, ty, tz: translation distances in each X, Y, Z direction
 void Test_Translation(float tx, float ty, float tz);
+
+// @para sx, sy, sz: scaling parameters in each X, Y, Z direction
 void Test_Scaling(float sx, float sy, float sz);
 
+// @para density: density (number of pixels in unit length)
+// @para coef_f: focal length
+// @para coord_xc, coord_yc, coord_zc: Xc, Yc, Zc (three vectors of camera coordinates system)
+// @para coord_r: r (vector from the origin of the world coordinates to the origin of the camera coordinate)
+void Forward_Mapping(int density, float coef_f, Coord3D coord_xc, Coord3D coord_yc, Coord3D coord_zc, Coord3D coord_r);
+
+// @para density: density (number of pixels in unit length)
+void Reverse_Mapping(int density);
+
+// @para int mode:
+// 0: implement for problem1a, swirling
+// 1: test case for rotation
+// 2: test case for translation
+// 3: test case for scaling
+void prob1a(int mode);
+
+// @para int mode:
+// 0: implement for problem1b, different density + 3D camera forward mapping
+// 1: implement for problem1b, 3D camera reverse mapping
+// 2: test case for different f in forward mapping
+// 3: test case for different r in forward mapping
+void prob1b(int mode);
+
+
+/////////////////////////////////////
+/////////// Application /////////////
+/////////////////////////////////////
 void Swirling(float degree) {
     Image img_ori(512, 512, 3, "p1_image/kate.raw");
     img_ori.Initial_Geodata();
@@ -66,39 +103,6 @@ void Test_Scaling(float sx, float sy, float sz) {
     img_ori.Write(&img_ori, filename);
 
 }
-
-void prob1a () {
-    int mode = 0;
-    switch (mode) {
-        case 0:
-            Swirling(-90.0f);
-            Swirling(-45.0f);
-            Swirling(45.0f);
-            Swirling(90.0f);
-            Swirling(180.0f);
-            break;
-        case 1:
-            Test_Rotation(90, MODE_Z);
-            Test_Rotation(60, MODE_Z);
-            Test_Rotation(30, MODE_Z);
-            break;
-        case 2:
-            Test_Translation(256, 256, 0);
-            Test_Translation(256, 0, 0);
-            Test_Translation(-256, 0, 0);
-            Test_Translation(-256, -256, 0);
-            Test_Translation(512, 0, 0);
-            break;
-        case 3:
-            Test_Scaling(1.5f, 1.0f, 1.0f);
-            Test_Scaling(1.0f, 1.5f, 1.0f);
-            Test_Scaling(1.0f, 1.0f, 1.5);
-            Test_Scaling(0.5f, 1.0f, 1.0f);
-            Test_Scaling(1.0f, 0.5f, 1.0f);
-            break;
-    }
-}
-
 
 void Forward_Mapping(int density, float coef_f, Coord3D coord_xc, Coord3D coord_yc, Coord3D coord_zc, Coord3D coord_r) {
     // Read image data
@@ -198,10 +202,45 @@ void Reverse_Mapping(int density) {
     img_reverse.Print_Geodata_Coord("Extrinsic", 600, 4);
     img_reverse.Set_Camera_Data_Reverse();
     img_reverse.Write(&img_reverse, "test0.raw");
-
 }
 
-void prob1b() {
+
+////////////////////////////////////////////////
+/////////// Problem implementation /////////////
+////////////////////////////////////////////////
+void prob1a (int mode) {
+    cout << "Problem 1a" << endl;
+    switch (mode) {
+        case 0:
+            Swirling(-90.0f);
+            Swirling(-45.0f);
+            Swirling(45.0f);
+            Swirling(90.0f);
+            Swirling(180.0f);
+            break;
+        case 1:
+            Test_Rotation(90, MODE_Z);
+            Test_Rotation(60, MODE_Z);
+            Test_Rotation(30, MODE_Z);
+            break;
+        case 2:
+            Test_Translation(256, 256, 0);
+            Test_Translation(256, 0, 0);
+            Test_Translation(-256, 0, 0);
+            Test_Translation(-256, -256, 0);
+            Test_Translation(512, 0, 0);
+            break;
+        case 3:
+            Test_Scaling(1.5f, 1.0f, 1.0f);
+            Test_Scaling(1.0f, 1.5f, 1.0f);
+            Test_Scaling(1.0f, 1.0f, 1.5);
+            Test_Scaling(0.5f, 1.0f, 1.0f);
+            Test_Scaling(1.0f, 0.5f, 1.0f);
+            break;
+    }
+}
+
+void prob1b(int mode) {
     cout << "Problem 1b" << endl;
     Coord3D coord_xc = {-1.0f, 1.0f, 0.0f};
     Coord3D coord_yc = {1.0f, 1.0f, -2.0f};
@@ -209,7 +248,6 @@ void prob1b() {
     Coord3D coord_r = {5.0f, 5.0f, 5.0f};
     float coef_f = (float)sqrt(3.0);
 
-    int mode = 1;
     switch(mode) {
         case 0:
             Forward_Mapping(300, coef_f, coord_xc, coord_yc, coord_zc, coord_r);
@@ -243,16 +281,30 @@ void prob1b() {
 }
 
 
-
+///////////////////////////////////////
+/////////// Main function /////////////
+///////////////////////////////////////
 int main() {
     cout << "Hello, World!" << endl;
-    int problem_number = 1;
-    switch (problem_number) {
+    int mode = 0;
+    switch (mode) {
         case 0:
-            prob1a();
+            // Implementation for problem 1
+            prob1a(0);
+            prob1b(0);
+            prob1b(1);
             break;
         case 1:
-            prob1b();
+            // Test
+            prob1a(0);
+            prob1a(1);
+            prob1a(2);
+            prob1a(3);
+
+            prob1b(0);
+            prob1b(1);
+            prob1b(2);
+            prob1b(3);
             break;
     }
     return 0;
