@@ -14,11 +14,8 @@
     <list default="true" id="74f0502d-10d8-47d4-93b6-31ded37a526e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../p2/p2_code/Halftoning.cpp" afterPath="$PROJECT_DIR$/../p2/p2_code/Halftoning.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../p2/p2_code/Halftoning.h" afterPath="$PROJECT_DIR$/../p2/p2_code/Halftoning.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p1_code/Image.cpp" afterPath="$PROJECT_DIR$/p1_code/Image.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../p2/p2_code/Image.cpp" afterPath="$PROJECT_DIR$/../p2/p2_code/Image.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p1_code/Image.h" afterPath="$PROJECT_DIR$/p1_code/Image.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../p2/p2_code/Image.h" afterPath="$PROJECT_DIR$/../p2/p2_code/Image.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p1_code/p1_main.cpp" afterPath="$PROJECT_DIR$/p1_code/p1_main.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../p2/p2_code/p2_main.cpp" afterPath="$PROJECT_DIR$/../p2/p2_code/p2_main.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../p2/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../p2/.idea/workspace.xml" />
@@ -55,8 +52,8 @@
       <file leaf-file-name="p1_main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/p1_code/p1_main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.62459195">
-              <caret line="291" column="43" selection-start-line="291" selection-start-column="43" selection-end-line="291" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.640914">
+              <caret line="292" column="22" selection-start-line="292" selection-start-column="22" selection-end-line="292" selection-end-column="22" />
               <folding>
                 <element signature="e#0#204#0" expanded="true" />
                 <element signature="e#3750#5257#0" expanded="true" />
@@ -90,8 +87,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="218" />
-    <option name="y" value="307" />
+    <option name="x" value="285" />
+    <option name="y" value="262" />
     <option name="width" value="1725" />
     <option name="height" value="1039" />
   </component>
@@ -227,11 +224,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="218" y="307" width="1725" height="1039" extended-state="0" />
-    <editor active="true" />
+    <frame x="285" y="262" width="1725" height="1039" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3576946" sideWeight="0.5163675" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3576946" sideWeight="0.48363253" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3576946" sideWeight="0.48363253" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -610,8 +607,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/p1_code/p1_main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.62459195">
-          <caret line="291" column="43" selection-start-line="291" selection-start-column="43" selection-end-line="291" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.640914">
+          <caret line="292" column="22" selection-start-line="292" selection-start-column="22" selection-end-line="292" selection-end-column="22" />
           <folding>
             <element signature="e#0#204#0" expanded="true" />
             <element signature="e#3750#5257#0" expanded="true" />

@@ -12,25 +12,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35808f88-5166-40f4-a588-5517df4521fc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/p2_code/Halftoning.cpp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/p2_code/Halftoning.h" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dithering_2_1.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dithering_2_255.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dithering_2_85.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dithering_4_255.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dithering_4_85.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dithering_8_255.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dithering_8_85.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ErrorDiffuse_0.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ErrorDiffuse_1.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ErrorDiffuse_2.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ScalarColorHalftoning_0.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ScalarColorHalftoning_1.raw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ScalarColorHalftoning_2.raw" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/p2.iml" afterPath="$PROJECT_DIR$/.idea/p2.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/Halftoning.cpp" afterPath="$PROJECT_DIR$/p2_code/Halftoning.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/Halftoning.h" afterPath="$PROJECT_DIR$/p2_code/Halftoning.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/Image.cpp" afterPath="$PROJECT_DIR$/p2_code/Image.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/Image.h" afterPath="$PROJECT_DIR$/p2_code/Image.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/p2_main.cpp" afterPath="$PROJECT_DIR$/p2_code/p2_main.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../p1/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../p1/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="p2.iws" />
@@ -45,6 +32,28 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DockManager">
+    <window id="2">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="Image.h" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/p2_code/Image.h">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.8850085">
+                    <caret line="98" column="28" selection-start-line="98" selection-start-column="28" selection-end-line="98" selection-end-column="28" />
+                    <folding>
+                      <element signature="e#0#233#0" expanded="true" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -66,21 +75,9 @@
         <entry file="file://$PROJECT_DIR$/p2_code/Image.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="123" column="41" selection-start-line="123" selection-start-column="41" selection-end-line="123" selection-end-column="41" />
+              <caret line="136" column="0" selection-start-line="136" selection-start-column="0" selection-end-line="136" selection-end-column="0" />
               <folding>
-                <element signature="e#0#204#0" expanded="true" />
-                <element signature="e#424#593#0" expanded="true" />
-                <element signature="e#595#1302#0" expanded="true" />
-                <element signature="e#1304#2140#0" expanded="true" />
-                <element signature="e#2142#2238#0" expanded="true" />
-                <element signature="e#2240#2273#0" expanded="true" />
-                <element signature="e#2343#2820#0" expanded="true" />
-                <element signature="e#7085#7122#0" expanded="true" />
-                <element signature="e#7200#7298#0" expanded="true" />
-                <element signature="e#7300#7400#0" expanded="true" />
-                <element signature="e#7981#8015#0" expanded="true" />
-                <element signature="e#15859#15891#0" expanded="true" />
-                <element signature="e#18746#18781#0" expanded="true" />
+                <element signature="e#0#233#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -89,17 +86,51 @@
       <file leaf-file-name="p2_main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/p2_code/p2_main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.30869564">
-              <caret line="78" column="21" selection-start-line="78" selection-start-column="21" selection-end-line="78" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.8083475">
+              <caret line="137" column="18" selection-start-line="137" selection-start-column="18" selection-end-line="137" selection-end-column="18" />
               <folding>
-                <element signature="e#667#1105#0" expanded="true" />
-                <element signature="e#1107#1388#0" expanded="true" />
-                <element signature="e#1390#1696#0" expanded="true" />
-                <element signature="e#1698#2004#0" expanded="true" />
-                <element signature="e#2401#2524#0" expanded="true" />
-                <element signature="e#2526#2673#0" expanded="true" />
-                <element signature="e#2675#2822#0" expanded="true" />
-                <element signature="e#2825#3252#0" expanded="true" />
+                <element signature="e#0#233#0" expanded="true" />
+                <element signature="e#902#1340#0" expanded="true" />
+                <element signature="e#1342#1623#0" expanded="true" />
+                <element signature="e#1625#1931#0" expanded="true" />
+                <element signature="e#1933#2239#0" expanded="true" />
+                <element signature="e#2242#2634#0" expanded="true" />
+                <element signature="e#2636#2759#0" expanded="true" />
+                <element signature="e#2761#2908#0" expanded="true" />
+                <element signature="e#2910#3057#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Halftoning.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/p2_code/Halftoning.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="13" column="3" selection-start-line="13" selection-start-column="3" selection-end-line="13" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#233#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Halftoning.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/p2_code/Halftoning.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#233#0" expanded="true" />
+                <element signature="e#260#918#0" expanded="true" />
+                <element signature="e#920#1389#0" expanded="true" />
+                <element signature="e#1423#2648#0" expanded="true" />
+                <element signature="e#2650#5640#0" expanded="true" />
+                <element signature="e#5643#7652#0" expanded="true" />
+                <element signature="e#7655#11592#0" expanded="true" />
+                <element signature="e#11595#13062#0" expanded="true" />
+                <element signature="e#13064#15946#0" expanded="true" />
+                <element signature="e#15178#15793#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -114,10 +145,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/p2_code/Halftoning.cpp" />
+        <option value="$PROJECT_DIR$/p2_code/Halftoning.h" />
         <option value="$PROJECT_DIR$/p2_code/Image.cpp" />
         <option value="$PROJECT_DIR$/p2_code/Image.h" />
-        <option value="$PROJECT_DIR$/p2_code/Halftoning.h" />
-        <option value="$PROJECT_DIR$/p2_code/Halftoning.cpp" />
         <option value="$PROJECT_DIR$/p2_code/p2_main.cpp" />
       </list>
     </option>
@@ -132,8 +163,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="669" />
     <option name="y" value="116" />
-    <option name="width" value="1384" />
-    <option name="height" value="1270" />
+    <option name="width" value="1755" />
+    <option name="height" value="1294" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -249,17 +280,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="669" y="116" width="1384" height="1270" extended-state="0" />
-    <editor active="true" />
+    <frame x="669" y="116" width="1755" height="1294" extended-state="0" />
+    <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32786885" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2439244" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32749563" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.400467" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14176418" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14244017" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32488823" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.400467" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -287,9 +318,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14176418" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32538253" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -313,21 +344,74 @@
     <entry file="file://$PROJECT_DIR$/p2_code/Image.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#233#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/p2_code/p2_main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#233#0" expanded="true" />
+            <element signature="e#902#1340#0" expanded="true" />
+            <element signature="e#1342#1623#0" expanded="true" />
+            <element signature="e#1625#1931#0" expanded="true" />
+            <element signature="e#1933#2239#0" expanded="true" />
+            <element signature="e#2242#2634#0" expanded="true" />
+            <element signature="e#2636#2759#0" expanded="true" />
+            <element signature="e#2761#2908#0" expanded="true" />
+            <element signature="e#2910#3057#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/p2_code/Halftoning.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="3" selection-start-line="13" selection-start-column="3" selection-end-line="13" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#233#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/p2_code/Halftoning.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#233#0" expanded="true" />
+            <element signature="e#260#918#0" expanded="true" />
+            <element signature="e#920#1389#0" expanded="true" />
+            <element signature="e#1423#2648#0" expanded="true" />
+            <element signature="e#2650#5640#0" expanded="true" />
+            <element signature="e#5643#7652#0" expanded="true" />
+            <element signature="e#7655#11592#0" expanded="true" />
+            <element signature="e#11595#13062#0" expanded="true" />
+            <element signature="e#13064#15946#0" expanded="true" />
+            <element signature="e#15178#15793#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="34" selection-start-line="6" selection-start-column="34" selection-end-line="6" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/p2_code/Image.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
           <caret line="123" column="41" selection-start-line="123" selection-start-column="41" selection-end-line="123" selection-end-column="41" />
           <folding>
-            <element signature="e#0#204#0" expanded="true" />
-            <element signature="e#424#593#0" expanded="true" />
-            <element signature="e#595#1302#0" expanded="true" />
-            <element signature="e#1304#2140#0" expanded="true" />
-            <element signature="e#2142#2238#0" expanded="true" />
-            <element signature="e#2240#2273#0" expanded="true" />
-            <element signature="e#2343#2820#0" expanded="true" />
-            <element signature="e#7085#7122#0" expanded="true" />
-            <element signature="e#7200#7298#0" expanded="true" />
-            <element signature="e#7300#7400#0" expanded="true" />
-            <element signature="e#7981#8015#0" expanded="true" />
-            <element signature="e#15859#15891#0" expanded="true" />
-            <element signature="e#18746#18781#0" expanded="true" />
+            <element signature="e#0#233#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -337,14 +421,15 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#667#1105#0" expanded="true" />
-            <element signature="e#1107#1388#0" expanded="true" />
-            <element signature="e#1390#1696#0" expanded="true" />
-            <element signature="e#1698#2004#0" expanded="true" />
-            <element signature="e#2401#2524#0" expanded="true" />
-            <element signature="e#2526#2673#0" expanded="true" />
-            <element signature="e#2675#2822#0" expanded="true" />
-            <element signature="e#2825#3252#0" expanded="true" />
+            <element signature="e#0#233#0" expanded="true" />
+            <element signature="e#902#1340#0" expanded="true" />
+            <element signature="e#1342#1623#0" expanded="true" />
+            <element signature="e#1625#1931#0" expanded="true" />
+            <element signature="e#1933#2239#0" expanded="true" />
+            <element signature="e#2242#2634#0" expanded="true" />
+            <element signature="e#2636#2759#0" expanded="true" />
+            <element signature="e#2761#2908#0" expanded="true" />
+            <element signature="e#2910#3057#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -353,14 +438,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/p2_code/Image.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37391305">
-          <caret line="72" column="32" selection-start-line="72" selection-start-column="32" selection-end-line="72" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -375,65 +452,67 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/p2_code/Halftoning.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.4826088">
-          <caret line="131" column="100" selection-start-line="131" selection-start-column="100" selection-end-line="131" selection-end-column="100" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding>
-            <element signature="e#0#2#0" expanded="true" />
-            <element signature="e#66#724#0" expanded="true" />
-            <element signature="e#726#1195#0" expanded="true" />
-            <element signature="e#1229#2454#0" expanded="true" />
-            <element signature="e#5449#7458#0" expanded="true" />
-            <element signature="e#7461#11398#0" expanded="true" />
-            <element signature="e#11401#12868#0" expanded="true" />
-            <element signature="e#12870#15752#0" expanded="true" />
-            <element signature="e#14984#15599#0" expanded="true" />
+            <element signature="e#0#233#0" expanded="true" />
+            <element signature="e#260#918#0" expanded="true" />
+            <element signature="e#920#1389#0" expanded="true" />
+            <element signature="e#1423#2648#0" expanded="true" />
+            <element signature="e#2650#5640#0" expanded="true" />
+            <element signature="e#5643#7652#0" expanded="true" />
+            <element signature="e#7655#11592#0" expanded="true" />
+            <element signature="e#11595#13062#0" expanded="true" />
+            <element signature="e#13064#15946#0" expanded="true" />
+            <element signature="e#15178#15793#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/p2_code/Halftoning.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.004347826">
-          <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="3" selection-start-line="13" selection-start-column="3" selection-end-line="13" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#233#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/p2_code/Image.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8850085">
+          <caret line="98" column="28" selection-start-line="98" selection-start-column="28" selection-end-line="98" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#233#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/p2_code/Image.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="123" column="41" selection-start-line="123" selection-start-column="41" selection-end-line="123" selection-end-column="41" />
+          <caret line="136" column="0" selection-start-line="136" selection-start-column="0" selection-end-line="136" selection-end-column="0" />
           <folding>
-            <element signature="e#0#204#0" expanded="true" />
-            <element signature="e#424#593#0" expanded="true" />
-            <element signature="e#595#1302#0" expanded="true" />
-            <element signature="e#1304#2140#0" expanded="true" />
-            <element signature="e#2142#2238#0" expanded="true" />
-            <element signature="e#2240#2273#0" expanded="true" />
-            <element signature="e#2343#2820#0" expanded="true" />
-            <element signature="e#7085#7122#0" expanded="true" />
-            <element signature="e#7200#7298#0" expanded="true" />
-            <element signature="e#7300#7400#0" expanded="true" />
-            <element signature="e#7981#8015#0" expanded="true" />
-            <element signature="e#15859#15891#0" expanded="true" />
-            <element signature="e#18746#18781#0" expanded="true" />
+            <element signature="e#0#233#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/p2_code/p2_main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30869564">
-          <caret line="78" column="21" selection-start-line="78" selection-start-column="21" selection-end-line="78" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.8083475">
+          <caret line="137" column="18" selection-start-line="137" selection-start-column="18" selection-end-line="137" selection-end-column="18" />
           <folding>
-            <element signature="e#667#1105#0" expanded="true" />
-            <element signature="e#1107#1388#0" expanded="true" />
-            <element signature="e#1390#1696#0" expanded="true" />
-            <element signature="e#1698#2004#0" expanded="true" />
-            <element signature="e#2401#2524#0" expanded="true" />
-            <element signature="e#2526#2673#0" expanded="true" />
-            <element signature="e#2675#2822#0" expanded="true" />
-            <element signature="e#2825#3252#0" expanded="true" />
+            <element signature="e#0#233#0" expanded="true" />
+            <element signature="e#902#1340#0" expanded="true" />
+            <element signature="e#1342#1623#0" expanded="true" />
+            <element signature="e#1625#1931#0" expanded="true" />
+            <element signature="e#1933#2239#0" expanded="true" />
+            <element signature="e#2242#2634#0" expanded="true" />
+            <element signature="e#2636#2759#0" expanded="true" />
+            <element signature="e#2761#2908#0" expanded="true" />
+            <element signature="e#2910#3057#0" expanded="true" />
           </folding>
         </state>
       </provider>

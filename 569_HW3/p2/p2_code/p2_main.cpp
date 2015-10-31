@@ -1,3 +1,18 @@
+/* EE569 Homework Assignment #3
+ * Date: Nov 1, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * Email: meiyiyan@usc.edu
+ *
+ * Problem2. Digital Half-toning
+ *
+ * p2_main.cpp
+ * Image.h
+ * Image.cpp
+ * Halftoning.h
+ * Halftoning.cpp
+ */
+
 #include "Halftoning.h"
 using namespace std;
 
@@ -92,7 +107,7 @@ void prob2c() {
     Scalar_Color_Halftoning(0);
     Scalar_Color_Halftoning(1);
     Scalar_Color_Halftoning(2);
-}
+}gi
 
 void prob2d() {
     cout << "Problem 2d" << endl;
@@ -107,18 +122,24 @@ void prob2d() {
 ////////////////////////////
 int main() {
     cout << "Homework 3.2" << endl;
-    int number = 1;
+    int number = 0;
     switch (number) {
         case 0:
+            // Implementation for problem 2
+            prob2a();
+            prob2b();
+            prob2c();
+            prob2d();
+        case 1:
             prob2a();
             break;
-        case 1:
+        case 2:
             prob2b();
             break;
-        case 2:
+        case 3:
             prob2c();
             break;
-        case 3:
+        case 4:
             prob2d();
             break;
     }

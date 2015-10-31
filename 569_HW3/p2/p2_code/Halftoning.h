@@ -1,3 +1,18 @@
+/* EE569 Homework Assignment #3
+ * Date: Nov 1, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * Email: meiyiyan@usc.edu
+ *
+ * Problem2. Digital Half-toning
+ *
+ * p2_main.cpp
+ * Image.h
+ * Image.cpp
+ * Halftoning.h
+ * Halftoning.cpp
+ */
+
 #include "Image.h"
 
 #ifndef P2_HALFTONING_H
