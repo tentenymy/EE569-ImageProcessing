@@ -12,12 +12,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35808f88-5166-40f4-a588-5517df4521fc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/Halftoning.cpp" afterPath="$PROJECT_DIR$/p2_code/Halftoning.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/Halftoning.h" afterPath="$PROJECT_DIR$/p2_code/Halftoning.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/Image.cpp" afterPath="$PROJECT_DIR$/p2_code/Image.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/Image.h" afterPath="$PROJECT_DIR$/p2_code/Image.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p2_code/p2_main.cpp" afterPath="$PROJECT_DIR$/p2_code/p2_main.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../p1/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../p1/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="p2.iws" />
@@ -32,28 +26,6 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
-  </component>
-  <component name="DockManager">
-    <window id="2">
-      <content type="file-editors">
-        <state>
-          <leaf>
-            <file leaf-file-name="Image.h" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/p2_code/Image.h">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.8850085">
-                    <caret line="98" column="28" selection-start-line="98" selection-start-column="28" selection-end-line="98" selection-end-column="28" />
-                    <folding>
-                      <element signature="e#0#233#0" expanded="true" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -86,8 +58,8 @@
       <file leaf-file-name="p2_main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/p2_code/p2_main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8083475">
-              <caret line="137" column="18" selection-start-line="137" selection-start-column="18" selection-end-line="137" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.45059624">
+              <caret line="109" column="3" selection-start-line="109" selection-start-column="3" selection-end-line="109" selection-end-column="3" />
               <folding>
                 <element signature="e#0#233#0" expanded="true" />
                 <element signature="e#902#1340#0" expanded="true" />
@@ -97,7 +69,8 @@
                 <element signature="e#2242#2634#0" expanded="true" />
                 <element signature="e#2636#2759#0" expanded="true" />
                 <element signature="e#2761#2908#0" expanded="true" />
-                <element signature="e#2910#3057#0" expanded="true" />
+                <element signature="e#2908#3059#0" expanded="true" />
+                <element signature="e#3062#3637#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -364,7 +337,8 @@
             <element signature="e#2242#2634#0" expanded="true" />
             <element signature="e#2636#2759#0" expanded="true" />
             <element signature="e#2761#2908#0" expanded="true" />
-            <element signature="e#2910#3057#0" expanded="true" />
+            <element signature="e#2908#3059#0" expanded="true" />
+            <element signature="e#3062#3637#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -429,7 +403,8 @@
             <element signature="e#2242#2634#0" expanded="true" />
             <element signature="e#2636#2759#0" expanded="true" />
             <element signature="e#2761#2908#0" expanded="true" />
-            <element signature="e#2910#3057#0" expanded="true" />
+            <element signature="e#2908#3059#0" expanded="true" />
+            <element signature="e#3062#3637#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -501,8 +476,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/p2_code/p2_main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8083475">
-          <caret line="137" column="18" selection-start-line="137" selection-start-column="18" selection-end-line="137" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.45059624">
+          <caret line="109" column="3" selection-start-line="109" selection-start-column="3" selection-end-line="109" selection-end-column="3" />
           <folding>
             <element signature="e#0#233#0" expanded="true" />
             <element signature="e#902#1340#0" expanded="true" />
@@ -512,7 +487,8 @@
             <element signature="e#2242#2634#0" expanded="true" />
             <element signature="e#2636#2759#0" expanded="true" />
             <element signature="e#2761#2908#0" expanded="true" />
-            <element signature="e#2910#3057#0" expanded="true" />
+            <element signature="e#2908#3059#0" expanded="true" />
+            <element signature="e#3062#3637#0" expanded="true" />
           </folding>
         </state>
       </provider>

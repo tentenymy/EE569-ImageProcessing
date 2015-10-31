@@ -34,18 +34,18 @@ Halftoning::Halftoning(int new_row, int new_col, int new_byte, string filename) 
 }
 
 Halftoning::Halftoning(Image *new_image) {
-        image.col = new_image->col;
-        image.row = new_image->row;
-        image.byte = new_image->byte;
-        image.data = new ImgPixel[image.col * image.row * image.byte];
-        if (!image.data) {
-            cerr << "Wrong allocate memory" << endl;
-            exit(1);
-        }
-        for (int i = 0; i < image.col * image.row * image.byte; i++) {
-            image.data[i] = new_image->data[i];
-        }
+    image.col = new_image->col;
+    image.row = new_image->row;
+    image.byte = new_image->byte;
+    image.data = new ImgPixel[image.col * image.row * image.byte];
+    if (!image.data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
     }
+    for (int i = 0; i < image.col * image.row * image.byte; i++) {
+        image.data[i] = new_image->data[i];
+    }
+}
 
 Halftoning::~Halftoning() { }
 
