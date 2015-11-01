@@ -178,7 +178,7 @@ void prob3a() {
             Find_Holes();
             Find_Objects();
             break;
-        case 1:
+        case 1: // Test
             Test_Shrinking(filename, "Test_Shrinking.raw", row, col);
             Test_Thinning(filename, "Test_Thinning.raw", row, col);
             Test_Skeletonizing(filename, "Test_Skeletonizing.raw", row, col);
@@ -196,7 +196,7 @@ void prob3b() {
             Apply_Thinning(2, 4);
             Apply_Skeletonizing(2, 4);
             break;
-        case 1:
+        case 1: // Test
             Apply_Thinning(2, 0);
             Apply_Thinning(2, 1);
             Apply_Thinning(2, 2);

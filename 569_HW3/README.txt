@@ -13,37 +13,37 @@
 # Compile, link and default run:
 # Problem1:
 # in HW3 root folder:
-# Use make
+# Use cmake
 cd p1
 cmake .
 make
 ./p1
 
-# OR just makefile: 
+# OR just use makefile: 
 make
 ./p1
 ——————————————————————
 # Problem2:
 # in HW3 root folder:
-# Use make
+# Use cmake
 cd p2
 cmake .
 make
 ./p2
 
-# OR just makefile: 
+# OR just use  makefile: 
 make
 ./p2
 ——————————————————————
 # Problem3:
 # in HW3 root folder:
-# Use make
+# Use cmake
 cd p3
 cmake .
 make
 ./p3
 
-# OR just makefile: 
+# OR just use makefile: 
 make
 ./p3
 ——————————————————————
@@ -52,8 +52,27 @@ make clean
 #########################################################
  * 2. File list and explanation
  * Problem1. Geometrical Modification
- *
- * p1_main.cpp
- * Image.h
- * Image.cpp
+ * main implementing and testing file
+ p1_main.cpp
+ * class file
+ Image.h
+ Image.cpp
+
+ * Problem2. Digital Half-toning
+ * main implementing and testing file
+ p2_main.cpp
+ * class file
+ Image.h
+ Image.cpp
+ Halftoning.h
+ Halftoning.cpp
+
+ * Problem3. Morphological Processing
+ * main implementing and testing file
+ * p3_main.cpp
+ * class file
+ Image.h
+ Image.cpp
+ Morphology.h
+ Morphology.cpp
 #########################################################
