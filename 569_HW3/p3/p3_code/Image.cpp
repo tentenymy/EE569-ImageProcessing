@@ -4,18 +4,16 @@
  * ID: 6761054585
  * Email: meiyiyan@usc.edu
  *
- * Problem2. Digital Half-toning
+ * Problem3. Morphological Processing
  *
- * p2_main.cpp
+ * p3_main.cpp
  * Image.h
  * Image.cpp
- * Halftoning.h
- * Halftoning.cpp
+ * Morphology.h
+ * Morphology.cpp
  */
 
 #include "Image.h"
-
-
 
 float COS(float degree) {
     return cos(degree * PI / 180.0);

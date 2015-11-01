@@ -4,13 +4,13 @@
  * ID: 6761054585
  * Email: meiyiyan@usc.edu
  *
- * Problem2. Digital Half-toning
+ * Problem3. Morphological Processing
  *
- * p2_main.cpp
+ * p3_main.cpp
  * Image.h
  * Image.cpp
- * Halftoning.h
- * Halftoning.cpp
+ * Morphology.h
+ * Morphology.cpp
  */
 
 #ifndef P3_IMAGE_H

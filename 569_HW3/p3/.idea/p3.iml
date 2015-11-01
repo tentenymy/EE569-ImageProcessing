@@ -5,6 +5,8 @@
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/p3_code/Image.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/p3_code/Image.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/p3_code/Morphology.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/p3_code/Morphology.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/p3_code/p3_main.cpp" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
