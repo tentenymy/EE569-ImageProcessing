@@ -124,7 +124,7 @@ void Image::Write (Image *image, string filename) {
 }
 
 void Image::Write (string filename) {
-    //cout << "Write " << filename << endl;
+    cout << "Write " << filename << endl;
     char *c_filename = new char[filename.length() + 1];
     strcpy(c_filename, filename.c_str());
     FILE *file;
