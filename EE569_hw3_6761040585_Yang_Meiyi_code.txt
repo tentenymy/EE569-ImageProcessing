@@ -1,0 +1,3515 @@
+/* EE569 Homework Assignment #3
+ * Date: Nov 1, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * Email: meiyiyan@usc.edu
+ *
+ * Problem1. Geometrical Modification
+ *
+ * p1_main.cpp
+ * Image.h
+ * Image.cpp
+ */
+
+#ifndef P1_IMAGE_H
+#define P1_IMAGE_H
+
+#include <stdio.h>
+#include <iostream>
+#include <stdlib.h>
+#include <math.h>
+#include <fstream>
+#include <cstring>
+#include <vector>
+using namespace std;
+
+
+//////////////////////////////////////////////
+/////////// Structure Definition /////////////
+//////////////////////////////////////////////
+const double PI = 3.14159265;
+
+const int MODE_X = 0;
+const int MODE_Y = 1;
+const int MODE_Z = 2;
+
+typedef unsigned char ImgPixel;
+typedef float ImgCoord[4];
+typedef float ImgColor[3];
+typedef float Matrix[4][4];
+typedef float Coord3D[3];
+
+typedef struct GeoPixel {
+    ImgCoord coord;
+    ImgColor color;
+} GeoPixel;
+
+
+//////////////////////////////////////////////
+/////////// Functions Definition /////////////
+//////////////////////////////////////////////
+float COS(float);
+float SIN(float);
+float TAN(float);
+
+
+//////////////////////////////////////////
+/////////// Class Definition /////////////
+//////////////////////////////////////////
+class Image {
+public:
+    int col;
+    int row;
+    int byte;
+    int geo_row;
+    int geo_col;
+    ImgPixel *data = NULL;
+    GeoPixel *geo_data = NULL;
+
+/////////////////////////////////////
+/////////// Constructor /////////////
+/////////////////////////////////////
+// @para new_row: image row
+// @para new_col: image col
+// @para new_byte: image byte (1 or 3)
+// @para pt_img: image data buffer (row * col * byte size)
+    Image(int new_row, int new_col, int new_byte, ImgPixel *pt_img);
+
+// @para new_row: image row
+// @para new_col: image col
+// @para new_byte: image byte (1 or 3)
+// @para filename: filename of image
+    Image(int new_row, int new_col, int new_byte, string filename);
+
+    ~Image();
+
+
+/////////////////////////////////
+/////////// Display /////////////
+/////////////////////////////////
+// @para image: image want to write
+// @para filename: filename of image to write to
+    void Write (Image *image, string filename);
+
+// @para str: comment to print
+// @para new_row: max row to print
+// @para new_col: max col to print
+    void Print_Data(string str);
+    void Print_Geodata_Color(string str);
+    void Print_Geodata_Color(string str, int new_row, int new_col);
+    void Print_Geodata_Coord(string str);
+    void Print_Geodata_Coord(string str, int new_row, int new_col);
+
+
+/////////////////////////////////////
+/////////// Access Data /////////////
+/////////////////////////////////////
+// @para i, j, k: row, column, byte number index to access
+// @para index: index want to access
+    ImgPixel Get_Value(int i, int j, int k);
+    float Get_Geo_Coord(int i, int j, int k);
+    float Get_Geo_Value(int i, int j, int k);
+    int Get_Row(int index);
+    int Get_Col(int index);
+    int Get_Byte(int index);
+
+
+//////////////////////////////////
+/////////// Geometry /////////////
+//////////////////////////////////
+// @para image_list: a list of images
+// @para new_geo_data: copy a geo_data to this class
+// @para new_geo_row, new_geo_col: set the row, column of geometry data
+// @para matrix: matrix to multiply to the geodata matrix;
+    int Initial_Geodata();
+    int Initial_Geodata(vector <Image*> image_list);
+    int Initial_Geodata(GeoPixel* new_geo_data, int new_geo_row, int new_geo_col);
+    int Image_to_Cartesian_Coordinate();
+    int Cartesian_to_Image_Coordinate();
+    int Apply_Matrix(Matrix matrix);
+    int Set_Data();
+
+
+////////////////////////////////
+/////////// Effect /////////////
+////////////////////////////////
+// @para theta: max rotation degree
+// @para mode:
+// MODE_X: rotation on X axis
+// MODE_Y: rotation on Y axis
+// MODE_Z: rotation on Z axis
+    int Effect_Rotation(float theta, int mode);
+
+// @para tx, ty, tz: translation distances in each X, Y, Z direction
+    int Effect_Translation(float coef_tx, float coef_ty, float coef_tz);
+
+// @para sx, sy, sz: scaling parameters in each X, Y, Z direction
+    int Effect_Scaling(float coef_sx, float coef_sy, float coef_sz);
+
+// @para degree: max rotation degree
+    int Effect_Swirling(float theta);
+
+
+///////////////////////////////////
+/////////// 3D camera /////////////
+///////////////////////////////////
+// @para density: density (number of pixels in unit length)
+// @para coord_xc, coord_yc, coord_zc: Xc, Yc, Zc (three vectors of camera coordinates system)
+// @para coord_r: r (vector from the origin of the world coordinates to the origin of the camera coordinate)
+// @para coef_f: focal length
+// @para coef_cx, coef_cy: iamge coordinates of the intersecting point between the optical axis and the image plane (2.0f, 2.0f in this case)
+    int Camera_Extrinsic(Coord3D coord_xc, Coord3D coord_yc, Coord3D coord_zc, Coord3D coord_r);
+    int Camera_Intrinsic(float coef_f, float coef_cx, float coef_cy);
+    int Set_Camera_Data(int density);
+    int Camera_Intrinsic_Reverse(float coef_f, float coef_cx, float coef_cy);
+    int Camera_Extrinsic_Reverse(Coord3D coord_xc, Coord3D coord_yc, Coord3D coord_zc, Coord3D coord_r);
+    int Set_Camera_Data_Reverse();
+};
+#endif //P1_IMAGE_H
+/* EE569 Homework Assignment #3
+ * Date: Nov 1, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * Email: meiyiyan@usc.edu
+ *
+ * Problem1. Geometrical Modification
+ *
+ * p1_main.cpp
+ * Image.h
+ * Image.cpp
+ */
+
+#include "Image.h"
+
+
+//////////////////////////////////////////
+/////////// Helper functions /////////////
+//////////////////////////////////////////
+float COS(float degree) {
+    return cos(degree * PI / 180.0);
+}
+float SIN(float degree) {
+    return sin(degree * PI / 180.0);
+}
+float TAN (float degree) {
+    return tan(degree * PI / 180.0);
+}
+
+
+/////////////////////////////////////
+/////////// Constructor /////////////
+/////////////////////////////////////
+Image::Image(int new_row, int new_col, int new_byte, ImgPixel *pt_img) {
+    if (new_col <= 0 || new_col > 1024) {
+        cerr << "wrong column" << endl;
+        exit(1);
+    }
+    if (new_row <= 0 || new_row > 1024) {
+        cerr << "wrong column" << endl;
+        exit(1);
+    }
+    col = new_col;
+    row = new_row;
+    byte = new_byte;
+    data = new ImgPixel [col * row * byte];
+    if (!data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
+    }
+    if (pt_img == NULL) {
+        for (int i = 0; i < col * row * byte; i++) {
+            data[i] = 0;
+        }
+
+    } else {
+        for (int i = 0; i < col * row * byte; i++) {
+            data[i] = *pt_img++;
+        }
+    }
+
+}
+
+Image::Image(int new_row, int new_col, int new_byte, string filename) {
+    if (new_col <= 0 || new_col > 1024) {
+        cerr << "Wrong column" << endl;
+        exit(1);
+    }
+    if (new_row <= 0 || new_row > 1024) {
+        cerr << "Wrong row" << endl;
+        exit(1);
+    }
+    col = new_col;
+    row = new_row;
+    byte = new_byte;
+    char *c_filename = new char[filename.length() + 1];
+    strcpy(c_filename, filename.c_str());
+    FILE *file;
+    if (!(file = fopen(c_filename, "rb")))  {
+        cout << "Cannot open file: " << filename << endl;
+        exit(1);
+    }
+    data = new ImgPixel[col * row * byte];
+    if (!data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
+    }
+    fread(data, sizeof(ImgPixel), col * row * byte, file);
+    fclose(file);
+    if (c_filename)
+        delete c_filename;
+}
+
+Image::~Image() {
+    if(data)
+        delete data;
+    if (geo_data)
+        delete geo_data;
+}
+
+
+/////////////////////////////////
+/////////// Display /////////////
+/////////////////////////////////
+void Image::Write (Image *image, string filename) {
+    cout << "Write " << filename << endl;
+    char *c_filename = new char[filename.length() + 1];
+    strcpy(c_filename, filename.c_str());
+    FILE *file;
+    if (!(file = fopen(c_filename, "wb"))) {
+        cout << "Cannot open file: " << filename << endl;
+        exit(1);
+    }
+    size_t size = image->col * image->row * image->byte;
+    fwrite(image->data, sizeof(ImgPixel), col * row * byte, file);
+    fclose(file);
+}
+
+void Image::Print_Data(string str) {
+    cout << endl << "Image " << str << ": " << row << ", " << col << ", " << byte << endl;
+    int new_col = col;
+    int max_col = 100;
+    if (col * byte > max_col) {
+        new_col = max_col / byte;
+    }
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < new_col; j++) {
+            for (int k = 0; k < byte; k++) {
+                cout << (int)Get_Value(i, j, k) << " ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+void Image::Print_Geodata_Color(string str) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (geo_data) {
+        for (int i = 0; i < geo_row; i++) {
+            for (int j = 0; j < geo_col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << " "
+                << geo_data[i * geo_col + j].color[0] << " "
+                << geo_data[i * geo_col + j].color[1] << " "
+                << geo_data[i * geo_col + j].color[2] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+void Image::Print_Geodata_Color(string str, int new_row, int new_col) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (new_row > geo_row)
+        new_row = geo_row;
+    if (new_col > geo_col)
+        new_col = geo_col;
+    if (geo_data) {
+        for (int i = 0; i < new_row; i++) {
+            for (int j = 0; j < new_col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << " "
+                << geo_data[i * geo_col + j].color[0] << " "
+                << geo_data[i * geo_col + j].color[1] << " "
+                << geo_data[i * geo_col + j].color[2] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+void Image::Print_Geodata_Coord(string str) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (geo_data) {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+void Image::Print_Geodata_Coord(string str, int new_row, int new_col) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (new_row > geo_row)
+        new_row = geo_row;
+    if (new_col > geo_col)
+        new_col = geo_col;
+    if (geo_data) {
+        for (int i = 0; i < new_row; i++) {
+            for (int j = 0; j < new_col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+
+/////////////////////////////////////
+/////////// Access Data /////////////
+/////////////////////////////////////
+ImgPixel Image::Get_Value(int i, int j, int k) {
+    return data[i * byte * col + j * byte + k];
+}
+
+float Image::Get_Geo_Value(int i, int j, int k) {
+    if (i < geo_row && j < geo_col && k < 3)
+        return geo_data[i * geo_col + j].color[k];
+    else
+        return (ImgPixel)0;
+}
+
+float Image::Get_Geo_Coord(int i, int j, int k) {
+    if (i < geo_row && j < geo_col && k < 4)
+        return geo_data[i * geo_col + j].coord[k];
+    else
+        return (ImgPixel)0;
+}
+
+int Image::Get_Row(int index) {
+    return index / (col * byte);
+}
+
+int Image::Get_Col(int index) {
+    return (index % (byte * col)) / byte;
+}
+
+int Image::Get_Byte(int index) {
+    return index % byte;
+}
+
+
+//////////////////////////////////
+/////////// Geometry /////////////
+//////////////////////////////////
+int Image::Initial_Geodata() {
+    cout << "Initial Geodata" << endl;
+    // allocate memory to geo_data
+    if (geo_data) {
+        cerr << "geo data already exist" << endl;
+        return 0;
+    }
+    geo_row = row;
+    geo_col = col;
+    geo_data = new GeoPixel[geo_row * geo_col];
+    if (!geo_data) {
+        cerr << "Wrong allocate memory" << endl;
+        return 0;
+    }
+
+    // image coordinate
+    for (int i = 0; i < geo_row; i++) {
+        for (int j = 0; j < geo_col; j++) {
+            geo_data[i * geo_col + j].coord[0] = i;
+            geo_data[i * geo_col + j].coord[1] = j;
+            geo_data[i * geo_col + j].coord[2] = 0.0f;
+            geo_data[i * geo_col + j].coord[3] = 1.0f;
+            geo_data[i * geo_col + j].color[0] = Get_Value(i, j, 0);
+            geo_data[i * geo_col + j].color[1] = Get_Value(i, j, 1);
+            geo_data[i * geo_col + j].color[2] = Get_Value(i, j, 2);
+        }
+    }
+    return Image_to_Cartesian_Coordinate();
+}
+
+int Image::Initial_Geodata(vector <Image*> image_list) {
+    // resize geo_col, geo row
+    int image_size = image_list.size();
+    int new_geo_row = 0, new_geo_col = 0;
+    for (int i = 0; i < image_size; i++){
+        new_geo_row += image_list[i]->geo_row;
+        if (new_geo_col < image_list[i]->geo_col)
+            new_geo_col = image_list[i]->geo_col;
+    }
+    geo_row = new_geo_row;
+    geo_col = new_geo_col;
+    cout << "Initial Geodata " << new_geo_row << " " << new_geo_col << endl;
+    // allocate memory to geo_data
+    if (geo_data) {
+        cerr << "geo data already exist" << endl;
+        return 0;
+    }
+    if (new_geo_row <= 0 && new_geo_col <= 0) {
+        cerr << "geo_row or geo_col is wrong" << endl;
+        return 0;
+    }
+    geo_data = new GeoPixel[geo_row * geo_col];
+    if (!geo_data) {
+        cerr << "Wrong allocate memory" << endl;
+        return 0;
+    }
+    // image coordinate
+    int image_count = 0;
+    int image_row = 0;
+    for (int i = 0; i < geo_row; i++) {
+        for (int j = 0; j < geo_col; j++) {
+            geo_data[i * geo_col + j].coord[0] = image_list[image_count]->Get_Geo_Coord(image_row, j, 0);
+            geo_data[i * geo_col + j].coord[1] = image_list[image_count]->Get_Geo_Coord(image_row, j, 1);
+            geo_data[i * geo_col + j].coord[2] = image_list[image_count]->Get_Geo_Coord(image_row, j, 2);
+            geo_data[i * geo_col + j].coord[3] = image_list[image_count]->Get_Geo_Coord(image_row, j, 3);
+            geo_data[i * geo_col + j].color[0] = image_list[image_count]->Get_Geo_Value(image_row, j, 0);
+            geo_data[i * geo_col + j].color[1] = image_list[image_count]->Get_Geo_Value(image_row, j, 1);
+            geo_data[i * geo_col + j].color[2] = image_list[image_count]->Get_Geo_Value(image_row, j, 2);
+        }
+        image_row++;
+        if (image_row >= image_list[image_count]->geo_row) {
+            image_count++;
+            image_row = 0;
+        }
+    }
+    return 1;
+}
+
+int Image::Initial_Geodata(GeoPixel* new_geo_data, int new_geo_row, int new_geo_col) {
+    // resize geo_col, geo row
+    geo_row = new_geo_row;
+    geo_col = new_geo_col;
+    cout << "Initial Geodata " << new_geo_row << " " << new_geo_col << endl;
+    // allocate memory to geo_data
+    if (geo_data) {
+        cerr << "geo data already exist" << endl;
+        return 0;
+    }
+    if (new_geo_row <= 0 && new_geo_col <= 0) {
+        cerr << "geo_row or geo_col is wrong" << endl;
+        return 0;
+    }
+    geo_data = new GeoPixel[geo_row * geo_col];
+    if (!geo_data) {
+        cerr << "Wrong allocate memory" << endl;
+        return 0;
+    }
+    // image coordinate
+    int image_count = 0;
+    int image_row = 0;
+    for (int i = 0; i < geo_row; i++) {
+        for (int j = 0; j < geo_col; j++) {
+            geo_data[i * geo_col + j].coord[0] = new_geo_data[i * geo_col + j].coord[0];
+            geo_data[i * geo_col + j].coord[1] = new_geo_data[i * geo_col + j].coord[1];
+            geo_data[i * geo_col + j].coord[2] = new_geo_data[i * geo_col + j].coord[2];
+            geo_data[i * geo_col + j].coord[3] = new_geo_data[i * geo_col + j].coord[3];
+            geo_data[i * geo_col + j].color[0] = new_geo_data[i * geo_col + j].color[0];
+            geo_data[i * geo_col + j].color[1] = new_geo_data[i * geo_col + j].color[1];
+            geo_data[i * geo_col + j].color[2] = new_geo_data[i * geo_col + j].color[2];
+        }
+    }
+    return 1;
+}
+
+int Image::Image_to_Cartesian_Coordinate() {
+    cout << "Convert_Cartesian_Coordinate" << endl;
+    float temp_row = (float)row - 0.5f;
+    Matrix matrix = {{0.0f, 1.0f, 0.0f, 0.5f},
+                    {-1.0f, 0.0f, 0.0f, temp_row},
+                    {0.0f, 0.0f, 1.0f, 0.0f},
+                    {0.0f, 0.0f, 0.0f, 1.0f}};
+    return Apply_Matrix(matrix);
+}
+
+int Image::Cartesian_to_Image_Coordinate() {
+    cout << "Convert_Image_Coordinate" << endl;
+    float temp_row = (float)row - 0.5f;
+    Matrix matrix = {{0.0f, -1.0f, 0.0f, temp_row},
+                    {1.0f, 0.0f, 0.0f, -0.5f},
+                    {0.0f, 0.0f, 1.0f, 0.0f},
+                    {0.0f, 0.0f, 0.0f, 1.0f}};
+    return Apply_Matrix(matrix);
+}
+
+int Image::Apply_Matrix(Matrix matrix) {
+    // check geo_data
+    if (!geo_data) {
+        cerr << "geo data is still null" << endl;
+        return 0;
+    }
+    // apply matrix to Image coordinate
+    ImgCoord temp_coord = {};
+    for(int i = 0; i < geo_row * geo_col; i++) {
+        for (int j = 0; j < 4; j++) {
+            temp_coord[j] = 0;
+            for (int k = 0; k < 4; k++) {
+                temp_coord[j] += matrix[j][k] * geo_data[i].coord[k];
+            }
+        }
+        geo_data[i].coord[0] = temp_coord[0];
+        geo_data[i].coord[1] = temp_coord[1];
+        geo_data[i].coord[2] = temp_coord[2];
+        geo_data[i].coord[3] = temp_coord[3];
+    }
+    return 1;
+}
+
+int Image::Set_Data() {
+    cout << "Set Data" << endl;
+    // check geo_data
+    if (!geo_data) {
+        cerr << "geo data is still null" << endl;
+        return 0;
+    }
+    // convert geodata to image coordinate from Cartesian
+    if (Cartesian_to_Image_Coordinate() == 0)
+        return 0;
+
+    // Set temp data
+    float *temp_data = new float[row * col * byte];
+    if (!temp_data) {
+        cerr << "fail to allocate memory" << endl;
+        return 0;
+    }
+    for (int i = 0; i < row * col * byte; i++) {
+        temp_data[i] = 0.0f;
+    }
+    // bilinear intepolation
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            float point_estimate_x = geo_data[i * geo_col + j].coord[0];
+            float point_estimate_y = geo_data[i * geo_col + j].coord[1];
+            int point_lt_x = (int)floor(point_estimate_x);
+            int point_lt_y = (int)floor(point_estimate_y);
+            float scale_a = point_estimate_x - (float)point_lt_x;
+            float scale_b = point_estimate_y - (float)point_lt_y;
+
+            int point_x[4] = {point_lt_x, point_lt_x, point_lt_x + 1, point_lt_x + 1};
+            int point_y[4] = {point_lt_y, point_lt_y + 1, point_lt_y, point_lt_y + 1};
+            float scale_ab[4] = {(1.0f - scale_a) * (1.0f - scale_b), (1.0f - scale_a) * scale_b, (1.0f - scale_b) * scale_a, scale_a * scale_b};
+            for(int k = 0; k < byte; k++)
+            {
+                float value = 0;
+                for (int m = 0; m < 4; m++) {
+                    if (point_x[m] >= 0 && point_x[m] <= row && point_y[m] >= 0 && point_y[m] <= col)
+                        value += scale_ab[m] * Get_Geo_Value(point_x[m], point_y[m], k);
+                }
+                temp_data[i * col * byte + j * byte + k] = value;
+            }
+        }
+    }
+    for (int i = 0; i < row * col * byte; i++) {
+        data[i] = (ImgPixel)temp_data[i];
+    }
+    delete temp_data;
+    return 1;
+}
+
+
+////////////////////////////////
+/////////// Effect /////////////
+////////////////////////////////
+int Image::Effect_Rotation(float theta, int mode) {
+    cout << "Effect_Rotation: " << theta << " in " << mode << "axie" << endl;
+    if (mode == MODE_X) {
+        Matrix matrix1 = {{1.0f, 0.0f, 0.0f, 0.0f}, {0.0f, COS(theta), -SIN(theta), 0.0f},
+                          {0.0f, SIN(theta), COS(theta), 0.0f}, {0.0f, 0.0f, 0.0f, 1.0f}};
+        return Apply_Matrix(matrix1);
+    } else if (mode == MODE_Y) {
+        Matrix matrix2 = {{COS(theta), 0.0f, SIN(theta), 0.0f}, {0.0f, 1.0f, 0.0f, 0.0f},
+                          {-SIN(theta), 0.0f, COS(theta), 0.0f}, {0.0f, 0.0f, 0.0f, 1.0f}};
+        return Apply_Matrix(matrix2);
+    } else if (mode == MODE_Z) {
+        Matrix matrix3 = {{COS(theta), -SIN(theta), 0.0f, 0.0f}, {SIN(theta), COS(theta), 0.0f, 0.0f},
+                          {0.0f, 0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 1.0f}};
+        return Apply_Matrix(matrix3);
+    } else {
+        cout << "Wrong mode " << mode << endl;
+        return 0;
+    }
+
+}
+
+int Image::Effect_Translation(float coef_tx, float coef_ty, float coef_tz) {
+    cout << "Effect_Translation: " << coef_tx << " " << coef_ty << " " << coef_tz << endl;
+    Matrix matrix = {{1.0f, 0.0f, 0.0f, coef_tx}, {0.0f, 1.0f, 0.0f, coef_ty},
+                    {0.0f, 0.0f, 1.0f, coef_tz}, {0.0f, 0.0f, 0.0f, 1.0f}};
+    return Apply_Matrix(matrix);
+}
+
+int Image::Effect_Scaling(float coef_sx, float coef_sy, float coef_sz) {
+    cout << "Effect_Scaling: " << coef_sx << " " << coef_sy << " " << coef_sz << endl;
+    Matrix matrix = {{coef_sx, 0.0f, 0.0f, 0.0f}, {0.0f, coef_sy, 0.0f, 0.0f},
+                     {0.0f, 0.0f, coef_sz, 0.0f}, {0.0f, 0.0f, 0.0f, 1.0f}};
+    return Apply_Matrix(matrix);
+}
+
+int Image::Effect_Swirling(float theta) {
+    cout << "Effect_Swirling: " << theta << endl;
+    // check geo_data
+    if (!geo_data) {
+        cerr << "geo data is still null" << endl;
+        return 0;
+    }
+    // apply matrix to Image coordinate
+    ImgCoord temp_coord = {};
+    for(int i = 0; i < geo_row * geo_col; i++) {
+        float range = geo_data[i].coord[0] * geo_data[i].coord[0] + geo_data[i].coord[1] * geo_data[i].coord[1];
+        float theta_current = -theta * range * 4 / (row * col);
+        Matrix matrix = {{COS(theta_current), -SIN(theta_current), 0.0f, 0.0f}, {SIN(theta_current), COS(theta_current), 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 1.0f}};
+        for (int j = 0; j < 4; j++) {
+            temp_coord[j] = 0;
+            for (int k = 0; k < 4; k++) {
+                temp_coord[j] += matrix[j][k] * geo_data[i].coord[k];
+            }
+        }
+        geo_data[i].coord[0] = temp_coord[0];
+        geo_data[i].coord[1] = temp_coord[1];
+        geo_data[i].coord[2] = temp_coord[2];
+        geo_data[i].coord[3] = temp_coord[3];
+    }
+    return 1;
+}
+
+
+///////////////////////////////////
+/////////// 3D camera /////////////
+///////////////////////////////////
+int Image::Camera_Extrinsic(Coord3D coord_xc, Coord3D coord_yc, Coord3D coord_zc, Coord3D coord_r) {
+    // normalize coordinate
+    double scale_xc = 1.0 / sqrt(coord_xc[0] * coord_xc[0] + coord_xc[1] * coord_xc[1] + coord_xc[2] * coord_xc[2]);
+    double scale_yc = 1.0 / sqrt(coord_yc[0] * coord_yc[0] + coord_yc[1] * coord_yc[1] + coord_yc[2] * coord_yc[2]);
+    double scale_zc = 1.0 / sqrt(coord_zc[0] * coord_zc[0] + coord_zc[1] * coord_zc[1] + coord_zc[2] * coord_zc[2]);
+    for (int i = 0; i < 3; i++) {
+        coord_xc[i] *= scale_xc;
+        coord_yc[i] *= scale_yc;
+        coord_zc[i] *= scale_zc;
+    }
+    // Set matrix
+    Matrix matrix =
+    {{coord_xc[0], coord_xc[1], coord_xc[2], -1.0f * (coord_r[0] * coord_xc[0] + coord_r[1] * coord_xc[1] + coord_r[2] * coord_xc[2])},
+    {coord_yc[0], coord_yc[1], coord_yc[2], -1.0f * (coord_r[0] * coord_yc[0] + coord_r[1] * coord_yc[1] + coord_r[2] * coord_yc[2])},
+    {coord_zc[0], coord_zc[1], coord_zc[2], -1.0f * (coord_r[0] * coord_zc[0] + coord_r[1] * coord_zc[1] + coord_r[2] * coord_zc[2])},
+    {0.0f, 0.0f, 0.0f, 1.0f}};
+    return Apply_Matrix(matrix);
+}
+
+int Image::Camera_Intrinsic(float coef_f, float coef_cx, float coef_cy) {
+    Matrix matrix = {{coef_f, 0.0f, coef_cx / 2.0f, 0.0f}, {0.0f, coef_f, coef_cy / 2.0f, 0.0f},
+    {0.0f, 0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 1.0f}};
+    Apply_Matrix(matrix);
+    for (int i = 0; i < geo_row * geo_col; i++) {
+        geo_data[i].coord[0] /= geo_data[i].coord[2];
+        geo_data[i].coord[1] /= geo_data[i].coord[2];
+    }
+    return 1;
+}
+
+int Image::Camera_Intrinsic_Reverse(float coef_f, float coef_cx, float coef_cy) {
+    for (int i = 0; i < geo_row * geo_col; i++) {
+        geo_data[i].coord[0] *= geo_data[i].coord[2];
+        geo_data[i].coord[1] *= geo_data[i].coord[2];
+    }
+    Matrix matrix = {{1.0f / coef_f, 0.0f, -coef_cx / (2.0f * coef_f), 0.0f},
+                     {0.0f, 1.0f / coef_f, -coef_cy / (2.0f * coef_f), 0.0f},
+                     {0.0f, 0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 1.0f}};
+    Apply_Matrix(matrix);
+    return 1;
+}
+
+int Image::Camera_Extrinsic_Reverse(Coord3D coord_xc, Coord3D coord_yc, Coord3D coord_zc, Coord3D coord_r) {
+    // normalize coordinate
+    double scale_xc = 1.0 / sqrt(coord_xc[0] * coord_xc[0] + coord_xc[1] * coord_xc[1] + coord_xc[2] * coord_xc[2]);
+    double scale_yc = 1.0 / sqrt(coord_yc[0] * coord_yc[0] + coord_yc[1] * coord_yc[1] + coord_yc[2] * coord_yc[2]);
+    double scale_zc = 1.0 / sqrt(coord_zc[0] * coord_zc[0] + coord_zc[1] * coord_zc[1] + coord_zc[2] * coord_zc[2]);
+    for (int i = 0; i < 3; i++) {
+        coord_xc[i] *= scale_xc;
+        coord_yc[i] *= scale_yc;
+        coord_zc[i] *= scale_zc;
+    }
+    // Set matrix
+    Matrix matrix =
+            {{coord_xc[0], coord_yc[0], coord_zc[0], coord_r[0]},
+             {coord_xc[1], coord_yc[1], coord_zc[1], coord_r[1]},
+             {coord_xc[2], coord_yc[2], coord_zc[2], coord_r[2]},
+             {0.0f, 0.0f, 0.0f, 1.0f}};
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+    return Apply_Matrix(matrix);
+}
+
+int Image::Set_Camera_Data(int density) {
+    cout << "Set Data" << endl;
+    // check geo_data
+    if (!geo_data) {
+        cerr << "geo data is still null" << endl;
+        return 0;
+    }
+
+    float max_x = -10000;
+    float max_y = -10000;
+    float min_x = 10000;
+    float min_y = 10000;
+    for (int i = 0; i < geo_row * geo_col; i++) {
+        geo_data[i].coord[0] *= density;
+        geo_data[i].coord[1] *= density;
+        if (max_x < geo_data[i].coord[0])
+            max_x = geo_data[i].coord[0];
+        if (max_y < geo_data[i].coord[1])
+            max_y = geo_data[i].coord[1];
+        if (min_x > geo_data[i].coord[0])
+            min_x = geo_data[i].coord[0];
+        if (min_y > geo_data[i].coord[1])
+            min_y = geo_data[i].coord[1];
+    }
+    Effect_Translation(100 - density, 100 - density, 0);
+    Effect_Scaling(1.0f, -1.0f, 1.0f);
+
+
+    for (int i = 0; i < geo_row; i++) {
+        for (int j = 0; j < geo_col; j++) {
+            int temp_i = (int)geo_data[i * geo_col + j].coord[0];
+            int temp_j = (int)geo_data[i * geo_col + j].coord[1];
+            int index =  temp_i * col * byte + temp_j * byte;
+            if (index >= 0 && index < col * byte * row - 2) {
+                data[index] = (ImgPixel)Get_Geo_Value(i, j, 0);
+                data[index + 1] = (ImgPixel)Get_Geo_Value(i, j, 1);
+                data[index + 2] = (ImgPixel)Get_Geo_Value(i, j, 2);
+            }
+        }
+    }
+    return 1;
+}
+
+int Image::Set_Camera_Data_Reverse() {
+    cout << "Set Data" << endl;
+    // check geo_data
+    if (!geo_data) {
+        cerr << "geo data is still null" << endl;
+        return 0;
+    }
+
+    float max_x = -10000;
+    float max_y = -10000;
+    float min_x = 10000;
+    float min_y = 10000;
+    int density = 50;
+    for (int i = 0; i < geo_row * geo_col; i++) {
+        geo_data[i].coord[0] *= 50;
+        geo_data[i].coord[1] *= 50;
+        if (max_x < geo_data[i].coord[0])
+            max_x = geo_data[i].coord[0];
+        if (max_y < geo_data[i].coord[1])
+            max_y = geo_data[i].coord[1];
+        if (min_x > geo_data[i].coord[0])
+            min_x = geo_data[i].coord[0];
+        if (min_y > geo_data[i].coord[1])
+            min_y = geo_data[i].coord[1];
+    }
+    Effect_Translation(50, 50, 0);
+    Cartesian_to_Image_Coordinate();
+    Print_Geodata_Coord("Image2", 20, 2);
+    Effect_Translation(-50, 50, 0);
+
+    float z_buffer = INT_MAX;
+    for (int i = 0; i < geo_row; i++) {
+        for (int j = 0; j < geo_col; j++) {
+            int temp_i = (int)geo_data[i * geo_col + j].coord[0];
+            int temp_j = (int)geo_data[i * geo_col + j].coord[1];
+            int index =  temp_i * col * byte + temp_j * byte;
+            if (index >= 0 && index < col * byte * row - 2) {
+                data[index] = (ImgPixel)Get_Geo_Value(i, j, 0);
+                data[index + 1] = (ImgPixel)Get_Geo_Value(i, j, 1);
+                data[index + 2] = (ImgPixel)Get_Geo_Value(i, j, 2);
+                z_buffer = Get_Geo_Coord(i, j, 2);
+            }
+        }
+    }
+    return 1;
+}
+
+/* EE569 Homework Assignment #3
+ * Date: Nov 1, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * Email: meiyiyan@usc.edu
+ *
+ * Problem1. Geometrical Modification
+ *
+ * p1_main.cpp
+ * Image.h
+ * Image.cpp
+ */
+
+#include "Image.h"
+using namespace std;
+
+/////////////////////////////////////
+/////////// Declaration /////////////
+/////////////////////////////////////
+// @para degree: max rotation degree
+void Swirling(float degree);
+
+// @para degree: max rotation degree
+// @para mode:
+// MODE_X: rotation on X axis
+// MODE_Y: rotation on Y axis
+// MODE_Z: rotation on Z axis
+void Test_Rotation(float degree, int mode);
+
+// @para tx, ty, tz: translation distances in each X, Y, Z direction
+void Test_Translation(float tx, float ty, float tz);
+
+// @para sx, sy, sz: scaling parameters in each X, Y, Z direction
+void Test_Scaling(float sx, float sy, float sz);
+
+// @para density: density (number of pixels in unit length)
+// @para coef_f: focal length
+// @para coord_xc, coord_yc, coord_zc: Xc, Yc, Zc (three vectors of camera coordinates system)
+// @para coord_r: r (vector from the origin of the world coordinates to the origin of the camera coordinate)
+void Forward_Mapping(int density, float coef_f, Coord3D coord_xc, Coord3D coord_yc, Coord3D coord_zc, Coord3D coord_r);
+
+// @para density: density (number of pixels in unit length)
+void Reverse_Mapping(int density);
+
+// @para int mode:
+// 0: implement for problem1a, swirling
+// 1: test case for rotation
+// 2: test case for translation
+// 3: test case for scaling
+void prob1a(int mode);
+
+// @para int mode:
+// 0: implement for problem1b, different density + 3D camera forward mapping
+// 1: implement for problem1b, 3D camera reverse mapping
+// 2: test case for different f in forward mapping
+// 3: test case for different r in forward mapping
+void prob1b(int mode);
+
+
+/////////////////////////////////////
+/////////// Application /////////////
+/////////////////////////////////////
+void Swirling(float degree) {
+    Image img_ori(512, 512, 3, "p1_image/kate.raw");
+    img_ori.Initial_Geodata();
+    img_ori.Effect_Translation(-0.5f * img_ori.row, -0.5f * img_ori.col, 0.0f);
+    img_ori.Effect_Swirling(degree);
+    img_ori.Effect_Translation(0.5f * img_ori.row, 0.5f * img_ori.col, 0.0f);
+    img_ori.Set_Data();
+    string filename = "Kate_swirling_" + to_string((int)degree) + ".raw";
+    img_ori.Write(&img_ori, filename);
+}
+
+void Test_Rotation(float degree, int mode) {
+    Image img_ori(512, 512, 3, "p1_image/kate.raw");
+    img_ori.Initial_Geodata();
+    img_ori.Effect_Translation(-0.5f * img_ori.row, -0.5f * img_ori.col, 0.0f);
+    img_ori.Effect_Rotation(degree, mode);
+    img_ori.Effect_Translation(0.5f * img_ori.row, 0.5f * img_ori.col, 0.0f);
+    img_ori.Set_Data();
+    string filename = "Kate_rotation_" + to_string((int)degree) + ".raw";
+    img_ori.Write(&img_ori, filename);
+
+}
+
+void Test_Translation(float tx, float ty, float tz) {
+    Image img_ori(512, 512, 3, "p1_image/kate.raw");
+    img_ori.Initial_Geodata();
+    img_ori.Effect_Translation(tx, ty, tz);
+    img_ori.Set_Data();
+    string filename = "Kate_translation_" + to_string((int)tx) + "_" + to_string((int)ty) +  "_" + to_string((int)tz) + ".raw";
+    img_ori.Write(&img_ori, filename);
+}
+
+void Test_Scaling(float sx, float sy, float sz) {
+    Image img_ori(512, 512, 3, "p1_image/kate.raw");
+    img_ori.Initial_Geodata();
+    img_ori.Effect_Translation(-0.5f * img_ori.row, -0.5f * img_ori.col, 0.0f);
+    img_ori.Effect_Scaling(1.0f/sx, 1.0f/sy, 1.0f/sz);
+    img_ori.Effect_Translation(0.5f * img_ori.row, 0.5f * img_ori.col, 0.0f);
+    img_ori.Set_Data();
+    string filename = "Kate_scaling_" + to_string(sx) + "_" + to_string(sy) +  "_" + to_string(sz) + ".raw";
+    img_ori.Write(&img_ori, filename);
+
+}
+
+void Forward_Mapping(int density, float coef_f, Coord3D coord_xc, Coord3D coord_yc, Coord3D coord_zc, Coord3D coord_r) {
+    // Read image data
+    vector<Image*> image_list;
+    Image img_ori0(200, 200, 3, "p1_image/baby.raw");
+    img_ori0.Initial_Geodata();
+    img_ori0.Effect_Translation(-100.0f, -100.0f, 1.0f);
+    img_ori0.Effect_Rotation(90.0f, MODE_Z);
+    img_ori0.Effect_Scaling(0.01, 0.01, 1.0f);
+
+    Image img_ori1(200, 200, 3, "p1_image/baby_bear.raw");
+    img_ori1.Initial_Geodata();
+    img_ori1.Effect_Translation(-100, -100, 1);
+    img_ori1.Effect_Rotation(90, MODE_Y);
+    img_ori1.Effect_Rotation(90, MODE_X);
+    img_ori1.Effect_Scaling(1.0f, 0.01, 0.01);
+
+    Image img_ori2(200, 200, 3, "p1_image/baby_cat.raw");
+    img_ori2.Initial_Geodata();
+    img_ori2.Effect_Translation(-100, -100, 1);
+    img_ori2.Effect_Rotation(-90, MODE_X);
+    img_ori2.Effect_Rotation(180, MODE_Y);
+    img_ori2.Effect_Scaling(0.01, 1.0f, 0.01);
+
+    image_list.push_back(&img_ori0);
+    image_list.push_back(&img_ori1);
+    image_list.push_back(&img_ori2);
+
+    // Set to new image
+    Image img(200, 200, 3, (ImgPixel *)NULL);
+    img.Initial_Geodata(image_list);
+
+    // Extrinsic Camera
+    img.Camera_Extrinsic(coord_xc, coord_yc, coord_zc, coord_r);
+
+    // Intrinsic Camera
+    img.Camera_Intrinsic(coef_f, 2.0f, 2.0f);
+
+    // Display
+    img.Set_Camera_Data(density);
+    string filename = "cube" + to_string(density) + "_r" + to_string(coord_r[0]) + ".raw";
+    img.Write(&img, filename);
+}
+
+void Reverse_Mapping(int density) {
+    // Read image data
+    vector<Image*> image_list;
+
+    Image img_ori0(200, 200, 3, "p1_image/baby.raw");
+    img_ori0.Initial_Geodata();
+    img_ori0.Effect_Translation(-100.0f, -100.0f, 1.0f);
+    img_ori0.Effect_Rotation(90.0f, MODE_Z);
+    img_ori0.Effect_Scaling(0.01, 0.01, 1.0f);
+
+    Image img_ori1(200, 200, 3, "p1_image/baby_bear.raw");
+    img_ori1.Initial_Geodata();
+    img_ori1.Effect_Translation(-100, -100, 1);
+    img_ori1.Effect_Rotation(90, MODE_Y);
+    img_ori1.Effect_Rotation(90, MODE_X);
+    img_ori1.Effect_Scaling(1.0f, 0.01, 0.01);
+
+    Image img_ori2(200, 200, 3, "p1_image/baby_cat.raw");
+    img_ori2.Initial_Geodata();
+    img_ori2.Effect_Translation(-100, -100, 1);
+    img_ori2.Effect_Rotation(-90, MODE_X);
+    img_ori2.Effect_Rotation(180, MODE_Y);
+    img_ori2.Effect_Scaling(0.01, 1.0f, 0.01);
+
+    image_list.push_back(&img_ori0);
+    image_list.push_back(&img_ori1);
+    image_list.push_back(&img_ori2);
+
+    // Set to new image
+    Image img(200, 200, 3, (ImgPixel *)NULL);
+    img.Initial_Geodata(image_list);
+
+    // Extrinsic Camera
+    Coord3D coord_xc = {-1.0f, 1.0f, 0.0f};
+    Coord3D coord_yc = {1.0f, 1.0f, -2.0f};
+    Coord3D coord_zc = {-1.0f, -1.0f, -1.0f};
+    Coord3D coord_r = {5.0f, 5.0f, 5.0f};
+    img.Camera_Extrinsic(coord_xc, coord_yc, coord_zc, coord_r);
+
+    // Intrinsic Camera
+    float coef_f = (float)sqrt(3.0);
+    img.Camera_Intrinsic(coef_f, 2.0f, 2.0f);
+
+    // Reverse Mapping
+    Image img_reverse(200, 200, 3, (ImgPixel*) NULL);
+    img_reverse.Initial_Geodata(img.geo_data, img.geo_row, img.geo_col);
+
+    // Reverse Intrinsic Camera
+    img_reverse.Camera_Intrinsic_Reverse(coef_f, 2.0f, 2.0f);
+
+    // Reverse Extrinsic Camera
+    img_reverse.Camera_Extrinsic_Reverse(coord_xc, coord_yc, coord_zc, coord_r);
+    img_reverse.Print_Geodata_Coord("Extrinsic", 600, 4);
+    img_reverse.Set_Camera_Data_Reverse();
+    img_reverse.Write(&img_reverse, "test0.raw");
+}
+
+
+////////////////////////////////////////////////
+/////////// Problem implementation /////////////
+////////////////////////////////////////////////
+void prob1a (int mode) {
+    cout << "Problem 1a" << endl;
+    switch (mode) {
+        case 0:
+            Swirling(-90.0f);
+            Swirling(-45.0f);
+            Swirling(45.0f);
+            Swirling(90.0f);
+            Swirling(180.0f);
+            break;
+        case 1:
+            Test_Rotation(90, MODE_Z);
+            Test_Rotation(60, MODE_Z);
+            Test_Rotation(30, MODE_Z);
+            break;
+        case 2:
+            Test_Translation(256, 256, 0);
+            Test_Translation(256, 0, 0);
+            Test_Translation(-256, 0, 0);
+            Test_Translation(-256, -256, 0);
+            Test_Translation(512, 0, 0);
+            break;
+        case 3:
+            Test_Scaling(1.5f, 1.0f, 1.0f);
+            Test_Scaling(1.0f, 1.5f, 1.0f);
+            Test_Scaling(1.0f, 1.0f, 1.5);
+            Test_Scaling(0.5f, 1.0f, 1.0f);
+            Test_Scaling(1.0f, 0.5f, 1.0f);
+            break;
+    }
+}
+
+void prob1b(int mode) {
+    cout << "Problem 1b" << endl;
+    Coord3D coord_xc = {-1.0f, 1.0f, 0.0f};
+    Coord3D coord_yc = {1.0f, 1.0f, -2.0f};
+    Coord3D coord_zc = {-1.0f, -1.0f, -1.0f};
+    Coord3D coord_r = {5.0f, 5.0f, 5.0f};
+    float coef_f = (float)sqrt(3.0);
+
+    switch(mode) {
+        case 0:
+            Forward_Mapping(300, coef_f, coord_xc, coord_yc, coord_zc, coord_r);
+            Forward_Mapping(250, coef_f, coord_xc, coord_yc, coord_zc, coord_r);
+            Forward_Mapping(200, coef_f, coord_xc, coord_yc, coord_zc, coord_r);
+            Forward_Mapping(150, coef_f, coord_xc, coord_yc, coord_zc, coord_r);
+            Forward_Mapping(100, coef_f, coord_xc, coord_yc, coord_zc, coord_r);
+            Forward_Mapping(50, coef_f, coord_xc, coord_yc, coord_zc, coord_r);
+            break;
+        case 1:
+            Reverse_Mapping(100);
+            break;
+        case 2:
+            Forward_Mapping(200, 0.0, coord_xc, coord_yc, coord_zc, coord_r);
+            Forward_Mapping(200, 1.0, coord_xc, coord_yc, coord_zc, coord_r);
+            Forward_Mapping(200, 2.0, coord_xc, coord_yc, coord_zc, coord_r);
+            break;
+        case 3:
+            Coord3D coord_r0 = {-3.0f, -3.0f, -3.0f};
+            Coord3D coord_r1 = {0.0f, 0.0f, 0.0f};
+            Coord3D coord_r2 = {3.0f, 3.0f, 3.0f};
+            Coord3D coord_r3 = {6.0f, 6.0f, 6.0f};
+            Coord3D coord_r4 = {12.0f, 12.0f, 12.0f};
+            Forward_Mapping(200, coef_f, coord_xc, coord_yc, coord_zc, coord_r0);
+            Forward_Mapping(200, coef_f, coord_xc, coord_yc, coord_zc, coord_r1);
+            Forward_Mapping(200, coef_f, coord_xc, coord_yc, coord_zc, coord_r2);
+            Forward_Mapping(200, coef_f, coord_xc, coord_yc, coord_zc, coord_r3);
+            Forward_Mapping(200, coef_f, coord_xc, coord_yc, coord_zc, coord_r4);
+            break;
+    }
+}
+
+
+///////////////////////////////////////
+/////////// Main function /////////////
+///////////////////////////////////////
+int main() {
+    cout << "Hello, World!" << endl;
+    int mode = 0;
+    switch (mode) {
+        case 0:
+            // Implementation for problem 1
+            prob1a(0);
+            prob1b(0);
+            prob1b(1);
+            break;
+        case 1:
+            // Test
+            prob1a(0);
+            prob1a(1);
+            prob1a(2);
+            prob1a(3);
+
+            prob1b(0);
+            prob1b(1);
+            prob1b(2);
+            prob1b(3);
+            break;
+    }
+    return 0;
+}
+/* EE569 Homework Assignment #3
+ * Date: Nov 1, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * Email: meiyiyan@usc.edu
+ *
+ * Problem2. Digital Half-toning
+ *
+ * p2_main.cpp
+ * Image.h
+ * Image.cpp
+ * Halftoning.h
+ * Halftoning.cpp
+ */
+
+#ifndef P1_IMAGE_H
+#define P1_IMAGE_H
+
+#include <stdio.h>
+#include <iostream>
+#include <stdlib.h>
+#include <math.h>
+#include <fstream>
+#include <cstring>
+#include <vector>
+using namespace std;
+
+//////////////////////////////////////////////
+/////////// Structure Definition /////////////
+//////////////////////////////////////////////
+const double PI = 3.14159265;
+const int MODE_X = 0;
+const int MODE_Y = 1;
+const int MODE_Z = 2;
+typedef unsigned char ImgPixel;
+typedef float ImgCoord[4];
+typedef float ImgColor[3];
+typedef float Matrix[4][4];
+typedef float Coord3D[3];
+typedef struct GeoPixel {
+    ImgCoord coord;
+    ImgColor color;
+} GeoPixel;
+
+
+//////////////////////////////////////////////
+/////////// Function Declaration /////////////
+//////////////////////////////////////////////
+float COS(float);
+float SIN(float);
+float TAN(float);
+
+
+//////////////////////////////////////////
+/////////// Class Definition /////////////
+//////////////////////////////////////////
+class Image {
+public:
+    int col;
+    int row;
+    int byte;
+    int geo_row;
+    int geo_col;
+    ImgPixel *data = NULL;
+    GeoPixel *geo_data = NULL;
+
+
+/////////////////////////////////////
+/////////// Constructor /////////////
+/////////////////////////////////////
+    Image(int, int, int, ImgPixel*);
+    Image(int, int, int, string);
+    Image();
+    ~Image();
+
+
+/////////////////////////////////
+/////////// Display /////////////
+/////////////////////////////////
+    void Write (Image*, string);
+    void Write (string);
+    void Print_Data(string);
+    void Print_Data(string, int, int);
+    void Print_Geodata_Color(string);
+    void Print_Geodata_Color(string, int, int);
+    void Print_Geodata_Coord(string);
+    void Print_Geodata_Coord(string, int, int);
+
+
+/////////////////////////////////////
+/////////// Access Data /////////////
+/////////////////////////////////////
+    ImgPixel Get_Value(int i, int j, int k);
+    ImgPixel* Get_Pixel(int i, int j, int k);
+    float Get_Geo_Coord(int i, int j, int k);
+    float Get_Geo_Value(int i, int j, int k);
+    int Get_Row(int index);
+    int Get_Col(int index);
+    int Get_Byte(int index);
+};
+#endif //P1_IMAGE_H
+/* EE569 Homework Assignment #3
+ * Date: Nov 1, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * Email: meiyiyan@usc.edu
+ *
+ * Problem2. Digital Half-toning
+ *
+ * p2_main.cpp
+ * Image.h
+ * Image.cpp
+ * Halftoning.h
+ * Halftoning.cpp
+ */
+
+#include "Image.h"
+
+float COS(float degree) {
+    return cos(degree * PI / 180.0);
+}
+
+float SIN(float degree) {
+    return sin(degree * PI / 180.0);
+}
+
+float TAN (float degree) {
+    return tan(degree * PI / 180.0);
+}
+
+/////////////////////////////////////
+/////////// Constructor /////////////
+/////////////////////////////////////
+Image::Image() {
+    col = 0;
+    row = 0;
+    byte = 0;
+}
+
+Image::Image(int new_row, int new_col, int new_byte, ImgPixel *pt_img) {
+    if (new_col <= 0 || new_col > 1024) {
+        cerr << "wrong column" << endl;
+        exit(1);
+    }
+    if (new_row <= 0 || new_row > 1024) {
+        cerr << "wrong column" << endl;
+        exit(1);
+    }
+    col = new_col;
+    row = new_row;
+    byte = new_byte;
+    data = new ImgPixel [col * row * byte];
+    if (!data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
+    }
+    if (pt_img == NULL) {
+        for (int i = 0; i < col * row * byte; i++) {
+            data[i] = 0;
+        }
+
+    } else {
+        for (int i = 0; i < col * row * byte; i++) {
+            data[i] = *pt_img++;
+        }
+    }
+
+}
+
+Image::Image(int new_row, int new_col, int new_byte, string filename) {
+    if (new_col <= 0 || new_col > 1024) {
+        cerr << "Wrong column" << endl;
+        exit(1);
+    }
+    if (new_row <= 0 || new_row > 1024) {
+        cerr << "Wrong row" << endl;
+        exit(1);
+    }
+    col = new_col;
+    row = new_row;
+    byte = new_byte;
+    char *c_filename = new char[filename.length() + 1];
+    strcpy(c_filename, filename.c_str());
+    FILE *file;
+    if (!(file = fopen(c_filename, "rb")))  {
+        cout << "Cannot open file: " << filename << endl;
+        exit(1);
+    }
+    data = new ImgPixel[col * row * byte];
+    if (!data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
+    }
+    fread(data, sizeof(ImgPixel), col * row * byte, file);
+    fclose(file);
+    if (c_filename)
+        delete c_filename;
+}
+
+Image::~Image() {
+    if(data)
+        delete data;
+    if (geo_data)
+        delete geo_data;
+}
+
+
+/////////////////////////////////
+/////////// Display /////////////
+/////////////////////////////////
+void Image::Write (Image *image, string filename) {
+    cout << "Write " << filename << endl;
+    char *c_filename = new char[filename.length() + 1];
+    strcpy(c_filename, filename.c_str());
+    FILE *file;
+    if (!(file = fopen(c_filename, "wb"))) {
+        cout << "Cannot open file: " << filename << endl;
+        exit(1);
+    }
+    size_t size = image->col * image->row * image->byte;
+    fwrite(image->data, sizeof(ImgPixel), col * row * byte, file);
+    fclose(file);
+}
+
+void Image::Write (string filename) {
+    cout << "Write " << filename << endl;
+    char *c_filename = new char[filename.length() + 1];
+    strcpy(c_filename, filename.c_str());
+    FILE *file;
+    if (!(file = fopen(c_filename, "wb"))) {
+        cout << "Cannot open file: " << filename << endl;
+        exit(1);
+    }
+    size_t size = col * row * byte;
+    fwrite(data, sizeof(ImgPixel), col * row * byte, file);
+    fclose(file);
+}
+
+void Image::Print_Data(string str) {
+    cout << endl << "Image " << str << ": " << row << ", " << col << ", " << byte << endl;
+    int new_col = col;
+    int max_col = 100;
+    if (col * byte > max_col) {
+        new_col = max_col / byte;
+    }
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < new_col; j++) {
+            for (int k = 0; k < byte; k++) {
+                cout << (int)Get_Value(i, j, k) << " ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+void Image::Print_Data(string str, int new_row, int new_col) {
+    cout << endl << "Image " << str << ": " << row << ", " << col << ", " << byte << endl;
+    if (new_row > row)
+        new_row = row;
+    if (new_col > col)
+        new_col = col;
+    for (int i = 0; i < new_row; i++) {
+        for (int j = 0; j < new_col; j++) {
+            for (int k = 0; k < byte; k++) {
+                cout << (int)Get_Value(i, j, k) << " ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+void Image::Print_Geodata_Color(string str) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (geo_data) {
+        for (int i = 0; i < geo_row; i++) {
+            for (int j = 0; j < geo_col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << " "
+                << geo_data[i * geo_col + j].color[0] << " "
+                << geo_data[i * geo_col + j].color[1] << " "
+                << geo_data[i * geo_col + j].color[2] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+void Image::Print_Geodata_Color(string str, int new_row, int new_col) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (new_row > geo_row)
+        new_row = geo_row;
+    if (new_col > geo_col)
+        new_col = geo_col;
+    if (geo_data) {
+        for (int i = 0; i < new_row; i++) {
+            for (int j = 0; j < new_col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << " "
+                << geo_data[i * geo_col + j].color[0] << " "
+                << geo_data[i * geo_col + j].color[1] << " "
+                << geo_data[i * geo_col + j].color[2] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+void Image::Print_Geodata_Coord(string str) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (geo_data) {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+void Image::Print_Geodata_Coord(string str, int new_row, int new_col) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (new_row > geo_row)
+        new_row = geo_row;
+    if (new_col > geo_col)
+        new_col = geo_col;
+    if (geo_data) {
+        for (int i = 0; i < new_row; i++) {
+            for (int j = 0; j < new_col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+
+/////////////////////////////////////
+/////////// Access Data /////////////
+/////////////////////////////////////
+ImgPixel Image::Get_Value(int i, int j, int k) {
+    return data[i * byte * col + j * byte + k];
+}
+
+ImgPixel* Image::Get_Pixel(int i, int j, int k) {
+    return &data[i * byte * col + j * byte + k];
+}
+
+float Image::Get_Geo_Value(int i, int j, int k) {
+    if (i < geo_row && j < geo_col && k < 3)
+        return geo_data[i * geo_col + j].color[k];
+    else
+        return (ImgPixel)0;
+}
+
+float Image::Get_Geo_Coord(int i, int j, int k) {
+    if (i < geo_row && j < geo_col && k < 4)
+        return geo_data[i * geo_col + j].coord[k];
+    else
+        return (ImgPixel)0;
+}
+
+int Image::Get_Row(int index) {
+    return index / (col * byte);
+}
+
+int Image::Get_Col(int index) {
+    return (index % (byte * col)) / byte;
+}
+
+int Image::Get_Byte(int index) {
+    return index % byte;
+}
+
+/* EE569 Homework Assignment #3
+ * Date: Nov 1, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * Email: meiyiyan@usc.edu
+ *
+ * Problem2. Digital Half-toning
+ *
+ * p2_main.cpp
+ * Image.h
+ * Image.cpp
+ * Halftoning.h
+ * Halftoning.cpp
+ */
+
+#include "Halftoning.h"
+using namespace std;
+
+///////////////////////////////////
+/////////// Declaration ///////////
+///////////////////////////////////
+// @para int size: Dithering index matrix size
+// @para int color_number: different color number in each range
+void Dithering(int size, int color_number);
+
+// @para int mode
+// 0 Floyd-Steinberg
+// 1 JJN
+// 2 Stucki
+void Error_Diffusion(int mode);
+
+// @para int mode
+// 0 Floyd-Steinberg
+// 1 JJN
+// 2 Stucki
+void Scalar_Color_Halftoning(int mode);
+
+// @para int mode
+// 0 Floyd-Steinberg
+// 1 JJN
+// 2 Stucki
+void Vector_Color_Halftoning(int mode);
+
+void prob2a();
+void prob2b();
+void prob2c();
+void prob2d();
+
+
+///////////////////////////////////
+/////////// Application ///////////
+///////////////////////////////////
+void Dithering(int size, int color_number) {
+    Halftoning halftoning = Halftoning(512, 512, 1, "p2_image/mandrill.raw");
+    halftoning.Apply_Dithering(size, color_number);
+    string filename = "Dithering_" + to_string(size) + "_" + to_string(color_number) + ".raw";
+    halftoning.image.Write(&(halftoning.image), filename);
+}
+
+void Error_Diffusion(int mode) {
+    Halftoning halftoning = Halftoning(512, 512, 1, "p2_image/mandrill.raw");
+    halftoning.Apply_Error_Diffusion(mode);
+    string filename = "ErrorDiffuse_" + to_string(mode) + ".raw";
+    halftoning.image.Write(&(halftoning.image), filename);
+}
+
+void Scalar_Color_Halftoning(int mode) {
+    Halftoning halftoning = Halftoning(512, 512, 3, "p2_image/Sailboat.raw");
+    halftoning.Apply_Scalar_Color_halftoning(mode);
+    string filename = "ScalarColorHalftoning_" + to_string(mode) + ".raw";
+    halftoning.image.Write(&(halftoning.image), filename);
+}
+
+void Vector_Color_Halftoning(int mode) {
+    Halftoning halftoning = Halftoning(512, 512, 3, "p2_image/Sailboat.raw");
+    halftoning.Apply_Vector_Color_Halftoning(mode);
+    string filename = "VectorColorHalftoning_" + to_string(mode) + ".raw";
+    halftoning.image.Write(&(halftoning.image), filename);
+}
+
+
+/////////////////////////////////////////
+/////////// Problem Implement ///////////
+/////////////////////////////////////////
+void prob2a() {
+    cout << "Problem 2a" << endl;
+    // Intensity: 0, 255
+    Dithering(2, 255);
+    Dithering(4, 255);
+    Dithering(8, 255);
+    // Intensity: 0, 85, 170, 255
+    Dithering(2, 85);
+    Dithering(4, 85);
+    Dithering(8, 85);
+    Dithering(2, 1);
+}
+
+void prob2b() {
+    cout << "Problem 2b" << endl;
+    Error_Diffusion(0);
+    Error_Diffusion(1);
+    Error_Diffusion(2);
+}
+
+void prob2c() {
+    cout << "Problem 2c" << endl;
+    Scalar_Color_Halftoning(0);
+    Scalar_Color_Halftoning(1);
+    Scalar_Color_Halftoning(2);
+}gi
+
+void prob2d() {
+    cout << "Problem 2d" << endl;
+    Vector_Color_Halftoning(0);
+    Vector_Color_Halftoning(1);
+    Vector_Color_Halftoning(2);
+}
+
+
+////////////////////////////
+/////////// Main ///////////
+////////////////////////////
+int main() {
+    cout << "Homework 3.2" << endl;
+    int number = 0;
+    switch (number) {
+        case 0:
+            // Implementation for problem 2
+            prob2a();
+            prob2b();
+            prob2c();
+            prob2d();
+        case 1:
+            prob2a();
+            break;
+        case 2:
+            prob2b();
+            break;
+        case 3:
+            prob2c();
+            break;
+        case 4:
+            prob2d();
+            break;
+    }
+    return 0;
+}/* EE569 Homework Assignment #3
+ * Date: Nov 1, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * Email: meiyiyan@usc.edu
+ *
+ * Problem2. Digital Half-toning
+ *
+ * p2_main.cpp
+ * Image.h
+ * Image.cpp
+ * Halftoning.h
+ * Halftoning.cpp
+ */
+
+#include "Halftoning.h"
+
+////////////////////////////////////////////
+/////////////// Constructors ///////////////
+////////////////////////////////////////////
+Halftoning::Halftoning(int new_row, int new_col, int new_byte, string filename) {
+    Image new_image = Image(new_row, new_col, new_byte, filename);
+    image.col = new_image.col;
+    image.row = new_image.row;
+    image.byte = new_image.byte;
+    image.data = new ImgPixel[image.col * image.row * image.byte];
+    if (!image.data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
+    }
+    for (int i = 0; i < image.col * image.row * image.byte; i++) {
+        image.data[i] = new_image.data[i];
+    }
+}
+
+Halftoning::Halftoning(Image *new_image) {
+    image.col = new_image->col;
+    image.row = new_image->row;
+    image.byte = new_image->byte;
+    image.data = new ImgPixel[image.col * image.row * image.byte];
+    if (!image.data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
+    }
+    for (int i = 0; i < image.col * image.row * image.byte; i++) {
+        image.data[i] = new_image->data[i];
+    }
+}
+
+Halftoning::~Halftoning() { }
+
+
+//////////////////////////////////////////////////////////
+/////////////// Grayscale Image Halftoning ///////////////
+//////////////////////////////////////////////////////////
+int Halftoning::Apply_Dithering(int size, int color_number) {
+    // Check grayscale iamge
+    if (image.byte != 1) {
+        cerr << "Image must be grayscale" << endl;
+        return 0;
+    }
+
+    // Set Dithering Matrix
+    float *bayer_matrix = Generate_Bayer_Matrix(size, color_number);
+    int bayer_matrix_row = 0;
+    int bayer_matrix_col = 0;
+    int color_size = 255 / color_number;
+    for (int i = 0; i < image.row; i++) {
+        for (int j = 0; j < image.col; j++) {
+            int value = (int)((int)(*image.Get_Pixel(i, j, 0)) / bayer_matrix[bayer_matrix_row * size + bayer_matrix_col]);
+            if (value > color_size)
+                value = color_size;
+            *image.Get_Pixel(i, j, 0) = (ImgPixel)(color_number * value);
+            bayer_matrix_col++;
+            if (bayer_matrix_col >= size)
+                bayer_matrix_col = 0;
+        }
+        bayer_matrix_col = 0;
+        bayer_matrix_row++;
+        if (bayer_matrix_row >= size)
+            bayer_matrix_row = 0;
+    }
+    delete bayer_matrix;
+    return 1;
+}
+
+int Halftoning::Apply_Error_Diffusion(int mode) {
+    // Check grayscale iamge
+    if (image.byte != 1) {
+        cerr << "Image must be grayscale" << endl;
+        return 0;
+    }
+
+    // Set Error Diffussion matrix
+    int matrix_size, matrix_half, matrix_center;
+    float *error_matrix;
+    float threshold = 127;
+    if (mode == 0) { // Floyd-Steinberg
+        matrix_size = 3;
+        float temp_matrix[9] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 7.0f, 3.0f, 5.0f, 1.0f};
+        error_matrix = new float[matrix_size * matrix_size];
+        for (int i = 0; i < matrix_size * matrix_size; i++)
+            error_matrix[i] = temp_matrix[i] / 16.0f;
+    } else if (mode == 1) { // JJN
+        matrix_size = 5;
+        float temp_matrix[25] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 7.0f, 5.0f,
+                                 3.0f, 5.0f, 7.0f, 5.0f, 3.0f, 1.0f, 3.0f, 5.0f, 3.0f, 1.0f};
+        error_matrix = new float[matrix_size * matrix_size];
+        for (int i = 0; i < matrix_size * matrix_size; i++)
+            error_matrix[i] = temp_matrix[i] / 48.0f;
+    } else if (mode == 2) { // Stucki
+        matrix_size = 5;
+        float temp_matrix[25] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 8.0f, 4.0f,
+                                 2.0f, 4.0f, 8.0f, 4.0f, 2.0f, 1.0f, 2.0f, 4.0f, 2.0f, 1.0f};
+        error_matrix = new float[matrix_size * matrix_size];
+        for (int i = 0; i < matrix_size * matrix_size; i++)
+            error_matrix[i] = temp_matrix[i] / 42.0f;
+    } else {
+        cerr << "Error mode" << endl;
+        return 0;
+    }
+    matrix_half = matrix_size / 2;
+    matrix_center = matrix_half * matrix_size + matrix_half;
+
+    // Initial f~(i, j)
+    float* image_f = new float[image.row * image.col];
+    for (int i = 0; i < image.row * image.col; i++)
+        image_f[i] = (float)image.data[i];
+
+    // For each pixel:  error e, image b, and forward f~
+    for (int i = 0; i < image.row; i++) {
+        for(int j = 0; j < image.col; j++) {
+            if (image_f[i * image.col + j] > threshold)
+                *image.Get_Pixel(i, j, 0) = (ImgPixel)255;
+            else
+                *image.Get_Pixel(i, j, 0) = (ImgPixel)0;
+            float coef_e = image_f[i * image.col + j] - (float)(*image.Get_Pixel(i, j, 0));
+            for (int m = matrix_half; m < matrix_size; m++) {
+                for (int n = 0; n < matrix_size; n++) {
+                    int temp_index_x = i + m - matrix_half;
+                    int temp_index_y = j + n - matrix_half;
+                    if (temp_index_x >= 0 && temp_index_x < image.row && temp_index_y >= 0 && temp_index_y < image.col && (m * matrix_size + n) > matrix_center) {
+                        image_f[temp_index_x * image.col + temp_index_y] += error_matrix[m * matrix_size + n] * coef_e;
+                    }
+                }
+            }
+        }
+    }
+
+    // Delete
+    delete error_matrix;
+    delete image_f;
+    return 1;
+}
+
+
+//////////////////////////////////////////////////////
+/////////////// Color Image Halftoning ///////////////
+//////////////////////////////////////////////////////
+int Halftoning::Apply_Scalar_Color_halftoning(int mode) {
+    // check image
+    if (image.byte != 3) {
+        cerr << "image must be color" << endl;
+        return 0;
+    }
+
+    // Separate to three image (CMY)
+    int color_size = 255;
+    ImgPixel *temp_color[3];
+    temp_color[0] = new ImgPixel[image.row * image.col];
+    temp_color[1] = new ImgPixel[image.row * image.col];
+    temp_color[2] = new ImgPixel[image.row * image.col];
+    for (int i = 0; i < image.row; i++) {
+        for (int j = 0; j < image.col; j++) {
+            temp_color[0][i * image.col + j] = (ImgPixel)color_size - image.Get_Value(i, j, 0);
+            temp_color[1][i * image.col + j] = (ImgPixel)color_size - image.Get_Value(i, j, 1);
+            temp_color[2][i * image.col + j] = (ImgPixel)color_size - image.Get_Value(i, j, 2);
+        }
+    }
+    Image image_C(image.row, image.col, 1, temp_color[0]);
+    Image image_M(image.row, image.col, 1, temp_color[1]);
+    Image image_Y(image.row, image.col, 1, temp_color[2]);
+
+    // Apply Error Diffusion
+    Halftoning halftoning_C(&image_C);
+    Halftoning halftoning_M(&image_M);
+    Halftoning halftoning_Y(&image_Y);
+    halftoning_C.Apply_Error_Diffusion(mode);
+    halftoning_M.Apply_Error_Diffusion(mode);
+    halftoning_Y.Apply_Error_Diffusion(mode);
+
+    // Combine three CMY
+    for (int i = 0; i < image.row; i++) {
+        for (int j = 0; j < image.col; j++) {
+            *image.Get_Pixel(i, j, 0) = (ImgPixel)color_size - halftoning_C.image.Get_Value(i, j, 0);
+            *image.Get_Pixel(i, j, 1) = (ImgPixel)color_size - halftoning_M.image.Get_Value(i, j, 0);
+            *image.Get_Pixel(i, j, 2) = (ImgPixel)color_size - halftoning_Y.image.Get_Value(i, j, 0);
+        }
+    }
+
+    // Delete memory
+    delete temp_color[0];
+    delete temp_color[1];
+    delete temp_color[2];
+    return 1;
+}
+
+
+int Halftoning::Apply_Vector_Color_Halftoning(int mode) {
+    // Convert to CMY image
+    if (image.byte != 3) {
+        cerr << "image must be RGB" << endl;
+        return 0;
+    }
+
+    // Set Error Diffussion Matrix
+    int matrix_size, matrix_half, matrix_center;
+    float *error_matrix;
+    float threshold = 127;
+    if (mode == 0) { // Floyd-Steinberg
+        matrix_size = 3;
+        float temp_matrix[9] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 7.0f, 3.0f, 5.0f, 1.0f};
+        error_matrix = new float[matrix_size * matrix_size];
+        for (int i = 0; i < matrix_size * matrix_size; i++)
+            error_matrix[i] = temp_matrix[i] / 16.0f;
+    } else if (mode == 1) { // JJN
+        matrix_size = 5;
+        float temp_matrix[25] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 7.0f, 5.0f,
+                                 3.0f, 5.0f, 7.0f, 5.0f, 3.0f, 1.0f, 3.0f, 5.0f, 3.0f, 1.0f};
+        error_matrix = new float[matrix_size * matrix_size];
+        for (int i = 0; i < matrix_size * matrix_size; i++)
+            error_matrix[i] = temp_matrix[i] / 48.0f;
+    } else if (mode == 2) { // Stucki
+        matrix_size = 5;
+        float temp_matrix[25] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 8.0f, 4.0f,
+                                 2.0f, 4.0f, 8.0f, 4.0f, 2.0f, 1.0f, 2.0f, 4.0f, 2.0f, 1.0f};
+        error_matrix = new float[matrix_size * matrix_size];
+        for (int i = 0; i < matrix_size * matrix_size; i++)
+            error_matrix[i] = temp_matrix[i] / 42.0f;
+    } else {
+        cerr << "Error mode" << endl;
+        return 0;
+    }
+    matrix_half = matrix_size / 2;
+    matrix_center = matrix_half * matrix_size + matrix_half;
+
+    // Initial CMY by RGB image
+    double* image_CMY = new double[image.row * image.col * image.byte];
+    for (int i = 0; i < image.row; i++) {
+        for (int j = 0; j < image.col; j++) {
+            for (int k = 0; k < image.byte; k++)
+                image_CMY[i * image.col * image.byte + j * image.byte + k] = 255.0 - (double)(*image.Get_Pixel(i, j, k));
+        }
+    }
+
+    // For each pixel:  error E, image RBG, and forward CMY by E
+    double coef_e[3] = {};
+    for (int i = 0; i < image.row; i++) {
+        for (int j = 0; j < image.col; j++) {
+            // Find V
+            int index = i * image.col * image.byte + j * image.byte;
+            int *vertex = Find_Closest_Vector(image_CMY[index], image_CMY[index + 1], image_CMY[index + 2]);
+
+            // Set value to RGB image
+            (*image.Get_Pixel(i, j, 0)) = (ImgPixel)255 - (ImgPixel)vertex[0];
+            (*image.Get_Pixel(i, j, 1)) = (ImgPixel)255 - (ImgPixel)vertex[1];
+            (*image.Get_Pixel(i, j, 2)) = (ImgPixel)255 - (ImgPixel)vertex[2];
+
+            // Calculate E
+            coef_e[0] = image_CMY[index] - vertex[0];
+            coef_e[1] = image_CMY[index + 1] - vertex[1];
+            coef_e[2] = image_CMY[index + 2] - vertex[2];
+
+            // Forward Error
+            for (int m = matrix_half; m < matrix_size; m++) {
+                for (int n = 0; n < matrix_size; n++) {
+                    int temp_index_x = i + m - matrix_half;
+                    int temp_index_y = j + n - matrix_half;
+                    int temp_index = temp_index_x * image.col * image.byte + temp_index_y * image.byte;
+                    if (temp_index_x >= 0 && temp_index_x < image.row && temp_index_y >= 0 && temp_index_y < image.col && (m * matrix_size + n) > matrix_center) {
+                        image_CMY[temp_index] += error_matrix[m * matrix_size + n] * coef_e[0];
+                        image_CMY[temp_index + 1] += error_matrix[m * matrix_size + n] * coef_e[1];
+                        image_CMY[temp_index + 2] += error_matrix[m * matrix_size + n] * coef_e[2];
+                    }
+                }
+            }
+        }
+    }
+
+    // delete
+    delete error_matrix;
+    delete image_CMY;
+    return 1;
+}
+
+
+////////////////////////////////////////////////
+/////////////// Helper functions ///////////////
+////////////////////////////////////////////////
+float* Halftoning::Generate_Bayer_Matrix(int size, int color_number) {
+    float *bayer_matrix = new float[size * size];
+    if (size == 2) {
+        float matrix[4] = {1, 2, 3, 0};
+        for (int i = 0; i < size * size; i++) {
+            bayer_matrix[i] = (matrix[i] + 0.5f) * (float)color_number / (size * size);
+        }
+    } else if (size == 4) {
+        float matrix[16] = {5, 9, 6, 10, 13, 1, 14, 2, 7, 11, 4, 8, 15, 3, 12, 0};
+        for (int i = 0; i < size * size; i++) {
+            bayer_matrix[i] = (matrix[i] + 0.5f) * (float)color_number / (size * size);
+        }
+    } else if (size == 8) {
+        float matrix[64] = {21, 37, 25, 41, 22, 38, 26, 42,
+                            53, 5, 57, 9, 54, 6, 58, 10,
+                            29, 45, 17, 33, 30, 46, 18, 34,
+                            61, 13, 49, 1, 62, 14, 50, 2,
+                            23, 39, 27, 43, 20, 36, 24, 40,
+                            55, 7, 59, 11, 52, 4, 56, 8,
+                            31, 47, 19, 35, 28, 44, 16, 32,
+                            63, 15, 51, 3, 60, 12, 48, 0};
+        for (int i = 0; i < size * size; i++) {
+            bayer_matrix[i] = (matrix[i] + 0.5f) * (float)color_number / (size * size);
+        }
+    } else {
+        cerr << "Wrong matrix size" << endl;
+    }
+    return bayer_matrix;
+}
+
+int* Halftoning::Find_Closest_Vector(double color_C, double color_M, double color_Y) {
+    // Convert CMY cube
+    color_C = color_C / 255.0;
+    color_M = color_M / 255.0;
+    color_Y = color_Y / 255.0;
+
+    // Initial six quadrants
+    int *vertex = new int[3];
+    int quadrant[6][4][3] = {{{0, 1, 0}, {1, 0, 0}, {0, 0, 1}, {0, 0, 0}}, // CMYW
+                             {{1, 0, 0}, {0, 0, 1}, {0, 1, 1}, {0, 1, 0}}, // MYGC
+                             {{1, 0, 1}, {0, 1, 1}, {1, 0, 0}, {0, 0, 1}}, // RGMY
+                             {{1, 1, 1}, {1, 0, 1}, {0, 1, 1}, {1, 1, 0}}, // KRGB
+                             {{1, 0, 1}, {0, 1, 1}, {1, 1, 0}, {1, 0, 0}}, // RGBM
+                             {{0, 1, 0}, {1, 0, 0}, {0, 1, 1}, {1, 1, 0}}}; // CMGB
+
+    // Determine the quadrant
+    int quadrant_number = 0;
+    if (color_C + color_M < 1) {
+        if (color_M + color_Y < 1) {
+            if (color_C + color_M + color_Y < 1)
+                quadrant_number = 0;
+            else
+                quadrant_number = 1;
+        }
+        else
+            quadrant_number = 2;
+    } else {
+        if (color_M + color_Y >= 1) {
+            if (color_M + color_Y + color_C >= 2)
+                quadrant_number = 3;
+            else
+                quadrant_number = 4;
+        } else
+            quadrant_number = 5;
+    }
+
+    // Find the closest vertex in determined quadrant
+    double distance = 100;
+    for (int i = 0; i < 4; i++) {
+        double temp = (color_M - quadrant[quadrant_number][i][0]) * (color_M - quadrant[quadrant_number][i][0])
+                      + (color_C - quadrant[quadrant_number][i][1]) * (color_C - quadrant[quadrant_number][i][1])
+                      + (color_Y - quadrant[quadrant_number][i][2]) * (color_Y - quadrant[quadrant_number][i][2]);
+        if (temp < distance) {
+            distance = temp;
+            vertex[0] = quadrant[quadrant_number][i][0] * 255;
+            vertex[1] = quadrant[quadrant_number][i][1] * 255;
+            vertex[2] = quadrant[quadrant_number][i][2] * 255;
+        }
+    }
+
+    // Find the closest vertex in cube (For report)
+    /*int cube[8][3] = {{0, 0, 0}, {0, 0, 1}, {0, 1, 0}, {1, 0, 0},
+                      {0, 1, 1}, {1, 0, 1}, {1, 1, 0}, {1, 1, 1}};
+    double distance2 = 100;
+    for (int i = 0; i < 8; i++) {
+        double temp = (color_M - cube[i][0]) * (color_M - cube[i][0])
+                       + (color_C - cube[i][1]) * (color_C - cube[i][1])
+                       + (color_Y - cube[i][2]) * (color_Y - cube[i][2]);
+        if (temp < distance2) {
+            distance2 = temp;
+            vertex[0] = cube[i][0] * 255;
+            vertex[1] = cube[i][1] * 255;
+            vertex[2] = cube[i][2] * 255;
+        }
+    }*/
+
+    // Convert to CMY order
+    int temp_color;
+    temp_color = vertex[0];
+    vertex[0] = vertex[1];
+    vertex[1] = temp_color;
+    return vertex;
+}
+/* EE569 Homework Assignment #3
+ * Date: Nov 1, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * Email: meiyiyan@usc.edu
+ *
+ * Problem2. Digital Half-toning
+ *
+ * p2_main.cpp
+ * Image.h
+ * Image.cpp
+ * Halftoning.h
+ * Halftoning.cpp
+ */
+
+#include "Image.h"
+
+#ifndef P2_HALFTONING_H
+#define P2_HALFTONING_H
+
+class Halftoning {
+public:
+    Image image;
+
+////////////////////////////////////////////
+/////////////// Constructors ///////////////
+////////////////////////////////////////////
+    // int new_row: image row
+    // int new_col: image col
+    // int new_byte: image byte
+    // string filename: filename to read in
+    Halftoning(int new_row, int new_col, int new_byte, string filename);
+
+    // Image *: pointer of image to read in
+    Halftoning(Image *new_image);
+
+    ~Halftoning();
+
+
+//////////////////////////////////////////////////////////
+/////////////// Grayscale Image Halftoning ///////////////
+//////////////////////////////////////////////////////////
+    // Dithering application for grayscale image
+    // int size: Dithering Matrix size (2 or 4 or 8)
+    // int color_number: Range of color:
+    // (0, 255): 255
+    // (0, 85, 170, 255): 85
+    int Apply_Dithering(int size, int color_number);
+
+    // Error Diffusion application for grayscale image
+    // int mode:
+    // 0 Floyd-Steinberg
+    // 1 JJN
+    // 2 Stucki
+    int Apply_Error_Diffusion(int mode);
+
+
+//////////////////////////////////////////////////////
+/////////////// Color Image Halftoning ///////////////
+//////////////////////////////////////////////////////
+    // Scalar Color Halftoning for RGB image
+    // int mode:
+    // 0 Floyd-Steinberg
+    // 1 JJN
+    // 2 Stucki
+    int Apply_Scalar_Color_halftoning(int mode);
+
+    // Vector Color Halftoning for RGB image
+    // int mode:
+    // 0 Floyd-Steinberg
+    // 1 JJN
+    // 2 Stucki
+    int Apply_Vector_Color_Halftoning(int mode);
+
+
+private:
+////////////////////////////////////////////////
+/////////////// Helper functions ///////////////
+////////////////////////////////////////////////
+    // Generate Bayer Matrix for Dithering
+    // int size: matrix size
+    // int color_number: range of color
+    // (0, 255): 255
+    // (0, 85, 170, 255): 85
+    float* Generate_Bayer_Matrix(int size, int color_number);
+
+    // Find the closest vector in the MBVQ quadrant
+    // double color_C: color intensity in C color (0, 255)
+    // double color_M: color intensity in M color (0, 255)
+    // double color_Y: color intensity in Y color (0, 255)
+    int *Find_Closest_Vector(double color_C, double color_M, double color_Y);
+};
+#endif //P2_HALFTONING_H
+/* EE569 Homework Assignment #3
+ * Date: Nov 1, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * Email: meiyiyan@usc.edu
+ *
+ * Problem3. Morphological Processing
+ *
+ * p3_main.cpp
+ * Image.h
+ * Image.cpp
+ * Morphology.h
+ * Morphology.cpp
+ */
+
+#include "Image.h"
+
+float COS(float degree) {
+    return cos(degree * PI / 180.0);
+}
+
+float SIN(float degree) {
+    return sin(degree * PI / 180.0);
+}
+
+float TAN (float degree) {
+    return tan(degree * PI / 180.0);
+}
+
+/////////////////////////////////////
+/////////// Constructor /////////////
+/////////////////////////////////////
+Image::Image() {
+    col = 0;
+    row = 0;
+    byte = 0;
+}
+
+Image::Image(int new_row, int new_col, int new_byte, ImgPixel *pt_img) {
+    if (new_col <= 0 || new_col > 1024) {
+        cerr << "wrong column" << endl;
+        exit(1);
+    }
+    if (new_row <= 0 || new_row > 1024) {
+        cerr << "wrong column" << endl;
+        exit(1);
+    }
+    col = new_col;
+    row = new_row;
+    byte = new_byte;
+    data = new ImgPixel [col * row * byte];
+    if (!data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
+    }
+    if (pt_img == NULL) {
+        for (int i = 0; i < col * row * byte; i++) {
+            data[i] = 0;
+        }
+
+    } else {
+        for (int i = 0; i < col * row * byte; i++) {
+            data[i] = *pt_img++;
+        }
+    }
+
+}
+
+Image::Image(int new_row, int new_col, int new_byte, string filename) {
+    if (new_col <= 0 || new_col > 1024) {
+        cerr << "Wrong column" << endl;
+        exit(1);
+    }
+    if (new_row <= 0 || new_row > 1024) {
+        cerr << "Wrong row" << endl;
+        exit(1);
+    }
+    col = new_col;
+    row = new_row;
+    byte = new_byte;
+    char *c_filename = new char[filename.length() + 1];
+    strcpy(c_filename, filename.c_str());
+    FILE *file;
+    if (!(file = fopen(c_filename, "rb")))  {
+        cout << "Cannot open file: " << filename << endl;
+        exit(1);
+    }
+    data = new ImgPixel[col * row * byte];
+    if (!data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
+    }
+    fread(data, sizeof(ImgPixel), col * row * byte, file);
+    fclose(file);
+    if (c_filename)
+        delete c_filename;
+}
+
+Image::~Image() {
+    if(data)
+        delete data;
+    if (geo_data)
+        delete geo_data;
+}
+
+
+/////////////////////////////////
+/////////// Display /////////////
+/////////////////////////////////
+void Image::Write (Image *image, string filename) {
+    cout << "Write " << filename << endl;
+    char *c_filename = new char[filename.length() + 1];
+    strcpy(c_filename, filename.c_str());
+    FILE *file;
+    if (!(file = fopen(c_filename, "wb"))) {
+        cout << "Cannot open file: " << filename << endl;
+        exit(1);
+    }
+    size_t size = image->col * image->row * image->byte;
+    fwrite(image->data, sizeof(ImgPixel), col * row * byte, file);
+    fclose(file);
+}
+
+void Image::Write (string filename) {
+    cout << "Write " << filename << endl;
+    char *c_filename = new char[filename.length() + 1];
+    strcpy(c_filename, filename.c_str());
+    FILE *file;
+    if (!(file = fopen(c_filename, "wb"))) {
+        cout << "Cannot open file: " << filename << endl;
+        exit(1);
+    }
+    size_t size = col * row * byte;
+    fwrite(data, sizeof(ImgPixel), col * row * byte, file);
+    fclose(file);
+}
+
+
+void Image::Write (string filename, int mode) {
+    cout << "Write " << filename << endl;
+    ofstream fout;
+    fout.open(filename);
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            for (int k = 0; k < byte; k++) {
+                if ((int)(data[i * byte * col + j * byte + k] == 255))
+                    fout << "1 ";
+                else
+                    fout << "  ";
+            }
+        }
+        fout << endl;
+    }
+    fout.close();
+}
+
+void Image::Print_Data(string str) {
+    cout << endl << "Image " << str << ": " << row << ", " << col << ", " << byte << endl;
+    int new_col = col;
+    int max_col = 100;
+    if (col * byte > max_col) {
+        new_col = max_col / byte;
+    }
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < new_col; j++) {
+            for (int k = 0; k < byte; k++) {
+                cout << (int)Get_Value(i, j, k) << " ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+void Image::Print_Pattern_Data(string str) {
+    int new_row = 50;
+    int new_col = 80;
+    if (row < new_row)
+        new_row = row;
+    if (col < new_col)
+        new_col = col;
+    cout << endl << "Image " << str << ": " << row << ", " << col << ", " << byte << endl;
+    for (int i = 0; i < new_row; i++) {
+        cout << "ROW " << i << ": ";
+        for (int j = 0; j < new_col; j++) {
+            for (int k = 0; k < byte; k++) {
+                if (Get_Value(i, j, k) == 0)
+                    cout << " ";
+                else if (Get_Value(i, j, k) == 2)
+                    cout << "2";
+                else
+                    cout << "1";
+            }
+        }
+        cout << endl;
+    }
+}
+
+void Image::Print_Data(string str, int new_row, int new_col) {
+    cout << endl << "Image " << str << ": " << row << ", " << col << ", " << byte << endl;
+    if (new_row > row)
+        new_row = row;
+    if (new_col > col)
+        new_col = col;
+    for (int i = 0; i < new_row; i++) {
+        for (int j = 0; j < new_col; j++) {
+            for (int k = 0; k < byte; k++) {
+                cout << (int)Get_Value(i, j, k) << " ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+void Image::Print_Geodata_Color(string str) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (geo_data) {
+        for (int i = 0; i < geo_row; i++) {
+            for (int j = 0; j < geo_col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << " "
+                << geo_data[i * geo_col + j].color[0] << " "
+                << geo_data[i * geo_col + j].color[1] << " "
+                << geo_data[i * geo_col + j].color[2] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+void Image::Print_Geodata_Color(string str, int new_row, int new_col) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (new_row > geo_row)
+        new_row = geo_row;
+    if (new_col > geo_col)
+        new_col = geo_col;
+    if (geo_data) {
+        for (int i = 0; i < new_row; i++) {
+            for (int j = 0; j < new_col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << " "
+                << geo_data[i * geo_col + j].color[0] << " "
+                << geo_data[i * geo_col + j].color[1] << " "
+                << geo_data[i * geo_col + j].color[2] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+void Image::Print_Geodata_Coord(string str) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (geo_data) {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+void Image::Print_Geodata_Coord(string str, int new_row, int new_col) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (new_row > geo_row)
+        new_row = geo_row;
+    if (new_col > geo_col)
+        new_col = geo_col;
+    if (geo_data) {
+        for (int i = 0; i < new_row; i++) {
+            for (int j = 0; j < new_col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+
+/////////////////////////////////////
+/////////// Access Data /////////////
+/////////////////////////////////////
+ImgPixel Image::Get_Value(int i, int j, int k) {
+    if (i < 0 || i >= row || j < 0 || j >= col || k < 0 || k >= byte)
+        return 0;
+    return data[i * byte * col + j * byte + k];
+}
+
+ImgPixel* Image::Get_Pixel(int i, int j, int k) {
+    return &data[i * byte * col + j * byte + k];
+}
+
+float Image::Get_Geo_Value(int i, int j, int k) {
+    if (i < geo_row && j < geo_col && k < 3)
+        return geo_data[i * geo_col + j].color[k];
+    else
+        return (ImgPixel)0;
+}
+
+float Image::Get_Geo_Coord(int i, int j, int k) {
+    if (i < geo_row && j < geo_col && k < 4)
+        return geo_data[i * geo_col + j].coord[k];
+    else
+        return (ImgPixel)0;
+}
+
+int Image::Get_Row(int index) {
+    return index / (col * byte);
+}
+
+int Image::Get_Col(int index) {
+    return (index % (byte * col)) / byte;
+}
+
+int Image::Get_Byte(int index) {
+    return index % byte;
+}
+
+/* EE569 Homework Assignment #3
+ * Date: Nov 1, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * Email: meiyiyan@usc.edu
+ *
+ * Problem3. Morphological Processing
+ *
+ * p3_main.cpp
+ * Image.h
+ * Image.cpp
+ * Morphology.h
+ * Morphology.cpp
+ */
+
+#ifndef P3_IMAGE_H
+#define P3_IMAGE_H
+
+#include <stdio.h>
+#include <iostream>
+#include <stdlib.h>
+#include <math.h>
+#include <fstream>
+#include <cstring>
+#include <vector>
+using namespace std;
+
+//////////////////////////////////////////////
+/////////// Structure Definition /////////////
+//////////////////////////////////////////////
+const double PI = 3.14159265;
+const int MODE_X = 0;
+const int MODE_Y = 1;
+const int MODE_Z = 2;
+typedef unsigned char ImgPixel;
+typedef float ImgCoord[4];
+typedef float ImgColor[3];
+typedef float Matrix[4][4];
+typedef float Coord3D[3];
+typedef struct GeoPixel {
+    ImgCoord coord;
+    ImgColor color;
+} GeoPixel;
+
+
+//////////////////////////////////////////////
+/////////// Function Declaration /////////////
+//////////////////////////////////////////////
+float COS(float);
+float SIN(float);
+float TAN(float);
+
+
+//////////////////////////////////////////
+/////////// Class Definition /////////////
+//////////////////////////////////////////
+class Image {
+public:
+    int col;
+    int row;
+    int byte;
+    int geo_row;
+    int geo_col;
+    ImgPixel *data = NULL;
+    GeoPixel *geo_data = NULL;
+
+
+/////////////////////////////////////
+/////////// Constructor /////////////
+/////////////////////////////////////
+    Image(int, int, int, ImgPixel*);
+    Image(int, int, int, string);
+    Image();
+    ~Image();
+
+
+/////////////////////////////////
+/////////// Display /////////////
+/////////////////////////////////
+    void Write (Image*, string);
+    void Write (string);
+    void Write (string, int);
+    void Print_Data(string);
+    void Print_Data(string, int, int);
+    void Print_Pattern_Data(string str);
+    void Print_Geodata_Color(string);
+    void Print_Geodata_Color(string, int, int);
+    void Print_Geodata_Coord(string);
+    void Print_Geodata_Coord(string, int, int);
+
+
+/////////////////////////////////////
+/////////// Access Data /////////////
+/////////////////////////////////////
+    ImgPixel Get_Value(int i, int j, int k);
+    ImgPixel* Get_Pixel(int i, int j, int k);
+    float Get_Geo_Coord(int i, int j, int k);
+    float Get_Geo_Value(int i, int j, int k);
+    int Get_Row(int index);
+    int Get_Col(int index);
+    int Get_Byte(int index);
+};
+#endif //P3_IMAGE_H
+/* EE569 Homework Assignment #3
+ * Date: Nov 1, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * Email: meiyiyan@usc.edu
+ *
+ * Problem3. Morphological Processing
+ *
+ * p3_main.cpp
+ * Image.h
+ * Image.cpp
+ * Morphology.h
+ * Morphology.cpp
+ */
+
+#include "Morphology.h"
+
+///////////////////////////////////////
+///////////// Constructor /////////////
+///////////////////////////////////////
+Morphology::Morphology() { };
+
+Morphology::Morphology(Image *new_image) {
+    // Set value to image
+    image.col = new_image->col;
+    image.row = new_image->row;
+    image.byte = 1;
+    image.data = new ImgPixel[image.col * image.row * image.byte];
+    if (!image.data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
+    }
+    for (int i = 0; i < image.col * image.row; i++) {
+        image.data[i] = new_image->data[i];
+    }
+    // Set to binary image
+    Convert_to_Binary_Image();
+}
+
+Morphology::Morphology(int new_row, int new_col, int new_byte, ImgPixel *pt_img) {
+    // Check parameter
+    if (new_col <= 0 || new_col > 1024) {
+        cerr << "wrong column" << endl;
+        exit(1);
+    }
+    if (new_row <= 0 || new_row > 1024) {
+        cerr << "wrong column" << endl;
+        exit(1);
+    }
+    if (new_byte != 1) {
+        cerr << "Image must be grayscale" << endl;
+        exit(1);
+    }
+    // Set value to image
+    image.col = new_col;
+    image.row = new_row;
+    image.byte = new_byte;
+    image.data = new ImgPixel [image.col * image.row * image.byte];
+    if (!image.data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
+    }
+    if (pt_img == NULL) {
+        for (int i = 0; i < image.col * image.row * image.byte; i++) {
+            image.data[i] = 0;
+        }
+
+    } else {
+        for (int i = 0; i < image.col * image.row * image.byte; i++) {
+            image.data[i] = *pt_img++;
+        }
+    }
+    // Set to binary image
+    Convert_to_Binary_Image();
+}
+
+Morphology::~Morphology() {
+        if (filter)
+            delete [] filter;
+        if (filter2)
+            delete [] filter2;
+    }
+
+
+////////////////////////////////////////////
+///////////// S/T/K Morphology /////////////
+////////////////////////////////////////////
+int Morphology::Apply_Hit_Miss(int size_filter1, int size_filter2) {
+    int PRINT = 0;
+    // Convert to binary image
+    int row = image.row;
+    int col = image.col;
+    if (!is_binary)
+        Convert_to_Binary_Image();
+
+    // Hit-or-Miss
+    int index[2][9] = {{-1, -1, -1, 0, 0, 0, 1, 1, 1}, {-1, 0, 1, -1, 0, 1, -1, 0, 1}};
+    int is_change = 1;
+    int count = 0;
+    while(count < 100 && is_change == 1) {
+        // For statistics and debug
+        is_change = 0;
+        int count_M = 0;
+        int count_F = 0;
+        // Generate M image by Hit-or-Miss filter1
+        Image image_M = Image(row, col, 1, NULL);
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (image.Get_Value(i, j, 0) == 1) {
+                    // Find neighbor dataset
+                    Dataset pixel_neighbor = {};
+                    for (int k = 0; k < 9; k++)
+                        pixel_neighbor[k] = (int)image.Get_Value(i + index[0][k], j + index[1][k], 0);
+                    // Compare the conditional pattern
+                    int res = 0;
+                    int k = 0;
+                    for (k = 0; k < size_filter1; k++) {
+                        res = Compare_Dataset_Conditional(pixel_neighbor, filter[k]);
+                        if (res == 1)
+                            break;
+                    }
+                    // Set M image
+                    if (res == 1) { // Hit
+                        *image_M.Get_Pixel(i, j, 0) = (ImgPixel)1;
+                        count_F++;
+                    }
+                }
+            }
+        }
+        if (PRINT == 1)
+            image_M.Print_Pattern_Data("M");
+
+        // Hit-or Miss filter2
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (image_M.Get_Value(i, j, 0) == 1) {
+                    // Find neighbor dataset
+                    Dataset pixel_neighbor = {};
+                    for (int k = 0; k < 9; k++)
+                        pixel_neighbor[k] = (int)image_M.Get_Value(i + index[0][k], j + index[1][k], 0);
+                    // Compare the conditional pattern and set M image
+                    int res = 0;
+                    int k = 0;
+                    for (k = 0; k < size_filter2; k++) {
+                        res = Compare_Dataset_Unconditional(pixel_neighbor, filter2[k]);
+                        if (res == 1)
+                            break;
+                    }
+                    // Set value to Image F
+                    if (res == 0) { // Miss
+                        count_M++;
+                        is_change = 1;
+                        *image.Get_Pixel(i, j, 0) = (ImgPixel)0;
+                    }
+                }
+            }
+        }
+        count++;
+        if (PRINT == 1)
+            image.Print_Pattern_Data("F");
+    }
+
+    // Calculate Pixel number for debug
+    int count_pixel = 0;
+    for (int i = 0; i < row * col; i++) {
+        if (image.data[i] > 0)
+            count_pixel++;
+    }
+    cout << "   COUNT: " << count_pixel << " ROUND: " << count << endl;
+    return 0;
+};
+
+int Morphology::Operator_Hit_Miss(string filename1, string filename2, int size1, int size2) {
+    if (size1 == PATTERN_S1)
+        cout << "Operator_Hit_Miss (Shrinking)" << endl;
+    else if (size1 == PATTERN_S2)
+        cout << "Operator_Hit_Miss (Thinning)" << endl;
+    else
+        cout << "operator_Hit_Miss (Sketonizing)" << endl;
+    Initialize_Pattern_Conditional(filename1, size1);
+    Initialize_Pattern_Unconditional(filename2, size2);
+    Apply_Hit_Miss(size1, size2);
+    return 1;
+}
+
+
+///////////////////////////////////////////////////
+///////////// Dilate/Erode Morphology /////////////
+///////////////////////////////////////////////////
+int Morphology::Operator_Dilate(Dataset filter) {
+    cout << "Operator_Dilate: ";
+    int size = 9;
+    for (int i = 0; i < size; i++)
+        cout << filter[i] << " ";
+    cout << endl;
+    if (!is_binary)
+        Convert_to_Binary_Image();
+
+    // Find pixels to be added by filter
+    int neighbor_index[2][9] = {{-1, -1, -1, 0, 0, 0, 1, 1, 1}, {-1, 0, 1, -1, 0, 1, -1, 0, 1}};
+    vector<int> dilate_index_list;
+    for (int i = 0; i < image.row; i++) {
+        for (int j = 0; j < image.col; j++) {
+            if (image.Get_Value(i, j, 0) == 1) {
+                for (int k = 0; k < size; k++) {
+                    if (filter[k] == 1) {
+                        int temp_x = i + neighbor_index[0][k];
+                        int temp_y = j + neighbor_index[1][k];
+                        if (temp_x >= 0 && temp_x < image.row && temp_y >= 0 && temp_y < image.col)
+                            dilate_index_list.push_back(temp_x * image.col + temp_y);
+                    }
+                }
+            }
+        }
+    }
+    // Set dilated pixels
+    for (int i = 0; i < dilate_index_list.size(); i++) {
+        image.data[dilate_index_list[i]] = (ImgPixel)1;
+    }
+    return 1;
+}
+
+int Morphology::Operator_Erode(Dataset filter) {
+    cout << "Operator_Erode: ";
+    int size = 9;
+    for (int i = 0; i < size; i++)
+        cout << filter[i] << " ";
+    cout << endl;
+    if (!is_binary)
+        Convert_to_Binary_Image();
+
+    // Find pixels to be added by filter
+    int neighbor_index[2][9] = {{-1, -1, -1, 0, 0, 0, 1, 1, 1}, {-1, 0, 1, -1, 0, 1, -1, 0, 1}};
+    vector<int> erode_index_list;
+    for (int i = 0; i < image.row; i++) {
+        for (int j = 0; j < image.col; j++) {
+            if (image.Get_Value(i, j, 0) == 1) {
+                // Find neighbor dataset
+                Dataset pixel_neighbor = {};
+                for (int k = 0; k < size; k++) {
+                    pixel_neighbor[k] = (int)image.Get_Value(i + neighbor_index[0][k], j + neighbor_index[1][k], 0);
+                }
+                // Compare the filter and pixels
+                int res = 1;
+                for (int k = 0; k < size; k++) {
+                    if (filter[k] == 1) {
+                        if (filter[k] != pixel_neighbor[k]) {
+                            res = 0;
+                            break;
+                        }
+                    }
+                }
+                // Add pixel
+                if (res == 1) {
+                    erode_index_list.push_back(i * image.col + j);
+                }
+            }
+        }
+    }
+    // Set erode pixels
+    for (int i = 0; i < image.row * image.col; i++) {
+        image.data[i] = (ImgPixel)0;
+    }
+    for (int i = 0; i < erode_index_list.size(); i++) {
+        image.data[erode_index_list[i]] = (ImgPixel)1;
+    }
+    return 1;
+}
+
+int Morphology::Operator_Open(Dataset filter1, Dataset filter2) {
+    Operator_Erode(filter1);
+    Operator_Dilate(filter2);
+    return 1;
+}
+
+int Morphology::Operator_Close(Dataset filter1, Dataset filter2) {
+    Operator_Dilate(filter1);
+    Operator_Erode(filter2);
+    return 1;
+}
+
+int Morphology::Operator_Filter(Dataset filter) {
+    cout << "Operator_Filter: ";
+    int size = 9;
+    for (int i = 0; i < size; i++)
+        cout << filter[i] << " ";
+    cout << endl;
+    if (!is_binary)
+        Convert_to_Binary_Image();
+
+    // Find pixels to be added by filter
+    int neighbor_index[2][9] = {{-1, -1, -1, 0, 0, 0, 1, 1, 1}, {-1, 0, 1, -1, 0, 1, -1, 0, 1}};
+    vector<int> erode_index_list;
+    for (int i = 0; i < image.row; i++) {
+        for (int j = 0; j < image.col; j++) {
+            if (image.Get_Value(i, j, 0) == 1) {
+                // Find neighbor dataset
+                Dataset pixel_neighbor = {};
+                for (int k = 0; k < size; k++) {
+                    pixel_neighbor[k] = (int)image.Get_Value(i + neighbor_index[0][k], j + neighbor_index[1][k], 0);
+                }
+                // Compare the filter and pixels
+                int res = 1;
+                for (int k = 0; k < size; k++) {
+                    if (filter[k] != pixel_neighbor[k]) {
+                        res = 0;
+                        break;
+                    }
+                }
+                // Add pixel
+                if (res == 1) {
+                    erode_index_list.push_back(i * image.col + j);
+                }
+            }
+        }
+    }
+    // Set erode pixels
+    for (int i = 0; i < image.row * image.col; i++) {
+        image.data[i] = (ImgPixel)0;
+    }
+    for (int i = 0; i < erode_index_list.size(); i++) {
+        image.data[erode_index_list[i]] = (ImgPixel)1;
+    }
+    return 1;
+
+}
+
+
+///////////////////////////////////////////////
+///////////// Counting and Display/////////////
+///////////////////////////////////////////////
+int Morphology::Convert_Black_Image() {
+    if (!is_binary)
+        Convert_to_Binary_Image();
+    for (int i = 0; i < image.row * image.col; i++) {
+        if (image.data[i] == 0)
+            image.data[i] = 1;
+        else
+            image.data[i] = 0;
+    }
+    return 1;
+}
+
+int Morphology::Write(string filename) {
+    if (is_binary)
+        Convert_to_Grayscale_Image();
+    image.Write(filename);
+    Convert_to_Binary_Image();
+    return 1;
+}
+
+int Morphology::Count_Pixel() {
+    int count = 0;
+    for (int i = 0; i < image.row * image.col; i++){
+        if (image.data[i] > 0)
+            count++;
+    }
+    cout << endl << "The image has " << count << " points" << endl;
+    return count;
+}
+
+int Morphology::Count_Pathway() {
+    vector<vector<int>> label_table;
+    Image image_label = Image(image.row, image.col, 1, NULL);
+    // First Pass
+    int neighbor_index[2][9] = {{-1, -1, -1, 0, 0, 0, 1, 1, 1}, {-1, 0, 1, -1, 0, 1, -1, 0, 1}};
+    int label_number = 0;
+    for (int i = 0; i < image.row; i++) {
+        for (int j = 0; j < image.col; j++) {
+            if (image.Get_Value(i, j, 0) == 1) {
+                // Find neighbor
+                Dataset pixel_neighbor = {};
+                int temp_min = INT_MAX;
+                int temp_max = 0;
+                //cout << "Neigh: " << endl;
+                for (int k = 0; k < 4; k++) {
+                    pixel_neighbor[k] = (int)image_label.Get_Value(i + neighbor_index[0][k], j + neighbor_index[1][k], 0);
+                    //cout << pixel_neighbor[k] << " ";
+                    if (pixel_neighbor[k] > temp_max)
+                        temp_max = pixel_neighbor[k];
+                    if (pixel_neighbor[k] != 0 && pixel_neighbor[k] < temp_min)
+                        temp_min = pixel_neighbor[k];
+                }
+
+                // Neighbor is empty
+                if (temp_max == 0) {
+                    label_number++;
+                    *image_label.Get_Pixel(i, j, 0) = (ImgPixel)label_number;
+                    vector<int> temp_vector;
+                    temp_vector.push_back(label_number);
+                    label_table.push_back(temp_vector);
+                } else {
+                    // Neighbor not empty
+                    *image_label.Get_Pixel(i, j, 0) = (ImgPixel)temp_min;
+                    for (int k = 0; k < 4; k++) {
+                        if (pixel_neighbor[k] != 0 && pixel_neighbor[k] != temp_min) {
+                            int temp_index1 = temp_min - 1;
+                            int temp_index2 = pixel_neighbor[k] - 1;
+                            label_table[temp_index1].push_back(pixel_neighbor[k]);
+                            label_table[temp_index2].push_back(temp_min);
+                            for (int m = 0; m < label_table[temp_index1].size(); m++) {
+                                label_table[temp_index2].push_back(label_table[temp_index1][m]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Process table
+    for (int i = 0; i < label_table.size(); i++) {
+        int temp_min = INT_MAX;
+        for (int j = 0; j < label_table[i].size(); j++) {
+            int index = label_table[i][j];
+            if (temp_min > index)
+                temp_min = index;
+        }
+        int temp = label_table[i][0];
+        label_table[i][0] = temp_min;
+        label_table[i].push_back(temp);
+    }
+    for (int i = 0; i < label_table.size(); i++) {
+        int temp_min = label_table[i][0];
+        if (temp_min != (i + 1) && temp_min > 1) {
+            int temp_min2 = label_table[temp_min - 1][0];
+            label_table[i][0] = temp_min2;
+        }
+    }
+
+    // Print count result
+    int count = 2;
+    vector <int> temp_number;
+    temp_number.push_back(label_table[0][0]);
+    for (int i = 1; i < label_table.size(); i++) {
+        int temp_value = label_table[i][0];
+        int res = 0;
+        for (int j = 0; j < temp_number.size(); j++) {
+            if (temp_value == temp_number[j]) {
+                res = 1;
+                break;
+            }
+        }
+        if (res == 0) {
+            temp_number.push_back(temp_value);
+            label_table[i][0] = count++;
+        }
+    }
+    cout << "The image has " << temp_number.size() << " pathways" << endl;
+
+    // Second Pass
+    for (int i = 0; i < image.row; i++) {
+        for (int j = 0; j < image.col; j++) {
+            if (image.Get_Value(i, j, 0) != 0) {
+                int value = image_label.Get_Value(i, j, 0);
+                int temp_min = label_table[value - 1][0];
+                *image_label.Get_Pixel(i, j, 0) = (ImgPixel)temp_min;
+            }
+        }
+    }
+    for (int i = 0; i < image.row * image.col; i++)
+        image_label.data[i] *= 25;
+    image_label.Write("Find_Object_2Count.raw");
+    return temp_number.size();
+}
+
+
+///////////////////////////////////////////////////
+///////////// S/T/K Morphology Private/////////////
+///////////////////////////////////////////////////
+int Morphology::Initialize_Pattern_Conditional(string filename, int size) {
+    ifstream fout(filename);
+    if (!fout.is_open()) {
+        cerr << "Cannot open the file " << filename << endl;
+        return 0;
+    }
+    filter = new Dataset[size];
+    char temp;
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < 10; j++) {
+            fout.get(temp);
+            if (temp == '1' || temp == '0')
+                filter[i][j] = (int)temp - 48;
+        }
+    }
+    fout.close();
+    return 1;
+}
+
+int Morphology::Initialize_Pattern_Unconditional(string filename, int size) {
+    ifstream fout(filename);
+    if (!fout.is_open()) {
+        cerr << "Cannot open the file " << filename << endl;
+        return 0;
+    }
+    filter2 = new Dataset[size];
+    char temp;
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < 10; j++) {
+            fout.get(temp);
+            if (temp == '1' || temp == '0' || temp == '2')
+                filter2[i][j] = (int)temp - 48;
+        }
+    }
+    fout.close();
+    return 1;
+}
+
+int Morphology::Compare_Dataset_Conditional(Dataset data1, Dataset data2) {
+    for (int i = 0; i < 9; i++) {
+        if (data1[i] != data2[i])
+            return 0;
+    }
+    return 1;
+}
+
+int Morphology::Compare_Dataset_Unconditional(Dataset data1, Dataset data2) {
+    for (int i = 0; i < 9; i++) {
+        int temp1 = data1[i];
+        int temp2 = data2[i];
+        if (temp2 == 2)
+            temp2 = 1;
+        if (temp1 != temp2)
+            return 0;
+    }
+    return 1;
+}
+
+
+///////////////////////////////////////////
+///////////// Helper Function /////////////
+///////////////////////////////////////////
+int Morphology::Convert_to_Binary_Image() {
+    for (int i = 0; i < image.row * image.col; i++)
+        image.data[i] /= 255;
+    is_binary = 1;
+    return 1;
+}
+
+int Morphology::Convert_to_Grayscale_Image() {
+    for (int i = 0; i < image.row * image.col; i++)
+        image.data[i] *= 255;
+    is_binary = 0;
+    return 1;
+}
+
+
+
+/* EE569 Homework Assignment #3
+ * Date: Nov 1, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * Email: meiyiyan@usc.edu
+ *
+ * Problem3. Morphological Processing
+ *
+ * p3_main.cpp
+ * Image.h
+ * Image.cpp
+ * Morphology.h
+ * Morphology.cpp
+ */
+
+#ifndef P3_MORPHOLOGY_H
+#define P3_MORPHOLOGY_H
+#include "Image.h"
+
+///////////////////////////////////////
+///////////// Data Declaration /////////////
+///////////////////////////////////////
+typedef int Dataset[9];
+const int PATTERN_S1 = 58;
+const int PATTERN_T1 = 46;
+const int PATTERN_K1 = 40;
+const int PATTERN_S2 = 332;
+const int PATTERN_T2 = 332;
+const int PATTERN_K2 = 348;
+const string FILE_S1 = "p3_image/Pattern_S1.txt";
+const string FILE_T1 = "p3_image/Pattern_T1.txt";
+const string FILE_K1 = "p3_image/Pattern_K1.txt";
+const string FILE_S2 = "p3_image/Pattern_S2.txt";
+const string FILE_T2 = "p3_image/Pattern_T2.txt";
+const string FILE_K2 = "p3_image/Pattern_K2.txt";
+
+
+/////////////////////////////////////////////
+///////////// Class Declaration /////////////
+/////////////////////////////////////////////
+class Morphology {
+public:
+    Image image;
+    Dataset *filter = NULL;
+    Dataset *filter2 = NULL;
+    int is_binary = 0;
+
+
+///////////////////////////////////////
+///////////// Constructor /////////////
+///////////////////////////////////////
+    Morphology();
+    Morphology(Image *new_image);
+    Morphology(int new_row, int new_col, int new_byte, ImgPixel *pt_img);
+    ~Morphology();
+
+
+////////////////////////////////////////////
+///////////// S/T/K Morphology /////////////
+////////////////////////////////////////////
+// @para: filename: Conditional/Unconditonal Pattern file
+// list of filename is writen above
+// @para: size: the number of patterns in the file
+    int Apply_Hit_Miss(int size_filter1, int size_filter2);
+    int Operator_Hit_Miss(string filename1, string filename2, int size1, int size2);
+
+
+///////////////////////////////////////////////////
+///////////// Dilate/Erode Morphology /////////////
+///////////////////////////////////////////////////
+// @para filter: structure to filter the image (3 * 3)
+    int Operator_Dilate(Dataset filter);
+    int Operator_Erode(Dataset filter);
+    int Operator_Open(Dataset filter1, Dataset filter2);
+    int Operator_Close(Dataset filter1, Dataset filter2);
+    int Operator_Filter(Dataset filter);
+
+
+///////////////////////////////////////////////
+///////////// Counting and Display/////////////
+///////////////////////////////////////////////
+    int Convert_Black_Image();
+    int Write(string filename);
+    int Count_Pathway();
+    int Count_Pixel();
+
+
+private:
+///////////////////////////////////////////////////
+///////////// S/T/K Morphology Private/////////////
+///////////////////////////////////////////////////
+// @para data1: neighbor of pixels
+// @para data2: filter pattern
+// @para: filename: Conditional/Unconditonal Pattern file
+// list of filename is writen above
+// @para: size: the number of patterns in the file
+    int Initialize_Pattern_Conditional(string filename, int size);
+    int Initialize_Pattern_Unconditional(string filename, int size);
+    int Compare_Dataset_Conditional(Dataset data1, Dataset data2);
+    int Compare_Dataset_Unconditional(Dataset data1, Dataset data2);
+
+///////////////////////////////////////////
+///////////// Helper Function /////////////
+///////////////////////////////////////////
+    int Convert_to_Binary_Image();
+    int Convert_to_Grayscale_Image();
+};
+
+#endif //P3_MORPHOLOGY_H
+/* EE569 Homework Assignment #3
+ * Date: Nov 1, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * Email: meiyiyan@usc.edu
+ *
+ * Problem3. Morphological Processing
+ *
+ * p3_main.cpp
+ * Image.h
+ * Image.cpp
+ * Morphology.h
+ * Morphology.cpp
+ */
+
+#include "Image.h"
+#include "Morphology.h"
+
+//////////////////////////////////////
+///////////// Declaration /////////////
+//////////////////////////////////////
+void Test_Shrinking(string filename_read, string filename_write, int row, int col);
+void Test_Thinning(string filename_read, string filename_write, int row, int col);
+void Test_Skeletonizing(string filename_read, string filename_write, int row, int col);
+void Find_Nails();
+void Find_Holes();
+void Find_Objects();
+void Apply_Thinning(int number_close, int number_dilate);
+void Apply_Skeletonizing(int number_close, int number_dilate);
+void prob3a();
+void prob3b();
+
+
+///////////////////////////////////////
+///////////// Application /////////////
+///////////////////////////////////////
+void Test_Shrinking(string filename_read, string filename_write, int row, int col) {
+    Image image = Image(row, col, 1, filename_read);
+    Morphology op = Morphology(&image);
+    op.Operator_Hit_Miss(FILE_S1, FILE_S2, PATTERN_S1, PATTERN_S2);
+    op.Write(filename_write);
+}
+
+void Test_Thinning(string filename_read, string filename_write, int row, int col) {
+    Image image = Image(row, col, 1, filename_read);
+    Morphology op = Morphology(&image);
+    op.Operator_Hit_Miss(FILE_T1, FILE_T2, PATTERN_T1, PATTERN_T2);
+    op.Write(filename_write);
+}
+
+void Test_Skeletonizing(string filename_read, string filename_write, int row, int col) {
+    Image image = Image(row, col, 1, filename_read);
+    Morphology op = Morphology(&image);
+    op.Operator_Hit_Miss(FILE_K1, FILE_K2, PATTERN_K1, PATTERN_K2);
+    op.Write(filename_write);
+}
+
+void Find_Nails() {
+    // Initialization
+    cout << "Find Nails" << endl;
+    Image image = Image(108, 91, 1, "p3_image/Horseshoe.raw");
+    Morphology op = Morphology(&image);
+
+    // Pre-processing: Erode
+    Dataset filter1 = {0, 1, 0, 1, 1, 1, 0, 1, 0};
+    op.Operator_Erode(filter1);
+    op.Write("Find_Nails_1Erode.raw");
+
+    // Shrinking
+    op.Operator_Hit_Miss(FILE_S1, FILE_S2, PATTERN_S1, PATTERN_S2);
+    op.Write("Find_Nails_2Shrink.raw");
+
+    // Nail Filter
+    Dataset filter2 = {0, 0, 0, 0, 1, 0, 0, 0, 0};
+    op.Operator_Filter(filter2);
+    op.Write("Find_Nails_3Filter.raw");
+    op.Count_Pixel();
+}
+
+void Find_Holes() {
+    // Initialization
+    cout << "Find Holes" << endl;
+    Image image = Image(108, 91, 1, "p3_image/Horseshoe.raw");
+    Morphology op = Morphology(&image);
+
+    // Pre-processing: Convert image white to black
+    op.Convert_Black_Image();
+    op.Write("Find_Holes_1Black.raw");
+
+    // Shrinking
+    op.Operator_Hit_Miss(FILE_S1, FILE_S2, PATTERN_S1, PATTERN_S2);
+    op.Write("Find_Holes_2Shrink.raw");
+
+    // Nail Filter
+    Dataset filter1 = {0, 0, 0, 0, 1, 0, 0, 0, 0};
+    op.Operator_Filter(filter1);
+    op.Write("Find_Holes_3Filter.raw");
+    op.Count_Pixel();
+}
+
+void Find_Objects() {
+    // Initialization
+    cout << "Find Objects" << endl;
+    Image image = Image(108, 91, 1, "p3_image/Horseshoe.raw");
+    Morphology op = Morphology(&image);
+
+    // Pre-processing: Convert image white to black
+    Dataset filter1 = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+    Dataset filter2 = {0, 1, 0, 1, 1, 1, 0, 1, 0};
+    Dataset filter3 = {0, 1, 0, 0, 1, 0, 0, 0, 0};
+    Dataset filter4 = {0, 0, 0, 0, 1, 0, 0, 0, 0};
+    op.Operator_Open(filter1, filter2);
+    op.Operator_Dilate (filter3);
+    op.Write("Find_Object_1OpenDilate.raw");
+
+
+    // Shrinking
+    op.Operator_Hit_Miss(FILE_S1, FILE_S2, PATTERN_S1, PATTERN_S2);
+    op.Write("Find_Object_2Shrinking.raw");
+    int res = op.Count_Pathway();
+}
+
+void Apply_Thinning(int number_close, int number_dilate) {
+    string filename = "p3_image/Horse1.raw";
+    int row = 275;
+    int col = 360;
+    Image image = Image(row, col, 1, filename);
+    Morphology op = Morphology(&image);
+
+    // Pre-processing
+    Dataset filter = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+    Dataset filter2 = {0, 1, 0, 1, 1, 1, 0, 1, 0};
+    for (int i = 0; i < number_close; i++)
+        op.Operator_Close(filter, filter2);
+    for (int i = 0; i < number_dilate; i++)
+        op.Operator_Dilate(filter);
+
+    // Thinning
+    op.Operator_Hit_Miss(FILE_T1, FILE_T2, PATTERN_T1, PATTERN_T2);
+    string filename_write = "Thinning_" + to_string(number_close) + "_" + to_string(number_dilate) + ".raw";
+    op.Write(filename_write);
+}
+
+void Apply_Skeletonizing(int number_close, int number_dilate) {
+    string filename = "p3_image/Horse1.raw";
+    int row = 275;
+    int col = 360;
+    Image image = Image(row, col, 1, filename);
+    Morphology op = Morphology(&image);
+
+    // Pre-processing
+    Dataset filter = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+    Dataset filter2 = {0, 1, 0, 1, 1, 1, 0, 1, 0};
+    for (int i = 0; i < number_close; i++)
+        op.Operator_Close(filter, filter2);
+    for (int i = 0; i < number_dilate; i++)
+        op.Operator_Dilate(filter);
+
+    // Thinning
+    op.Operator_Hit_Miss(FILE_K1, FILE_K2, PATTERN_K1, PATTERN_K2);
+    string filename_write = "Skeletonizing_" + to_string(number_close) + "_" + to_string(number_dilate) + ".raw";
+    op.Write(filename_write);
+}
+
+
+//////////////////////////////////////////////////
+///////////// Problem Implementation /////////////
+//////////////////////////////////////////////////
+void prob3a() {
+    cout << "Problem 3a" << endl;
+    string filename = "p3_image/Horseshoe.raw";
+    int row = 108;
+    int col = 91;
+    int number = 0;
+    switch(number) {
+        case 0:
+            Find_Nails();
+            Find_Holes();
+            Find_Objects();
+            break;
+        case 1: // Test
+            Test_Shrinking(filename, "Test_Shrinking.raw", row, col);
+            Test_Thinning(filename, "Test_Thinning.raw", row, col);
+            Test_Skeletonizing(filename, "Test_Skeletonizing.raw", row, col);
+            break;
+    }
+}
+
+void prob3b() {
+    cout << "Problem 3b" << endl;
+    int number = 0;
+    switch(number) {
+        case 0:
+            Apply_Thinning(0, 0);
+            Apply_Skeletonizing(0, 0);
+            Apply_Thinning(2, 4);
+            Apply_Skeletonizing(2, 4);
+            break;
+        case 1: // Test
+            Apply_Thinning(2, 0);
+            Apply_Thinning(2, 1);
+            Apply_Thinning(2, 2);
+            Apply_Thinning(2, 3);
+            Apply_Thinning(2, 4);
+            Apply_Thinning(2, 5);
+            break;
+        case 2:
+            Apply_Thinning(0, 2);
+            Apply_Thinning(1, 2);
+            Apply_Thinning(2, 2);
+            Apply_Thinning(3, 2);
+            Apply_Thinning(4, 2);
+            Apply_Thinning(5, 2);
+            break;
+        case 3:
+            Apply_Skeletonizing(2, 0);
+            Apply_Skeletonizing(2, 1);
+            Apply_Skeletonizing(2, 2);
+            Apply_Skeletonizing(2, 3);
+            Apply_Skeletonizing(2, 4);
+            Apply_Skeletonizing(2, 5);
+            //break;
+        case 4:
+            Apply_Skeletonizing(0, 2);
+            Apply_Skeletonizing(1, 2);
+            Apply_Skeletonizing(2, 2);
+            Apply_Skeletonizing(3, 2);
+            Apply_Skeletonizing(4, 2);
+            Apply_Skeletonizing(5, 2);
+            break;
+    }
+}
+
+
+/////////////////////////////////////////
+///////////// Main Function /////////////
+/////////////////////////////////////////
+int main() {
+    cout << "Homework 3.3" << endl;
+    prob3a();
+    prob3b();
+    return 0;
+}
