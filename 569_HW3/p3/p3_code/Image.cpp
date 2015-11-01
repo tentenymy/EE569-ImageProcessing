@@ -124,7 +124,7 @@ void Image::Write (Image *image, string filename) {
 }
 
 void Image::Write (string filename) {
-    cout << "Write " << filename << endl;
+    //cout << "Write " << filename << endl;
     char *c_filename = new char[filename.length() + 1];
     strcpy(c_filename, filename.c_str());
     FILE *file;
@@ -135,6 +135,25 @@ void Image::Write (string filename) {
     size_t size = col * row * byte;
     fwrite(data, sizeof(ImgPixel), col * row * byte, file);
     fclose(file);
+}
+
+
+void Image::Write (string filename, int mode) {
+    cout << "Write " << filename << endl;
+    ofstream fout;
+    fout.open(filename);
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            for (int k = 0; k < byte; k++) {
+                if ((int)(data[i * byte * col + j * byte + k] == 255))
+                    fout << "1 ";
+                else
+                    fout << "  ";
+            }
+        }
+        fout << endl;
+    }
+    fout.close();
 }
 
 void Image::Print_Data(string str) {
@@ -155,13 +174,15 @@ void Image::Print_Data(string str) {
 }
 
 void Image::Print_Pattern_Data(string str) {
+    int new_row = 50;
+    int new_col = 80;
+    if (row < new_row)
+        new_row = row;
+    if (col < new_col)
+        new_col = col;
     cout << endl << "Image " << str << ": " << row << ", " << col << ", " << byte << endl;
-    int new_col = col;
-    int max_col = 100;
-    if (col * byte > max_col) {
-        new_col = max_col / byte;
-    }
-    for (int i = 0; i < row; i++) {
+    for (int i = 0; i < new_row; i++) {
+        cout << "ROW " << i << ": ";
         for (int j = 0; j < new_col; j++) {
             for (int k = 0; k < byte; k++) {
                 if (Get_Value(i, j, k) == 0)
@@ -271,8 +292,7 @@ void Image::Print_Geodata_Coord(string str, int new_row, int new_col) {
 /////////// Access Data /////////////
 /////////////////////////////////////
 ImgPixel Image::Get_Value(int i, int j, int k) {
-    int index = (i * byte * col + j * byte + k);
-    if (index >= row * byte * col + j * byte + k || index < 0)
+    if (i < 0 || i >= row || j < 0 || j >= col || k < 0 || k >= byte)
         return 0;
     return data[i * byte * col + j * byte + k];
 }

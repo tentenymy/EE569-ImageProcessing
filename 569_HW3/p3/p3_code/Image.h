@@ -79,6 +79,7 @@ public:
 /////////////////////////////////
     void Write (Image*, string);
     void Write (string);
+    void Write (string, int);
     void Print_Data(string);
     void Print_Data(string, int, int);
     void Print_Pattern_Data(string str);
