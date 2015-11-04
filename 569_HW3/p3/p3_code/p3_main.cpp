@@ -156,7 +156,7 @@ void Apply_Skeletonizing(int number_close, int number_dilate) {
     for (int i = 0; i < number_dilate; i++)
         op.Operator_Dilate(filter);
 
-    // Thinning
+    // Skeletonizing
     op.Operator_Hit_Miss(FILE_K1, FILE_K2, PATTERN_K1, PATTERN_K2);
     string filename_write = "Skeletonizing_" + to_string(number_close) + "_" + to_string(number_dilate) + ".raw";
     op.Write(filename_write);
@@ -228,6 +228,10 @@ void prob3b() {
             Apply_Skeletonizing(4, 2);
             Apply_Skeletonizing(5, 2);
             break;
+        case 5:
+            Apply_Thinning(0, 1);
+            Apply_Thinning(1, 0);
+            break;
     }
 }
 
@@ -237,7 +241,7 @@ void prob3b() {
 /////////////////////////////////////////
 int main() {
     cout << "Homework 3.3" << endl;
-    prob3a();
+    //prob3a();
     prob3b();
     return 0;
 }
