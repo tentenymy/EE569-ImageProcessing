@@ -37,10 +37,14 @@ Include four problems
 		For MATLAB code		
 		# image processing toolbox	
 		# Statistic and Machine Learning Toolbox	
-		# Piotr's Computer Vision Matlab Toolbox (https://github.com/pdollar/toolbox.git)	
-		# Structured Edge Detection Toolbox V3.0 (https://github.com/pdollar/edges.git)	
-		# MATLAB and Octave Functions for Computer Vision and Image Processing 			 (http://www.csse.uwa.edu.au/~pk/research/matlabfns/)
-		# CCP source code (https://github.com/fuxiang87/MCL_CCP)	
+		# Piotr's Computer Vision Matlab Toolbox	
+			https://github.com/pdollar/toolbox.git
+		# Structured Edge Detection Toolbox V3.0 
+			https://github.com/pdollar/edges.git
+		# MATLAB and Octave Functions for Computer Vision and Image Processing	
+			http://www.csse.uwa.edu.au/~pk/research/matlabfns/
+		# CCP source code 
+			https://github.com/fuxiang87/MCL_CCP	
 		# benchmark source code given by TA	
 *****************************************
 ****************** HW3 ******************
