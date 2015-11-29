@@ -18,6 +18,8 @@
  */
 
 #include "classifier.h"
+#include <iostream>
+
 
 // Declaration of default parameter
 const string LABEL[5] = {"grass", "straw", "sand", "leather", "unknown"};

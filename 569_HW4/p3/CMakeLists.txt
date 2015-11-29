@@ -3,11 +3,9 @@ project(p3)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-find_package( OpenCV REQUIRED )
+find_package(OpenCV REQUIRED )
 
-set(SOURCE_FILES
-        p3_code/main.cpp
-        )
+set(SOURCE_FILES p3_code/main.cpp p3_code/sift.cpp p3_code/sift.h)
 
 add_executable(p3 ${SOURCE_FILES})
 
