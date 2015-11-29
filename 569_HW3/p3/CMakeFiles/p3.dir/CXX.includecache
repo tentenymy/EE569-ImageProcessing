@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/tenten/Documents/github/github_569/569_HW3/p3/p3_code/Image.cpp
+Image.h
+/Users/tenten/Documents/github/github_569/569_HW3/p3/p3_code/Image.h
+
+/Users/tenten/Documents/github/github_569/569_HW3/p3/p3_code/Image.h
+stdio.h
+-
+iostream
+-
+stdlib.h
+-
+math.h
+-
+fstream
+-
+cstring
+-
+vector
+-
+
+/Users/tenten/Documents/github/github_569/569_HW3/p3/p3_code/Morphology.cpp
+Morphology.h
+/Users/tenten/Documents/github/github_569/569_HW3/p3/p3_code/Morphology.h
+
+/Users/tenten/Documents/github/github_569/569_HW3/p3/p3_code/Morphology.h
+Image.h
+/Users/tenten/Documents/github/github_569/569_HW3/p3/p3_code/Image.h
+
+/Users/tenten/Documents/github/github_569/569_HW3/p3/p3_code/p3_main.cpp
+Image.h
+/Users/tenten/Documents/github/github_569/569_HW3/p3/p3_code/Image.h
+Morphology.h
+/Users/tenten/Documents/github/github_569/569_HW3/p3/p3_code/Morphology.h
+

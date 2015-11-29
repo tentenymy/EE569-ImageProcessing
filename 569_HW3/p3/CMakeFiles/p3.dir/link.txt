@@ -1,0 +1,1 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++    -std=c++11 -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/p3.dir/p3_code/p3_main.cpp.o CMakeFiles/p3.dir/p3_code/Image.cpp.o CMakeFiles/p3.dir/p3_code/Morphology.cpp.o  -o p3  

@@ -53,28 +53,28 @@ void prob2d();
 void Dithering(int size, int color_number) {
     Halftoning halftoning = Halftoning(512, 512, 1, "p2_image/mandrill.raw");
     halftoning.Apply_Dithering(size, color_number);
-    string filename = "Dithering_" + to_string(size) + "_" + to_string(color_number) + ".raw";
+    string filename = "p2_result/Dithering_" + to_string(size) + "_" + to_string(color_number) + ".raw";
     halftoning.image.Write(&(halftoning.image), filename);
 }
 
 void Error_Diffusion(int mode) {
     Halftoning halftoning = Halftoning(512, 512, 1, "p2_image/mandrill.raw");
     halftoning.Apply_Error_Diffusion(mode);
-    string filename = "ErrorDiffuse_" + to_string(mode) + ".raw";
+    string filename = "p2_result/ErrorDiffuse_" + to_string(mode) + ".raw";
     halftoning.image.Write(&(halftoning.image), filename);
 }
 
 void Scalar_Color_Halftoning(int mode) {
     Halftoning halftoning = Halftoning(512, 512, 3, "p2_image/Sailboat.raw");
     halftoning.Apply_Scalar_Color_halftoning(mode);
-    string filename = "ScalarColorHalftoning_" + to_string(mode) + ".raw";
+    string filename = "p2_result/ScalarColorHalftoning_" + to_string(mode) + ".raw";
     halftoning.image.Write(&(halftoning.image), filename);
 }
 
 void Vector_Color_Halftoning(int mode) {
     Halftoning halftoning = Halftoning(512, 512, 3, "p2_image/Sailboat.raw");
     halftoning.Apply_Vector_Color_Halftoning(mode);
-    string filename = "VectorColorHalftoning_" + to_string(mode) + ".raw";
+    string filename = "p2_result/VectorColorHalftoning_" + to_string(mode) + ".raw";
     halftoning.image.Write(&(halftoning.image), filename);
 }
 
@@ -107,7 +107,7 @@ void prob2c() {
     Scalar_Color_Halftoning(0);
     Scalar_Color_Halftoning(1);
     Scalar_Color_Halftoning(2);
-}gi
+}
 
 void prob2d() {
     cout << "Problem 2d" << endl;

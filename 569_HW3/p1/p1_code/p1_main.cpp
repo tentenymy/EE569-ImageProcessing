@@ -67,7 +67,7 @@ void Swirling(float degree) {
     img_ori.Effect_Swirling(degree);
     img_ori.Effect_Translation(0.5f * img_ori.row, 0.5f * img_ori.col, 0.0f);
     img_ori.Set_Data();
-    string filename = "Kate_swirling_" + to_string((int)degree) + ".raw";
+    string filename = "p1_result/p1a_swirling_" + to_string((int)degree) + ".raw";
     img_ori.Write(&img_ori, filename);
 }
 
@@ -143,7 +143,7 @@ void Forward_Mapping(int density, float coef_f, Coord3D coord_xc, Coord3D coord_
 
     // Display
     img.Set_Camera_Data(density);
-    string filename = "cube" + to_string(density) + "_r" + to_string(coord_r[0]) + ".raw";
+    string filename = "p1_result/p1b" + to_string(density) + "_r" + to_string(coord_r[0]) + ".raw";
     img.Write(&img, filename);
 }
 
@@ -201,7 +201,7 @@ void Reverse_Mapping(int density) {
     img_reverse.Camera_Extrinsic_Reverse(coord_xc, coord_yc, coord_zc, coord_r);
     img_reverse.Print_Geodata_Coord("Extrinsic", 600, 4);
     img_reverse.Set_Camera_Data_Reverse();
-    img_reverse.Write(&img_reverse, "test0.raw");
+    img_reverse.Write(&img_reverse, "p1_result/p1b_reverse.raw");
 }
 
 

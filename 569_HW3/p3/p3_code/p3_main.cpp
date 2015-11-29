@@ -64,16 +64,16 @@ void Find_Nails() {
     // Pre-processing: Erode
     Dataset filter1 = {0, 1, 0, 1, 1, 1, 0, 1, 0};
     op.Operator_Erode(filter1);
-    op.Write("Find_Nails_1Erode.raw");
+    op.Write("p3_result/Find_Nails_1Erode.raw");
 
     // Shrinking
     op.Operator_Hit_Miss(FILE_S1, FILE_S2, PATTERN_S1, PATTERN_S2);
-    op.Write("Find_Nails_2Shrink.raw");
+    op.Write("p3_result/Find_Nails_2Shrink.raw");
 
     // Nail Filter
     Dataset filter2 = {0, 0, 0, 0, 1, 0, 0, 0, 0};
     op.Operator_Filter(filter2);
-    op.Write("Find_Nails_3Filter.raw");
+    op.Write("p3_result/Find_Nails_3Filter.raw");
     op.Count_Pixel();
 }
 
@@ -85,16 +85,16 @@ void Find_Holes() {
 
     // Pre-processing: Convert image white to black
     op.Convert_Black_Image();
-    op.Write("Find_Holes_1Black.raw");
+    op.Write("p3_result/Find_Holes_1Black.raw");
 
     // Shrinking
     op.Operator_Hit_Miss(FILE_S1, FILE_S2, PATTERN_S1, PATTERN_S2);
-    op.Write("Find_Holes_2Shrink.raw");
+    op.Write("p3_result/Find_Holes_2Shrink.raw");
 
     // Nail Filter
     Dataset filter1 = {0, 0, 0, 0, 1, 0, 0, 0, 0};
     op.Operator_Filter(filter1);
-    op.Write("Find_Holes_3Filter.raw");
+    op.Write("p3_result/Find_Holes_3Filter.raw");
     op.Count_Pixel();
 }
 
@@ -111,12 +111,12 @@ void Find_Objects() {
     Dataset filter4 = {0, 0, 0, 0, 1, 0, 0, 0, 0};
     op.Operator_Open(filter1, filter2);
     op.Operator_Dilate (filter3);
-    op.Write("Find_Object_1OpenDilate.raw");
+    op.Write("p3_result/Find_Object_1OpenDilate.raw");
 
 
     // Shrinking
     op.Operator_Hit_Miss(FILE_S1, FILE_S2, PATTERN_S1, PATTERN_S2);
-    op.Write("Find_Object_2Shrinking.raw");
+    op.Write("p3_result/Find_Object_2Shrinking.raw");
     int res = op.Count_Pathway();
 }
 
@@ -137,7 +137,7 @@ void Apply_Thinning(int number_close, int number_dilate) {
 
     // Thinning
     op.Operator_Hit_Miss(FILE_T1, FILE_T2, PATTERN_T1, PATTERN_T2);
-    string filename_write = "Thinning_" + to_string(number_close) + "_" + to_string(number_dilate) + ".raw";
+    string filename_write = "p3_result/p3b_Thinning_" + to_string(number_close) + "_" + to_string(number_dilate) + ".raw";
     op.Write(filename_write);
 }
 
@@ -158,7 +158,7 @@ void Apply_Skeletonizing(int number_close, int number_dilate) {
 
     // Skeletonizing
     op.Operator_Hit_Miss(FILE_K1, FILE_K2, PATTERN_K1, PATTERN_K2);
-    string filename_write = "Skeletonizing_" + to_string(number_close) + "_" + to_string(number_dilate) + ".raw";
+    string filename_write = "p3_result/p3b_Skeletonizing_" + to_string(number_close) + "_" + to_string(number_dilate) + ".raw";
     op.Write(filename_write);
 }
 
@@ -179,9 +179,9 @@ void prob3a() {
             Find_Objects();
             break;
         case 1: // Test
-            Test_Shrinking(filename, "Test_Shrinking.raw", row, col);
-            Test_Thinning(filename, "Test_Thinning.raw", row, col);
-            Test_Skeletonizing(filename, "Test_Skeletonizing.raw", row, col);
+            Test_Shrinking(filename, "p3_result/Test_Shrinking.raw", row, col);
+            Test_Thinning(filename, "p3_result/Test_Thinning.raw", row, col);
+            Test_Skeletonizing(filename, "p3_result/Test_Skeletonizing.raw", row, col);
             break;
     }
 }
@@ -241,7 +241,7 @@ void prob3b() {
 /////////////////////////////////////////
 int main() {
     cout << "Homework 3.3" << endl;
-    //prob3a();
+    prob3a();
     prob3b();
     return 0;
 }

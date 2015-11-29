@@ -3,6 +3,7 @@
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" assignedExecutableTargets="true" buildAllGenerated="true">
     <generated>
       <config projectName="HW1" targetName="HW1" />
+      <config projectName="569_HW1" targetName="569_HW1" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="false" GENERATION_PASS_SYSTEM_ENVIRONMENT="true">
@@ -11,7 +12,47 @@
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="add86cd5-d5ec-44d8-8eb6-1d9cfa7ca572" name="Default" comment="" />
+    <list default="true" id="add86cd5-d5ec-44d8-8eb6-1d9cfa7ca572" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../569_HW3/p2/.idea/encodings.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW2/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/Bayer_matrix.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/Bayer_matrix_threshold.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/Dithering_2_17.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/Dithering_2_255.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/Dithering_2_85.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/Dithering_4_255.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/Dithering_4_85.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/Dithering_8_255.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/Dithering_8_85.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/ErrorDiffuse_0.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/ErrorDiffuse_1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/ErrorDiffuse_2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/Sailboat.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/ScalarColorHalftoning_0.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/ScalarColorHalftoning_1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/ScalarColorHalftoning_2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/VectorColorHalftoning_0.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/VectorColorHalftoning_0_without_error.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/VectorColorHalftoning_0_without_error_and_quadrant.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/VectorColorHalftoning_1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/VectorColorHalftoning_2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_result/mandrill.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../569_HW3/p3/.idea/vcs.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/HW1.iml" afterPath="$PROJECT_DIR$/.idea/HW1.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../569_HW2/.idea/HW2.iml" afterPath="$PROJECT_DIR$/../569_HW2/.idea/HW2.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../569_HW2/.idea/misc.xml" afterPath="$PROJECT_DIR$/../569_HW2/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../569_HW2/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../569_HW2/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../569_HW3/p1/.idea/misc.xml" afterPath="$PROJECT_DIR$/../569_HW3/p1/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../569_HW3/p1/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../569_HW3/p1/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../569_HW3/p1/p1_code/p1_main.cpp" afterPath="$PROJECT_DIR$/../569_HW3/p1/p1_code/p1_main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../569_HW3/p2/.idea/misc.xml" afterPath="$PROJECT_DIR$/../569_HW3/p2/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../569_HW3/p2/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../569_HW3/p2/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../569_HW3/p2/p2_code/p2_main.cpp" afterPath="$PROJECT_DIR$/../569_HW3/p2/p2_code/p2_main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../569_HW3/p3/.idea/misc.xml" afterPath="$PROJECT_DIR$/../569_HW3/p3/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../569_HW3/p3/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../569_HW3/p3/.idea/workspace.xml" />
+    </list>
     <ignored path="HW1.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -67,18 +108,16 @@
     </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" />
+  <component name="JsBuildToolPackageJson" detection-done="true" />
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
   </component>
-  <component name="NamedScopeManager">
-    <order />
-  </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="242" />
-    <option name="y" value="129" />
-    <option name="width" value="726" />
-    <option name="height" value="516" />
+    <option name="x" value="70" />
+    <option name="y" value="23" />
+    <option name="width" value="1210" />
+    <option name="height" value="777" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -101,6 +140,8 @@
       <autoscrollToSource />
       <autoscrollFromSource />
       <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
       <pane id="ProjectPane">
@@ -110,6 +151,10 @@
               <option name="myItemId" value="HW1" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -117,7 +162,21 @@
               <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="569_HW1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
               <option name="myItemId" value="HW1" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="569_HW1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Debug" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -163,9 +222,14 @@
       <envs />
       <method />
     </configuration>
-    <list size="2">
+    <configuration default="false" name="569_HW1" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="569_HW1" TARGET_NAME="569_HW1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="569_HW1" RUN_TARGET_NAME="569_HW1">
+      <envs />
+      <method />
+    </configuration>
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
       <item index="1" class="java.lang.String" itemvalue="Application.HW1" />
+      <item index="2" class="java.lang.String" itemvalue="Application.569_HW1" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -191,47 +255,47 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="242" y="129" width="726" height="516" extended-state="0" />
+    <frame x="70" y="23" width="1210" height="777" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41061047" sideWeight="0.6835187" order="4" side_tool="false" content_ui="tabs" x="1097" y="304" width="460" height="1075" />
-      <window_info id="TODO" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2932331" sideWeight="0.48576513" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12596402" sideWeight="0.45491388" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="CMake" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14766082" sideWeight="0.45754716" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14766082" sideWeight="0.5424528" order="0" side_tool="true" content_ui="combo" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.10025707" sideWeight="0.07583418" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0" sideWeight="0.50250626" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27197942" sideWeight="0.3164813" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.101277374" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.63126594" sideWeight="0.46325582" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30033478" sideWeight="0.5367442" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1515411" sideWeight="0.54730713" order="0" side_tool="true" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2932331" sideWeight="0.48576513" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.147651" sideWeight="0.45269287" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0" sideWeight="0.50250626" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27197942" sideWeight="0.3164813" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12596402" sideWeight="0.45491388" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35702056" sideWeight="0.6835187" order="4" side_tool="false" content_ui="tabs" x="1097" y="304" width="460" height="1075" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10025707" sideWeight="0.07583418" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.63126594" sideWeight="0.46325582" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30033478" sideWeight="0.5367442" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.101277374" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27197942" sideWeight="0.6835187" order="4" side_tool="false" content_ui="tabs" x="1097" y="304" width="460" height="1075" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.101277374" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="CMake" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14550129" sideWeight="0.48932385" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.10025707" sideWeight="0.07583418" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0" sideWeight="0.50250626" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27197942" sideWeight="0.3164813" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.63126594" sideWeight="0.46325582" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2932331" sideWeight="0.48576513" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12596402" sideWeight="0.46309403" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12596402" sideWeight="0.53690594" order="0" side_tool="true" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30033478" sideWeight="0.5367442" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2932331" sideWeight="0.48576513" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.63126594" sideWeight="0.46325582" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14550129" sideWeight="0.48932385" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0" sideWeight="0.50250626" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27197942" sideWeight="0.3164813" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30033478" sideWeight="0.5367442" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27197942" sideWeight="0.6835187" order="4" side_tool="false" content_ui="tabs" x="1097" y="304" width="460" height="1075" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12596402" sideWeight="0.53690594" order="0" side_tool="true" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.101277374" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12596402" sideWeight="0.46309403" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10025707" sideWeight="0.07583418" order="1" side_tool="true" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -247,9 +311,57 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="10" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/hw1_helper.cpp</url>
+          <line>146</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/hw1_helper.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.70561457">
+          <caret line="146" column="0" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#3729#4236#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hw1_helper.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.59180576">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/p1_bilinear.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38543248">
+          <caret line="168" column="0" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.215478">
+          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
   </component>
   <component name="masterDetails">
     <states>
