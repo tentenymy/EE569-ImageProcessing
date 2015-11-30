@@ -119,7 +119,7 @@ void Prob1c2() {
 
 int main() {
     cout << "PROBLEM 1!" << endl;
-    int number = 0;
+    int number = 1;
     switch(number) {
         case 0:
             //Prob1a();
@@ -129,7 +129,7 @@ int main() {
             Prob1c2();
             break;
         case 1:
-            Prob1c();
+            Prob1a();
             break;
         case 2:
             Prob1c2();

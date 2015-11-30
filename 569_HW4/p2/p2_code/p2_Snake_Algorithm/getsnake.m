@@ -1,3 +1,17 @@
+
+% EE569 Homework Assignment #4 
+% Date: Noverber 29th 2015 
+% Name: Meiyi Yang
+% ID:  6761-0405-85 
+% email:  meiyiyan@usc.edu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2:    Coutour Modeling
+% p2_code/p2_Level_Set/prob2b.m       % Main script for prob2b
+% p2_code/p2_Level_Set/drlse_edge.m   % Helper function for level-set
+% p2_code/p2_Level_Set/level_set.m    % Helper function for level-set
+% p1_code/p2_Snake_Algorithm/         % GUI for snake algorithm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % getsnake.m is a helper function for interate.m. To run snakes
 % (active contours) with GUI see below. To go to the meat of the code, see

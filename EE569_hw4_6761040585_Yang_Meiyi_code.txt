@@ -1,0 +1,2591 @@
+/* EE569 Homework Assignment #4
+ * Date: Noverber 29, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem1. OCR
+ *
+ * Main function:
+ * p1_main.cpp
+ *
+ * Class OCR:
+ * OCR.h
+ * OCR.cpp
+ *
+ * Class Image:
+ * image.h
+ * image.cpp
+ *
+ * Class Morphology:
+ * Morphology.h
+ * Morphology.cpp
+ */
+
+#include "Image.h"
+
+float COS(float degree) {
+    return cos(degree * PI / 180.0);
+}
+
+float SIN(float degree) {
+    return sin(degree * PI / 180.0);
+}
+
+float TAN (float degree) {
+    return tan(degree * PI / 180.0);
+}
+
+/////////////////////////////////////
+/////////// Constructor /////////////
+/////////////////////////////////////
+Image::Image() {
+    col = 0;
+    row = 0;
+    byte = 0;
+}
+
+Image::Image(int new_row, int new_col, int new_byte, ImgPixel *pt_img) {
+    if (new_col <= 0 || new_col > 1024) {
+        cerr << "wrong column" << endl;
+        exit(1);
+    }
+    if (new_row <= 0 || new_row > 1024) {
+        cerr << "wrong column" << endl;
+        exit(1);
+    }
+    col = new_col;
+    row = new_row;
+    byte = new_byte;
+    data = new ImgPixel [col * row * byte];
+    if (!data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
+    }
+    if (pt_img == NULL) {
+        for (int i = 0; i < col * row * byte; i++) {
+            data[i] = 0;
+        }
+
+    } else {
+        for (int i = 0; i < col * row * byte; i++) {
+            data[i] = *pt_img++;
+        }
+    }
+
+}
+
+Image::Image(int new_row, int new_col, int new_byte, string filename) {
+    if (new_col <= 0 || new_col > 1024) {
+        cerr << "Wrong column" << endl;
+        exit(1);
+    }
+    if (new_row <= 0 || new_row > 1024) {
+        cerr << "Wrong row" << endl;
+        exit(1);
+    }
+    col = new_col;
+    row = new_row;
+    byte = new_byte;
+    char *c_filename = new char[filename.length() + 1];
+    strcpy(c_filename, filename.c_str());
+    FILE *file;
+    if (!(file = fopen(c_filename, "rb")))  {
+        cout << "Cannot open file: " << filename << endl;
+        exit(1);
+    }
+    data = new ImgPixel[col * row * byte];
+    if (!data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
+    }
+    fread(data, sizeof(ImgPixel), col * row * byte, file);
+    fclose(file);
+    if (c_filename)
+        delete c_filename;
+}
+
+Image::~Image() {
+    if(data)
+        delete data;
+    if (geo_data)
+        delete geo_data;
+}
+
+
+/////////////////////////////////
+/////////// Display /////////////
+/////////////////////////////////
+void Image::Write (Image *image, string filename) {
+    cout << "Write " << filename << endl;
+    char *c_filename = new char[filename.length() + 1];
+    strcpy(c_filename, filename.c_str());
+    FILE *file;
+    if (!(file = fopen(c_filename, "wb"))) {
+        cout << "Cannot open file: " << filename << endl;
+        exit(1);
+    }
+    size_t size = image->col * image->row * image->byte;
+    fwrite(image->data, sizeof(ImgPixel), col * row * byte, file);
+    fclose(file);
+}
+
+void Image::Write (string filename) {
+    //cout << "Write " << filename << endl;
+    char *c_filename = new char[filename.length() + 1];
+    strcpy(c_filename, filename.c_str());
+    FILE *file;
+    if (!(file = fopen(c_filename, "wb"))) {
+        cout << "Cannot open file: " << filename << endl;
+        exit(1);
+    }
+    size_t size = col * row * byte;
+    fwrite(data, sizeof(ImgPixel), col * row * byte, file);
+    fclose(file);
+}
+
+void Image::Write_Txt (string filename) {
+    cout << "Write " << filename << endl;
+    fstream fout;
+    fout.open(filename, ios_base::out);
+    if (!fout.is_open()) {
+        cerr << "Cannot open file: " << filename << endl;
+    }
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            for (int k = 0; k < byte; k++)
+                fout << (int)data[i * col * byte + j * byte + k]<< " ";
+        }
+        fout << endl;
+    }
+    fout.close();
+}
+
+
+void Image::Write (string filename, int mode) {
+    //cout << "Write " << filename << endl;
+    ofstream fout;
+    fout.open(filename);
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            for (int k = 0; k < byte; k++) {
+                if ((int)(data[i * byte * col + j * byte + k] == 255))
+                    fout << "1 ";
+                else
+                    fout << "  ";
+            }
+        }
+        fout << endl;
+    }
+    fout.close();
+}
+
+void Image::Print_Data(string str) {
+    cout << endl << "Image " << str << ": " << row << ", " << col << ", " << byte << endl;
+    int new_col = col;
+    int max_col = 100;
+    if (col * byte > max_col) {
+        new_col = max_col / byte;
+    }
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < new_col; j++) {
+            for (int k = 0; k < byte; k++) {
+                cout << (int)Get_Value(i, j, k) << " ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+void Image::Print_Pattern_Data(string str) {
+    int new_row = 256;
+    int new_col = 100;
+    if (row < new_row)
+        new_row = row;
+    if (col < new_col)
+        new_col = col;
+    cout << endl << "Image " << str << ": " << row << ", " << col << ", " << byte << endl;
+    for (int i = 0; i < new_row; i++) {
+        cout << "ROW " << i << ": ";
+        for (int j = 0; j < new_col; j++) {
+            for (int k = 0; k < byte; k++) {
+                if (Get_Value(i, j, k) == 0)
+                    cout << " ";
+                else
+                    cout << (int)Get_Value(i, j, k);
+            }
+        }
+        cout << endl;
+    }
+}
+
+void Image::Print_Data(string str, int new_row, int new_col) {
+    cout << endl << "Image " << str << ": " << row << ", " << col << ", " << byte << endl;
+    if (new_row > row)
+        new_row = row;
+    if (new_col > col)
+        new_col = col;
+    for (int i = 0; i < new_row; i++) {
+        for (int j = 0; j < new_col; j++) {
+            for (int k = 0; k < byte; k++) {
+                cout << (int)Get_Value(i, j, k) << " ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+void Image::Print_Geodata_Color(string str) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (geo_data) {
+        for (int i = 0; i < geo_row; i++) {
+            for (int j = 0; j < geo_col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << " "
+                << geo_data[i * geo_col + j].color[0] << " "
+                << geo_data[i * geo_col + j].color[1] << " "
+                << geo_data[i * geo_col + j].color[2] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+void Image::Print_Geodata_Color(string str, int new_row, int new_col) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (new_row > geo_row)
+        new_row = geo_row;
+    if (new_col > geo_col)
+        new_col = geo_col;
+    if (geo_data) {
+        for (int i = 0; i < new_row; i++) {
+            for (int j = 0; j < new_col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << " "
+                << geo_data[i * geo_col + j].color[0] << " "
+                << geo_data[i * geo_col + j].color[1] << " "
+                << geo_data[i * geo_col + j].color[2] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+void Image::Print_Geodata_Coord(string str) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (geo_data) {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+void Image::Print_Geodata_Coord(string str, int new_row, int new_col) {
+    cout << endl << "Image " << str << ": " << geo_row << ", " << geo_col << endl;
+    if (new_row > geo_row)
+        new_row = geo_row;
+    if (new_col > geo_col)
+        new_col = geo_col;
+    if (geo_data) {
+        for (int i = 0; i < new_row; i++) {
+            for (int j = 0; j < new_col; j++) {
+                cout << "(" << geo_data[i * geo_col + j].coord[0] << " "
+                << geo_data[i * geo_col + j].coord[1] << " "
+                << geo_data[i * geo_col + j].coord[2] << " "
+                << geo_data[i * geo_col + j].coord[3] << ") ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+
+/////////////////////////////////////
+/////////// Access Data /////////////
+/////////////////////////////////////
+ImgPixel Image::Get_Value(int i, int j, int k) {
+    if (i < 0 || i >= row || j < 0 || j >= col || k < 0 || k >= byte)
+        return 0;
+    return data[i * byte * col + j * byte + k];
+}
+
+ImgPixel* Image::Get_Pixel(int i, int j, int k) {
+    return &data[i * byte * col + j * byte + k];
+}
+
+float Image::Get_Geo_Value(int i, int j, int k) {
+    if (i < geo_row && j < geo_col && k < 3)
+        return geo_data[i * geo_col + j].color[k];
+    else
+        return (ImgPixel)0;
+}
+
+float Image::Get_Geo_Coord(int i, int j, int k) {
+    if (i < geo_row && j < geo_col && k < 4)
+        return geo_data[i * geo_col + j].coord[k];
+    else
+        return (ImgPixel)0;
+}
+
+int Image::Get_Row(int index) {
+    return index / (col * byte);
+}
+
+int Image::Get_Col(int index) {
+    return (index % (byte * col)) / byte;
+}
+
+int Image::Get_Byte(int index) {
+    return index % byte;
+}
+
+
+/////////////////////////////////
+/////////// Process /////////////
+/////////////////////////////////
+
+
+void Image::Convert_To_Binary() {
+    if (byte == 1) {
+        for (int i = 0; i < row * col; i++) {
+            ImgPixel temp = data[i];
+            if (temp > (ImgPixel)170) {
+                data[i] = (ImgPixel)1;
+            } else {
+                data[i] = (ImgPixel)0;
+            }
+        }
+    }
+}
+
+void Image::Convert_Size(int new_row, int new_col) {
+    double ratio_row = (double)(row - 1) / (double)(new_row - 1);
+    double ratio_col = (double)(col - 1) / (double)(new_col - 1);
+    double point_estimate_x;
+    double point_estimate_y;
+    int point_lt_x;
+    int point_lt_y;
+    double scale_a;
+    double scale_b;
+    int point_rb_x;
+    int point_rb_y;
+
+    ImgPixel *data_new = new ImgPixel[new_row * new_col * byte];
+    for(int i = 0; i < new_row; i++)  {
+        for(int j = 0; j < new_col; j++) {
+            point_estimate_x = ratio_row * (double)i;
+            point_estimate_y = ratio_col *  (double)j;
+            point_lt_x = (int)point_estimate_x;
+            point_lt_y = (int)point_estimate_y;
+            scale_a = point_estimate_x - (double)point_lt_x;
+            scale_b = point_estimate_y - (double)point_lt_y;
+            for(int k = 0; k < byte; k++) {
+                double value = (1.0 - scale_a) * (1.0 - scale_b) * (double)Get_Value(point_lt_x, point_lt_y, k)
+                               + (1.0 - scale_a) * scale_b * (double)Get_Value(point_lt_x, point_lt_y + 1, k)
+                               + (1.0 - scale_b) * scale_a * (double)Get_Value(point_lt_x + 1, point_lt_y, k)
+                               + scale_a * scale_b * (double)Get_Value(point_lt_x + 1, point_lt_y + 1, k);
+                data_new[i * (new_col) * byte + j * byte + k] = (ImgPixel)round(value);
+            }
+        }
+    }
+
+    delete data;
+    row = new_row;
+    col = new_col;
+    data = new ImgPixel[row * col * byte];
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            for (int k = 0; k < byte; k++)
+                data[i * col * byte + j * byte + k] = data_new[i * col * byte + j * byte + k];
+        }
+    }
+}
+
+
+void Image::Convert_Row_Size(int new_row) {
+    double ratio_row = (double)(row - 1) / (double)(new_row - 1);
+    double point_estimate_x;
+    double point_estimate_y;
+    int point_lt_x;
+    int point_lt_y;
+    double scale_a;
+    double scale_b;
+    int point_rb_x;
+    int point_rb_y;
+
+    ImgPixel *data_new = new ImgPixel[new_row * col * byte];
+    for(int i = 0; i < new_row; i++)  {
+        for(int j = 0; j < col; j++) {
+            point_estimate_x = ratio_row * (double)i;
+            point_lt_x = (int)point_estimate_x;
+            point_lt_y = (int)point_estimate_y;
+            scale_a = point_estimate_x - (double)point_lt_x;
+            scale_b = point_estimate_y - (double)point_lt_y;
+            for(int k = 0; k < byte; k++) {
+                double value = (1.0 - scale_a) * (1.0 - scale_b) * (double)Get_Value(point_lt_x, point_lt_y, k)
+                               + (1.0 - scale_a) * scale_b * (double)Get_Value(point_lt_x, point_lt_y + 1, k)
+                               + (1.0 - scale_b) * scale_a * (double)Get_Value(point_lt_x + 1, point_lt_y, k)
+                               + scale_a * scale_b * (double)Get_Value(point_lt_x + 1, point_lt_y + 1, k);
+                data_new[i * col * byte + j * byte + k] = (ImgPixel)round(value);
+            }
+        }
+    }
+
+    delete data;
+    row = new_row;
+    data = new ImgPixel[row * col * byte];
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            for (int k = 0; k < byte; k++)
+                data[i * col * byte + j * byte + k] = data_new[i * col * byte + j * byte + k];
+        }
+    }
+}/* EE569 Homework Assignment #4
+ * Date: Noverber 29, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem1. OCR
+ *
+ * Main function:
+ * p1_main.cpp
+ *
+ * Class OCR:
+ * OCR.h
+ * OCR.cpp
+ *
+ * Class Image:
+ * image.h
+ * image.cpp
+ *
+ * Class Morphology:
+ * Morphology.h
+ * Morphology.cpp
+ */
+
+#ifndef P3_IMAGE_H
+#define P3_IMAGE_H
+
+#include <stdio.h>
+#include <iostream>
+#include <stdlib.h>
+#include <math.h>
+#include <fstream>
+#include <cstring>
+#include <vector>
+using namespace std;
+
+//////////////////////////////////////////////
+/////////// Structure Definition /////////////
+//////////////////////////////////////////////
+const double PI = 3.14159265;
+const int MODE_X = 0;
+const int MODE_Y = 1;
+const int MODE_Z = 2;
+typedef unsigned char ImgPixel;
+typedef float ImgCoord[4];
+typedef float ImgColor[3];
+typedef float Matrix[4][4];
+typedef float Coord3D[3];
+typedef struct GeoPixel {
+    ImgCoord coord;
+    ImgColor color;
+} GeoPixel;
+
+
+//////////////////////////////////////////////
+/////////// Function Declaration /////////////
+//////////////////////////////////////////////
+float COS(float);
+float SIN(float);
+float TAN(float);
+
+
+//////////////////////////////////////////
+/////////// Class Definition /////////////
+//////////////////////////////////////////
+class Image {
+public:
+    int col;
+    int row;
+    int byte;
+    int geo_row;
+    int geo_col;
+    ImgPixel *data = NULL;
+    GeoPixel *geo_data = NULL;
+
+
+/////////////////////////////////////
+/////////// Constructor /////////////
+/////////////////////////////////////
+    Image(int, int, int, ImgPixel*);
+    Image(int, int, int, string);
+    Image();
+    ~Image();
+
+
+/////////////////////////////////
+/////////// Display /////////////
+/////////////////////////////////
+    void Write (Image*, string);
+    void Write (string);
+    void Write (string, int);
+    void Write_Txt(string);
+    void Print_Data(string);
+    void Print_Data(string, int, int);
+    void Print_Pattern_Data(string str);
+    void Print_Geodata_Color(string);
+    void Print_Geodata_Color(string, int, int);
+    void Print_Geodata_Coord(string);
+    void Print_Geodata_Coord(string, int, int);
+
+
+/////////////////////////////////////
+/////////// Access Data /////////////
+/////////////////////////////////////
+    ImgPixel Get_Value(int i, int j, int k);
+    ImgPixel* Get_Pixel(int i, int j, int k);
+    float Get_Geo_Coord(int i, int j, int k);
+    float Get_Geo_Value(int i, int j, int k);
+    int Get_Row(int index);
+    int Get_Col(int index);
+    int Get_Byte(int index);
+
+
+/////////////////////////////////
+/////////// Process /////////////
+/////////////////////////////////
+//@ new_row, new_col: resize row and col
+    void Convert_To_Gray();
+    void Convert_To_Binary();
+    void Convert_Size(int new_row, int new_col);
+    void Convert_Row_Size(int new_row);
+};
+#endif //P3_IMAGE_H
+/* EE569 Homework Assignment #4
+ * Date: Noverber 29, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem1. OCR
+ *
+ * Main function:
+ * p1_main.cpp
+ *
+ * Class OCR:
+ * OCR.h
+ * OCR.cpp
+ *
+ * Class Image:
+ * image.h
+ * image.cpp
+ *
+ * Class Morphology:
+ * Morphology.h
+ * Morphology.cpp
+ */
+#include "Morphology.h"
+
+///////////////////////////////////////
+///////////// Constructor /////////////
+///////////////////////////////////////
+Morphology::Morphology() { };
+
+Morphology::Morphology(Image *new_image) {
+    // Set value to image
+    image.col = new_image->col;
+    image.row = new_image->row;
+    image.byte = 1;
+    image.data = new ImgPixel[image.col * image.row * image.byte];
+    if (!image.data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
+    }
+    for (int i = 0; i < image.col * image.row; i++) {
+        image.data[i] = new_image->data[i];
+    }
+    // Set to binary image
+    Convert_to_Binary_Image();
+}
+
+Morphology::Morphology(int new_row, int new_col, int new_byte, ImgPixel *pt_img) {
+    // Check parameter
+    if (new_col <= 0 || new_col > 1024) {
+        cerr << "wrong column" << endl;
+        exit(1);
+    }
+    if (new_row <= 0 || new_row > 1024) {
+        cerr << "wrong column" << endl;
+        exit(1);
+    }
+    if (new_byte != 1) {
+        cerr << "Image must be grayscale" << endl;
+        exit(1);
+    }
+    // Set value to image
+    image.col = new_col;
+    image.row = new_row;
+    image.byte = new_byte;
+    image.data = new ImgPixel [image.col * image.row * image.byte];
+    if (!image.data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
+    }
+    if (pt_img == NULL) {
+        for (int i = 0; i < image.col * image.row * image.byte; i++) {
+            image.data[i] = 0;
+        }
+
+    } else {
+        for (int i = 0; i < image.col * image.row * image.byte; i++) {
+            image.data[i] = *pt_img++;
+        }
+    }
+    // Set to binary image
+    //Convert_to_Binary_Image();
+    is_binary = 1;
+}
+
+Morphology::~Morphology() {
+        if (filter)
+            delete [] filter;
+        if (filter2)
+            delete [] filter2;
+    }
+
+
+////////////////////////////////////////////
+///////////// S/T/K Morphology /////////////
+////////////////////////////////////////////
+int Morphology::Apply_Hit_Miss(int size_filter1, int size_filter2) {
+    int PRINT = 0;
+    // Convert to binary image
+    int row = image.row;
+    int col = image.col;
+    if (!is_binary)
+        Convert_to_Binary_Image();
+
+    // Hit-or-Miss
+    int index[2][9] = {{-1, -1, -1, 0, 0, 0, 1, 1, 1}, {-1, 0, 1, -1, 0, 1, -1, 0, 1}};
+    int is_change = 1;
+    int count = 0;
+    while(count < 100 && is_change == 1) {
+        // For statistics and debug
+        is_change = 0;
+        int count_M = 0;
+        int count_F = 0;
+        // Generate M image by Hit-or-Miss filter1
+        Image image_M = Image(row, col, 1, NULL);
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (image.Get_Value(i, j, 0) == 1) {
+                    // Find neighbor dataset
+                    Dataset pixel_neighbor = {};
+                    for (int k = 0; k < 9; k++)
+                        pixel_neighbor[k] = (int)image.Get_Value(i + index[0][k], j + index[1][k], 0);
+                    // Compare the conditional pattern
+                    int res = 0;
+                    int k = 0;
+                    for (k = 0; k < size_filter1; k++) {
+                        res = Compare_Dataset_Conditional(pixel_neighbor, filter[k]);
+                        if (res == 1)
+                            break;
+                    }
+                    // Set M image
+                    if (res == 1) { // Hit
+                        *image_M.Get_Pixel(i, j, 0) = (ImgPixel)1;
+                        count_F++;
+                    }
+                }
+            }
+        }
+        if (PRINT == 1)
+            image_M.Print_Pattern_Data("M");
+
+        // Hit-or Miss filter2
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (image_M.Get_Value(i, j, 0) == 1) {
+                    // Find neighbor dataset
+                    Dataset pixel_neighbor = {};
+                    for (int k = 0; k < 9; k++)
+                        pixel_neighbor[k] = (int)image_M.Get_Value(i + index[0][k], j + index[1][k], 0);
+                    // Compare the conditional pattern and set M image
+                    int res = 0;
+                    int k = 0;
+                    for (k = 0; k < size_filter2; k++) {
+                        res = Compare_Dataset_Unconditional(pixel_neighbor, filter2[k]);
+                        if (res == 1)
+                            break;
+                    }
+                    // Set value to Image F
+                    if (res == 0) { // Miss
+                        count_M++;
+                        is_change = 1;
+                        *image.Get_Pixel(i, j, 0) = (ImgPixel)0;
+                    }
+                }
+            }
+        }
+        count++;
+        if (PRINT == 1)
+            image.Print_Pattern_Data("F");
+    }
+
+    // Calculate Pixel number for debug
+    int count_pixel = 0;
+    for (int i = 0; i < row * col; i++) {
+        if (image.data[i] > 0)
+            count_pixel++;
+    }
+    //cout << "   COUNT: " << count_pixel << " ROUND: " << count << endl;
+    return 0;
+};
+
+int Morphology::Operator_Hit_Miss(string filename1, string filename2, int size1, int size2) {
+    /*if (size1 == PATTERN_S1)
+        cout << "Operator_Hit_Miss (Shrinking)" << endl;
+    else if (size1 == PATTERN_S2)
+        cout << "Operator_Hit_Miss (Thinning)" << endl;
+    else
+        cout << "operator_Hit_Miss (Sketonizing)" << endl;*/
+    Initialize_Pattern_Conditional(filename1, size1);
+    Initialize_Pattern_Unconditional(filename2, size2);
+    Apply_Hit_Miss(size1, size2);
+    return 1;
+}
+
+
+///////////////////////////////////////////////////
+///////////// Dilate/Erode Morphology /////////////
+///////////////////////////////////////////////////
+int Morphology::Operator_Dilate(Dataset filter) {
+    //cout << "Operator_Dilate: ";
+    int size = 9;
+    for (int i = 0; i < size; i++)
+        //cout << filter[i] << " ";
+    //cout << endl;
+    if (!is_binary)
+        Convert_to_Binary_Image();
+
+    // Find pixels to be added by filter
+    int neighbor_index[2][9] = {{-1, -1, -1, 0, 0, 0, 1, 1, 1}, {-1, 0, 1, -1, 0, 1, -1, 0, 1}};
+    vector<int> dilate_index_list;
+    for (int i = 0; i < image.row; i++) {
+        for (int j = 0; j < image.col; j++) {
+            if (image.Get_Value(i, j, 0) == 1) {
+                for (int k = 0; k < size; k++) {
+                    if (filter[k] == 1) {
+                        int temp_x = i + neighbor_index[0][k];
+                        int temp_y = j + neighbor_index[1][k];
+                        if (temp_x >= 0 && temp_x < image.row && temp_y >= 0 && temp_y < image.col)
+                            dilate_index_list.push_back(temp_x * image.col + temp_y);
+                    }
+                }
+            }
+        }
+    }
+    // Set dilated pixels
+    for (int i = 0; i < dilate_index_list.size(); i++) {
+        image.data[dilate_index_list[i]] = (ImgPixel)1;
+    }
+    return 1;
+}
+
+int Morphology::Operator_Erode(Dataset filter) {
+    //cout << "Operator_Erode: ";
+    int size = 9;
+    for (int i = 0; i < size; i++)
+        //cout << filter[i] << " ";
+    //cout << endl;
+    if (!is_binary)
+        Convert_to_Binary_Image();
+
+    // Find pixels to be added by filter
+    int neighbor_index[2][9] = {{-1, -1, -1, 0, 0, 0, 1, 1, 1}, {-1, 0, 1, -1, 0, 1, -1, 0, 1}};
+    vector<int> erode_index_list;
+    for (int i = 0; i < image.row; i++) {
+        for (int j = 0; j < image.col; j++) {
+            if (image.Get_Value(i, j, 0) == 1) {
+                // Find neighbor dataset
+                Dataset pixel_neighbor = {};
+                for (int k = 0; k < size; k++) {
+                    pixel_neighbor[k] = (int)image.Get_Value(i + neighbor_index[0][k], j + neighbor_index[1][k], 0);
+                }
+                // Compare the filter and pixels
+                int res = 1;
+                for (int k = 0; k < size; k++) {
+                    if (filter[k] == 1) {
+                        if (filter[k] != pixel_neighbor[k]) {
+                            res = 0;
+                            break;
+                        }
+                    }
+                }
+                // Add pixel
+                if (res == 1) {
+                    erode_index_list.push_back(i * image.col + j);
+                }
+            }
+        }
+    }
+    // Set erode pixels
+    for (int i = 0; i < image.row * image.col; i++) {
+        image.data[i] = (ImgPixel)0;
+    }
+    for (int i = 0; i < erode_index_list.size(); i++) {
+        image.data[erode_index_list[i]] = (ImgPixel)1;
+    }
+    return 1;
+}
+
+int Morphology::Operator_Open(Dataset filter1, Dataset filter2) {
+    Operator_Erode(filter1);
+    Operator_Dilate(filter2);
+    return 1;
+}
+
+int Morphology::Operator_Close(Dataset filter1, Dataset filter2) {
+    Operator_Dilate(filter1);
+    Operator_Erode(filter2);
+    return 1;
+}
+
+int Morphology::Operator_Filter(Dataset filter) {
+    //cout << "Operator_Filter: ";
+    int size = 9;
+    for (int i = 0; i < size; i++)
+        cout << filter[i] << " ";
+    cout << endl;
+    if (!is_binary)
+        Convert_to_Binary_Image();
+
+    // Find pixels to be added by filter
+    int neighbor_index[2][9] = {{-1, -1, -1, 0, 0, 0, 1, 1, 1}, {-1, 0, 1, -1, 0, 1, -1, 0, 1}};
+    vector<int> erode_index_list;
+    for (int i = 0; i < image.row; i++) {
+        for (int j = 0; j < image.col; j++) {
+            if (image.Get_Value(i, j, 0) == 1) {
+                // Find neighbor dataset
+                Dataset pixel_neighbor = {};
+                for (int k = 0; k < size; k++) {
+                    pixel_neighbor[k] = (int)image.Get_Value(i + neighbor_index[0][k], j + neighbor_index[1][k], 0);
+                }
+                // Compare the filter and pixels
+                int res = 1;
+                for (int k = 0; k < size; k++) {
+                    if (filter[k] != pixel_neighbor[k]) {
+                        res = 0;
+                        break;
+                    }
+                }
+                // Add pixel
+                if (res == 1) {
+                    erode_index_list.push_back(i * image.col + j);
+                }
+            }
+        }
+    }
+    // Set erode pixels
+    for (int i = 0; i < image.row * image.col; i++) {
+        image.data[i] = (ImgPixel)0;
+    }
+    for (int i = 0; i < erode_index_list.size(); i++) {
+        image.data[erode_index_list[i]] = (ImgPixel)1;
+    }
+    return 1;
+
+}
+
+
+///////////////////////////////////////////////
+///////////// Counting and Display/////////////
+///////////////////////////////////////////////
+int Morphology::Convert_Black_Image() {
+    if (!is_binary)
+        Convert_to_Binary_Image();
+    for (int i = 0; i < image.row * image.col; i++) {
+        if (image.data[i] == 0)
+            image.data[i] = 1;
+        else
+            image.data[i] = 0;
+    }
+    return 1;
+}
+
+int Morphology::Write(string filename) {
+    if (is_binary)
+        Convert_to_Grayscale_Image();
+    image.Write(filename);
+    Convert_to_Binary_Image();
+    return 1;
+}
+
+int Morphology::Count_Pixel() {
+    int count = 0;
+    for (int i = 0; i < image.row * image.col; i++){
+        if (image.data[i] > 0)
+            count++;
+    }
+    cout << endl << "The image has " << count << " points" << endl;
+    return count;
+}
+
+int Morphology::Count_Pathway(Image *image_label) {
+    vector<int> label_table;
+    // First Pass
+    int neighbor_index[2][9] = {{-1, -1, -1, 0, 0, 0, 1, 1, 1}, {-1, 0, 1, -1, 0, 1, -1, 0, 1}};
+    for (int i = 0; i < image.row; i++) {
+        for (int j = 0; j < image.col; j++) {
+            if (image.Get_Value(i, j, 0) == 1) {
+                // Find neighbor
+                Dataset pixel_neighbor = {};
+                int temp_min = INT_MAX;
+                int temp_max = 0;
+                for (int k = 0; k < 4; k++) {
+                    pixel_neighbor[k] = (int)image_label->Get_Value(i + neighbor_index[0][k], j + neighbor_index[1][k], 0);
+                    if (pixel_neighbor[k] > temp_max)
+                        temp_max = pixel_neighbor[k];
+                    if (pixel_neighbor[k] != 0 && pixel_neighbor[k] < temp_min)
+                        temp_min = pixel_neighbor[k];
+                }
+
+                if (temp_max == 0) {
+                    // Neighbor is empty
+                    int label_number = label_table.size() + 1;
+                    *image_label->Get_Pixel(i, j, 0) = (ImgPixel)label_number;
+                    label_table.push_back(label_number);
+                } else {
+                    *image_label->Get_Pixel(i, j, 0) = (ImgPixel)temp_min;
+                    int min = label_table[temp_min - 1];
+                    for (int k = 0; k < 4; k++) {
+                        if (pixel_neighbor[k] != 0) {
+                            label_table[pixel_neighbor[k] - 1] = min;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //Process table
+    for (int i = 0; i < label_table.size(); i++) {
+        if ((i + 1) > label_table[i]) {
+            for (int j = i; j < label_table.size(); j++) {
+                if (label_table[j] == (i + 1)) {
+                    label_table[j] = label_table[i];
+                }
+            }
+        }
+    }
+
+    // Print count result
+    int count = 2;
+    vector <int> temp_number;
+    temp_number.push_back(label_table[0]);
+    for (int i = 1; i < label_table.size(); i++) {
+        int temp_value = label_table[i];
+        int res = 0;
+        for (int j = 0; j < temp_number.size(); j++) {
+            if (temp_value == temp_number[j]) {
+                res = 1;
+                break;
+            }
+        }
+        if (res == 0) {
+            temp_number.push_back(temp_value);
+        }
+    }
+
+    // Normalize the label
+    for (int i = 0; i < label_table.size(); i++) {
+        for (int j = 0; j < temp_number.size(); j++) {
+            if (label_table[i] == temp_number[j]) {
+                label_table[i] = (j + 1);
+            }
+        }
+    }
+
+    // Second Pass
+    for (int i = 0; i < image.row; i++) {
+        for (int j = 0; j < image.col; j++) {
+            if (image.Get_Value(i, j, 0) != 0) {
+                int label_number = image_label->Get_Value(i, j, 0);
+                *image_label->Get_Pixel(i, j, 0) = (ImgPixel)label_table[label_number - 1];
+            }
+        }
+    }
+    return temp_number.size();
+}
+
+
+///////////////////////////////////////////////////
+///////////// S/T/K Morphology Private/////////////
+///////////////////////////////////////////////////
+int Morphology::Initialize_Pattern_Conditional(string filename, int size) {
+    ifstream fout(filename);
+    if (!fout.is_open()) {
+        cerr << "Cannot open the file " << filename << endl;
+        return 0;
+    }
+    filter = new Dataset[size];
+    char temp;
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < 10; j++) {
+            fout.get(temp);
+            if (temp == '1' || temp == '0')
+                filter[i][j] = (int)temp - 48;
+        }
+    }
+    fout.close();
+    return 1;
+}
+
+int Morphology::Initialize_Pattern_Unconditional(string filename, int size) {
+    ifstream fout(filename);
+    if (!fout.is_open()) {
+        cerr << "Cannot open the file " << filename << endl;
+        return 0;
+    }
+    filter2 = new Dataset[size];
+    char temp;
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < 10; j++) {
+            fout.get(temp);
+            if (temp == '1' || temp == '0' || temp == '2')
+                filter2[i][j] = (int)temp - 48;
+        }
+    }
+    fout.close();
+    return 1;
+}
+
+int Morphology::Compare_Dataset_Conditional(Dataset data1, Dataset data2) {
+    for (int i = 0; i < 9; i++) {
+        if (data1[i] != data2[i])
+            return 0;
+    }
+    return 1;
+}
+
+int Morphology::Compare_Dataset_Unconditional(Dataset data1, Dataset data2) {
+    for (int i = 0; i < 9; i++) {
+        int temp1 = data1[i];
+        int temp2 = data2[i];
+        if (temp2 == 2)
+            temp2 = 1;
+        if (temp1 != temp2)
+            return 0;
+    }
+    return 1;
+}
+
+
+///////////////////////////////////////////
+///////////// Helper Function /////////////
+///////////////////////////////////////////
+int Morphology::Convert_to_Binary_Image() {
+    for (int i = 0; i < image.row * image.col; i++) {
+        if (image.data[i] > 250)
+            image.data[i] /= 255;
+    }
+
+    is_binary = 1;
+    return 1;
+}
+
+int Morphology::Convert_to_Grayscale_Image() {
+    for (int i = 0; i < image.row * image.col; i++)
+        image.data[i] *= 255;
+    is_binary = 0;
+    return 1;
+}
+
+
+
+/* EE569 Homework Assignment #4
+ * Date: Noverber 29, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem1. OCR
+ *
+ * Main function:
+ * p1_main.cpp
+ *
+ * Class OCR:
+ * OCR.h
+ * OCR.cpp
+ *
+ * Class Image:
+ * image.h
+ * image.cpp
+ *
+ * Class Morphology:
+ * Morphology.h
+ * Morphology.cpp
+ */
+
+#ifndef P3_MORPHOLOGY_H
+#define P3_MORPHOLOGY_H
+#include "Image.h"
+
+///////////////////////////////////////
+///////////// Data Declaration /////////////
+///////////////////////////////////////
+typedef int Dataset[9];
+const int PATTERN_S1 = 58;
+const int PATTERN_T1 = 46;
+const int PATTERN_K1 = 40;
+const int PATTERN_S2 = 332;
+const int PATTERN_T2 = 332;
+const int PATTERN_K2 = 348;
+const string FILE_S1 = "p1_image/Pattern_S1.txt";
+const string FILE_T1 = "p1_image/Pattern_T1.txt";
+const string FILE_K1 = "p1_image/Pattern_K1.txt";
+const string FILE_S2 = "p1_image/Pattern_S2.txt";
+const string FILE_T2 = "p1_image/Pattern_T2.txt";
+const string FILE_K2 = "p1_image/Pattern_K2.txt";
+
+
+/////////////////////////////////////////////
+///////////// Class Declaration /////////////
+/////////////////////////////////////////////
+class Morphology {
+public:
+    Image image;
+    Dataset *filter = NULL;
+    Dataset *filter2 = NULL;
+    int is_binary = 0;
+
+
+///////////////////////////////////////
+///////////// Constructor /////////////
+///////////////////////////////////////
+    Morphology();
+    Morphology(Image *new_image);
+    Morphology(int new_row, int new_col, int new_byte, ImgPixel *pt_img);
+    ~Morphology();
+
+
+////////////////////////////////////////////
+///////////// S/T/K Morphology /////////////
+////////////////////////////////////////////
+// @para: filename: Conditional/Unconditonal Pattern file
+// list of filename is writen above
+// @para: size: the number of patterns in the file
+    int Apply_Hit_Miss(int size_filter1, int size_filter2);
+    int Operator_Hit_Miss(string filename1, string filename2, int size1, int size2);
+
+
+///////////////////////////////////////////////////
+///////////// Dilate/Erode Morphology /////////////
+///////////////////////////////////////////////////
+// @para filter: structure to filter the image (3 * 3)
+    int Operator_Dilate(Dataset filter);
+    int Operator_Erode(Dataset filter);
+    int Operator_Open(Dataset filter1, Dataset filter2);
+    int Operator_Close(Dataset filter1, Dataset filter2);
+    int Operator_Filter(Dataset filter);
+
+
+///////////////////////////////////////////////
+///////////// Counting and Display/////////////
+///////////////////////////////////////////////
+    int Convert_Black_Image();
+    int Write(string filename);
+    int Count_Pathway(Image*);
+    int Count_Pixel();
+
+
+private:
+///////////////////////////////////////////////////
+///////////// S/T/K Morphology Private/////////////
+///////////////////////////////////////////////////
+// @para data1: neighbor of pixels
+// @para data2: filter pattern
+// @para: filename: Conditional/Unconditonal Pattern file
+// list of filename is writen above
+// @para: size: the number of patterns in the file
+    int Initialize_Pattern_Conditional(string filename, int size);
+    int Initialize_Pattern_Unconditional(string filename, int size);
+    int Compare_Dataset_Conditional(Dataset data1, Dataset data2);
+    int Compare_Dataset_Unconditional(Dataset data1, Dataset data2);
+
+///////////////////////////////////////////
+///////////// Helper Function /////////////
+///////////////////////////////////////////
+    int Convert_to_Binary_Image();
+    int Convert_to_Grayscale_Image();
+};
+
+#endif //P3_MORPHOLOGY_H
+/* EE569 Homework Assignment #4
+ * Date: Noverber 29, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem1. OCR
+ *
+ * Main function:
+ * p1_main.cpp
+ *
+ * Class OCR:
+ * OCR.h
+ * OCR.cpp
+ *
+ * Class Image:
+ * image.h
+ * image.cpp
+ *
+ * Class Morphology:
+ * Morphology.h
+ * Morphology.cpp
+ */
+
+#include "OCR.h"
+
+/////////////////////////////////////////
+////////////// Constructor //////////////
+/////////////////////////////////////////
+OCR::OCR(int new_row, int new_col, int new_byte, string filename, int new_pathway_number, string *new_label) {
+        if (new_col <= 0 || new_col > 1024) {
+            cerr << "Wrong column" << endl;
+            exit(1);
+        }
+        if (new_row <= 0 || new_row > 1024) {
+            cerr << "Wrong row" << endl;
+            exit(1);
+        }
+        image.col = new_col;
+        image.row = new_row;
+        image.byte = new_byte;
+        char *c_filename = new char[filename.length() + 1];
+        strcpy(c_filename, filename.c_str());
+        FILE *file;
+        if (!(file = fopen(c_filename, "rb")))  {
+            cout << "Cannot open file: " << filename << endl;
+            exit(1);
+        }
+        image.data = new ImgPixel[image.col * image.row * image.byte];
+        if (!image.data) {
+            cerr << "Wrong allocate memory" << endl;
+            exit(1);
+        }
+        fread(image.data, sizeof(ImgPixel), image.col * image.row * image.byte, file);
+        fclose(file);
+        if (c_filename)
+            delete c_filename;
+        Convert_To_Gray(&image);
+        Convert_To_Binary_Turn(&image);
+
+        // Label
+        pathway_number = new_pathway_number;
+        label = new string[pathway_number];
+        for (int i = 0; i < pathway_number; i++) {
+            label[i] = new_label[i];
+        }
+    }
+
+
+//////////////////////////////////////
+////////////// Training //////////////
+//////////////////////////////////////
+void OCR::Train(string filename, int new_row, int new_col) {
+    cout << "Train" << endl;
+    Segment_Train(filename, new_row, new_col);
+    //Process_Train(filename, new_row, new_col);
+    Feature_Train(filename, new_row, new_col);
+}
+
+void OCR::Segment_Train(string filename, int new_row, int new_col) {
+    cout << "Segment_Train" << endl;
+    // Label pathway
+    Morphology morphology(&image);
+    Image image_label(image.row, image.col, 1, NULL);
+    pathway_number = morphology.Count_Pathway(&image_label);
+
+    // Segment by connecting pathway
+    for (int m = 0; m < pathway_number; m++) {
+        Image image_new(image.row, image.col, 1, NULL);
+        for (int i = 0; i < image.row; i++) {
+            for (int j = 0; j < image.col; j++) {
+                if ((int)image_label.Get_Value(i, j, 0) == (m + 1))
+                    *image_new.Get_Pixel(i, j, 0) = (ImgPixel)255;
+            }
+        }
+
+        // resize to 100 * 100
+        int row_max = 0;
+        int row_min = INT_MAX;
+        int col_max = 0;
+        int col_min = INT_MAX;
+        for (int i = 0; i < image.row; i++) {
+            for (int j = 0; j < image.col; j++) {
+                if ((int)image_new.Get_Value(i, j, 0) > 0) {
+                    if (i > row_max)
+                        row_max = i;
+                    if (i < row_min)
+                        row_min = i;
+                    if (j > col_max)
+                        col_max = j;
+                    if (j < col_min)
+                        col_min = j;
+                }
+            }
+        }
+        Image image_resize((row_max - row_min + 1), (col_max - col_min + 1), 1, NULL);
+        for (int i = 0; i < (row_max - row_min + 1); i++) {
+            for (int j = 0; j < (col_max - col_min + 1); j++) {
+                if ((int)image_new.Get_Value(i + row_min, j + col_min, 0) > 0) {
+                    *image_resize.Get_Pixel(i, j, 0) = (ImgPixel)255;
+                }
+            }
+        }
+        label_row = new_row;
+        label_col = new_col;
+        filename_train = filename;
+        image_resize.Convert_Size(new_row, new_col);
+
+        // Write
+        Convert_To_Binary(&image_resize);
+        image_resize.Write(filename + to_string(m) + ".raw");
+    }
+}
+
+void OCR::Feature_Train(string filename, int new_row, int new_col) {
+    cout << "Feature_Train" << endl;
+    Initial_Bit_Quad();
+    cout << "Label\t" << "Area\t" << "Peri \t" << "Circle  \t" << "SymmetrX\t" << "SymmetrY\t" << "MomentX  \t" << "MomentY  \t"<< "Euler\t" << endl;
+    int count = 0;
+    for (int i = 0; i < pathway_number; i++) {
+        // Symmetry feature
+        double feature_area = Feature_Area(filename, i);
+        double feature_symmetry_X = Feature_Symmetry_X(filename, i, feature_area);
+        double feature_symmetry_Y = Feature_Symmetry_Y(filename, i, feature_area);
+
+        // Thinning
+        Image image_feature(label_row, label_col, 1, filename + to_string(i) + ".raw");
+        Morphology op = Morphology(&image_feature);
+        Dataset filter = {0, 1, 0, 1, 1, 1, 0, 1, 0};
+        Dataset filter2 = {0, 0, 0, 0, 1, 0, 0, 0, 0};
+        for (int i = 0; i < 3; i++)
+            op.Operator_Close(filter, filter);
+        for (int i = 0; i < 3; i++)
+            op.Operator_Dilate(filter);
+        op.Operator_Hit_Miss(FILE_T1, FILE_T2, PATTERN_T1, PATTERN_T2);
+        op.image.Write(filename + to_string(i) + ".raw");
+
+        // other feature
+        feature_area = Feature_Area(filename, i);
+        double feature_perimeter = Feature_Perimeter(filename, i);
+        double feature_euler = Feature_Euler(filename, i);
+        double feature_circularity = Feature_Circularity(filename, i, feature_area, feature_perimeter);
+        double feature_moment_X = Feature_Moment_X(filename, i, feature_area);
+        double feature_moment_Y = Feature_Moment_Y(filename, i, feature_area);
+        string res = Classifier(feature_euler, feature_symmetry_X, feature_symmetry_Y, feature_moment_X, feature_moment_Y, feature_area, feature_perimeter);
+
+        // Print
+        cout << label[i] << "    \t";
+        cout << feature_area << "    \t";
+        cout << feature_perimeter << "    \t";
+        cout << feature_circularity << " \t";
+        cout << feature_symmetry_X << "     \t";
+        cout << feature_symmetry_Y << "     \t";
+        cout << feature_moment_X << "   \t";
+        cout << feature_moment_Y << "   \t";
+        cout << feature_euler << "   \t";
+        cout << res;
+        if (res == label[i]) {
+            count++;
+        } else {
+            cout << " (*)";
+        }
+        cout << endl;
+    }
+    cout << "Total " << count << ", " << pathway_number << ", " << (int)(((double)count / pathway_number) * 100) << " %" << endl;
+}
+
+string OCR::Classifier(double feature_euler, double feature_symmetry_X, double feature_symmetry_Y, double feature_moment_X, double feature_moment_Y, double feature_area, double feature_perimeter) {
+    string res = "";
+    if (feature_area < 100) {
+        return "I";
+    }
+    if (feature_euler > 0) {
+        if (feature_symmetry_X > 0.87) {
+            if (feature_moment_X > 0.5)
+                return "M";
+            else
+                return "T";
+        } else if (feature_symmetry_X > 0.47 && feature_symmetry_X <= 0.87) {
+            if (feature_symmetry_Y > 0.80) {
+                return "E";
+            } else if (feature_symmetry_Y > 0.6 && feature_symmetry_Y <= 0.9) {
+                if (feature_moment_Y > 0.55)
+                    return "3";
+                else if (feature_moment_X > 0.52)
+                    return "2";
+                else
+                    return "S";
+            } else if (feature_symmetry_Y > 0.35 && feature_symmetry_Y <= 0.6) {
+                if (feature_moment_X > 0.5)
+                    return "2";
+                else
+                    return "5";
+            } else
+                return "7";
+        } else {
+            if (feature_moment_X > 0.5)
+                return "L";
+            else
+                return "1";
+        }
+    } else if (feature_euler == 0) {
+        if (feature_symmetry_X > 0.89) {
+            return "0";
+        } else {
+            if (feature_symmetry_Y > 0.85) {
+                return "D";
+            } else {
+                if (feature_moment_X > 0.44) {
+                    if (feature_moment_Y > 0.5) {
+                        if (feature_perimeter > 630)
+                            return "9";
+                        else
+                            return "4";
+                    } else
+                        return "6";
+                } else
+                    return "P";
+            }
+        }
+    } else
+        return "8";
+}
+
+
+/////////////////////////////////////
+////////////// Testing //////////////
+/////////////////////////////////////
+void OCR::Test(int new_row, int new_col, int new_byte, string filename_test, string *label_test, int threshold1, int threshold2) {
+    Segment_Test(filename_test, &image_test, threshold1, threshold2);
+    vector<double> vector_symmetry_X, vector_symmetry_Y;
+    Feature_Test_Symmetry(filename_test, &vector_symmetry_X, &vector_symmetry_Y);
+    Process_Test(filename_test, label_test);
+    Feature_Test(filename_test, label_test, &vector_symmetry_X, &vector_symmetry_Y);
+}
+
+void OCR::Segment_Test(string filename_test, Image *new_image, int threshold1, int threshold2) {
+    cout << "Segment_Test: " << endl;
+    // Label pathway
+    Morphology morphology(new_image);
+    Image image_label(new_image->row, new_image->col, 1, NULL);
+    pathway_number_test = morphology.Count_Pathway(&image_label);
+    cout << "Total " << pathway_number_test << " pathways" << endl;
+
+    // Segment by connecting pathway
+    int count = 0;
+    for (int m = 0; m < pathway_number_test; m++) {
+        Image image_new(new_image->row, new_image->col, 1, NULL);
+        for (int i = 0; i < new_image->row; i++) {
+            for (int j = 0; j < new_image->col; j++) {
+                if ((int)image_label.Get_Value(i, j, 0) == (m + 1))
+                    *image_new.Get_Pixel(i, j, 0) = (ImgPixel)255;
+            }
+        }
+
+        // resize to 100 * 100
+        int row_max = 0;
+        int row_min = INT_MAX;
+        int col_max = 0;
+        int col_min = INT_MAX;
+        for (int i = 0; i < new_image->row; i++) {
+            for (int j = 0; j < new_image->col; j++) {
+                if ((int)image_new.Get_Value(i, j, 0) > 0) {
+                    if (i > row_max)
+                        row_max = i;
+                    if (i < row_min)
+                        row_min = i;
+                    if (j > col_max)
+                        col_max = j;
+                    if (j < col_min)
+                        col_min = j;
+                }
+            }
+        }
+        int row_resize = row_max - row_min + 1;
+        int col_resize = col_max - col_min + 1;
+        //cout << "SIZE: " << row_resize << ", " << col_resize;
+        if ((row_resize + col_resize >= 2 * threshold1) && row_resize < threshold2 && col_resize < threshold2) {
+            //cout << " (*)";
+            Image image_resize(row_resize, col_resize, 1, NULL);
+            for (int i = 0; i < (row_max - row_min + 1); i++) {
+                for (int j = 0; j < (col_max - col_min + 1); j++) {
+                    if ((int)image_new.Get_Value(i + row_min, j + col_min, 0) > 0) {
+                        *image_resize.Get_Pixel(i, j, 0) = (ImgPixel)255;
+                    }
+                }
+            }
+
+            image_resize.Convert_Size(label_row, label_col);
+
+            // binary the image
+            for (int i = 0; i < image_resize.row * image_resize.col; i++) {
+                ImgPixel temp = image_resize.data[i];
+                if (temp > (ImgPixel)170) {
+                    image_resize.data[i] = (ImgPixel)1;
+                } else {
+                    image_resize.data[i] = (ImgPixel)0;
+                }
+            }
+            image_resize.Write(filename_test + "_test_" + to_string(count) + ".raw");
+            //image_resize.Print_Pattern_Data("");
+            count++;
+        }
+        //cout << endl;
+    }
+    pathway_number_test = count;
+
+
+}
+
+void OCR::Feature_Test_Symmetry(string filename_test, vector<double>* vector_symmetry_X, vector<double>* vector_symmetry_Y) {
+    cout << "Feature_Test_Symmetry" << endl;
+    for (int i = 0; i < pathway_number_test; i++) {
+        // symmetry
+        double feature_area = Feature_Area(filename_test + "_test_", i);
+        vector_symmetry_X->push_back(Feature_Symmetry_X(filename_test + "_test_", i, feature_area));
+        vector_symmetry_Y->push_back(Feature_Symmetry_Y(filename_test + "_test_", i, feature_area));
+    }
+}
+
+void OCR::Feature_Test(string filename, string *new_label_test, vector<double>* vector_symmetry_X, vector<double>* vector_symmetry_Y) {
+    cout << "Feature_Test" << endl;
+    // Label
+    string *label_test = new string[pathway_number_test];
+    for (int i = 0; i < pathway_number_test; i++) {
+        label_test[i] = new_label_test[i];
+    }
+
+    Initial_Bit_Quad();
+    int count = 0;
+    cout << "Label\t" << "Area\t" << "Peri \t" << "Circle  \t" << "SymmetrX\t" << "SymmetrY\t" << "MomentX  \t" << "MomentY  \t"<< "Euler\t" << "Result\t" << endl;
+    for (int i = 0; i < pathway_number_test; i++) {
+        // symmetry
+        vector<double> vector_symmetry_X_temp = *(vector_symmetry_X);
+        vector<double> vector_symmetry_Y_temp = *(vector_symmetry_Y);
+        double feature_area = Feature_Area(filename + "_test_", i);
+        double feature_symmetry_X = vector_symmetry_X_temp[i];
+        double feature_symmetry_Y = vector_symmetry_Y_temp[i];
+        double feature_perimeter = Feature_Perimeter(filename + "_test_", i);
+        double feature_euler = Feature_Euler(filename + "_test_", i);
+        double feature_circularity = Feature_Circularity(filename + "_test_", i, feature_area, feature_perimeter);
+        double feature_moment_X = Feature_Moment_X(filename + "_test_", i, feature_area);
+        double feature_moment_Y = Feature_Moment_Y(filename + "_test_", i, feature_area);
+        string res = Classifier(feature_euler, feature_symmetry_X, feature_symmetry_Y, feature_moment_X, feature_moment_Y, feature_area, feature_perimeter);
+
+        // Print
+        cout << label_test[i] << "    \t";
+        cout << feature_area << "    \t";
+        cout << feature_perimeter << "  \t";
+        cout << feature_circularity << " \t";
+        cout << feature_symmetry_X << "  \t";
+        cout << feature_symmetry_Y << "  \t";
+        cout << feature_moment_X << "   \t";
+        cout << feature_moment_Y << "   \t";
+        cout << feature_euler << "   \t";
+        cout << res;
+        if (res == label_test[i]) {
+            count++;
+        } else {
+            cout << " (*)";
+        }
+        cout << endl;
+    }
+    cout << "Total " << count << ", " << pathway_number_test << ", " << (int)(((double)count / pathway_number_test) * 100) << " %" << endl;
+}
+
+void OCR::Read_Test(int new_row, int new_col, int new_byte, string filename) {
+    if (new_col <= 0 || new_col > 1024) {
+        cerr << "Wrong column" << endl;
+        exit(1);
+    }
+    if (new_row <= 0 || new_row > 1024) {
+        cerr << "Wrong row" << endl;
+        exit(1);
+    }
+    image_test.col = new_col;
+    image_test.row = new_row;
+    image_test.byte = new_byte;
+    char *c_filename = new char[filename.length() + 1];
+    strcpy(c_filename, filename.c_str());
+    FILE *file;
+    if (!(file = fopen(c_filename, "rb")))  {
+        cout << "Cannot open file: " << filename << endl;
+        exit(1);
+    }
+    image_test.data = new ImgPixel[image_test.col * image_test.row * image_test.byte];
+    if (!image_test.data) {
+        cerr << "Wrong allocate memory" << endl;
+        exit(1);
+    }
+    fread(image_test.data, sizeof(ImgPixel), image_test.col * image_test.row * image_test.byte, file);
+    fclose(file);
+    if (c_filename)
+        delete c_filename;
+}
+
+void OCR::Process_Test(string filename_test, string *new_label_test) {
+    cout << "Process_Test" << endl;
+    // Label
+    string *label_test = new string[pathway_number_test];
+    for (int i = 0; i < pathway_number_test; i++) {
+        label_test[i] = new_label_test[i];
+        // Thinning
+        Image image_feature(label_row, label_col, 1, filename_test + "_test_" + to_string(i) + ".raw");
+        Morphology op = Morphology(&image_feature);
+        Dataset filter = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+        for (int i = 0; i < 3; i++)
+            op.Operator_Close(filter, filter);
+        for (int i = 0; i < 3; i++)
+            op.Operator_Dilate(filter);
+        op.Operator_Hit_Miss(FILE_T1, FILE_T2, PATTERN_T1, PATTERN_T2);
+        op.image.Write(filename_test + "_test_" + to_string(i) + ".raw");
+    }
+}
+
+
+////////////////////////////////////////
+////////////// Preprocess //////////////
+////////////////////////////////////////
+void OCR::Preprocess_Test1(string filename_test) {
+    cout << "Preprocess_Test" << endl;
+    Convert_To_Gray(&image_test);
+    int max = 0;
+    int min = 255;
+    for (int i = 0; i < image_test.row * image_test.col; i++) {
+        int temp = (int)image_test.data[i];
+        if (temp > 60)
+            image_test.data[i] = 0;
+        else
+            image_test.data[i] = 255;
+    }
+
+    image_test.Write("test.raw");
+}
+
+void OCR::Preprocess_Test2(string filename_test) {
+    cout << "Preprocess_Test" << endl;
+    Convert_To_Gray(&image_test);
+    image_test.Write_Txt("test.txt");
+    int max = 0;
+    int min = 255;
+    for (int i = 0; i < image_test.row * image_test.col; i++) {
+        int temp = (int)image_test.data[i];
+        if (temp > 170)
+            image_test.data[i] = 0;
+        else
+            image_test.data[i] = 255;
+    }
+
+
+
+    Morphology op = Morphology(&image_test);
+    Dataset filter = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+    for (int i = 0; i < 3; i++)
+        op.Operator_Close(filter, filter);
+
+    for (int i = 0; i < image_test.row  * image_test.col; i++) {
+        image_test.data[i] = op.image.data[i];
+    }
+    image_test.Write("test.raw");
+}
+
+void OCR::Preprocess_Test3(string filename_test) {
+    cout << "Preprocess_Test3" << endl;
+    Convert_To_Gray(&image_test);
+    image_test.Write_Txt("test.txt");
+    image_test.Write("test.raw");
+
+    // Histogram equalization
+    double pdf[256] = {};
+    double cdf[256];
+    int temp;
+    for (int i = 0; i < image_test.row * image_test.col; i++) {
+        temp = (int)image_test.data[i];
+        pdf[temp]++;
+    }
+    for (int i = 0; i < 256; i++)
+        pdf[i] /= (double)image_test.row * image_test.col;
+    cdf[0] = pdf[0];
+    for (int i = 1; i < 256; i++) {
+        cdf[i] = cdf[i - 1] + pdf[i];
+    }
+    short tranferfunc[256];
+    for (int i = 0; i < 256; i++)
+        tranferfunc[i] = (short)floor(cdf[i] * 256);
+    for (int i = 0; i < image_test.row; i++) {
+        for (int j = 0; j < image_test.col; j++) {
+            temp = (int)image_test.data[i * image_test.col + j];
+            image_test.data[i * image_test.col + j] = tranferfunc[temp];
+        }
+    }
+    image_test.Write("test2.raw");
+
+    // binary
+    int max = 0;
+    int min = 255;
+    for (int i = 0; i < image_test.row * image_test.col; i++) {
+        int temp = (int)image_test.data[i];
+        if (temp > 110)
+            image_test.data[i] = 0;
+        else
+            image_test.data[i] = 255;
+    }
+    image_test.Write("test3.raw");
+
+
+    Morphology op = Morphology(&image_test);
+    Dataset filter = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+    for (int i = 0; i < 3; i++)
+        op.Operator_Close(filter, filter);
+
+    for (int i = 0; i < image_test.row  * image_test.col; i++) {
+        image_test.data[i] = op.image.data[i];
+    }
+}
+
+void OCR::Preprocess_Test4(string filename_test) {
+    cout << "Preprocess_Test3" << endl;
+    Convert_To_Gray(&image_test);
+    image_test.Write_Txt("test.txt");
+    image_test.Write("test.raw");
+
+    // Binary
+    int max = 0;
+    int min = 255;
+    for (int i = 0; i < image_test.row * image_test.col; i++) {
+        int temp = (int)image_test.data[i];
+        if (temp > 50)
+            image_test.data[i] = 0;
+        else
+            image_test.data[i] = 255;
+    }
+    image_test.Write("test2.raw");
+
+    // Morphology
+    Morphology op = Morphology(&image_test);
+    Dataset filter = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+    Dataset filter2 = {0, 0, 0, 1, 1, 1, 0, 0, 0};
+    for (int i = 0; i < 2; i++)
+        op.Operator_Dilate(filter2);
+
+    for (int i = 0; i < image_test.row  * image_test.col; i++) {
+        image_test.data[i] = op.image.data[i];
+    }
+    for (int i = 0; i < image_test.row * image_test.col; i++) {
+        image_test.data[i] *= 255;
+    }
+    image_test.Write("test3.raw");
+    for (int i = 0; i < image_test.row * image_test.col; i++) {
+        image_test.data[i] /= 255;
+    }
+}
+
+
+//////////////////////////////////////////////
+////////////// Feature Analysis //////////////
+//////////////////////////////////////////////
+double OCR::Feature_Area(string filename, int num) {
+        Image image_feature(label_row, label_col, 1, filename + to_string(num) + ".raw");
+        int total = 0;
+        for (int i = 0; i < label_row; i++) {
+            for (int j = 0; j < label_col; j++) {
+                if (image_feature.Get_Value(i, j, 0) == (ImgPixel)1) {
+                    total++;
+                }
+            }
+        }
+        return (double)total;
+    }
+
+double OCR::Feature_Perimeter(string filename, int num) {
+        Image image_feature(label_row, label_col, 1, filename + to_string(num) + ".raw");
+        int total = 0;
+        for (int i = 0; i < label_row; i++) {
+            for (int j = 0; j < label_col; j++) {
+                if (image_feature.Get_Value(i, j, 0) == (ImgPixel)1) {
+                    if (image_feature.Get_Value(i - 1, j, 0) == (ImgPixel)0)
+                        total++;
+                    if (image_feature.Get_Value(i + 1, j, 0) == (ImgPixel)0)
+                        total++;
+                    if (image_feature.Get_Value(i, j - 1, 0) == (ImgPixel)0)
+                        total++;
+                    if (image_feature.Get_Value(i, j + 1, 0) == (ImgPixel)0)
+                        total++;
+                }
+            }
+        }
+        return (double)total;
+    }
+
+double OCR::Feature_Circularity(string filename, int num, double feature_area, double feature_perimeter) {
+        double feature_cirularity = 4 * PI * feature_area / (feature_perimeter * feature_perimeter);
+        return feature_cirularity;
+    }
+
+double OCR::Feature_Symmetry_Y(string filename, int num, double feature_area) {
+        Image image_feature(label_row, label_col, 1, filename + to_string(num) + ".raw");
+        int total = 0;
+        for (int i = 0; i < label_row / 2; i++) {
+            for (int j = 0; j < label_col; j++) {
+                if (image_feature.Get_Value(i, j, 0) == (ImgPixel)1) {
+                    if (image_feature.Get_Value(i, j, 0) == image_feature.Get_Value(label_row - 1 - i, j, 0))
+                        total++;
+                }
+            }
+        }
+        return total * 2 / feature_area;
+    }
+
+double OCR::Feature_Symmetry_X(string filename, int num, double feature_area) {
+    Image image_feature(label_row, label_col, 1, filename + to_string(num) + ".raw");
+    int total = 0;
+    for (int i = 0; i < label_row; i++) {
+        for (int j = 0; j < label_col / 2; j++) {
+            if (image_feature.Get_Value(i, j, 0) == (ImgPixel)1) {
+                if (image_feature.Get_Value(i, j, 0) == image_feature.Get_Value(i, label_col - 1 - j, 0))
+                    total++;
+            }
+        }
+    }
+    return total * 2 / feature_area;
+}
+
+double OCR::Feature_Euler(string filename, int num) {
+    Image image_feature(label_row, label_col, 1, filename + to_string(num) + ".raw");
+    int q1 = 0;
+    int q3 = 0;
+    int qD = 0;
+    for (int i = 0; i < label_row; i++) {
+        for (int j = 0; j < label_row; j++) {
+            Bit_Quad neighbor;
+            neighbor[0] = (int)image_feature.Get_Value(i, j, 0);
+            neighbor[1] = (int)image_feature.Get_Value(i, j + 1, 0);
+            neighbor[2] = (int)image_feature.Get_Value(i + 1, j, 0);
+            neighbor[3] = (int)image_feature.Get_Value(i + 1, j + 1, 0);
+            for (int k = 0; k < 4; k++) {
+                q1 += Compare_Bit_Quad(neighbor, bit_quad[k]);
+            }
+            for (int k = 4; k < 8; k++) {
+                q3 += Compare_Bit_Quad(neighbor, bit_quad[k]);
+            }
+            for (int k = 8; k < 10; k++) {
+                qD += Compare_Bit_Quad(neighbor, bit_quad[k]);
+            }
+        }
+    }
+    double feature_Euler = 0.25 * (q1 - q3 - 2 * qD);
+    return feature_Euler;
+}
+
+double OCR::Feature_Moment_X(string filename, int num, double feature_area) {
+    Image image_feature(label_row, label_col, 1, filename + to_string(num) + ".raw");
+    double total = 0;
+    for (int i = 0; i < label_row; i++) {
+        for (int j = 0; j < label_col; j++) {
+            total += (i + 1.5) * image_feature.Get_Value(i, j, 0) / label_row;
+        }
+    }
+    return total / feature_area;
+}
+
+double OCR::Feature_Moment_Y(string filename, int num, double feature_area) {
+    Image image_feature(label_row, label_col, 1, filename + to_string(num) + ".raw");
+    double total = 0;
+    for (int i = 0; i < label_row; i++) {
+        for (int j = 0; j < label_col; j++) {
+            total += (j + 1.5) * image_feature.Get_Value(i, j, 0) / label_col;
+        }
+    }
+    return total / feature_area;
+}
+
+
+/////////////////////////////////////////////
+////////////// Helper Function //////////////
+/////////////////////////////////////////////
+void OCR::Initial_Bit_Quad() {
+    int temp_data[40] = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0,
+                         1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0};
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 4; j++) {
+            bit_quad[i][j] = temp_data[i * 4 + j];
+        }
+    }
+}
+
+int OCR::Compare_Bit_Quad(Bit_Quad bitquad1, Bit_Quad bitquad2) {
+    for (int i = 0; i < 4; i++) {
+        if (bitquad1[i] != bitquad2[i]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void OCR::Convert_To_Binary_Turn(Image* new_image) {
+    for (int i = 0; i < new_image->row * new_image->col; i++) {
+        ImgPixel temp = new_image->data[i];
+        if (temp > (ImgPixel)170) {
+            new_image->data[i] = (ImgPixel)0;
+        } else {
+            new_image->data[i] = (ImgPixel)255;
+        }
+    }
+}
+
+void OCR::Convert_To_Binary(Image* new_image) {
+    for (int i = 0; i < new_image->row * new_image->col; i++) {
+        ImgPixel temp = new_image->data[i];
+        if (temp > (ImgPixel)170) {
+            new_image->data[i] = (ImgPixel)1;
+        } else {
+            new_image->data[i] = (ImgPixel)0;
+        }
+    }
+}
+
+void OCR::Convert_To_Gray(Image* new_image) {
+    if (new_image->byte == 3) {
+        ImgPixel *data_temp = new ImgPixel [new_image->col * new_image->row];
+        for (int i = 0; i < new_image->row; i++) {
+            for (int j = 0; j < new_image->col; j++) {
+                data_temp[i * new_image->col + j] = new_image->Get_Value(i, j, 0) * 0.21 + new_image->Get_Value(i, j, 1) * 0.72 + new_image->Get_Value(i, j, 2) * 0.07;
+            }
+        }
+        delete new_image->data;
+        new_image->data = new ImgPixel[new_image->col * new_image->row];
+        for (int i = 0; i < new_image->row; i++) {
+            for (int j = 0; j < new_image->col; j++) {
+                new_image->data[i * new_image->col + j] = data_temp[i * new_image->col + j];
+            }
+        }
+        new_image->byte = 1;
+    }
+}
+
+
+/* EE569 Homework Assignment #4
+ * Date: Noverber 29, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem1. OCR
+ *
+ * Main function:
+ * p1_main.cpp
+ *
+ * Class OCR:
+ * OCR.h
+ * OCR.cpp
+ *
+ * Class Image:
+ * image.h
+ * image.cpp
+ *
+ * Class Morphology:
+ * Morphology.h
+ * Morphology.cpp
+ */
+#ifndef P1_OCR_H
+#define P1_OCR_H
+
+#include "Image.h"
+#include "Morphology.h"
+
+typedef int Bit_Quad[4];
+
+class OCR {
+public:
+    Image image;
+    Image image_test;
+    int pathway_number;
+    int pathway_number_test;
+    string *label;
+    string filename_train;
+    string filename_test;
+    int label_row;
+    int label_col;
+    Bit_Quad bit_quad[10];
+
+/////////////////////////////////////////
+////////////// Constructor //////////////
+/////////////////////////////////////////
+    OCR(int new_row, int new_col, int new_byte, string filename, int new_pathway_number, string *new_label);
+
+//////////////////////////////////////
+////////////// Training //////////////
+//////////////////////////////////////
+    void Train(string filename, int new_row, int new_col);
+
+    void Segment_Train(string filename, int new_row, int new_col);
+
+    void Feature_Train(string filename, int new_row, int new_col);
+
+    string Classifier(double feature_euler, double feature_symmetry_X, double feature_symmetry_Y, double feature_moment_X, double feature_moment_Y, double feature_area, double feature_perimeter);
+
+/////////////////////////////////////
+////////////// Testing //////////////
+/////////////////////////////////////
+    void Test(int new_row, int new_col, int new_byte, string filename_test, string *label_test, int threshold1, int threshold2);
+
+    void Segment_Test(string filename_test, Image *new_image, int threshold1, int threshold2);
+
+    void Feature_Test_Symmetry(string filename_test, vector<double>* vector_symmetry_X, vector<double>* vector_symmetry_Y);
+
+    void Feature_Test(string filename, string *new_label_test, vector<double>* vector_symmetry_X, vector<double>* vector_symmetry_Y);
+
+    void Read_Test(int new_row, int new_col, int new_byte, string filename);
+
+    void Process_Test(string filename_test, string *new_label_test);
+
+////////////////////////////////////////
+////////////// Preprocess //////////////
+////////////////////////////////////////
+    void Preprocess_Test1(string filename_test);
+
+    void Preprocess_Test2(string filename_test);
+
+    void Preprocess_Test3(string filename_test);
+
+    void Preprocess_Test4(string filename_test);
+
+private:
+//////////////////////////////////////////////
+////////////// Feature Analysis //////////////
+//////////////////////////////////////////////
+    double Feature_Area(string filename, int num);
+
+    double Feature_Perimeter(string filename, int num);
+
+    double Feature_Circularity(string filename, int num, double feature_area, double feature_perimeter);
+
+    double Feature_Symmetry_Y(string filename, int num, double feature_area);
+
+    double Feature_Symmetry_X(string filename, int num, double feature_area);
+
+    double Feature_Euler(string filename, int num);
+
+    double Feature_Moment_X(string filename, int num, double feature_area);
+
+    double Feature_Moment_Y(string filename, int num, double feature_area);
+
+/////////////////////////////////////////////
+////////////// Helper Function //////////////
+/////////////////////////////////////////////
+    void Initial_Bit_Quad();
+
+    int Compare_Bit_Quad(Bit_Quad bitquad1, Bit_Quad bitquad2);
+
+    void Convert_To_Binary_Turn(Image* new_image);
+
+    void Convert_To_Binary(Image* new_image);
+
+    void Convert_To_Gray(Image* new_image);
+};
+#endif //P1_OCR_H
+/* EE569 Homework Assignment #4
+ * Date: Noverber 29, 2015
+ * Name: Meiyi Yang
+ * ID: 6761054585
+ * email: meiyiyan@usc.edu
+ * Problem1. OCR
+ *
+ * Main function:
+ * p1_main.cpp
+ *
+ * Class OCR:
+ * OCR.h
+ * OCR.cpp
+ *
+ * Class Image:
+ * image.h
+ * image.cpp
+ *
+ * Class Morphology:
+ * Morphology.h
+ * Morphology.cpp
+ */
+
+#include <iostream>
+#include "OCR.h"
+using namespace std;
+
+void Prob1a() {
+    int row = 256;
+    int col = 512;
+    int pathway_number = 18;
+    string label[18] = {"S", "P", "E", "D", "L", "I", "M", "T", "0", "1", "2", "3", "6", "8", "9", "4", "5", "7"};
+    OCR ocr = OCR(row, col, 3, "p1_image/Training.raw", pathway_number, label);
+    ocr.Train("p1_result/label", 100, 100);
+}
+
+void Prob1b(int number) {
+    if (number == 0) {
+        int row = 256;
+        int col = 512;
+        int row_test = 759;
+        int col_test = 620;
+        string filename_train = "p1_image/Training.raw";
+        string filename_test = "p1_image/Test_ideal1.raw";
+        string filename_index_train = "p1_result/label";
+        string filename_index_test = "p1_result/Test1";
+
+        int pathway_number = 18;
+        string label[18] = {"S", "P", "E", "D", "L", "I", "M", "T", "0", "1", "2", "3", "6", "8", "9", "4", "5", "7"};
+        string label_test[12] = {"E", "S", "E", "D", "P", "L", "I", "M", "I", "T", "0", "7"};
+
+        OCR ocr = OCR(row, col, 3, filename_train, pathway_number, label);
+        ocr.Train(filename_index_train, 100, 100);
+        ocr.Read_Test(row_test, col_test, 3, filename_test);
+        ocr.Preprocess_Test1(filename_index_test);
+        ocr.Test(row_test, col_test, 3, filename_index_test, label_test, 10, 400);
+    } else {
+        int row = 256;
+        int col = 512;
+        int row_test = 400;
+        int col_test = 250;
+        string filename_train = "p1_image/Training.raw";
+        string filename_test = "p1_image/Test_ideal2.raw";
+        string filename_index_train = "p1_result/label";
+        string filename_index_test = "p1_result/Test2";
+
+        int pathway_number = 18;
+        string label[18] = {"S", "P", "E", "D", "L", "I", "M", "T", "0", "1", "2", "3", "6", "8", "9", "4", "5", "7"};
+        string label_test[12] = {"S", "P", "E", "E", "D", "L", "I", "M", "I", "T", "3", "1"};
+
+        OCR ocr = OCR(row, col, 3, filename_train, pathway_number, label);
+        ocr.Train(filename_index_train, 100, 100);
+        ocr.Read_Test(row_test, col_test, 3, filename_test);
+        ocr.Preprocess_Test2(filename_index_test);
+        ocr.Test(row_test, col_test, 3, filename_index_test, label_test, 5, 200);
+    }
+}
+
+void Prob1c() {
+    int row = 256;
+    int col = 512;
+    int row_test = 360;
+    int col_test = 267;
+    string filename_train = "p1_image/Training.raw";
+    string filename_test = "p1_image/Test_night.raw";
+    string filename_index_train = "p1_result/label";
+    string filename_index_test = "p1_result/Test3";
+
+    int pathway_number = 18;
+    string label[18] = {"S", "P", "E", "D", "L", "I", "M", "T", "0", "1", "2", "3", "6", "8", "9", "4", "5", "7"};
+    string label_test[13] = {"S", "P", "E", "E", "D", "T", "M", "I", "I", "L", "5", "9", "1"};
+
+    OCR ocr = OCR(row, col, 3, filename_train, pathway_number, label);
+    ocr.Train(filename_index_train, 100, 100);
+    ocr.Read_Test(row_test, col_test, 3, filename_test);
+    ocr.Preprocess_Test3(filename_index_test);
+    ocr.Test(row_test, col_test, 3, filename_index_test, label_test, 5, 90);
+}
+
+void Prob1c2() {
+    int row = 256;
+    int col = 512;
+    int row_test = 361;
+    int col_test = 215;
+    string filename_train = "p1_image/Training.raw";
+    string filename_test = "p1_image/Test_shade.raw";
+    string filename_index_train = "p1_result/label";
+    string filename_index_test = "p1_result/Test4";
+
+    int pathway_number = 18;
+    string label[18] = {"S", "P", "E", "D", "L", "I", "M", "T", "0", "1", "2", "3", "6", "8", "9", "4", "5", "7"};
+    string label_test[21] = {"D", "E", "E", "P", "S", "T", "I", "M", "I", "L", "5", "2", "V", "R", "Y", "O", "E", "E", "D", "S", "P"};
+    OCR ocr = OCR(row, col, 3, filename_train, pathway_number, label);
+    ocr.Train(filename_index_train, 100, 100);
+    ocr.Read_Test(row_test, col_test, 3, filename_test);
+    ocr.Preprocess_Test4(filename_index_test);
+    ocr.Test(row_test, col_test, 3, filename_index_test, label_test, 14, 120);
+}
+
+int main() {
+    cout << "PROBLEM 1!" << endl;
+    int number = 0;
+    switch(number) {
+        case 0:
+            //Prob1a();
+            Prob1b(0);
+            Prob1b(1);
+            Prob1c();
+            Prob1c2();
+            break;
+        case 1:
+            Prob1c();
+            break;
+        case 2:
+            Prob1c2();
+            break;
+        default:
+            break;
+    }
+    return 0;
+}% EE569 Homework Assignment #4 
+% Date: Noverber 29th 2015 
+% Name: Meiyi Yang
+% ID:  6761-0405-85 
+% email:  meiyiyan@usc.edu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2:    Coutour Modeling
+% p2_code/p2_Level_Set/prob2b.m       % Main script for prob2b
+% p2_code/p2_Level_Set/drlse_edge.m   % Helper function for level-set
+% p2_code/p2_Level_Set/level_set.m    % Helper function for level-set
+% p1_code/p2_Snake_Algorithm/         % GUI for snake algorithm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+
+clear all;
+close all;
+
+number = input('Which subproblem (0 or 1 or 2 or 3)? ');
+%%%%%%%%%%%%%%%%%%%
+%%%% Problem2a %%%%
+%%%%%%%%%%%%%%%%%%%
+if number == 0
+    filename = 'spine.tif';
+    iter_outer = 70;
+    lambda = 5; % coefficient of the weighted length term L(phi)
+    alfa = 2;  % coefficient of the weighted area term A(phi)
+    epsilon = 1; % papramater that specifies the width of the DiracDelta function
+    x_min = 30;
+    x_max = 380;
+    y_min = 10;
+    y_max = 590;
+    level_set(filename, iter_outer, lambda, alfa, epsilon, x_min, x_max, y_min, y_max)
+end
+if number == 0
+    filename = 'spine.tif';
+    iter_outer = 60;
+    lambda = 2; % coefficient of the weighted length term L(phi)
+    alfa = 5;  % coefficient of the weighted area term A(phi)
+    epsilon = 1; % papramater that specifies the width of the DiracDelta function
+    x_min = 30;
+    x_max = 380;
+    y_min = 10;
+    y_max = 590;
+    level_set(filename, iter_outer, lambda, alfa, epsilon, x_min, x_max, y_min, y_max)
+end
+if number == 0
+    filename = 'spine.tif';
+    iter_outer = 70;
+    lambda = 2; % coefficient of the weighted length term L(phi)
+    alfa = 2;  % coefficient of the weighted area term A(phi)
+    epsilon = 1; % papramater that specifies the width of the DiracDelta function
+    x_min = 30;
+    x_max = 380;
+    y_min = 10;
+    y_max = 590;
+    level_set(filename, iter_outer, lambda, alfa, epsilon, x_min, x_max, y_min, y_max)
+end
+
+%%%%%%%%%%%%%%%%%%%
+%%%% Problem2b %%%%
+%%%%%%%%%%%%%%%%%%%
+if number == 1
+    filename = 'coronary.tif';
+    iter_outer = 60;
+    lambda = 5; % coefficient of the weighted length term L(phi)
+    alfa = 2;  % coefficient of the weighted area term A(phi)
+    epsilon = 1; % papramater that specifies the width of the DiracDelta function
+    x_min = 70;
+    x_max = 420;
+    y_min = 50;
+    y_max = 460;
+    level_set(filename, iter_outer, lambda, alfa, epsilon, x_min, x_max, y_min, y_max)
+end
+
+if number == 1
+    filename = 'coronary.tif';
+    iter_outer = 60;
+    lambda = 2; % coefficient of the weighted length term L(phi)
+    alfa = 5;  % coefficient of the weighted area term A(phi)
+    epsilon = 1; % papramater that specifies the width of the DiracDelta function
+    x_min = 70;
+    x_max = 420;
+    y_min = 50;
+    y_max = 460;
+    level_set(filename, iter_outer, lambda, alfa, epsilon, x_min, x_max, y_min, y_max)
+end
+
+if number == 1
+    filename = 'coronary.tif';
+    iter_outer = 60;
+    lambda = 2; % coefficient of the weighted length term L(phi)
+    alfa = 2;  % coefficient of the weighted area term A(phi)
+    epsilon = 1; % papramater that specifies the width of the DiracDelta function
+    x_min = 70;
+    x_max = 420;
+    y_min = 50;
+    y_max = 460;
+    level_set(filename, iter_outer, lambda, alfa, epsilon, x_min, x_max, y_min, y_max)
+end
+
+%%%%%%%%%%%%%%%%%%%
+%%%% Problem2c %%%%
+%%%%%%%%%%%%%%%%%%%
+if number == 2
+    filename = 'blood_cells.tif';
+    iter_outer = 50;
+    lambda = 5; % coefficient of the weighted length term L(phi)
+    alfa = 2;  % coefficient of the weighted area term A(phi)
+    epsilon = 1; % papramater that specifies the width of the DiracDelta function
+    x_min = 120;
+    x_max = 430;
+    y_min = 340;
+    y_max = 580;
+    level_set(filename, iter_outer, lambda, alfa, epsilon, x_min, x_max, y_min, y_max)
+end
+
+if number == 2
+    filename = 'blood_cells.tif';
+    iter_outer = 50;
+    lambda = 2; % coefficient of the weighted length term L(phi)
+    alfa = 5;  % coefficient of the weighted area term A(phi)
+    epsilon = 1; % papramater that specifies the width of the DiracDelta function
+    x_min = 120;
+    x_max = 430;
+    y_min = 340;
+    y_max = 580;
+    level_set(filename, iter_outer, lambda, alfa, epsilon, x_min, x_max, y_min, y_max)
+end
+
+%%%%%%%%%%%%%%%%%%%
+%%%% Problem2d %%%%
+%%%%%%%%%%%%%%%%%%%
+if number == 3
+    filename = 'brain.tif';
+    iter_outer = 50;
+    lambda = 5; % coefficient of the weighted length term L(phi)
+    alfa = 2;  % coefficient of the weighted area term A(phi)
+    epsilon = 1; % papramater that specifies the width of the DiracDelta function
+    x_min = 120;
+    x_max = 280;
+    y_min = 350;
+    y_max = 510;
+    level_set(filename, iter_outer, lambda, alfa, epsilon, x_min, x_max, y_min, y_max)
+end% EE569 Homework Assignment #4 
+% Date: Noverber 29th 2015 
+% Name: Meiyi Yang
+% ID:  6761-0405-85 
+% email:  meiyiyan@usc.edu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3:    Salient Point Descriptors and Image Matching
+% p3_code/prob3a.m      %  main script for problem3a
+% p3_code/prob3b.m      %  main script for problem3b
+% p3_code/prob3c.m      %  main script for problem3c
+% p3_code/SIFT/         %  SIFT Source code
+% p3_code/SURF/         % SURF Source code
+% p3_code/BOW/          %  BOW Source code
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+clc;
+clear all;
+close all;
+
+%% SIFT
+Sift_Feature('Bus.jpg', 300, 400);
+Sift_Feature('Sedan.jpg', 233, 400);
+
+%% SURF
+I=imread('Bus.jpg');
+Options.verbose=false; % Set this option to true if you want to see more information
+Ipts=OpenSurf(I,Options); % Get the Key Points
+PaintSURF(I, Ipts);  % Draw points on the image
+
+I2=imread('Sedan.jpg');
+Options.verbose=false; % Set this option to true if you want to see more information
+Ipts=OpenSurf(I2,Options); % Get the Key Points
+PaintSURF(I2, Ipts);  % Draw points on the image% EE569 Homework Assignment #4 
+% Date: Noverber 29th 2015 
+% Name: Meiyi Yang
+% ID:  6761-0405-85 
+% email:  meiyiyan@usc.edu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3:    Salient Point Descriptors and Image Matching
+% p3_code/prob3a.m      %  main script for problem3a
+% p3_code/prob3b.m      %  main script for problem3b
+% p3_code/prob3c.m      %  main script for problem3c
+% p3_code/SIFT/         %  SIFT Source code
+% p3_code/SURF/         % SURF Source code
+% p3_code/BOW/          %  BOW Source code
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+clear all;
+
+% Example 2, Corresponding points
+% Load images
+  I1=imread('School_bus1.jpg');
+  I2=imread('School_bus2.jpg');
+  
+% Get the Key Points
+  Options.upright=true;
+  Options.tresh=0.0001;
+  Ipts1=OpenSurf(I1,Options);
+  Ipts2=OpenSurf(I2,Options);
+  
+  
+ 
+% Put the landmark descriptors in a matrix
+  D1 = reshape([Ipts1.descriptor],64,[]); 
+  D2 = reshape([Ipts2.descriptor],64,[]); 
+  
+    figure;
+  imshow(D1);
+  figure;
+  imshow(D2);  
+  
+% Find the best matches
+  err=zeros(1,length(Ipts1));
+  cor1=1:length(Ipts1); 
+  cor2=zeros(1,length(Ipts1));
+  for i=1:length(Ipts1),
+      distance=sum((D2-repmat(D1(:,i),[1 length(Ipts2)])).^2,1);
+      [err(i),cor2(i)]=min(distance);
+  end
+  
+% Sort matches on vector distance
+  [err, ind]=sort(err); 
+  cor1=cor1(ind); 
+  cor2=cor2(ind);
+  
+% Show both images
+  I = zeros([size(I1,1) size(I1,2)*2 size(I1,3)]);
+  I(:,1:size(I1,2),:)=I1; I(:,size(I1,2)+1:size(I1,2)+size(I2,2),:)=I2;
+  figure, imshow(I/255); hold on;
+  
+% Show the best matches
+  for i=1:30,
+      c=rand(1,3);
+      plot([Ipts1(cor1(i)).x Ipts2(cor2(i)).x+size(I1,2)],[Ipts1(cor1(i)).y Ipts2(cor2(i)).y],'-','Color',c)
+      plot([Ipts1(cor1(i)).x Ipts2(cor2(i)).x+size(I1,2)],[Ipts1(cor1(i)).y Ipts2(cor2(i)).y],'o','Color',c)
+  end% EE569 Homework Assignment #4 
+% Date: Noverber 29th 2015 
+% Name: Meiyi Yang
+% ID:  6761-0405-85 
+% email:  meiyiyan@usc.edu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3:    Salient Point Descriptors and Image Matching
+% p3_code/prob3a.m      %  main script for problem3a
+% p3_code/prob3b.m      %  main script for problem3b
+% p3_code/prob3c.m      %  main script for problem3c
+% p3_code/SIFT/         %  SIFT Source code
+% p3_code/SURF/         % SURF Source code
+% p3_code/BOW/          %  BOW Source code
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+% Copyright Aditya Khosla http://mit.edu/khosla
+%
+% Please cite this paper if you use this code in your publication:
+%   A. Khosla, J. Xiao, A. Torralba, A. Oliva
+%   Memorability of Image Regions
+%   Advances in Neural Information Processing Systems (NIPS) 2012
+%
+
+addpath(genpath(pwd));
+
+% Initialize variables for calling datasets_feature function
+%info = load('images/filelist.mat');
+info.train_list = {'Bus.jpg', 'Sedan.jpg', 'School_bus1.jpg'};
+info.test_list = {'School_bus2.jpg'};
+info.train_labels = [1,2,3];
+info.test_labels = [1];
+info.classes = {'Bus', 'Sedan', 'School_bus'};
+
+datasets = {'demo'};
+train_lists = {info.train_list};
+test_lists = {info.test_list};
+feature = 'color';
+
+% Load the configuration and set dictionary size to 20 (for fast demo)
+c = conf();
+c.feature_config.(feature).dictionary_size=20;
+
+% Compute train and test features
+datasets_feature(datasets, train_lists, test_lists, feature, c);
+
+% Load train and test features
+train_features = load_feature(datasets{1}, feature, 'train', c);
+test_features = load_feature(datasets{1}, feature, 'test', c);
+
+% Below is a simple nearest-neighbor classifier
+%  The display code is more complicated than finding the actual nearest
+%  neighbor. Only two lines are required to find the nearest neighbor:
+%   [~, nn_idx] = min(sp_dist2(train_features, test_features));
+%   predicted_labels = train_labels(nn_idx);
+% The images have a border color of black and white to indicate the two
+% different classes in the demo dataset.
+
+%
+% Display demo images from Stanford Dogs dataset
+% URL: http://vision.stanford.edu/aditya86/StanfordDogs/
+%
+
+% Display train images in Figure 1
+train_labels = info.train_labels; 
+classes = info.classes;
+unique_labels = unique(train_labels);
+numPerClass = max(histc(train_labels, unique_labels));
+h = figure(1); set(h, 'name', 'Train Images'); border = 10;
+
+for i=1:length(unique_labels)
+    idx = find(train_labels==unique_labels(i));
+    for j=1:length(idx)
+        subplot(length(unique_labels), numPerClass, j+(i-1)*numPerClass);
+        im = imread(train_lists{1}{idx(j)});
+        im = padarray(im, [border border], 255*(i-1)/(length(unique_labels)-1)); imshow(im); 
+        title(sprintf('Example: %d, Class: %s', j, classes{unique_labels(i)}));
+    end
+end
+
+% Display test images and nearest neighbor from train images in Figure 2
+test_labels = info.test_labels; classes = info.classes;
+numPerClass = max(histc(test_labels, unique_labels));
+h = figure(2); set(h, 'name', 'Test Images'); border = 10;
+[~, nn_idx] = min(sp_dist2(train_features, test_features));
+
+for i=1:length(unique_labels)
+    idx = find(test_labels==unique_labels(i));
+    for j=1:length(idx)
+        subplot(length(unique_labels), numPerClass*2, 2*(j-1)+1+(i-1)*numPerClass*2);
+        im = imread(test_lists{1}{idx(j)});
+        im = padarray(im, [border border], 255*(i-1)/(length(unique_labels)-1)); 
+        imshow(im); 
+        title(sprintf('Example: %d, Class: %s', j, classes{unique_labels(i)}));
+        
+        subplot(length(unique_labels), numPerClass*2, 2*(j-1)+2+(i-1)*numPerClass*2);
+        im = imread(train_lists{1}{nn_idx(idx(j))}); 
+        im = padarray(im, [border border], 255*(train_labels(nn_idx(idx(j)))-1)/(length(unique_labels)-1));
+        imshow(im); title(sprintf('Nearest neighbor, predicted class: %s', classes{train_labels(nn_idx(idx(j)))}));
+    end
+end
+
+%
+% Sample code for usage of features with Liblinear SVM classifier:
+%   svm_options = '-s 2 -B 1 -c 1 -q';
+%   model = train(train_labels, sparse(double(train_features)), svm_options);
+%   predicted_labels = predict(test_labels, sparse(double(test_features)), model);
+%

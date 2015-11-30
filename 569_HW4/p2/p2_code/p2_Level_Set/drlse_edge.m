@@ -1,3 +1,16 @@
+% EE569 Homework Assignment #4 
+% Date: Noverber 29th 2015 
+% Name: Meiyi Yang
+% ID:  6761-0405-85 
+% email:  meiyiyan@usc.edu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2:    Coutour Modeling
+% p2_code/p2_Level_Set/prob2b.m       % Main script for prob2b
+% p2_code/p2_Level_Set/drlse_edge.m   % Helper function for level-set
+% p2_code/p2_Level_Set/level_set.m    % Helper function for level-set
+% p1_code/p2_Snake_Algorithm/         % GUI for snake algorithm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
 function phi = drlse_edge(phi_0, g, lambda,mu, alfa, epsilon, timestep, iter, potentialFunction)
 %  This Matlab code implements an edge-based active contour model as an
 %  application of the Distance Regularized Level Set Evolution (DRLSE) formulation in Li et al's paper:

@@ -1,9 +1,45 @@
+% EE569 Homework Assignment #4 
+% Date: Noverber 29th 2015 
+% Name: Meiyi Yang
+% ID:  6761-0405-85 
+% email:  meiyiyan@usc.edu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3:    Salient Point Descriptors and Image Matching
+% p3_code/prob3a.m      %  main script for problem3a
+% p3_code/prob3b.m      %  main script for problem3b
+% p3_code/prob3c.m      %  main script for problem3c
+% p3_code/SIFT/         %  SIFT Source code
+% p3_code/SURF/         % SURF Source code
+% p3_code/BOW/          %  BOW Source code
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+close all;
 clear all;
 
-% Example 2, Corresponding points
+%% SIFT
+Sift_Feature('School_bus1.jpg', 200, 374);
+Sift_Feature('School_bus2.jpg', 200, 356);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+number = 3;
+if number == 0
+    filename = 'School_bus2.jpg';
+end
+if number == 1
+    filename = 'Bus.jpg';
+end
+if number == 2
+    filename = 'Sedan.jpg';
+end
+if number == 3
+    filename = 'School_bus1.jpg';
+end
+
+
+
 % Load images
   I1=imread('School_bus1.jpg');
-  I2=imread('School_bus2.jpg');
+  I2=imread(filename);
+  I2 = imresize(I2, [200, 374]);
   
 % Get the Key Points
   Options.upright=true;

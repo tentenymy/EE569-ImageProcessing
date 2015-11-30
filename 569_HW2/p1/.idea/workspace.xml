@@ -12,13 +12,555 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47897ba5-1fd5-4902-86c7-4ad7f0e82eb3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../569_HW4/p3/p3_code/main.cpp" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/p1_code/p1_main.cpp" afterPath="$PROJECT_DIR$/p1_code/p1_main.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../569_HW4/p3/.idea/p3.iml" afterPath="$PROJECT_DIR$/../../569_HW4/p3/.idea/p3.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../569_HW4/p3/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../569_HW4/p3/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../569_HW4/p3/CMakeLists.txt" afterPath="$PROJECT_DIR$/../../569_HW4/p3/CMakeLists.txt" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../569_HW4/Problem 2.docx" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../569_HW4/~$oblem 2.docx" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/.gitattributes" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/COPYING" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/Makefile" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/Makefile.mak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/apps/phow_caltech101.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/apps/recognition/encodeImage.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/apps/recognition/experiments.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/apps/recognition/extendDescriptorsWithGeometry.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/apps/recognition/getDenseSIFT.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/apps/recognition/readImage.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/apps/recognition/setupCaltech256.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/apps/recognition/setupFMD.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/apps/recognition/setupGeneric.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/apps/recognition/setupScene67.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/apps/recognition/setupVoc.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/apps/recognition/trainEncoder.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/apps/recognition/traintest.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/apps/sift_mosaic.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/data/box.pgm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/data/box.sift" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/data/river1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/data/river2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/data/roofs1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/data/roofs2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/data/spots.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/about.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/api.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/apps.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/compiling.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/doc.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/download.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/doxygen.conf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/doxygen.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/doxytag.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/dtd/xhtml1/xhtml-lat1.ent" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/dtd/xhtml1/xhtml-special.ent" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/dtd/xhtml1/xhtml-symbol.ent" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/dtd/xhtml1/xhtml.soc" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/dtd/xhtml1/xhtml1-frameset.dtd" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/dtd/xhtml1/xhtml1-strict.dtd" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/dtd/xhtml1/xhtml1-transitional.dtd" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/dtd/xhtml1/xhtml1.dcl" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/cell-bins.fig" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/covdet-normalization.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/covdet.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/dhog-bins.fig" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/dsift-geom.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/frame-canonical.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/frame-types.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/frames.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/lbp.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/liop.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/mser-er-step.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/mser-er.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/mser-tree.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/scalespace-basic.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/scalespace.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/sift-angle.fig" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/sift-bins.fig" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/sift-can.fig" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/sift-conv-vlfeat.fig" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/sift-conv.fig" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/sift-descr-easy.fig" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/sift-frame.fig" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/sift-image-frame.fig" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/sift-orient.fig" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/figures/sift-ss.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/formatter.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/PASCAL2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/caltech-collage.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/down.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/fulkerson.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/git.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/help.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/lenc.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/liop-neighbours-sampling.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/liop-patch-layout.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/perdoch.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/perrone.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/placeholder.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/sarbortova.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/sift-mosaic.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/sulc.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-vs-additional-deps.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-vs-additional-include.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-vs-additional-libdir.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-vs-all-configurations.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-vs-empty-project.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-vs-new-project.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-vs-nodll.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-vs-ok.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-vs-post-step.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-vs-project-properties.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-xcode-copy-2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-xcode-copy.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-xcode-dylib.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-xcode-edit.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-xcode-err.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-xcode-info.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-xcode-new.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/using-xcode-ok.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/vedaldi.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/vl_blue.ico" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/vl_blue.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/vl_blue.pxm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/vl_blue_large.pxm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/images/yandex.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/install-c.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/install-matlab.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/install-octave.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/install-shell.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/license.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/mdoc.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/notfound.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/pygmentize.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/roadmap.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/aib.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/covdet.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/dsift.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/encode.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/frame.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/gmm.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/hikm.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/hog.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/ikm.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/imdisttf.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/kdtree.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/kmeans.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/liop.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/mser.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/plots-rank.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/quickshift.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/sift.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/slic.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/svm.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/tutorials/utils.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/using-gcc.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/using-vsexpress.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/using-xcode.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/vlfeat-website-main-content.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/vlfeat-website-preproc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/vlfeat-website-template.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/vlfeat-website.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/vlfeat.bib" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/vlfeat.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/webdoc.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/docsrc/wikidoc.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/make/bin.mak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/make/dist.mak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/make/dll.mak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/make/doc.mak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/make/matlab.mak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/make/nmake_helper.mak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/make/octave.mak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/make/update-mak.sh" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/aib.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/check.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/generic-driver.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/mser.1" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/mser.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/sift.1" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/sift.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_gauss_elimination.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_getopt_long.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_gmm.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_heap-def.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_host.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_imopv.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_kmeans.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_liop.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_mathop.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_mathop_abs.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_mathop_fast_resqrt.tc" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_mathop_fast_sqrt_ui.tc" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_nan.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_qsort-def.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_rand.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_sqrti.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_stringop.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_svd2.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_threads.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/test_vec_comp.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/src/vlfeat.7" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/aib/vl_aib.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/aib/vl_aib.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/aib/vl_aibcut.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/aib/vl_aibcuthist.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/aib/vl_aibcutpush.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/aib/vl_aibhist.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/aib/vl_aibhist.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_aib.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_alldist.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_cmd.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_covdet.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_dsift.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_frame.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_gmm_2d_rand.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_gmm_2d_twist.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_gmm_3d.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_gmm_convergence.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_hog.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_ikmeans.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_imdisttf.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_kdtree.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_kdtree_ann.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_kdtree_forest.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_kdtree_plot.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_kdtree_self.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_kdtree_sift.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_kmeans_2d.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_kmeans_ann_speed.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_kmeans_init.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_kmeans_vs_builtin.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_mser_basic.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_mser_cmd.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_mser_delta.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_plots_rank.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_print.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_quickshift.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_sift_basic.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_sift_cmd.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_sift_edge.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_sift_match.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_sift_or.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_sift_peak.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_sift_vs_ubc.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_slic.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_svm.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/demo/vl_demo_svm_data.mat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/fisher/vl_fisher.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/fisher/vl_fisher.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/geometry/vl_hat.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/geometry/vl_ihat.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/geometry/vl_irodr.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/geometry/vl_irodr.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/geometry/vl_rodr.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/geometry/vl_rodr.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/gmm/vl_gmm.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/gmm/vl_gmm.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_dwaffine.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imarray.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imarraysc.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imdisttf.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imdisttf.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imdown.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imgrad.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imintegral.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imintegral.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_impattern.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imreadbw.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imreadgray.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imsc.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imsmooth.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imsmooth.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imup.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imwbackward.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imwbackwardmx.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_imwhiten.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_rgb2xyz.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_tps.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_tpsu.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_tpsumx.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_waffine.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_witps.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_wtps.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_xyz2lab.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_xyz2luv.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/imop/vl_xyz2rgb.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/info.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/kmeans/vl_hikmeans.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/kmeans/vl_hikmeans.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/kmeans/vl_hikmeanshist.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/kmeans/vl_hikmeanspush.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/kmeans/vl_hikmeanspush.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/kmeans/vl_ikmeans.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/kmeans/vl_ikmeans.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/kmeans/vl_ikmeanshist.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/kmeans/vl_ikmeanspush.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/kmeans/vl_ikmeanspush.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/kmeans/vl_kmeans.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/kmeans/vl_kmeans.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/mexutils.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/inthist.tc" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/kdtree.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/samplinthist.tc" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/svms_common.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_alldist.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_alldist2.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_alldist2.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_alphanum.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_argparse.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_binsearch.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_binsearch.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_binsum.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_binsum.def" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_binsum.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_colsubset.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_cummax.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_cummax.def" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_cummax.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_getpid.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_getpid.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_grad.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_histmarg.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_hog.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_hog.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_homkermap.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_homkermap.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_ihashfind.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_ihashfind.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_ihashsum.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_ihashsum.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_inthist.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_inthist.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_isoctave.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_kdtreebuild.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_kdtreebuild.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_kdtreequery.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_kdtreequery.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_lbp.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_lbp.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_lbpfliplr.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_localmax.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_localmax.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_matlabversion.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_numder.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_numder2.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_override.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_pegasos.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_sampleinthist.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_sampleinthist.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_simdctrl.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_simdctrl.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_svmdataset.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_svmpegasos.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_svmtrain.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_svmtrain.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_threads.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_threads.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_twister.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_twister.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_version.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_version.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_whistc.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/misc/vl_xmkdir.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/mser/vl_erfill.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/mser/vl_erfill.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/mser/vl_ertr.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/mser/vl_mser.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/mser/vl_mser.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_cf.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_click.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_clickpoint.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_clicksegment.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_det.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_figaspect.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_linespec2prop.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_plotbox.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_plotframe.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_plotgrid.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_plotpoint.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_plotstyle.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_pr.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_printsize.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_roc.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_tightsubplot.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/plotop/vl_tpfp.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/quickshift/vl_flatmap.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/quickshift/vl_imseg.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/quickshift/vl_quickseg.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/quickshift/vl_quickshift.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/quickshift/vl_quickshift.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/quickshift/vl_quickvis.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_covdet.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_covdet.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_dsift.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_dsift.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_frame2oell.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_liop.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_liop.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_phow.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_plotsiftdescriptor.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_plotss.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_sift.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_sift.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_siftdescriptor.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_siftdescriptor.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_ubcmatch.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_ubcmatch.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/sift/vl_ubcread.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/slic/vl_slic.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/slic/vl_slic.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/special/vl_ddgaussian.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/special/vl_dgaussian.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/special/vl_dsigmoid.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/special/vl_gaussian.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/special/vl_rcos.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/special/vl_sigmoid.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/vl_compile.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/vl_demo.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/vl_harris.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/vl_help.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/vl_noprefix.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/vl_root.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/vl_setup.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/vlad/vl_vlad.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/vlad/vl_vlad.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_assert_almost_equal.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_assert_equal.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_assert_exception.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_aib.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_alldist.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_alldist2.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_alphanum.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_argparse.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_binsearch.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_binsum.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_colsubset.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_cummax.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_dsift.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_fisher.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_gmm.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_grad.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_hikmeans.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_hog.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_homkermap.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_ihashsum.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_ikmeans.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_imarray.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_imdisttf.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_imintegral.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_imsmooth.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_imwbackward.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_init.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_inthist.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_kdtree.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_kmeans.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_lbp.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_liop.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_mser.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_phow.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_plotbox.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_pr.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_printsize.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_roc.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_sift.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_slic.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_svmtrain.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_twister.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_vlad.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/toolbox/xtest/vl_test_whistc.m" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/aib.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/aib.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/array.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/array.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/covdet.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/covdet.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/dsift.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/dsift.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/fisher.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/fisher.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/float.th" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/generic.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/generic.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/getopt_long.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/getopt_long.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/gmm.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/gmm.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/heap-def.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/hikmeans.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/hikmeans.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/hog.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/hog.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/homkermap.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/homkermap.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/host.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/host.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/ikmeans.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/ikmeans.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/ikmeans_elkan.tc" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/ikmeans_init.tc" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/ikmeans_lloyd.tc" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/imopv.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/imopv.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/imopv_sse2.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/imopv_sse2.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/kdtree.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/kdtree.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/kmeans.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/kmeans.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/lbp.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/lbp.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/liop.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/liop.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/mathop.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/mathop.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/mathop_avx.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/mathop_avx.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/mathop_sse2.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/mathop_sse2.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/mser.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/mser.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/pgm.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/pgm.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/qsort-def.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/quickshift.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/quickshift.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/random.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/random.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/rodrigues.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/rodrigues.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/scalespace.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/scalespace.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/shuffle-def.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/sift.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/sift.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/slic.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/slic.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/stringop.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/stringop.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/svm.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/svm.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/svmdataset.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/svmdataset.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/vlad.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vl/vlad.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vlfeat.sln" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vlfeat.vcproj" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vlfeat.xcodeproj/project.pbxproj" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vlfeat.xcodeproj/xcshareddata/xcschemes/make doc-api.xcscheme" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vlfeat.xcodeproj/xcshareddata/xcschemes/make info.xcscheme" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../vlfeat-0.9.20/vlfeat.xcodeproj/xcshareddata/xcschemes/make.xcscheme" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../569_HW4/p2/p2_code/p2_Level_Set/drlse_edge.m" afterPath="$PROJECT_DIR$/../../569_HW4/p2/p2_code/p2_Level_Set/drlse_edge.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../569_HW4/p2/p2_code/p2_Level_Set/level_set.m" afterPath="$PROJECT_DIR$/../../569_HW4/p2/p2_code/p2_Level_Set/level_set.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../569_HW4/p2/p2_code/p2_Level_Set/prob2b.m" afterPath="$PROJECT_DIR$/../../569_HW4/p2/p2_code/p2_Level_Set/prob2b.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../569_HW4/p2/p2_code/p2_Snake_Algorithm/filter_function.m" afterPath="$PROJECT_DIR$/../../569_HW4/p2/p2_code/p2_Snake_Algorithm/filter_function.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../569_HW4/p2/p2_code/p2_Snake_Algorithm/getsnake.m" afterPath="$PROJECT_DIR$/../../569_HW4/p2/p2_code/p2_Snake_Algorithm/getsnake.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../569_HW4/p2/p2_code/p2_Snake_Algorithm/interate.m" afterPath="$PROJECT_DIR$/../../569_HW4/p2/p2_code/p2_Snake_Algorithm/interate.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../569_HW4/p2/p2_code/p2_Snake_Algorithm/snk.m" afterPath="$PROJECT_DIR$/../../569_HW4/p2/p2_code/p2_Snake_Algorithm/snk.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../569_HW4/p3/p3_code/prob3a.m" afterPath="$PROJECT_DIR$/../../569_HW4/p3/p3_code/prob3a.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../569_HW4/p3/p3_code/prob3b.m" afterPath="$PROJECT_DIR$/../../569_HW4/p3/p3_code/prob3b.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../569_HW4/p3/p3_code/prob3c.m" afterPath="$PROJECT_DIR$/../../569_HW4/p3/p3_code/prob3c.m" />
     </list>
     <ignored path="p1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,7 +584,7 @@
       <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2283105">
+            <state vertical-scroll-proportion="0.2276176">
               <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
               <folding />
             </state>
@@ -222,15 +764,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="481" y="452" width="1660" height="777" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11001236" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.111248456" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34177998" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34177998" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37414607" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -252,6 +794,45 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/p1_code/p1_main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding>
+            <element signature="e#364#387#0" expanded="true" />
+            <element signature="e#3981#5591#0" expanded="true" />
+            <element signature="e#5593#11353#0" expanded="true" />
+            <element signature="e#11355#11466#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/p1_code/classifier.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="90" column="2" selection-start-line="90" selection-start-column="2" selection-end-line="90" selection-end-column="2" />
+          <folding>
+            <element signature="e#407#430#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/p1_code/classifier.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="414" column="14" selection-start-line="414" selection-start-column="14" selection-end-line="414" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -518,7 +1099,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2283105">
+        <state vertical-scroll-proportion="0.2276176">
           <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
           <folding />
         </state>

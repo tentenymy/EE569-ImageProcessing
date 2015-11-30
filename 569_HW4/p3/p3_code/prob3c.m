@@ -1,3 +1,18 @@
+% EE569 Homework Assignment #4 
+% Date: Noverber 29th 2015 
+% Name: Meiyi Yang
+% ID:  6761-0405-85 
+% email:  meiyiyan@usc.edu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3:    Salient Point Descriptors and Image Matching
+% p3_code/prob3a.m      %  main script for problem3a
+% p3_code/prob3b.m      %  main script for problem3b
+% p3_code/prob3c.m      %  main script for problem3c
+% p3_code/SIFT/         %  SIFT Source code
+% p3_code/SURF/         % SURF Source code
+% p3_code/BOW/          %  BOW Source code
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
 % Copyright Aditya Khosla http://mit.edu/khosla
 %
 % Please cite this paper if you use this code in your publication:
