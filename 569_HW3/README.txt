@@ -1,7 +1,6 @@
 # EE569 Homework Assignment #3
 # Date:     Nov 1, 2015
 # Name:     Meiyi Yang
-# ID:       6761-0405-85
 # Email:    meiyiyan@usc.edu
 #########################################################
 # Compiled on OS X Yosemite Version 10.10.4
